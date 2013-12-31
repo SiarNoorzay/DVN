@@ -21,6 +21,9 @@
 		7627972E1871D53A00F22E73 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762797101871D53A00F22E73 /* UIKit.framework */; };
 		762797361871D53A00F22E73 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 762797341871D53A00F22E73 /* InfoPlist.strings */; };
 		762797381871D53A00F22E73 /* DNVTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 762797371871D53A00F22E73 /* DNVTests.m */; };
+		76BF9C73187222DC00ACF6DB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C72187222DC00ACF6DB /* Security.framework */; };
+		76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C74187222EF00ACF6DB /* QuartzCore.framework */; };
+		76BF9C771872237200ACF6DB /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C761872237200ACF6DB /* DropboxSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,9 @@
 		762797331871D53A00F22E73 /* DNVTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DNVTests-Info.plist"; sourceTree = "<group>"; };
 		762797351871D53A00F22E73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		762797371871D53A00F22E73 /* DNVTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DNVTests.m; sourceTree = "<group>"; };
+		76BF9C72187222DC00ACF6DB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		76BF9C74187222EF00ACF6DB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		76BF9C761872237200ACF6DB /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +66,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76BF9C771872237200ACF6DB /* DropboxSDK.framework in Frameworks */,
+				76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */,
+				76BF9C73187222DC00ACF6DB /* Security.framework in Frameworks */,
 				7627970F1871D53A00F22E73 /* CoreGraphics.framework in Frameworks */,
 				762797111871D53A00F22E73 /* UIKit.framework in Frameworks */,
 				7627970D1871D53A00F22E73 /* Foundation.framework in Frameworks */,
@@ -82,6 +91,7 @@
 		762797001871D53A00F22E73 = {
 			isa = PBXGroup;
 			children = (
+				76BF9C761872237200ACF6DB /* DropboxSDK.framework */,
 				762797121871D53A00F22E73 /* DNV */,
 				762797311871D53A00F22E73 /* DNVTests */,
 				7627970B1871D53A00F22E73 /* Frameworks */,
@@ -101,6 +111,8 @@
 		7627970B1871D53A00F22E73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				76BF9C74187222EF00ACF6DB /* QuartzCore.framework */,
+				76BF9C72187222DC00ACF6DB /* Security.framework */,
 				7627970C1871D53A00F22E73 /* Foundation.framework */,
 				7627970E1871D53A00F22E73 /* CoreGraphics.framework */,
 				762797101871D53A00F22E73 /* UIKit.framework */,
@@ -381,6 +393,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/usi/Downloads/dropbox-ios-sdk-1.3.9",
+					/Users/usi/Desktop/DVN/DNV,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DNV/DNV-Prefix.pch";
 				INFOPLIST_FILE = "DNV/DNV-Info.plist";
@@ -395,6 +412,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/usi/Downloads/dropbox-ios-sdk-1.3.9",
+					/Users/usi/Desktop/DVN/DNV,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DNV/DNV-Prefix.pch";
 				INFOPLIST_FILE = "DNV/DNV-Info.plist";
@@ -464,6 +486,7 @@
 				7627973D1871D53A00F22E73 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7627973E1871D53A00F22E73 /* Build configuration list for PBXNativeTarget "DNVTests" */ = {
 			isa = XCConfigurationList;
@@ -472,6 +495,7 @@
 				762797401871D53A00F22E73 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
