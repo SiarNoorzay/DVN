@@ -99,7 +99,6 @@
 		762797001871D53A00F22E73 = {
 			isa = PBXGroup;
 			children = (
-				76A2B22D187362010052F080 /* New Group */,
 				76BF9C761872237200ACF6DB /* DropboxSDK.framework */,
 				762797121871D53A00F22E73 /* DNV */,
 				762797311871D53A00F22E73 /* DNVTests */,
@@ -133,18 +132,13 @@
 		762797121871D53A00F22E73 /* DNV */ = {
 			isa = PBXGroup;
 			children = (
-				76A2B22B187361E70052F080 /* New Group1 */,
-				76A2B22A187361E00052F080 /* New Group */,
 				7627971B1871D53A00F22E73 /* AppDelegate.h */,
 				7627971C1871D53A00F22E73 /* AppDelegate.m */,
 				7627971E1871D53A00F22E73 /* Main.storyboard */,
-				76D96A39187B001300961260 /* LogInViewController.h */,
-				76D96A3A187B001300961260 /* LogInViewController.m */,
-				76D96A3C187B07EA00961260 /* UserObject.h */,
-				76D96A3D187B07EA00961260 /* UserObject.m */,
-				76A2B22E187362390052F080 /* DNV_logo.jpg */,
 				762797211871D53A00F22E73 /* ViewController.h */,
 				762797221871D53A00F22E73 /* ViewController.m */,
+				76D96A40187B112B00961260 /* LogInViewController */,
+				76D96A3F187B110D00961260 /* DNV Images */,
 				762797241871D53A00F22E73 /* Images.xcassets */,
 				762797131871D53A00F22E73 /* Supporting Files */,
 			);
@@ -165,7 +159,6 @@
 		762797311871D53A00F22E73 /* DNVTests */ = {
 			isa = PBXGroup;
 			children = (
-				76A2B22C187361F70052F080 /* New Group */,
 				762797371871D53A00F22E73 /* DNVTests.m */,
 				762797321871D53A00F22E73 /* Supporting Files */,
 			);
@@ -181,32 +174,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		76A2B22A187361E00052F080 /* New Group */ = {
+		76D96A3F187B110D00961260 /* DNV Images */ = {
 			isa = PBXGroup;
 			children = (
+				76A2B22E187362390052F080 /* DNV_logo.jpg */,
 			);
-			name = "New Group";
+			name = "DNV Images";
 			sourceTree = "<group>";
 		};
-		76A2B22B187361E70052F080 /* New Group1 */ = {
+		76D96A40187B112B00961260 /* LogInViewController */ = {
 			isa = PBXGroup;
 			children = (
+				76D96A39187B001300961260 /* LogInViewController.h */,
+				76D96A3A187B001300961260 /* LogInViewController.m */,
+				76D96A3C187B07EA00961260 /* UserObject.h */,
+				76D96A3D187B07EA00961260 /* UserObject.m */,
 			);
-			name = "New Group1";
-			sourceTree = "<group>";
-		};
-		76A2B22C187361F70052F080 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
-			sourceTree = "<group>";
-		};
-		76A2B22D187362010052F080 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
+			name = LogInViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,6 +240,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = USI;
 				TargetAttributes = {
+					762797081871D53A00F22E73 = {
+						DevelopmentTeam = VHCJASJ46H;
+					};
 					762797291871D53A00F22E73 = {
 						TestTargetID = 762797081871D53A00F22E73;
 					};
@@ -441,6 +428,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/usi/Downloads/dropbox-ios-sdk-1.3.9",
@@ -450,6 +438,7 @@
 				GCC_PREFIX_HEADER = "DNV/DNV-Prefix.pch";
 				INFOPLIST_FILE = "DNV/DNV-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -460,6 +449,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/usi/Downloads/dropbox-ios-sdk-1.3.9",
@@ -469,6 +459,7 @@
 				GCC_PREFIX_HEADER = "DNV/DNV-Prefix.pch";
 				INFOPLIST_FILE = "DNV/DNV-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
