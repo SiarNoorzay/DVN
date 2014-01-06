@@ -1,5 +1,5 @@
 //
-//  UserObject.h
+//  User.h
 //  DNV
 //
 //  Created by USI on 1/6/14.
@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface UserObject : NSObject
+@interface User : NSObject
 
 @property (nonatomic) NSString * userID;
 @property (nonatomic) NSString * password;
 @property (nonatomic) NSString * otherUserInfo;
 
--(id)init;
+-(id)initWithUserID:(NSString *)userID andPassword:(NSString *)password andInfo:(NSString *)otherInfo;
+
 
 @end
