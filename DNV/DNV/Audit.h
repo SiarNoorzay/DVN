@@ -20,4 +20,7 @@
 @property (nonatomic) NSString * lastModefied;
 @property (nonatomic) Report * report;
 
+-(id)initWithAudit:(NSDictionary *)auditDictionary;
+
+
 @end

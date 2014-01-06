@@ -17,14 +17,14 @@
 @property (nonatomic) NSString * address;
 @property (nonatomic) NSString * cityStateProvince;
 @property (nonatomic) NSString * country;
-@property (nonatomic) NSInteger * postalCode;
+@property (nonatomic) NSInteger postalCode;
 @property (nonatomic) NSString * auditDate;
 @property (nonatomic) NSString * auditor;
-@property (nonatomic) NSInteger * numEmployees;
+@property (nonatomic) NSInteger numEmployees;
 @property (nonatomic) BOOL baselineAudit;
 @property (nonatomic) NSString * licenseNum;
-@property (nonatomic) NSArray * Audits;
 
+-(id)initWithClient:(NSDictionary *)clientDictionary;
 
 
 @end

@@ -10,4 +10,10 @@
 
 @implementation Audit
 
+-(id)initWithAudit:(NSDictionary *)auditDictionary{
+    
+    return self;
+}
+
+
 @end

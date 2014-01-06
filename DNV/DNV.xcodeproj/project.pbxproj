@@ -34,6 +34,8 @@
 		76BF9C771872237200ACF6DB /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C761872237200ACF6DB /* DropboxSDK.framework */; };
 		76D96A3B187B001300961260 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3A187B001300961260 /* LogInViewController.m */; };
 		76D96A3E187B07EA00961260 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3D187B07EA00961260 /* User.m */; };
+		76E81F0C187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
+		76E81F0D187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +90,7 @@
 		76D96A3A187B001300961260 /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
 		76D96A3C187B07EA00961260 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		76D96A3D187B07EA00961260 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		76E81F0B187B559000441F62 /* sampleAudit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sampleAudit.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +174,7 @@
 		762797131871D53A00F22E73 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				76E81F0B187B559000441F62 /* sampleAudit.json */,
 				762797141871D53A00F22E73 /* DNV-Info.plist */,
 				762797151871D53A00F22E73 /* InfoPlist.strings */,
 				762797181871D53A00F22E73 /* main.m */,
@@ -267,6 +271,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = USI;
 				TargetAttributes = {
+					762797081871D53A00F22E73 = {
+						DevelopmentTeam = VHCJASJ46H;
+					};
 					762797291871D53A00F22E73 = {
 						TestTargetID = 762797081871D53A00F22E73;
 					};
@@ -298,6 +305,7 @@
 			files = (
 				762797251871D53A00F22E73 /* Images.xcassets in Resources */,
 				762797171871D53A00F22E73 /* InfoPlist.strings in Resources */,
+				76E81F0C187B559000441F62 /* sampleAudit.json in Resources */,
 				762797201871D53A00F22E73 /* Main.storyboard in Resources */,
 				76A2B22F187362390052F080 /* DNV_logo.jpg in Resources */,
 			);
@@ -308,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				762797361871D53A00F22E73 /* InfoPlist.strings in Resources */,
+				76E81F0D187B559000441F62 /* sampleAudit.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,6 +468,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -467,6 +477,7 @@
 				GCC_PREFIX_HEADER = "DNV/DNV-Prefix.pch";
 				INFOPLIST_FILE = "DNV/DNV-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -477,6 +488,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -485,6 +497,7 @@
 				GCC_PREFIX_HEADER = "DNV/DNV-Prefix.pch";
 				INFOPLIST_FILE = "DNV/DNV-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

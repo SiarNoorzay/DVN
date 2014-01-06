@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UserObject.h"
+#import "User.h"
 
 @interface LogInViewController : UIViewController
 
@@ -15,7 +15,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *userIDTextField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
 
-@property (strong, nonatomic) UserObject * user;
+@property (strong, nonatomic) User * user;
 
 //Log In Button
 - (IBAction)LogInButton:(UIBarButtonItem *)sender;
