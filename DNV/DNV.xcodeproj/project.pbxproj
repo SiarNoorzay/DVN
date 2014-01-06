@@ -99,8 +99,6 @@
 		762797001871D53A00F22E73 = {
 			isa = PBXGroup;
 			children = (
-				76A2B22D187362010052F080 /* New Group */,
-				76BF9C761872237200ACF6DB /* DropboxSDK.framework */,
 				762797121871D53A00F22E73 /* DNV */,
 				762797311871D53A00F22E73 /* DNVTests */,
 				7627970B1871D53A00F22E73 /* Frameworks */,
@@ -120,6 +118,7 @@
 		7627970B1871D53A00F22E73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				76BF9C761872237200ACF6DB /* DropboxSDK.framework */,
 				76BF9C74187222EF00ACF6DB /* QuartzCore.framework */,
 				76BF9C72187222DC00ACF6DB /* Security.framework */,
 				7627970C1871D53A00F22E73 /* Foundation.framework */,
@@ -133,8 +132,6 @@
 		762797121871D53A00F22E73 /* DNV */ = {
 			isa = PBXGroup;
 			children = (
-				76A2B22B187361E70052F080 /* New Group1 */,
-				76A2B22A187361E00052F080 /* New Group */,
 				7627971B1871D53A00F22E73 /* AppDelegate.h */,
 				7627971C1871D53A00F22E73 /* AppDelegate.m */,
 				7627971E1871D53A00F22E73 /* Main.storyboard */,
@@ -165,7 +162,6 @@
 		762797311871D53A00F22E73 /* DNVTests */ = {
 			isa = PBXGroup;
 			children = (
-				76A2B22C187361F70052F080 /* New Group */,
 				762797371871D53A00F22E73 /* DNVTests.m */,
 				762797321871D53A00F22E73 /* Supporting Files */,
 			);
@@ -179,34 +175,6 @@
 				762797341871D53A00F22E73 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		76A2B22A187361E00052F080 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
-			sourceTree = "<group>";
-		};
-		76A2B22B187361E70052F080 /* New Group1 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group1";
-			sourceTree = "<group>";
-		};
-		76A2B22C187361F70052F080 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
-			sourceTree = "<group>";
-		};
-		76A2B22D187362010052F080 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
