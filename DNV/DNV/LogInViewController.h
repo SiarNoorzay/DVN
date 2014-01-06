@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UserObject.h"
+#import "User.h"
 
 @class DBRestClient;
 

@@ -22,11 +22,20 @@
 		762797361871D53A00F22E73 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 762797341871D53A00F22E73 /* InfoPlist.strings */; };
 		762797381871D53A00F22E73 /* DNVTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 762797371871D53A00F22E73 /* DNVTests.m */; };
 		76A2B22F187362390052F080 /* DNV_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76A2B22E187362390052F080 /* DNV_logo.jpg */; };
+		76AB3CB1187B17410019603F /* Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AB3CB0187B17410019603F /* Client.m */; };
+		76AB3CB4187B1FDA0019603F /* Audit.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AB3CB3187B1FDA0019603F /* Audit.m */; };
+		76AB3CB7187B20520019603F /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AB3CB6187B20520019603F /* Report.m */; };
+		76AB3CBA187B20C70019603F /* Elements.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AB3CB9187B20C70019603F /* Elements.m */; };
+		76AB3CBD187B212C0019603F /* SubElements.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AB3CBC187B212C0019603F /* SubElements.m */; };
+		76AB3CC0187B21700019603F /* Questions.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AB3CBF187B21700019603F /* Questions.m */; };
+		76AB3CC3187B22300019603F /* Answers.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AB3CC2187B22300019603F /* Answers.m */; };
 		76BF9C73187222DC00ACF6DB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C72187222DC00ACF6DB /* Security.framework */; };
 		76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C74187222EF00ACF6DB /* QuartzCore.framework */; };
 		76BF9C771872237200ACF6DB /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C761872237200ACF6DB /* DropboxSDK.framework */; };
 		76D96A3B187B001300961260 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3A187B001300961260 /* LogInViewController.m */; };
-		76D96A3E187B07EA00961260 /* UserObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3D187B07EA00961260 /* UserObject.m */; };
+		76D96A3E187B07EA00961260 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3D187B07EA00961260 /* User.m */; };
+		76E81F0C187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
+		76E81F0D187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,13 +69,28 @@
 		762797351871D53A00F22E73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		762797371871D53A00F22E73 /* DNVTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DNVTests.m; sourceTree = "<group>"; };
 		76A2B22E187362390052F080 /* DNV_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = DNV_logo.jpg; sourceTree = "<group>"; };
+		76AB3CAF187B17410019603F /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Client.h; sourceTree = "<group>"; };
+		76AB3CB0187B17410019603F /* Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Client.m; sourceTree = "<group>"; };
+		76AB3CB2187B1FDA0019603F /* Audit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Audit.h; sourceTree = "<group>"; };
+		76AB3CB3187B1FDA0019603F /* Audit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Audit.m; sourceTree = "<group>"; };
+		76AB3CB5187B20520019603F /* Report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Report.h; sourceTree = "<group>"; };
+		76AB3CB6187B20520019603F /* Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Report.m; sourceTree = "<group>"; };
+		76AB3CB8187B20C70019603F /* Elements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Elements.h; sourceTree = "<group>"; };
+		76AB3CB9187B20C70019603F /* Elements.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Elements.m; sourceTree = "<group>"; };
+		76AB3CBB187B212C0019603F /* SubElements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubElements.h; sourceTree = "<group>"; };
+		76AB3CBC187B212C0019603F /* SubElements.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElements.m; sourceTree = "<group>"; };
+		76AB3CBE187B21700019603F /* Questions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Questions.h; sourceTree = "<group>"; };
+		76AB3CBF187B21700019603F /* Questions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Questions.m; sourceTree = "<group>"; };
+		76AB3CC1187B22300019603F /* Answers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Answers.h; sourceTree = "<group>"; };
+		76AB3CC2187B22300019603F /* Answers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Answers.m; sourceTree = "<group>"; };
 		76BF9C72187222DC00ACF6DB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		76BF9C74187222EF00ACF6DB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		76BF9C761872237200ACF6DB /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 		76D96A39187B001300961260 /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
 		76D96A3A187B001300961260 /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
-		76D96A3C187B07EA00961260 /* UserObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserObject.h; sourceTree = "<group>"; };
-		76D96A3D187B07EA00961260 /* UserObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserObject.m; sourceTree = "<group>"; };
+		76D96A3C187B07EA00961260 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		76D96A3D187B07EA00961260 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		76E81F0B187B559000441F62 /* sampleAudit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sampleAudit.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +143,7 @@
 		7627970B1871D53A00F22E73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				76BF9C761872237200ACF6DB /* DropboxSDK.framework */,
 				76BF9C74187222EF00ACF6DB /* QuartzCore.framework */,
 				76BF9C72187222DC00ACF6DB /* Security.framework */,
 				7627970C1871D53A00F22E73 /* Foundation.framework */,
@@ -148,6 +173,7 @@
 		762797131871D53A00F22E73 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				76E81F0B187B559000441F62 /* sampleAudit.json */,
 				762797141871D53A00F22E73 /* DNV-Info.plist */,
 				762797151871D53A00F22E73 /* InfoPlist.strings */,
 				762797181871D53A00F22E73 /* main.m */,
@@ -274,6 +300,7 @@
 			files = (
 				762797251871D53A00F22E73 /* Images.xcassets in Resources */,
 				762797171871D53A00F22E73 /* InfoPlist.strings in Resources */,
+				76E81F0C187B559000441F62 /* sampleAudit.json in Resources */,
 				762797201871D53A00F22E73 /* Main.storyboard in Resources */,
 				76A2B22F187362390052F080 /* DNV_logo.jpg in Resources */,
 			);
@@ -284,6 +311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				762797361871D53A00F22E73 /* InfoPlist.strings in Resources */,
+				76E81F0D187B559000441F62 /* sampleAudit.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,10 +323,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				76D96A3B187B001300961260 /* LogInViewController.m in Sources */,
+				76AB3CB4187B1FDA0019603F /* Audit.m in Sources */,
 				762797231871D53A00F22E73 /* ViewController.m in Sources */,
+				76AB3CC3187B22300019603F /* Answers.m in Sources */,
+				76AB3CB1187B17410019603F /* Client.m in Sources */,
 				7627971D1871D53A00F22E73 /* AppDelegate.m in Sources */,
-				76D96A3E187B07EA00961260 /* UserObject.m in Sources */,
+				76AB3CBD187B212C0019603F /* SubElements.m in Sources */,
+				76D96A3E187B07EA00961260 /* User.m in Sources */,
 				762797191871D53A00F22E73 /* main.m in Sources */,
+				76AB3CBA187B20C70019603F /* Elements.m in Sources */,
+				76AB3CB7187B20520019603F /* Report.m in Sources */,
+				76AB3CC0187B21700019603F /* Questions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,8 +466,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/usi/Downloads/dropbox-ios-sdk-1.3.9",
-					/Users/usi/Desktop/DVN/DNV,
+					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DNV/DNV-Prefix.pch";
@@ -452,8 +486,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/usi/Downloads/dropbox-ios-sdk-1.3.9",
-					/Users/usi/Desktop/DVN/DNV,
+					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DNV/DNV-Prefix.pch";
