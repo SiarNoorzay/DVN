@@ -25,6 +25,8 @@
 		76BF9C73187222DC00ACF6DB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C72187222DC00ACF6DB /* Security.framework */; };
 		76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C74187222EF00ACF6DB /* QuartzCore.framework */; };
 		76BF9C771872237200ACF6DB /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C761872237200ACF6DB /* DropboxSDK.framework */; };
+		76D96A3B187B001300961260 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3A187B001300961260 /* LogInViewController.m */; };
+		76D96A3E187B07EA00961260 /* UserObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3D187B07EA00961260 /* UserObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,10 @@
 		76BF9C72187222DC00ACF6DB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		76BF9C74187222EF00ACF6DB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		76BF9C761872237200ACF6DB /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
+		76D96A39187B001300961260 /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
+		76D96A3A187B001300961260 /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
+		76D96A3C187B07EA00961260 /* UserObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserObject.h; sourceTree = "<group>"; };
+		76D96A3D187B07EA00961260 /* UserObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserObject.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +138,10 @@
 				7627971B1871D53A00F22E73 /* AppDelegate.h */,
 				7627971C1871D53A00F22E73 /* AppDelegate.m */,
 				7627971E1871D53A00F22E73 /* Main.storyboard */,
+				76D96A39187B001300961260 /* LogInViewController.h */,
+				76D96A3A187B001300961260 /* LogInViewController.m */,
+				76D96A3C187B07EA00961260 /* UserObject.h */,
+				76D96A3D187B07EA00961260 /* UserObject.m */,
 				76A2B22E187362390052F080 /* DNV_logo.jpg */,
 				762797211871D53A00F22E73 /* ViewController.h */,
 				762797221871D53A00F22E73 /* ViewController.m */,
@@ -297,8 +307,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76D96A3B187B001300961260 /* LogInViewController.m in Sources */,
 				762797231871D53A00F22E73 /* ViewController.m in Sources */,
 				7627971D1871D53A00F22E73 /* AppDelegate.m in Sources */,
+				76D96A3E187B07EA00961260 /* UserObject.m in Sources */,
 				762797191871D53A00F22E73 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
