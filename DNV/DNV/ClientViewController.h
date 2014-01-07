@@ -16,4 +16,6 @@
 //Instance of the PopOver Controller
 @property (strong,nonatomic) UIPopoverController * popOver;
 
+@property (nonatomic) int auditType;
+
 @end

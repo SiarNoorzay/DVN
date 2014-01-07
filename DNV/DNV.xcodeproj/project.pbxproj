@@ -35,6 +35,7 @@
 		76D96A3B187B001300961260 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3A187B001300961260 /* LogInViewController.m */; };
 		76D96A3E187B07EA00961260 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3D187B07EA00961260 /* User.m */; };
 		76D96A45187B585900961260 /* ClientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A44187B585900961260 /* ClientViewController.m */; };
+		76DBFA78187C625D00F84282 /* MainWindowPopOver.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DBFA77187C625D00F84282 /* MainWindowPopOver.m */; };
 		76E81F0C187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
 		76E81F0D187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
 /* End PBXBuildFile section */
@@ -93,6 +94,8 @@
 		76D96A3D187B07EA00961260 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		76D96A43187B585900961260 /* ClientViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientViewController.h; sourceTree = "<group>"; };
 		76D96A44187B585900961260 /* ClientViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientViewController.m; sourceTree = "<group>"; };
+		76DBFA76187C625D00F84282 /* MainWindowPopOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowPopOver.h; sourceTree = "<group>"; };
+		76DBFA77187C625D00F84282 /* MainWindowPopOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowPopOver.m; sourceTree = "<group>"; };
 		76E81F0B187B559000441F62 /* sampleAudit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sampleAudit.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,6 +169,7 @@
 				7627971E1871D53A00F22E73 /* Main.storyboard */,
 				76D96A41187B580900961260 /* LogInViewController */,
 				76D96A42187B582000961260 /* ClientViewController */,
+				76DBFA75187C617400F84282 /* MainWindowPopOver */,
 				76A2B22E187362390052F080 /* DNV_logo.jpg */,
 				762797211871D53A00F22E73 /* ViewController.h */,
 				762797221871D53A00F22E73 /* ViewController.m */,
@@ -244,6 +248,15 @@
 				76D96A44187B585900961260 /* ClientViewController.m */,
 			);
 			name = ClientViewController;
+			sourceTree = "<group>";
+		};
+		76DBFA75187C617400F84282 /* MainWindowPopOver */ = {
+			isa = PBXGroup;
+			children = (
+				76DBFA76187C625D00F84282 /* MainWindowPopOver.h */,
+				76DBFA77187C625D00F84282 /* MainWindowPopOver.m */,
+			);
+			name = MainWindowPopOver;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -361,6 +374,7 @@
 				762797191871D53A00F22E73 /* main.m in Sources */,
 				76AB3CBA187B20C70019603F /* Elements.m in Sources */,
 				76AB3CB7187B20520019603F /* Report.m in Sources */,
+				76DBFA78187C625D00F84282 /* MainWindowPopOver.m in Sources */,
 				76AB3CC0187B21700019603F /* Questions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
