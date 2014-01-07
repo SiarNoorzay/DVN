@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <DropboxSDK/DropboxSDK.h>
+#import "LogInViewController.h"
 
 @implementation AppDelegate
 
@@ -17,12 +18,25 @@
     
     DBSession* dbSession =
     [[DBSession alloc]
-      initWithAppKey:@"INSERT_APP_KEY"
-      appSecret:@"INSERT_APP_SECRET"
-      root:@"root"]; // either kDBRootAppFolder or kDBRootDropbox
+      initWithAppKey:@"6imaamqs5vnpd7o"
+      appSecret:@"uq0lkhw3j6cjgvf"
+      root:kDBRootDropbox]; // either kDBRootAppFolder or kDBRootDropbox
 
     [DBSession setSharedSession:dbSession];
+    
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    if ([[DBSession sharedSession] handleOpenURL:url]) {
+        if ([[DBSession sharedSession] isLinked]) {
+            NSLog(@"App linked successfully!");
+            // At this point you can start making API calls
+        }
+        return YES;
+    }
+    // Add whatever other url handling code your app requires here
+    return NO;
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -35,6 +49,16 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+//    NSLog(@"Testing");
+//    
+//    if ([[DBSession sharedSession] isLinked]) {
+//        [[DBSession sharedSession] unlinkAll];
+//        [[[UIAlertView alloc]
+//          initWithTitle:@"Account Unlinked!" message:@"Your dropbox account has been unlinked"
+//          delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil]
+//         show];
+//    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -49,7 +73,8 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:
+    
 }
 
 @end

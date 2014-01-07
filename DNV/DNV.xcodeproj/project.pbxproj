@@ -34,6 +34,7 @@
 		76BF9C771872237200ACF6DB /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C761872237200ACF6DB /* DropboxSDK.framework */; };
 		76D96A3B187B001300961260 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3A187B001300961260 /* LogInViewController.m */; };
 		76D96A3E187B07EA00961260 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3D187B07EA00961260 /* User.m */; };
+		76D96A45187B585900961260 /* ClientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A44187B585900961260 /* ClientViewController.m */; };
 		76E81F0C187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
 		76E81F0D187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
 /* End PBXBuildFile section */
@@ -90,6 +91,8 @@
 		76D96A3A187B001300961260 /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
 		76D96A3C187B07EA00961260 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		76D96A3D187B07EA00961260 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		76D96A43187B585900961260 /* ClientViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientViewController.h; sourceTree = "<group>"; };
+		76D96A44187B585900961260 /* ClientViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientViewController.m; sourceTree = "<group>"; };
 		76E81F0B187B559000441F62 /* sampleAudit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sampleAudit.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -123,6 +126,7 @@
 		762797001871D53A00F22E73 = {
 			isa = PBXGroup;
 			children = (
+				76BF9C761872237200ACF6DB /* DropboxSDK.framework */,
 				762797121871D53A00F22E73 /* DNV */,
 				762797311871D53A00F22E73 /* DNVTests */,
 				7627970B1871D53A00F22E73 /* Frameworks */,
@@ -160,8 +164,8 @@
 				7627971B1871D53A00F22E73 /* AppDelegate.h */,
 				7627971C1871D53A00F22E73 /* AppDelegate.m */,
 				7627971E1871D53A00F22E73 /* Main.storyboard */,
-				76D96A39187B001300961260 /* LogInViewController.h */,
-				76D96A3A187B001300961260 /* LogInViewController.m */,
+				76D96A41187B580900961260 /* LogInViewController */,
+				76D96A42187B582000961260 /* ClientViewController */,
 				76A2B22E187362390052F080 /* DNV_logo.jpg */,
 				762797211871D53A00F22E73 /* ViewController.h */,
 				762797221871D53A00F22E73 /* ViewController.m */,
@@ -222,6 +226,24 @@
 				76AB3CC2187B22300019603F /* Answers.m */,
 			);
 			name = ClassObjects;
+			sourceTree = "<group>";
+		};
+		76D96A41187B580900961260 /* LogInViewController */ = {
+			isa = PBXGroup;
+			children = (
+				76D96A39187B001300961260 /* LogInViewController.h */,
+				76D96A3A187B001300961260 /* LogInViewController.m */,
+			);
+			name = LogInViewController;
+			sourceTree = "<group>";
+		};
+		76D96A42187B582000961260 /* ClientViewController */ = {
+			isa = PBXGroup;
+			children = (
+				76D96A43187B585900961260 /* ClientViewController.h */,
+				76D96A44187B585900961260 /* ClientViewController.m */,
+			);
+			name = ClientViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -333,6 +355,7 @@
 				76AB3CC3187B22300019603F /* Answers.m in Sources */,
 				76AB3CB1187B17410019603F /* Client.m in Sources */,
 				7627971D1871D53A00F22E73 /* AppDelegate.m in Sources */,
+				76D96A45187B585900961260 /* ClientViewController.m in Sources */,
 				76AB3CBD187B212C0019603F /* SubElements.m in Sources */,
 				76D96A3E187B07EA00961260 /* User.m in Sources */,
 				762797191871D53A00F22E73 /* main.m in Sources */,

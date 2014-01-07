@@ -33,9 +33,6 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    
     if (![[DBSession sharedSession] isLinked]) {
         [[DBSession sharedSession] linkFromController:self];
     }
@@ -79,13 +76,25 @@
     
 }
 
+- (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
+    NSLog(@"There was an error loading the file - %@", error);
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+- (DBRestClient*)restClient {
+    if (restClient == nil) {
+        restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        restClient.delegate = self;
+    }
+    return restClient;
+}
+
 - (IBAction)LogInButton:(UIBarButtonItem *)sender {
+    
     
     
 }

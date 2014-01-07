@@ -9,13 +9,24 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 
-@interface LogInViewController : UIViewController
+@class DBRestClient;
+
+@interface LogInViewController : UIViewController{
+    
+    DBRestClient* restClient;
+}
 
 //User Info Textfields
 @property (strong, nonatomic) IBOutlet UITextField *userIDTextField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
 
+//File properties
+@property NSString * myDirectory;
+@property NSString * directoryPath;
+
+//User properties
 @property (strong, nonatomic) User * user;
+@property (strong, nonatomic) NSArray * arrayOfUsers;
 
 //Log In Button
 - (IBAction)LogInButton:(UIBarButtonItem *)sender;
