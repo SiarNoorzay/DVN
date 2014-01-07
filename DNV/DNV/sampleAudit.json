@@ -16,7 +16,7 @@
                      "SubElements": [
                                      {
                                      "isCompleted": false,
-                                     "Name": "freezers",
+                                     "name": "freezers",
                                      "pointsPossible": 10,
                                      "pointsAwarded": 0,
                                      "Questions": [
@@ -75,7 +75,7 @@
                                      },
                                      {
                                      "isCompleted": false,
-                                     "Name": "freezers",
+                                     "name": "freezers",
                                      "pointsPossible": 10,
                                      "pointsAwarded": 0,
                                      "Questions": [
@@ -143,7 +143,7 @@
                      "SubElements": [
                                      {
                                      "isCompleted": false,
-                                     "Name": "Knives",
+                                     "name": "Knives",
                                      "pointsPossible": 6,
                                      "pointsAwarded": 0,
                                      "Questions": [
@@ -232,7 +232,7 @@
                                      },
                                      {
                                      "isCompleted": false,
-                                     "Name": "Spoons",
+                                     "name": "Spoons",
                                      "pointsPossible": 4,
                                      "pointsAwarded": 0,
                                      "Questions": [

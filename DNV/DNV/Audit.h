@@ -10,12 +10,12 @@
 #import "Report.h"
 
 
-@interface Audit : NSObject
+@interface Audit : NSDictionary
 
-@property (nonatomic) enum auditType;
+@property (nonatomic) NSInteger auditType;
 @property (nonatomic) NSString * name;
 @property (nonatomic) NSArray * Elements;
-@property (nonatomic) float * physicalConditionScore;
+@property (nonatomic) float physicalConditionScore;
 @property (nonatomic) NSString * awardLevel;
 @property (nonatomic) NSString * lastModefied;
 @property (nonatomic) Report * report;

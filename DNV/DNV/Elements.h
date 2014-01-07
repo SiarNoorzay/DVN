@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Elements : NSObject
+@interface Elements : NSDictionary
 
 @property (nonatomic) BOOL isCompleted;
 @property (nonatomic) NSString * name;
@@ -16,4 +16,8 @@
 @property (nonatomic) float  pointsPossible;
 @property (nonatomic) float  pointsAwarded;
 @property (nonatomic) NSArray * Subelements;
+
+-(id)initWithElement:(NSDictionary *)elementDictionary;
+
+
 @end
