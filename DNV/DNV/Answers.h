@@ -8,11 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Answers : NSObject
+@interface Answers : NSDictionary
 
 @property (nonatomic) NSString * answerText;
 @property (nonatomic) float pointsPossibleOrMultiplier;
 @property (nonatomic) BOOL isSelected;
 @property (nonatomic) NSArray * Questions;
+
+
+-(id)initWithAnswer:(NSDictionary *)answerDictionary;
 
 @end

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Questions : NSObject
+@interface Questions : NSDictionary
 
 @property (nonatomic) BOOL isCompleted;
 @property (nonatomic) float  pointsPossible;
@@ -22,9 +22,12 @@
 @property (nonatomic) NSArray * attachmentsLocationArray;
 @property (nonatomic) NSArray * imageLocationArray;
 @property (nonatomic) NSArray * Answers;
-@property (nonatomic) enum questionType;
+@property (nonatomic) int questionType;
 @property (nonatomic) BOOL isThumbsUp;
 @property (nonatomic) BOOL isThumbsDown;
+
+
+-(id)initWithQuestion:(NSDictionary *)questionDictionary;
 
 
 
