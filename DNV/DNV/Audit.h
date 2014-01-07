@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "Report.h"
+#import "Client.h"
+
 
 
 @interface Audit : NSDictionary
@@ -19,6 +21,7 @@
 @property (nonatomic) NSString * awardLevel;
 @property (nonatomic) NSString * lastModefied;
 @property (nonatomic) Report * report;
+@property (nonatomic) Client * client;
 
 -(id)initWithAudit:(NSDictionary *)auditDictionary;
 

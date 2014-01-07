@@ -9,18 +9,23 @@
 #import "LogInViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
 
-//#import "Audit.h"
-//#import "Elements.h"
-//#import "SubElements.h"
-//#import "Questions.h"
-//#import "Answers.h"
+#import "Audit.h"
+#import "Elements.h"
+#import "SubElements.h"
+#import "Questions.h"
+#import "Answers.h"
+#import <malloc/malloc.h>
 
 
-@interface LogInViewController ()
+@interface LogInViewController ()<DBRestClientDelegate>
+
+@property (nonatomic, readonly) DBRestClient * restClient;
 
 @end
 
 @implementation LogInViewController
+
+//@synthesize arrayOfUsers;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,6 +41,11 @@
     if (![[DBSession sharedSession] isLinked]) {
         [[DBSession sharedSession] linkFromController:self];
     }
+
+    [super viewDidLoad];
+	// Do any additional setup after loading the view.
+    
+
 //    NSError *error;
 //    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleAudit"
 //                                                                                  ofType:@"json"]];
@@ -43,6 +53,7 @@
 //    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
 //    
 //    NSLog(@"JSON contains:\n%@", [dictionary description]);
+    
 //    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
 //    
 //    
@@ -69,11 +80,34 @@
 //    
 //    SubElements *sub2 = [[SubElements alloc]initWithSubElement:ele2.Subelements[0]];
 //    NSLog(@"the second SubElement is:%@", sub2.name);
-//
-//
-//    
     
+
+
+    NSString *filename = @"/Users/users.json";
+    _myDirectory = @"users.json";
+    _directoryPath = [NSTemporaryDirectory() stringByAppendingPathComponent:_myDirectory];
     
+    [[self restClient] loadFile:filename intoPath:_directoryPath];
+
+    
+    NSError *error;
+    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"users"
+                                                                                  ofType:@"json"]];
+    
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+    
+    NSLog(@"JSON contains:\n%@", [dictionary description]);
+    
+    self.arrayOfUsers = [dictionary objectForKey:@"Users"];
+
+    
+}
+
+
+- (void)restClient:(DBRestClient*)client loadedFile:(NSString*)localPath
+       contentType:(NSString*)contentType metadata:(DBMetadata*)metadata {
+    
+    NSLog(@"File loaded into path: %@", localPath);
 }
 
 - (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
@@ -95,7 +129,10 @@
 
 - (IBAction)LogInButton:(UIBarButtonItem *)sender {
     
+    BOOL foundUser = false;
     
-    
+    for (User *usr in self.arrayOfUsers) {
+        
+    }
 }
 @end

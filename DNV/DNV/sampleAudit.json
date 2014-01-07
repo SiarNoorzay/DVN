@@ -5,7 +5,31 @@
         "physicalConditionScore": 5.5,
         "awardLevel": 5,
         "lastModefied": "20120513",
-        "Report": {},
+        "Report": { "companyName": "USI",
+            "summary": "The company had very nice kitchens",
+            "preparedBy": "The guy that prepares stuff",
+            "verifiedBy": " The Verifier",
+            "approvedBy": "The guy that verifies things",
+            "projectNum": 134111231,
+            "conclusion": "In conclusion USI's kitchens are pretty standard.",
+            "methodologyDiagramLocation":"/USI/audit1/diagram.png"
+        },
+        "Client": {
+            "companyName": "USI",
+            "division": "4",
+            "SICNumber": 12345,
+            "auditedSite": "Corporate Headquarters",
+            "address": "123 Fake St.",
+            "cityStateProvince": "Georgia",
+            "country": "USA",
+            "postalCode": "83912",
+            "auditDate": "01042014",
+            "auditor": "Bob Loblaw",
+            "numEmployees": "250",
+            "baselineAudit": false,
+            "licenseNum": "451RJ301J"
+            
+        },
         "Elements": [
                      {
                      "isCompleted": false,
