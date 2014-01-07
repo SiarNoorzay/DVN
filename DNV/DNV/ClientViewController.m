@@ -7,7 +7,7 @@
 //
 
 #import "ClientViewController.h"
-
+#import "MainWindowPopOver.h"
 
 @interface ClientViewController ()
 
@@ -60,10 +60,25 @@
     
 }
 
+
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-   
+    MainWindowPopOver * popContent = [[MainWindowPopOver alloc]init];
     
+    
+    self.popOver = [[UIPopoverController alloc] initWithContentViewController:popContent];
+    
+    self.popOver.delegate = self;
+    
+    self.auditType = popContent.auditChoice;
+    popContent.popOverContent = self.popOver;
+    
+    UICollectionViewCell * cell = [self.ClientCollectionView cellForItemAtIndexPath:indexPath];
+    
+    
+    [self.popOver presentPopoverFromRect:cell.frame inView:self.ClientCollectionView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    
+    NSLog(@"%d", self.auditType);
 }
 
 
