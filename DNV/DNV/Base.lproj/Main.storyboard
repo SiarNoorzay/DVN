@@ -66,10 +66,10 @@
             </objects>
             <point key="canvasLocation" x="694" y="742"/>
         </scene>
-        <!--View Controller - List of Clients-->
+        <!--Client View Controller - List of Clients-->
         <scene sceneID="OU5-it-9Cx">
             <objects>
-                <viewController id="1WR-Th-x7r" sceneMemberID="viewController">
+                <viewController id="1WR-Th-x7r" customClass="ClientViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lJJ-k0-mtt"/>
                         <viewControllerLayoutGuide type="bottom" id="MqB-xN-IUN"/>
@@ -86,42 +86,48 @@
                                 <rect key="frame" x="0.0" y="193" width="768" height="831"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="mGu-8z-wn8">
-                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="itemSize" width="154" height="132"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Juc-f7-ZkS">
-                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ClientCell" id="Juc-f7-ZkS">
+                                        <rect key="frame" x="0.0" y="0.0" width="154" height="132"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="154" height="132"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TjJ-ln-gJq">
+                                                    <rect key="frame" x="20" y="39" width="46" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <size key="customSize" width="100" height="100"/>
-                                        <connections>
-                                            <segue destination="m4F-gO-tvs" kind="popover" popoverAnchorView="Juc-f7-ZkS" id="Gxc-Oe-ZMf">
-                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                            </segue>
-                                        </connections>
+                                        <size key="customSize" width="154" height="132"/>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="1WR-Th-x7r" id="CvH-vs-nb9"/>
+                                    <outlet property="delegate" destination="1WR-Th-x7r" id="VAG-Cq-V3q"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="List of Clients" id="oGF-Lr-f6l"/>
                     <connections>
-                        <segue destination="MKD-O5-KK7" kind="push" identifier="WIPAuditSegue" id="Jf2-Bk-7mZ"/>
-                        <segue destination="5TZ-Hl-Ddb" kind="push" identifier="NewAuditSegue" id="zNh-06-BZ6"/>
-                        <segue destination="28Y-W0-upZ" kind="push" identifier="CompleteAuditSegue" id="m21-A0-Ewz"/>
+                        <outlet property="ClientCollectionView" destination="2KQ-TK-JK1" id="eRd-lW-61m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sER-QT-X25" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1620" y="736"/>
+            <point key="canvasLocation" x="1660" y="742"/>
         </scene>
         <!--View Controller - New Audit-->
         <scene sceneID="YiP-4h-pjt">
@@ -152,7 +158,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="0p3-Xt-jp1" kind="push" id="Wx4-f4-tqw"/>
+                                            <segue destination="0p3-Xt-jp1" kind="push" identifier="NewAuditDetails" id="Wx4-f4-tqw"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -258,7 +264,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="8Xc-YB-eLc" kind="push" id="2VJ-lN-Cgg"/>
+                                            <segue destination="8Xc-YB-eLc" kind="push" identifier="NewAuditQuestions" id="2VJ-lN-Cgg"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -439,11 +445,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="List of WIP Audits" id="o7s-Fw-GMX"/>
-                    <connections>
-                        <segue destination="0p3-Xt-jp1" kind="push" id="s68-k0-wSN"/>
-                        <segue destination="NjM-YN-Li5" kind="push" id="ntH-5w-zY2"/>
-                        <segue destination="kGq-Rt-Of0" kind="push" id="bPU-rh-E9l"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bbC-2V-P6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -525,9 +526,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="735" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="8Xc-YB-eLc" kind="push" id="NXb-tv-mhs"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -563,7 +561,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="F2T-b4-fnp">
-                                        <rect key="frame" x="0.0" y="64" width="125" height="125"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
@@ -626,10 +624,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="List of Completed Audits" id="k7m-zh-7kY"/>
-                    <connections>
-                        <segue destination="1LI-tS-8fd" kind="push" id="53I-Av-oHG"/>
-                        <segue destination="Ifz-5G-IlN" kind="push" id="9o0-G6-c0s"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9u9-ck-Zna" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -832,9 +826,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="735" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="8Xc-YB-eLc" kind="push" id="LUu-i9-roB"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -874,7 +865,7 @@
                         <viewControllerLayoutGuide type="bottom" id="kSf-6R-6Fu"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3yM-f6-lw0">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yJF-Uv-kZe">
@@ -904,7 +895,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yvp-0E-kE5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2673" y="510"/>
+            <point key="canvasLocation" x="2641" y="362"/>
         </scene>
     </scenes>
     <resources>
@@ -915,8 +906,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="Wx4-f4-tqw"/>
-        <segue reference="2VJ-lN-Cgg"/>
-    </inferredMetricsTieBreakers>
 </document>

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <DropboxSDK/DropboxSDK.h>
+#import "LogInViewController.h"
 
 @implementation AppDelegate
 
@@ -22,6 +23,7 @@
       root:kDBRootDropbox]; // either kDBRootAppFolder or kDBRootDropbox
 
     [DBSession setSharedSession:dbSession];
+    
     return YES;
 }
 

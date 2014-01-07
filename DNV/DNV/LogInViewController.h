@@ -25,7 +25,7 @@
 @property NSString * directoryPath;
 
 //User properties
-@property (strong, nonatomic) UserObject * user;
+@property (strong, nonatomic) User * user;
 @property (strong, nonatomic) NSArray * arrayOfUsers;
 
 //Log In Button

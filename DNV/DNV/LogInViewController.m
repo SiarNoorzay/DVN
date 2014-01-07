@@ -28,23 +28,22 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    
     if (![[DBSession sharedSession] isLinked]) {
         [[DBSession sharedSession] linkFromController:self];
     }
+
+    [super viewDidLoad];
+	// Do any additional setup after loading the view.
     
-//    NSString *localPath = [[NSBundle mainBundle] pathForResource:@"Users" ofType:@"json"];
-    
+
     NSString *filename = @"/Users/users.json";
     _myDirectory = @"users.json";
     _directoryPath = [NSTemporaryDirectory() stringByAppendingPathComponent:_myDirectory];
     
     [[self restClient] loadFile:filename intoPath:_directoryPath];
     
-    
 }
+
 
 - (void)restClient:(DBRestClient*)client loadedFile:(NSString*)localPath
        contentType:(NSString*)contentType metadata:(DBMetadata*)metadata {
