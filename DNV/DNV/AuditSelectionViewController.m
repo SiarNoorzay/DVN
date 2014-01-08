@@ -73,13 +73,15 @@
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
-    
-    
-}
-
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    NSIndexPath *indexPath = self.auditListTable.indexPathForSelectedRow;
+    
+    NSLog(@"Selected %@,",[self.audits objectAtIndex:indexPath.row]);
+    
+    Folder *temp =[self.audits objectAtIndex:indexPath.row];
+    
+    self.chosenAuditPath = temp.folderPath;
     
     ElementSubElementViewController *vc = [segue destinationViewController];
     [vc setAuditPath: self.chosenAuditPath];
