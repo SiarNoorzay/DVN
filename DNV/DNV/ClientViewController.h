@@ -25,6 +25,12 @@
 
 @property (nonatomic) int auditType;
 
+@property (nonatomic, readonly) DBRestClient *restClient;
+
+@property (nonatomic) NSArray * clients;
+
 -(void)goToChoice;
+
+
 
 @end

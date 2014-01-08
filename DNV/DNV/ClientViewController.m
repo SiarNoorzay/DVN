@@ -35,7 +35,12 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    [self.ClientCollectionView reloadData];
+    if (![[DBSession sharedSession] isLinked]) {
+        [[DBSession sharedSession] linkFromController:self];
+    }
+    
+    [[self restClient] loadMetadata:@"/"];
+
 }
 
 
@@ -45,6 +50,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark Collection View methods
+
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     
     return 1;
@@ -52,7 +59,7 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-    return 3;
+    return [self.clients count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -69,9 +76,7 @@
     
     return cell;
     
-    
 }
-
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -88,26 +93,6 @@
     
     [self.popOver presentPopoverFromRect:cell.frame inView:self.ClientCollectionView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     
-}
-
-
-
--(void)goToChoice
-{
-    switch (self.auditType) {
-        case 0:
-            [self performSegueWithIdentifier:@"NewAuditChoice" sender:self];
-            break;
-        case 1:
-            [self performSegueWithIdentifier:@"WIPAuditChoice" sender:self];
-            break;
-        case 2:
-            [self performSegueWithIdentifier:@"CompletedAuditChoice" sender:self];
-            break;
-            
-        default:
-            break;
-    }
 }
 
 #pragma mark Dropbox methods
@@ -145,6 +130,27 @@ loadMetadataFailedWithError:(NSError *)error {
     
     NSLog(@"Error loading metadata: %@", error);
 }
+
+#pragma mark Audit Type methods
+
+-(void)goToChoice
+{
+    switch (self.auditType) {
+        case 0:
+            [self performSegueWithIdentifier:@"NewAuditChoice" sender:self];
+            break;
+        case 1:
+            [self performSegueWithIdentifier:@"WIPAuditChoice" sender:self];
+            break;
+        case 2:
+            [self performSegueWithIdentifier:@"CompletedAuditChoice" sender:self];
+            break;
+            
+        default:
+            break;
+    }
+}
+
 
 
 
