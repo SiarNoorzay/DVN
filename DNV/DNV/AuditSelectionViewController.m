@@ -74,12 +74,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    NSLog(@"Selected %@,",[self.audits objectAtIndex:indexPath.row]);
-    
-    Folder *temp =[self.audits objectAtIndex:indexPath.row];
-    
-    self.chosenAuditPath = temp.folderPath;
+
     
     
 }
