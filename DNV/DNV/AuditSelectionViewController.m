@@ -46,6 +46,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark Tableview methods
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     return [self.audits count];

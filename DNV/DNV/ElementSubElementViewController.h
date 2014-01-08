@@ -8,6 +8,26 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ElementSubElementViewController : UIViewController
+#import "Audit.h"
+#import "Elements.h"
+#import "SubElements.h"
+
+@interface ElementSubElementViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate>
+
+@property (strong, nonatomic) NSString * auditPath;
+@property (strong,nonatomic) Audit * aud;
+
+@property (strong, nonatomic) Elements * ele;
+@property (strong, nonatomic) NSArray * listOfElements;
+
+@property (strong, nonatomic) SubElements * subEle;
+@property (strong, nonatomic) NSArray * listOfSubElements;
+
+@property (strong, nonatomic) IBOutlet UILabel *auditSelectLbl;
+
+@property (strong, nonatomic) IBOutlet UIPickerView *elementPicker;
+
+@property (strong, nonatomic) IBOutlet UITableView *subElementTable;
+
 
 @end
