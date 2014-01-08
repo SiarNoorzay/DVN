@@ -7,10 +7,11 @@
 //
 
 #import "AuditSelectionViewController.h"
-
+#import <DropboxSDK/DropboxSDK.h>
+#import "Folder.h"
 #import "Elements.h"
 
-@interface AuditSelectionViewController ()
+@interface AuditSelectionViewController ()<DBRestClientDelegate>
 
 @end
 
@@ -30,31 +31,11 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    NSError *error;
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleAudit"
-                                                                                  ofType:@"json"]];
+    NSLog(@"\n\nFolder Path recieved: %@", self.dbFolderPath);
     
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+    [[self restClient] loadMetadata:self.dbFolderPath];
     
-    NSLog(@"JSON contains:\n%@", [dictionary description]);
-    
-    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-    
-    
-    //use this to access the audit and its components dictionary style
-    self.aud = [[Audit alloc]initWithAudit:theAudit];
-    NSLog(@"Audit name: %@", self.aud.name);
-    
-    NSLog(@"Number of Elements: %d", [self.aud.Elements count]);
-    
-//    Elements *ele =  aud.Elements[0];
-//    NSLog(@"the first element is:%@", [ele objectForKey:@"name"]);
-//    
-//    //other way to access the audits components (probably easier this way)
-//    Elements *ele2 = [[Elements alloc]initWithElement:aud.Elements[1]];
-//    NSLog(@"the second element is %@", ele2.name);
-    
-    [self.auditListTable reloadData];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,7 +46,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 1;
+    return [self.audits count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -76,8 +57,9 @@
     if(cell == nil){
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
+    Folder *audit = [self.audits objectAtIndex:indexPath.row];
     
-    cell.textLabel.text = self.aud.name;
+    cell.textLabel.text = audit.name;
 //    cell.imageView.image = [UIImage imageNamed:@"check-mark-button.png"];
     
     return cell;
@@ -87,6 +69,43 @@
     
     
     
+}
+
+
+#pragma mark Dropbox methods
+
+- (DBRestClient*)restClient {
+    if (restClient == nil) {
+        restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        restClient.delegate = self;
+    }
+    return restClient;
+}
+
+
+- (void)restClient:(DBRestClient *)client loadedMetadata:(DBMetadata *)metadata {
+    if (metadata.isDirectory) {
+        NSLog(@"Folder '%@' contains:", metadata.path);
+        NSMutableArray *auditList = [[NSMutableArray alloc]init];
+        for (DBMetadata *file in metadata.contents) {
+            if (file.isDirectory) {
+                Folder *folder = [[Folder alloc]init];
+                folder.folderPath = file.path;
+                folder.contents = file.contents;
+                folder.name = file.filename;
+                NSLog(@"	%@", file.filename);
+                [auditList addObject:folder];
+            }
+        }
+        self.audits = auditList;
+        [self.auditListTable reloadData];
+    }
+}
+
+- (void)restClient:(DBRestClient *)client
+loadMetadataFailedWithError:(NSError *)error {
+    
+    NSLog(@"Error loading metadata: %@", error);
 }
 
 @end

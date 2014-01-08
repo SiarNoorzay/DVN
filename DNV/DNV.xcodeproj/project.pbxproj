@@ -44,7 +44,7 @@
 		76E81F0D187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
 		76E81F13187C908100441F62 /* usersNOTDB.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F12187C908100441F62 /* usersNOTDB.json */; };
 		76E81F15187CBC0500441F62 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F14187CBC0500441F62 /* users.json */; };
-		76E81F18187DB92600441F62 /* ClientFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F17187DB92600441F62 /* ClientFolder.m */; };
+		76E81F18187DB92600441F62 /* Folder.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F17187DB92600441F62 /* Folder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,8 +112,8 @@
 		76E81F0B187B559000441F62 /* sampleAudit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sampleAudit.json; sourceTree = "<group>"; };
 		76E81F12187C908100441F62 /* usersNOTDB.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = usersNOTDB.json; sourceTree = "<group>"; };
 		76E81F14187CBC0500441F62 /* users.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = users.json; sourceTree = "<group>"; };
-		76E81F16187DB92600441F62 /* ClientFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientFolder.h; sourceTree = "<group>"; };
-		76E81F17187DB92600441F62 /* ClientFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientFolder.m; sourceTree = "<group>"; };
+		76E81F16187DB92600441F62 /* Folder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Folder.h; sourceTree = "<group>"; };
+		76E81F17187DB92600441F62 /* Folder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Folder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,8 +257,8 @@
 				76AB3CBF187B21700019603F /* Questions.m */,
 				76AB3CC1187B22300019603F /* Answers.h */,
 				76AB3CC2187B22300019603F /* Answers.m */,
-				76E81F16187DB92600441F62 /* ClientFolder.h */,
-				76E81F17187DB92600441F62 /* ClientFolder.m */,
+				76E81F16187DB92600441F62 /* Folder.h */,
+				76E81F17187DB92600441F62 /* Folder.m */,
 			);
 			name = ClassObjects;
 			sourceTree = "<group>";
@@ -418,7 +418,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76D96A3B187B001300961260 /* LogInViewController.m in Sources */,
-				76E81F18187DB92600441F62 /* ClientFolder.m in Sources */,
+				76E81F18187DB92600441F62 /* Folder.m in Sources */,
 				76AB3CB4187B1FDA0019603F /* Audit.m in Sources */,
 				762797231871D53A00F22E73 /* ViewController.m in Sources */,
 				76AB3CC3187B22300019603F /* Answers.m in Sources */,

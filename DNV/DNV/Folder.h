@@ -1,5 +1,5 @@
 //
-//  ClientFolder.h
+//  Folder.h
 //  DNV
 //
 //  Created by USI on 1/8/14.
@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ClientFolder : NSObject
+@interface Folder : NSObject
 
 @property (nonatomic) NSString *folderPath;
-@property (nonatomic) NSString *clientName;
+@property (nonatomic) NSString *name;
 @property (nonatomic) NSArray *contents;
 
 @end

@@ -9,14 +9,18 @@
 #import "ClientViewController.h"
 #import "MainWindowPopOver.h"
 #import <DropboxSDK/DropboxSDK.h>
-#import "ClientFolder.h"
+#import "Folder.h"
+#import "AuditSelectionViewController.h"
 
 @interface ClientViewController ()<DBRestClientDelegate>
+
+@property int chosenClient;
 
 
 @end
 
 @implementation ClientViewController
+
 
 
 
@@ -68,9 +72,9 @@
     UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     
     UILabel * nameLabel = (UILabel *)[cell viewWithTag:1];
-    ClientFolder *client = [self.clients objectAtIndex:indexPath.row];
+    Folder *client = [self.clients objectAtIndex:indexPath.row];
     
-    nameLabel.text = client.clientName;
+    nameLabel.text = client.name;
     
     [cell setBackgroundColor:[UIColor redColor]];
     
@@ -93,6 +97,8 @@
     
     [self.popOver presentPopoverFromRect:cell.frame inView:self.ClientCollectionView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     
+    self.chosenClient = indexPath.row;
+    
 }
 
 #pragma mark Dropbox methods
@@ -112,10 +118,10 @@
         NSMutableArray *clientList = [[NSMutableArray alloc]init];
         for (DBMetadata *file in metadata.contents) {
             if (file.isDirectory) {
-                ClientFolder *folder = [[ClientFolder alloc]init];
+                Folder *folder = [[Folder alloc]init];
                 folder.folderPath = file.path;
                 folder.contents = file.contents;
-                folder.clientName = file.filename;
+                folder.name = file.filename;
                 NSLog(@"	%@", file.filename);
                 [clientList addObject:folder];
             }
@@ -151,6 +157,21 @@ loadMetadataFailedWithError:(NSError *)error {
     }
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"NewAuditChoice"]) {
+        
+        // Get destination view
+        AuditSelectionViewController *vc = [segue destinationViewController];
+        
+        // Pass the information to your destination view
+        Folder *folder = [self.clients objectAtIndex:self.chosenClient];
+        
+        [vc setDbFolderPath: [folder.folderPath stringByAppendingString:@"/New/"]];
+        
+        
+    }
+}
 
 
 

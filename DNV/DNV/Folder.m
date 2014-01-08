@@ -1,13 +1,13 @@
 //
-//  ClientFolder.m
+//  Folder.m
 //  DNV
 //
 //  Created by USI on 1/8/14.
 //  Copyright (c) 2014 USI. All rights reserved.
 //
 
-#import "ClientFolder.h"
+#import "Folder.h"
 
-@implementation ClientFolder
+@implementation Folder
 
 @end
