@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface User : NSObject
+@interface User : NSDictionary
 
 @property (nonatomic) NSString * userID;
 @property (nonatomic) NSString * password;

@@ -14,7 +14,6 @@
 #import "SubElements.h"
 #import "Questions.h"
 #import "Answers.h"
-#import <malloc/malloc.h>
 
 
 @interface LogInViewController ()<DBRestClientDelegate>
@@ -82,23 +81,19 @@
 //    NSLog(@"the second SubElement is:%@", sub2.name);
     
 
+//
+//    NSString *filename = @"/users.json";
+//    _myDirectory = @"users.json";
+//    _directoryPath = [NSTemporaryDirectory() stringByAppendingPathComponent:_myDirectory];
+//    
+//    [[self restClient] loadFile:filename intoPath:_directoryPath];
 
-    NSString *filename = @"/Users/users.json";
-    _myDirectory = @"users.json";
-    _directoryPath = [NSTemporaryDirectory() stringByAppendingPathComponent:_myDirectory];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents directory
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"usersFromDB.json"];
+    _directoryPath = filePath;
     
-    [[self restClient] loadFile:filename intoPath:_directoryPath];
-
-    
-    NSError *error;
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"users"
-                                                                                  ofType:@"json"]];
-    
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-    
-    NSLog(@"JSON contains:\n%@", [dictionary description]);
-    
-    self.arrayOfUsers = [dictionary objectForKey:@"Users"];
+    [self.restClient loadFile:@"/users.json" intoPath:filePath];
 
     
 }
@@ -108,6 +103,8 @@
        contentType:(NSString*)contentType metadata:(DBMetadata*)metadata {
     
     NSLog(@"File loaded into path: %@", localPath);
+    [self getUserArray];
+    
 }
 
 - (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
@@ -119,12 +116,51 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)getUserArray{
+    if (_directoryPath) { // check if file exists - if so load it:
+        NSError *error;
+        
+        NSString *stringData = [NSString stringWithContentsOfFile:_directoryPath encoding:NSUTF8StringEncoding error:&error];
+        NSData *data = [stringData dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+        NSLog(@"JSON contains:\n%@", [dictionary description]);
+//        
+//        
+//        NSDictionary *dictionary1 = [NSDictionary dictionaryWithContentsOfFile:_directoryPath];
+//        NSLog(@"JSON1 contains:\n%@", [dictionary1 description]);
+//        
+//        
+//        NSData *data2 = [NSData dataWithContentsOfFile:_directoryPath];
+//        NSDictionary *dictionary2 = [NSJSONSerialization JSONObjectWithData: data2 options:kNilOptions error:&error];
+//        NSLog(@"JSON2 contains:\n%@", [dictionary2 description]);
+//        
+//        NSData *data3 = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"users"                                                                                   ofType:@"json"]];
+//        
+//        NSArray *dictionary3 = [NSJSONSerialization JSONObjectWithData: data3 options:kNilOptions error:&error];
+//        
+//        NSLog(@"JSON3 contains:\n%@", [dictionary3 description]);
+
+        
+        
+        
+        self.arrayOfUsers = [dictionary objectForKey:@"Users"];
+    }
+    
+}
 - (DBRestClient*)restClient {
     if (restClient == nil) {
         restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
         restClient.delegate = self;
     }
     return restClient;
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
+    if (theTextField == self.passwordTextField) {
+        [theTextField resignFirstResponder];
+    } else if (theTextField == self.userIDTextField) {
+        [self.passwordTextField becomeFirstResponder];
+    }
+    return YES;
 }
 
 - (IBAction)LogInButton:(UIBarButtonItem *)sender {
@@ -133,6 +169,34 @@
     
     for (User *usr in self.arrayOfUsers) {
         
+        if ([[usr objectForKey:@"userID" ] isEqualToString:self.userIDTextField.text]) {
+            
+            self.user = usr;
+            foundUser = true;
+            break;
+        }
+    }
+    if (foundUser) {
+        BOOL passwordCorrect = false;
+        
+        if ([[self.user objectForKey:@"password" ] isEqualToString:self.passwordTextField.text]) {
+            passwordCorrect= true;
+            NSLog(@"User name and password correct");
+            [self performSegueWithIdentifier:@"loginSuccess" sender:nil];
+        }
+        else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Incorrect Password" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+           
+            NSLog(@"Incorrect password");
+        }
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"User ID not recognized" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        NSLog(@"User ID not recognized");//add alert view here}
+    
     }
 }
+
 @end
