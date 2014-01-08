@@ -14,6 +14,7 @@
 @interface AuditSelectionViewController ()<DBRestClientDelegate>
 
 @property (nonatomic) NSString *chosenAuditPath;
+
 @end
 
 
@@ -34,6 +35,9 @@
 	// Do any additional setup after loading the view.
     
     NSLog(@"\n\nFolder Path recieved: %@", self.dbFolderPath);
+    
+    self.auditListTable.delegate = self;
+    
     
     [[self restClient] loadMetadata:self.dbFolderPath];
     
@@ -107,7 +111,10 @@
             
         }
         self.audits = auditList;
-        [self.auditListTable reloadData];
+        
+     //   [self.auditListTable reloadData];
+        [self.auditListTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+
     }
 }
 
@@ -120,6 +127,9 @@ loadMetadataFailedWithError:(NSError *)error {
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     ElementSubElementViewController *vc = [segue destinationViewController];
+    [vc setAuditPath: self.chosenAuditPath];
+    
+    NSLog(@"path to audit: %@", self.chosenAuditPath);
 
     
 }
