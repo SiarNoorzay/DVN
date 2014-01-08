@@ -18,4 +18,6 @@
 
 @property (nonatomic) int auditType;
 
+-(void)goToChoice;
+
 @end

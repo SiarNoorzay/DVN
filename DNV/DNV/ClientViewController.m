@@ -30,6 +30,7 @@
 	// Do any additional setup after loading the view.
 }
 
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -43,7 +44,7 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-    return 1;
+    return 3;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -55,6 +56,8 @@
     
     nameLabel.text = @"USI";
     
+    [cell setBackgroundColor:[UIColor redColor]];
+    
     return cell;
     
     
@@ -63,22 +66,39 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    MainWindowPopOver * popContent = [[MainWindowPopOver alloc]init];
     
+    MainWindowPopOver * popContent = [self.storyboard instantiateViewControllerWithIdentifier:@"choices"];
     
-    self.popOver = [[UIPopoverController alloc] initWithContentViewController:popContent];
-    
+    self.popOver= [[UIPopoverController alloc] initWithContentViewController:popContent];
+   
     self.popOver.delegate = self;
-    
-    self.auditType = popContent.auditChoice;
-    popContent.popOverContent = self.popOver;
     
     UICollectionViewCell * cell = [self.ClientCollectionView cellForItemAtIndexPath:indexPath];
     
+    popContent.clientVC = self;
     
     [self.popOver presentPopoverFromRect:cell.frame inView:self.ClientCollectionView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     
-    NSLog(@"%d", self.auditType);
+}
+
+
+
+-(void)goToChoice
+{
+    switch (self.auditType) {
+        case 0:
+            [self performSegueWithIdentifier:@"NewAuditChoice" sender:self];
+            break;
+        case 1:
+            [self performSegueWithIdentifier:@"NewAuditChoice" sender:self];
+            break;
+        case 2:
+            [self performSegueWithIdentifier:@"NewAuditChoice" sender:self];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 

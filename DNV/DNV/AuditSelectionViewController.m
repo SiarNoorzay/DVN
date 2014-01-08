@@ -1,19 +1,18 @@
 //
-//  MainWindowPopOver.m
+//  AuditSelectionViewController.m
 //  DNV
 //
 //  Created by USI on 1/7/14.
 //  Copyright (c) 2014 USI. All rights reserved.
 //
 
-#import "MainWindowPopOver.h"
+#import "AuditSelectionViewController.h"
 
-@interface MainWindowPopOver ()
-
+@interface AuditSelectionViewController ()
 
 @end
 
-@implementation MainWindowPopOver
+@implementation AuditSelectionViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,7 +27,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -37,11 +35,18 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)btnChoiceMade:(UIButton *)sender
-{
-    [self.clientVC.popOver dismissPopoverAnimated:YES];
-    self.clientVC.auditType = sender.tag;
-    [self.clientVC goToChoice];
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    return 1;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
 }
 
 @end

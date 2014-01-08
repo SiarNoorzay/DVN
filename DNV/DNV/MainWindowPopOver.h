@@ -7,15 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ClientViewController.h"
 
 @interface MainWindowPopOver : UIViewController
 
-@property (nonatomic) int auditChoice;
+@property (weak, nonatomic) ClientViewController *clientVC;
 
-@property (weak, nonatomic) UIPopoverController * popOverContent;
-
-- (IBAction)newAuditBtn:(UIButton *)sender;
-- (IBAction)wipAuditBtn:(UIButton *)sender;
-- (IBAction)completedAuditBtn:(UIButton *)sender;
+- (IBAction)btnChoiceMade:(UIButton *)sender;
 
 @end

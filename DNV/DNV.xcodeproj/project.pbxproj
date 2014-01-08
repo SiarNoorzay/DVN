@@ -32,10 +32,13 @@
 		76BF9C73187222DC00ACF6DB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C72187222DC00ACF6DB /* Security.framework */; };
 		76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C74187222EF00ACF6DB /* QuartzCore.framework */; };
 		76BF9C771872237200ACF6DB /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C761872237200ACF6DB /* DropboxSDK.framework */; };
+		76D4A339187CE5F6007AB1A9 /* AuditSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D4A338187CE5F6007AB1A9 /* AuditSelectionViewController.m */; };
+		76D4A33C187CE8A7007AB1A9 /* USI_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76D4A33B187CE8A7007AB1A9 /* USI_logo.jpg */; };
+		76D4A33E187CF9A3007AB1A9 /* check-mark-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D4A33D187CF9A3007AB1A9 /* check-mark-button.png */; };
 		76D96A3B187B001300961260 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3A187B001300961260 /* LogInViewController.m */; };
 		76D96A3E187B07EA00961260 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3D187B07EA00961260 /* User.m */; };
 		76D96A45187B585900961260 /* ClientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A44187B585900961260 /* ClientViewController.m */; };
-		76DBFA78187C625D00F84282 /* MainWindowPopOver.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DBFA77187C625D00F84282 /* MainWindowPopOver.m */; };
+		76DBFA83187CAD6300F84282 /* MainWindowPopOver.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DBFA82187CAD6300F84282 /* MainWindowPopOver.m */; };
 		76E81F0C187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
 		76E81F0D187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
 /* End PBXBuildFile section */
@@ -88,14 +91,18 @@
 		76BF9C72187222DC00ACF6DB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		76BF9C74187222EF00ACF6DB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		76BF9C761872237200ACF6DB /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
+		76D4A337187CE5F6007AB1A9 /* AuditSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuditSelectionViewController.h; sourceTree = "<group>"; };
+		76D4A338187CE5F6007AB1A9 /* AuditSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuditSelectionViewController.m; sourceTree = "<group>"; };
+		76D4A33B187CE8A7007AB1A9 /* USI_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = USI_logo.jpg; path = ../../../USI_logo.jpg; sourceTree = "<group>"; };
+		76D4A33D187CF9A3007AB1A9 /* check-mark-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check-mark-button.png"; path = "../../../check-mark-button.png"; sourceTree = "<group>"; };
 		76D96A39187B001300961260 /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
 		76D96A3A187B001300961260 /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
 		76D96A3C187B07EA00961260 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		76D96A3D187B07EA00961260 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		76D96A43187B585900961260 /* ClientViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientViewController.h; sourceTree = "<group>"; };
 		76D96A44187B585900961260 /* ClientViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientViewController.m; sourceTree = "<group>"; };
-		76DBFA76187C625D00F84282 /* MainWindowPopOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowPopOver.h; sourceTree = "<group>"; };
-		76DBFA77187C625D00F84282 /* MainWindowPopOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowPopOver.m; sourceTree = "<group>"; };
+		76DBFA81187CAD6300F84282 /* MainWindowPopOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowPopOver.h; sourceTree = "<group>"; };
+		76DBFA82187CAD6300F84282 /* MainWindowPopOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowPopOver.m; sourceTree = "<group>"; };
 		76E81F0B187B559000441F62 /* sampleAudit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sampleAudit.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -167,10 +174,10 @@
 				7627971B1871D53A00F22E73 /* AppDelegate.h */,
 				7627971C1871D53A00F22E73 /* AppDelegate.m */,
 				7627971E1871D53A00F22E73 /* Main.storyboard */,
+				76D4A33A187CE832007AB1A9 /* Images */,
 				76D96A41187B580900961260 /* LogInViewController */,
 				76D96A42187B582000961260 /* ClientViewController */,
-				76DBFA75187C617400F84282 /* MainWindowPopOver */,
-				76A2B22E187362390052F080 /* DNV_logo.jpg */,
+				76D4A336187CE59C007AB1A9 /* AuditSelectionViewController */,
 				762797211871D53A00F22E73 /* ViewController.h */,
 				762797221871D53A00F22E73 /* ViewController.m */,
 				762797241871D53A00F22E73 /* Images.xcassets */,
@@ -232,6 +239,25 @@
 			name = ClassObjects;
 			sourceTree = "<group>";
 		};
+		76D4A336187CE59C007AB1A9 /* AuditSelectionViewController */ = {
+			isa = PBXGroup;
+			children = (
+				76D4A337187CE5F6007AB1A9 /* AuditSelectionViewController.h */,
+				76D4A338187CE5F6007AB1A9 /* AuditSelectionViewController.m */,
+			);
+			name = AuditSelectionViewController;
+			sourceTree = "<group>";
+		};
+		76D4A33A187CE832007AB1A9 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				76D4A33D187CF9A3007AB1A9 /* check-mark-button.png */,
+				76A2B22E187362390052F080 /* DNV_logo.jpg */,
+				76D4A33B187CE8A7007AB1A9 /* USI_logo.jpg */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		76D96A41187B580900961260 /* LogInViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,15 +272,16 @@
 			children = (
 				76D96A43187B585900961260 /* ClientViewController.h */,
 				76D96A44187B585900961260 /* ClientViewController.m */,
+				76DBFA80187C9BFD00F84282 /* MainWindowPopOver */,
 			);
 			name = ClientViewController;
 			sourceTree = "<group>";
 		};
-		76DBFA75187C617400F84282 /* MainWindowPopOver */ = {
+		76DBFA80187C9BFD00F84282 /* MainWindowPopOver */ = {
 			isa = PBXGroup;
 			children = (
-				76DBFA76187C625D00F84282 /* MainWindowPopOver.h */,
-				76DBFA77187C625D00F84282 /* MainWindowPopOver.m */,
+				76DBFA81187CAD6300F84282 /* MainWindowPopOver.h */,
+				76DBFA82187CAD6300F84282 /* MainWindowPopOver.m */,
 			);
 			name = MainWindowPopOver;
 			sourceTree = "<group>";
@@ -338,11 +365,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76D4A33C187CE8A7007AB1A9 /* USI_logo.jpg in Resources */,
 				762797251871D53A00F22E73 /* Images.xcassets in Resources */,
 				762797171871D53A00F22E73 /* InfoPlist.strings in Resources */,
 				76E81F0C187B559000441F62 /* sampleAudit.json in Resources */,
 				762797201871D53A00F22E73 /* Main.storyboard in Resources */,
 				76A2B22F187362390052F080 /* DNV_logo.jpg in Resources */,
+				76D4A33E187CF9A3007AB1A9 /* check-mark-button.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +395,7 @@
 				76AB3CB4187B1FDA0019603F /* Audit.m in Sources */,
 				762797231871D53A00F22E73 /* ViewController.m in Sources */,
 				76AB3CC3187B22300019603F /* Answers.m in Sources */,
+				76D4A339187CE5F6007AB1A9 /* AuditSelectionViewController.m in Sources */,
 				76AB3CB1187B17410019603F /* Client.m in Sources */,
 				7627971D1871D53A00F22E73 /* AppDelegate.m in Sources */,
 				76D96A45187B585900961260 /* ClientViewController.m in Sources */,
@@ -374,7 +404,7 @@
 				762797191871D53A00F22E73 /* main.m in Sources */,
 				76AB3CBA187B20C70019603F /* Elements.m in Sources */,
 				76AB3CB7187B20520019603F /* Report.m in Sources */,
-				76DBFA78187C625D00F84282 /* MainWindowPopOver.m in Sources */,
+				76DBFA83187CAD6300F84282 /* MainWindowPopOver.m in Sources */,
 				76AB3CC0187B21700019603F /* Questions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
