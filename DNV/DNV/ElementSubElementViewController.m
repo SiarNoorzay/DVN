@@ -35,7 +35,7 @@
 //    _directoryPath = filePath;
 //    
 //    [self.restClient loadFile:@"/users.json" intoPath:filePath];
-    
+    NSLog(@"Audit Path Received: %@", self.auditPath);
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,6 +61,26 @@
     
 }
 
-#
+#pragma maker Tableview methods
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    return 1;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString * cellIdentifier = @"AuditCell";
+    
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if(cell == nil){
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    
+    //cell.textLabel.text = audit.name;
+    //    cell.imageView.image = [UIImage imageNamed:@"check-mark-button.png"];
+    
+    return cell;
+    
+}
 
 @end

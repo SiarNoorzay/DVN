@@ -59,7 +59,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    static NSString * cellIdentifier = @"TestCell";
+    static NSString * cellIdentifier = @"AuditCell";
     
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if(cell == nil){
@@ -81,8 +81,17 @@
     
     self.chosenAuditPath = temp.folderPath;
     
+    
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    ElementSubElementViewController *vc = [segue destinationViewController];
+    [vc setAuditPath: self.chosenAuditPath];
+    
+    NSLog(@"path to audit: %@", self.chosenAuditPath);
+    
+}
 
 #pragma mark Dropbox methods
 
@@ -124,14 +133,5 @@ loadMetadataFailedWithError:(NSError *)error {
     NSLog(@"Error loading metadata: %@", error);
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    
-    ElementSubElementViewController *vc = [segue destinationViewController];
-    [vc setAuditPath: self.chosenAuditPath];
-    
-    NSLog(@"path to audit: %@", self.chosenAuditPath);
-
-    
-}
 
 @end
