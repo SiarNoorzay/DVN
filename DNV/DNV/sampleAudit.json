@@ -1,7 +1,7 @@
 {
     "Audit": {
-        "auditType": "1",
-        "name": "KitchenAudit",
+        "auditType": "0",
+        "name": "Kitchen Audit",
         "physicalConditionScore": 5.5,
         "awardLevel": 5,
         "lastModefied": "20120513",

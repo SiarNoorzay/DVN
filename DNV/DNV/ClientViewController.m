@@ -28,6 +28,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    [self.ClientCollectionView reloadData];
 }
 
 
@@ -90,10 +92,10 @@
             [self performSegueWithIdentifier:@"NewAuditChoice" sender:self];
             break;
         case 1:
-            [self performSegueWithIdentifier:@"NewAuditChoice" sender:self];
+            [self performSegueWithIdentifier:@"WIPAuditChoice" sender:self];
             break;
         case 2:
-            [self performSegueWithIdentifier:@"NewAuditChoice" sender:self];
+            [self performSegueWithIdentifier:@"CompletedAuditChoice" sender:self];
             break;
             
         default:

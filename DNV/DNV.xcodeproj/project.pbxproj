@@ -22,6 +22,7 @@
 		762797361871D53A00F22E73 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 762797341871D53A00F22E73 /* InfoPlist.strings */; };
 		762797381871D53A00F22E73 /* DNVTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 762797371871D53A00F22E73 /* DNVTests.m */; };
 		76A2B22F187362390052F080 /* DNV_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76A2B22E187362390052F080 /* DNV_logo.jpg */; };
+		76A2BE3C187DBF7A0056CC22 /* ElementSubElementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A2BE3B187DBF7A0056CC22 /* ElementSubElementViewController.m */; };
 		76AB3CB1187B17410019603F /* Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AB3CB0187B17410019603F /* Client.m */; };
 		76AB3CB4187B1FDA0019603F /* Audit.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AB3CB3187B1FDA0019603F /* Audit.m */; };
 		76AB3CB7187B20520019603F /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AB3CB6187B20520019603F /* Report.m */; };
@@ -76,6 +77,8 @@
 		762797351871D53A00F22E73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		762797371871D53A00F22E73 /* DNVTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DNVTests.m; sourceTree = "<group>"; };
 		76A2B22E187362390052F080 /* DNV_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = DNV_logo.jpg; sourceTree = "<group>"; };
+		76A2BE3A187DBF7A0056CC22 /* ElementSubElementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementSubElementViewController.h; sourceTree = "<group>"; };
+		76A2BE3B187DBF7A0056CC22 /* ElementSubElementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementSubElementViewController.m; sourceTree = "<group>"; };
 		76AB3CAF187B17410019603F /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Client.h; sourceTree = "<group>"; };
 		76AB3CB0187B17410019603F /* Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Client.m; sourceTree = "<group>"; };
 		76AB3CB2187B1FDA0019603F /* Audit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Audit.h; sourceTree = "<group>"; };
@@ -182,6 +185,7 @@
 				76D96A41187B580900961260 /* LogInViewController */,
 				76D96A42187B582000961260 /* ClientViewController */,
 				76D4A336187CE59C007AB1A9 /* AuditSelectionViewController */,
+				76A2BE39187DBC5A0056CC22 /* ElementSubElementViewController */,
 				762797211871D53A00F22E73 /* ViewController.h */,
 				762797221871D53A00F22E73 /* ViewController.m */,
 				762797241871D53A00F22E73 /* Images.xcassets */,
@@ -220,6 +224,15 @@
 				762797341871D53A00F22E73 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		76A2BE39187DBC5A0056CC22 /* ElementSubElementViewController */ = {
+			isa = PBXGroup;
+			children = (
+				76A2BE3A187DBF7A0056CC22 /* ElementSubElementViewController.h */,
+				76A2BE3B187DBF7A0056CC22 /* ElementSubElementViewController.m */,
+			);
+			name = ElementSubElementViewController;
 			sourceTree = "<group>";
 		};
 		76AB3CAE187B16920019603F /* ClassObjects */ = {
@@ -372,6 +385,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76D4A33C187CE8A7007AB1A9 /* USI_logo.jpg in Resources */,
+				76E81F13187C908100441F62 /* usersNOTDB.json in Resources */,
 				762797251871D53A00F22E73 /* Images.xcassets in Resources */,
 				762797171871D53A00F22E73 /* InfoPlist.strings in Resources */,
 				76E81F0C187B559000441F62 /* sampleAudit.json in Resources */,
@@ -409,6 +423,7 @@
 				76AB3CBD187B212C0019603F /* SubElements.m in Sources */,
 				76D96A3E187B07EA00961260 /* User.m in Sources */,
 				762797191871D53A00F22E73 /* main.m in Sources */,
+				76A2BE3C187DBF7A0056CC22 /* ElementSubElementViewController.m in Sources */,
 				76AB3CBA187B20C70019603F /* Elements.m in Sources */,
 				76AB3CB7187B20520019603F /* Report.m in Sources */,
 				76DBFA83187CAD6300F84282 /* MainWindowPopOver.m in Sources */,

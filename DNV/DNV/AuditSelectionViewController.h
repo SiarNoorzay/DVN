@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import "Audit.h"
+
 @interface AuditSelectionViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
+@property (strong, nonatomic) IBOutlet UITableView * auditListTable;
 
-
-@property (strong, nonatomic) IBOutlet UITableView *auditListTable;
+@property (strong, nonatomic) Audit * aud;
 
 @end

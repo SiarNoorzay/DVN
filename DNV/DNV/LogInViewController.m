@@ -52,7 +52,7 @@
 //    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
 //    
 //    NSLog(@"JSON contains:\n%@", [dictionary description]);
-    
+//    
 //    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
 //    
 //    
@@ -62,7 +62,7 @@
 //
 //    Elements *ele =  aud.Elements[0];
 //    NSLog(@"the first element is:%@", [ele objectForKey:@"name"]);
-//    
+    
 //    SubElements *sub = [[ele objectForKey:@"SubElements"]objectAtIndex:0];
 //    NSLog(@"the first SubElements is:%@", [sub objectForKey:@"name"]);
 //    
@@ -72,11 +72,11 @@
 //    Answers *ans = [[ques objectForKey:@"Answers"]objectAtIndex:0];
 //    NSLog(@"the first Answer is:%@", [ans objectForKey:@"answerText"]);
 //
-//    
+    
 //    //other way to access the audits components (probably easier this way)
 //    Elements *ele2 = [[Elements alloc]initWithElement:aud.Elements[1]];
 //    NSLog(@"the second element is %@", ele2.name);
-//    
+//
 //    SubElements *sub2 = [[SubElements alloc]initWithSubElement:ele2.Subelements[0]];
 //    NSLog(@"the second SubElement is:%@", sub2.name);
     

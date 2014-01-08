@@ -127,7 +127,8 @@
                         <segue destination="RcD-eX-J80" kind="popover" id="yyd-jX-zc8">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
-                        <segue destination="MKD-O5-KK7" kind="push" id="0eX-iJ-HNq"/>
+                        <segue destination="MKD-O5-KK7" kind="push" identifier="WIPAuditChoice" id="0eX-iJ-HNq"/>
+                        <segue destination="28Y-W0-upZ" kind="push" identifier="CompletedAuditChoice" id="WNS-Yd-zTN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sER-QT-X25" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -213,24 +214,22 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TestCell" rowHeight="90" id="MGg-Hm-fUa">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TestCell" id="c6V-gq-Ljn">
                                         <rect key="frame" x="0.0" y="22" width="768" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MGg-Hm-fUa" id="04m-na-7U9">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c6V-gq-Ljn">
                                             <rect key="frame" x="0.0" y="0.0" width="735" height="89"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="check-mark-button.png" translatesAutoresizingMaskIntoConstraints="NO" id="khf-JW-h9S">
-                                                    <rect key="frame" x="20" y="19" width="50" height="50"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                </imageView>
-                                            </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="0p3-Xt-jp1" kind="push" identifier="NewAuditDetails" id="Wx4-f4-tqw"/>
+                                            <segue destination="0p3-Xt-jp1" kind="push" id="qAv-AD-QyX"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="5TZ-Hl-Ddb" id="dM7-2S-rYG"/>
+                                    <outlet property="delegate" destination="5TZ-Hl-Ddb" id="YAM-MD-YUu"/>
+                                </connections>
                             </tableView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="USI_logo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="1lS-iI-qtY">
                                 <rect key="frame" x="20" y="141" width="125" height="125"/>
@@ -255,10 +254,10 @@
             </objects>
             <point key="canvasLocation" x="2966" y="-1815"/>
         </scene>
-        <!--View Controller - Audit Elements & Sub Elements-->
+        <!--Element Sub Element View Controller - Audit Elements & Sub Elements-->
         <scene sceneID="Rat-H4-JtR">
             <objects>
-                <viewController id="0p3-Xt-jp1" sceneMemberID="viewController">
+                <viewController id="0p3-Xt-jp1" customClass="ElementSubElementViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FLt-q5-t44"/>
                         <viewControllerLayoutGuide type="bottom" id="BfU-sn-Pds"/>
@@ -528,6 +527,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="List of WIP Audits" id="o7s-Fw-GMX"/>
+                    <connections>
+                        <segue destination="kGq-Rt-Of0" kind="push" id="CYG-U4-Oiv"/>
+                        <segue destination="NjM-YN-Li5" kind="push" id="hil-cU-HFZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bbC-2V-P6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -644,7 +647,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="F2T-b4-fnp">
-                                        <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+                                        <rect key="frame" x="0.0" y="64" width="125" height="125"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
@@ -707,6 +710,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="List of Completed Audits" id="k7m-zh-7kY"/>
+                    <connections>
+                        <segue destination="1LI-tS-8fd" kind="push" id="Cip-mv-hdZ"/>
+                        <segue destination="Ifz-5G-IlN" kind="push" id="I8c-g1-CBJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9u9-ck-Zna" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -943,7 +950,6 @@
     <resources>
         <image name="DNV_logo.jpg" width="852" height="1332"/>
         <image name="USI_logo.jpg" width="720" height="720"/>
-        <image name="check-mark-button.png" width="600" height="600"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackOpaque"/>
