@@ -8,12 +8,18 @@
 
 #import "ClientViewController.h"
 #import "MainWindowPopOver.h"
+#import <DropboxSDK/DropboxSDK.h>
+#import "ClientFolder.h"
 
-@interface ClientViewController ()
+@interface ClientViewController ()<DBRestClientDelegate>
+
 
 @end
 
 @implementation ClientViewController
+
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,6 +34,13 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    if (![[DBSession sharedSession] isLinked]) {
+        [[DBSession sharedSession] linkFromController:self];
+    }
+    
+    [[self restClient] loadMetadata:@"/"];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,7 +56,7 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-    return 1;
+    return [self.clients count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -52,8 +65,9 @@
     UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     
     UILabel * nameLabel = (UILabel *)[cell viewWithTag:1];
+    ClientFolder *client = [self.clients objectAtIndex:indexPath.row];
     
-    nameLabel.text = @"USI";
+    nameLabel.text = client.clientName;
     
     return cell;
     
@@ -80,6 +94,43 @@
     
     NSLog(@"%d", self.auditType);
 }
+
+#pragma mark Dropbox methods
+
+- (DBRestClient*)restClient {
+    if (restClient == nil) {
+        restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        restClient.delegate = self;
+    }
+    return restClient;
+}
+
+
+- (void)restClient:(DBRestClient *)client loadedMetadata:(DBMetadata *)metadata {
+    if (metadata.isDirectory) {
+        NSLog(@"Folder '%@' contains:", metadata.path);
+        NSMutableArray *clientList = [[NSMutableArray alloc]init];
+        for (DBMetadata *file in metadata.contents) {
+            if (file.isDirectory) {
+                ClientFolder *folder = [[ClientFolder alloc]init];
+                folder.folderPath = file.path;
+                folder.contents = file.contents;
+                folder.clientName = file.filename;
+                NSLog(@"	%@", file.filename);
+                [clientList addObject:folder];
+            }
+        }
+        self.clients = clientList;
+        [self.ClientCollectionView reloadData];
+    }
+}
+
+- (void)restClient:(DBRestClient *)client
+loadMetadataFailedWithError:(NSError *)error {
+    
+    NSLog(@"Error loading metadata: %@", error);
+}
+
 
 
 @end
