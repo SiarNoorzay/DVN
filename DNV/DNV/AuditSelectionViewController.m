@@ -9,11 +9,14 @@
 #import "AuditSelectionViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
 #import "Folder.h"
-#import "Elements.h"
+#import "ElementSubElementViewController.h"
 
 @interface AuditSelectionViewController ()<DBRestClientDelegate>
 
+@property (nonatomic) NSString *chosenAuditPath;
+
 @end
+
 
 @implementation AuditSelectionViewController
 
@@ -32,6 +35,9 @@
 	// Do any additional setup after loading the view.
     
     NSLog(@"\n\nFolder Path recieved: %@", self.dbFolderPath);
+    
+    self.auditListTable.delegate = self;
+    
     
     [[self restClient] loadMetadata:self.dbFolderPath];
     
@@ -69,7 +75,11 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    NSLog(@"Selected %@,",[self.audits objectAtIndex:indexPath.row]);
     
+    Folder *temp =[self.audits objectAtIndex:indexPath.row];
+    
+    self.chosenAuditPath = temp.folderPath;
     
 }
 
@@ -98,9 +108,13 @@
                 NSLog(@"	%@", file.filename);
                 [auditList addObject:folder];
             }
+            
         }
         self.audits = auditList;
-        [self.auditListTable reloadData];
+        
+     //   [self.auditListTable reloadData];
+        [self.auditListTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+
     }
 }
 
@@ -108,6 +122,16 @@
 loadMetadataFailedWithError:(NSError *)error {
     
     NSLog(@"Error loading metadata: %@", error);
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    ElementSubElementViewController *vc = [segue destinationViewController];
+    [vc setAuditPath: self.chosenAuditPath];
+    
+    NSLog(@"path to audit: %@", self.chosenAuditPath);
+
+    
 }
 
 @end
