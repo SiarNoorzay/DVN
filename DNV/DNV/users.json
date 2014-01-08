@@ -1,0 +1,24 @@
+{
+  "Users": [
+    {
+      "userID": "testUser",
+      "password": "test",
+      "otherInfo": "other information"
+    },
+    {
+      "userID": “1234”,
+      "password": “1234”,
+      "otherInfo": ""
+    },
+    {
+      "userID": "siar",
+      "password": "siar",
+      "otherInfo": ""
+    },
+    {
+      "userID": "cliff",
+      "password": "1234",
+      "otherInfo": ""
+    }
+  ]
+}

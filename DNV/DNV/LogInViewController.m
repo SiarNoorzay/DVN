@@ -9,18 +9,22 @@
 #import "LogInViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
 
-//#import "Audit.h"
-//#import "Elements.h"
-//#import "SubElements.h"
-//#import "Questions.h"
-//#import "Answers.h"
+#import "Audit.h"
+#import "Elements.h"
+#import "SubElements.h"
+#import "Questions.h"
+#import "Answers.h"
 
 
-@interface LogInViewController ()
+@interface LogInViewController ()<DBRestClientDelegate>
+
+@property (nonatomic, readonly) DBRestClient * restClient;
 
 @end
 
 @implementation LogInViewController
+
+//@synthesize arrayOfUsers;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,6 +40,11 @@
     if (![[DBSession sharedSession] isLinked]) {
         [[DBSession sharedSession] linkFromController:self];
     }
+
+    [super viewDidLoad];
+	// Do any additional setup after loading the view.
+    
+
 //    NSError *error;
 //    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleAudit"
 //                                                                                  ofType:@"json"]];
@@ -43,6 +52,7 @@
 //    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
 //    
 //    NSLog(@"JSON contains:\n%@", [dictionary description]);
+    
 //    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
 //    
 //    
@@ -69,10 +79,31 @@
 //    
 //    SubElements *sub2 = [[SubElements alloc]initWithSubElement:ele2.Subelements[0]];
 //    NSLog(@"the second SubElement is:%@", sub2.name);
-//
-//
-//    
     
+
+//
+//    NSString *filename = @"/users.json";
+//    _myDirectory = @"users.json";
+//    _directoryPath = [NSTemporaryDirectory() stringByAppendingPathComponent:_myDirectory];
+//    
+//    [[self restClient] loadFile:filename intoPath:_directoryPath];
+
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents directory
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"usersFromDB.json"];
+    _directoryPath = filePath;
+    
+    [self.restClient loadFile:@"/users.json" intoPath:filePath];
+
+    
+}
+
+
+- (void)restClient:(DBRestClient*)client loadedFile:(NSString*)localPath
+       contentType:(NSString*)contentType metadata:(DBMetadata*)metadata {
+    
+    NSLog(@"File loaded into path: %@", localPath);
+    [self getUserArray];
     
 }
 
@@ -85,6 +116,37 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)getUserArray{
+    if (_directoryPath) { // check if file exists - if so load it:
+        NSError *error;
+        
+        NSString *stringData = [NSString stringWithContentsOfFile:_directoryPath encoding:NSUTF8StringEncoding error:&error];
+        NSData *data = [stringData dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+        NSLog(@"JSON contains:\n%@", [dictionary description]);
+//        
+//        
+//        NSDictionary *dictionary1 = [NSDictionary dictionaryWithContentsOfFile:_directoryPath];
+//        NSLog(@"JSON1 contains:\n%@", [dictionary1 description]);
+//        
+//        
+//        NSData *data2 = [NSData dataWithContentsOfFile:_directoryPath];
+//        NSDictionary *dictionary2 = [NSJSONSerialization JSONObjectWithData: data2 options:kNilOptions error:&error];
+//        NSLog(@"JSON2 contains:\n%@", [dictionary2 description]);
+//        
+//        NSData *data3 = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"users"                                                                                   ofType:@"json"]];
+//        
+//        NSArray *dictionary3 = [NSJSONSerialization JSONObjectWithData: data3 options:kNilOptions error:&error];
+//        
+//        NSLog(@"JSON3 contains:\n%@", [dictionary3 description]);
+
+        
+        
+        
+        self.arrayOfUsers = [dictionary objectForKey:@"Users"];
+    }
+    
+}
 - (DBRestClient*)restClient {
     if (restClient == nil) {
         restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
@@ -92,10 +154,49 @@
     }
     return restClient;
 }
+- (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
+    if (theTextField == self.passwordTextField) {
+        [theTextField resignFirstResponder];
+    } else if (theTextField == self.userIDTextField) {
+        [self.passwordTextField becomeFirstResponder];
+    }
+    return YES;
+}
 
 - (IBAction)LogInButton:(UIBarButtonItem *)sender {
     
+    BOOL foundUser = false;
     
+    for (User *usr in self.arrayOfUsers) {
+        
+        if ([[usr objectForKey:@"userID" ] isEqualToString:self.userIDTextField.text]) {
+            
+            self.user = usr;
+            foundUser = true;
+            break;
+        }
+    }
+    if (foundUser) {
+        BOOL passwordCorrect = false;
+        
+        if ([[self.user objectForKey:@"password" ] isEqualToString:self.passwordTextField.text]) {
+            passwordCorrect= true;
+            NSLog(@"User name and password correct");
+            [self performSegueWithIdentifier:@"loginSuccess" sender:nil];
+        }
+        else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Incorrect Password" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+           
+            NSLog(@"Incorrect password");
+        }
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"User ID not recognized" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        NSLog(@"User ID not recognized");//add alert view here}
     
+    }
 }
+
 @end

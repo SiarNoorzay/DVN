@@ -1,0 +1,24 @@
+{
+  "Users": [
+    {
+      "userID": "testUser",
+      "password": "test",
+      "otherInfo": "other information"
+    },
+    {
+      "userID": "Jack",
+      "password": "inthebox",
+      "otherInfo": ""
+    },
+    {
+      "userID": "siar",
+      "password": "siar",
+      "otherInfo": ""
+    },
+    {
+      "userID": "cliff",
+      "password": "1234",
+      "otherInfo": ""
+    }
+  ]
+}
