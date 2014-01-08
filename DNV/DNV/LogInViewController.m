@@ -97,6 +97,12 @@
 
     
 }
+-(void)viewWillAppear:(BOOL)animated{
+    
+    self.userIDTextField.text = @"";
+    self.passwordTextField.text = @"";
+    
+}
 
 
 - (void)restClient:(DBRestClient*)client loadedFile:(NSString*)localPath
@@ -154,10 +160,10 @@
     }
     return restClient;
 }
-- (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
-    if (theTextField == self.passwordTextField) {
-        [theTextField resignFirstResponder];
-    } else if (theTextField == self.userIDTextField) {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.passwordTextField) {
+        [textField resignFirstResponder];
+    } else if (textField == self.userIDTextField) {
         [self.passwordTextField becomeFirstResponder];
     }
     return YES;

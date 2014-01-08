@@ -8,7 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class DBRestClient;
+
+
 @interface ClientViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UIPopoverControllerDelegate>
+{
+    DBRestClient* restClient;
+    
+}
 
 //Client CollectionView property
 @property (strong, nonatomic) IBOutlet UICollectionView *ClientCollectionView;
