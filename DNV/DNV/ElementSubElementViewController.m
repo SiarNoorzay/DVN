@@ -7,7 +7,10 @@
 //
 
 #import "ElementSubElementViewController.h"
+#import "QuestionsViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
+
+#import "Questions.h"
 
 @interface ElementSubElementViewController ()<DBRestClientDelegate>
 
@@ -66,20 +69,14 @@
     return [self.listOfElements count];
 }
 
-
-
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row   forComponent:(NSInteger)component{
 
     self.ele = [[Elements alloc]initWithElement:self.listOfElements[row]];
 
     return self.ele.name;
-    
 }
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    
-    //    SubElements *sub2 = [[SubElements alloc]initWithSubElement:ele2.Subelements[0]];
-    //    NSLog(@"the second SubElement is:%@", sub2.name);
     
     self.listOfSubElements = self.ele.Subelements;
     
@@ -111,18 +108,17 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    [self performSegueWithIdentifier:@"toQuestions" sender:self];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     NSIndexPath *indexPath = self.subElementTable.indexPathForSelectedRow;
     
+    QuestionsViewController * questionsVC = [segue destinationViewController];
     
-//    ElementSubElementViewController *vc = [segue destinationViewController];
-//    [vc setAuditPath: self.chosenAuditPath];
-//    
-//    NSLog(@"path to audit: %@", self.chosenAuditPath);
-    
+    self.subEle = [[SubElements alloc]initWithSubElement:self.listOfSubElements[indexPath.row]];
+    questionsVC.questionArray = self.subEle.Questions;
 }
 
 

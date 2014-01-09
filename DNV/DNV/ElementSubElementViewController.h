@@ -19,7 +19,6 @@
     DBRestClient * restClient;    
 }
 
-
 @property (strong, nonatomic) NSString * auditPath;
 @property (strong,nonatomic) Audit * aud;
 

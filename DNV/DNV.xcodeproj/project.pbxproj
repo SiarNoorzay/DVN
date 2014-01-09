@@ -187,13 +187,12 @@
 				7627971B1871D53A00F22E73 /* AppDelegate.h */,
 				7627971C1871D53A00F22E73 /* AppDelegate.m */,
 				7627971E1871D53A00F22E73 /* Main.storyboard */,
-				76E81F19187EE78C00441F62 /* QuestionsViewController.h */,
-				76E81F1A187EE78C00441F62 /* QuestionsViewController.m */,
 				76D4A33A187CE832007AB1A9 /* Images */,
 				76D96A41187B580900961260 /* LogInViewController */,
 				76D96A42187B582000961260 /* ClientViewController */,
 				76D4A336187CE59C007AB1A9 /* AuditSelectionViewController */,
 				76A2BE39187DBC5A0056CC22 /* ElementSubElementViewController */,
+				76A8AFF5187EFF13007531A9 /* QuestionsViewController */,
 				762797211871D53A00F22E73 /* ViewController.h */,
 				762797221871D53A00F22E73 /* ViewController.m */,
 				762797241871D53A00F22E73 /* Images.xcassets */,
@@ -241,6 +240,15 @@
 				76A2BE3B187DBF7A0056CC22 /* ElementSubElementViewController.m */,
 			);
 			name = ElementSubElementViewController;
+			sourceTree = "<group>";
+		};
+		76A8AFF5187EFF13007531A9 /* QuestionsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				76E81F19187EE78C00441F62 /* QuestionsViewController.h */,
+				76E81F1A187EE78C00441F62 /* QuestionsViewController.m */,
+			);
+			name = QuestionsViewController;
 			sourceTree = "<group>";
 		};
 		76AB3CAE187B16920019603F /* ClassObjects */ = {
