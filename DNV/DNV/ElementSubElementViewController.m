@@ -7,8 +7,9 @@
 //
 
 #import "ElementSubElementViewController.h"
+#import <DropboxSDK/DropboxSDK.h>
 
-@interface ElementSubElementViewController ()
+@interface ElementSubElementViewController ()<DBRestClientDelegate>
 
 @end
 
@@ -27,14 +28,59 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
-    
+//    
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents directory
+//    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"usersFromDB.json"];
+//    _directoryPath = filePath;
+//    
+//    [self.restClient loadFile:@"/users.json" intoPath:filePath];
+    NSLog(@"Audit Path Received: %@", self.auditPath);
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark Picker View methods
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    
+    return 1;
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    
+    return 1;
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    
+    
+}
+
+#pragma maker Tableview methods
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    return 1;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString * cellIdentifier = @"AuditCell";
+    
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if(cell == nil){
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    
+    //cell.textLabel.text = audit.name;
+    //    cell.imageView.image = [UIImage imageNamed:@"check-mark-button.png"];
+    
+    return cell;
+    
 }
 
 @end

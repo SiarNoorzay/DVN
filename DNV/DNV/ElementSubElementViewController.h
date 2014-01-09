@@ -12,7 +12,13 @@
 #import "Elements.h"
 #import "SubElements.h"
 
+@class DBRestClient;
+
 @interface ElementSubElementViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate>
+{
+    DBRestClient * restClient;    
+}
+
 
 @property (strong, nonatomic) NSString * auditPath;
 @property (strong,nonatomic) Audit * aud;
