@@ -119,6 +119,7 @@ loadMetadataFailedWithError:(NSError *)error {
     NSLog(@"Error loading metadata: %@", error);
 }
 
+#pragma mark Segue Preparation
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     NSIndexPath *indexPath = self.auditListTable.indexPathForSelectedRow;
