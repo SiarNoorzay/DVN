@@ -46,6 +46,7 @@
 		76E81F15187CBC0500441F62 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F14187CBC0500441F62 /* users.json */; };
 		76E81F18187DB92600441F62 /* Folder.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F17187DB92600441F62 /* Folder.m */; };
 		76E81F1B187EE78C00441F62 /* QuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F1A187EE78C00441F62 /* QuestionsViewController.m */; };
+		76E81F1E187F071C00441F62 /* AnswersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F1D187F071C00441F62 /* AnswersViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +118,8 @@
 		76E81F17187DB92600441F62 /* Folder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Folder.m; sourceTree = "<group>"; };
 		76E81F19187EE78C00441F62 /* QuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionsViewController.h; sourceTree = "<group>"; };
 		76E81F1A187EE78C00441F62 /* QuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsViewController.m; sourceTree = "<group>"; };
+		76E81F1C187F071C00441F62 /* AnswersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswersViewController.h; sourceTree = "<group>"; };
+		76E81F1D187F071C00441F62 /* AnswersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswersViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +201,8 @@
 				762797221871D53A00F22E73 /* ViewController.m */,
 				762797241871D53A00F22E73 /* Images.xcassets */,
 				762797131871D53A00F22E73 /* Supporting Files */,
+				76E81F1C187F071C00441F62 /* AnswersViewController.h */,
+				76E81F1D187F071C00441F62 /* AnswersViewController.m */,
 			);
 			path = DNV;
 			sourceTree = "<group>";
@@ -437,6 +442,7 @@
 				762797191871D53A00F22E73 /* main.m in Sources */,
 				76A2BE3C187DBF7A0056CC22 /* ElementSubElementViewController.m in Sources */,
 				76AB3CBA187B20C70019603F /* Elements.m in Sources */,
+				76E81F1E187F071C00441F62 /* AnswersViewController.m in Sources */,
 				76AB3CB7187B20520019603F /* Report.m in Sources */,
 				76DBFA83187CAD6300F84282 /* MainWindowPopOver.m in Sources */,
 				76AB3CC0187B21700019603F /* Questions.m in Sources */,
