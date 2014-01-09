@@ -158,7 +158,7 @@
 }
 
 - (IBAction)sliderChanged:(id)sender {
-    self.percentSliderLabel.text = [NSString stringWithFormat:@"%.0f %%", self.percentSlider.value];
+    self.percentSliderLabel.text = [NSString stringWithFormat:@"%.2f %%", self.percentSlider.value];
     
     
 }

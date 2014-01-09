@@ -76,7 +76,6 @@
     
     nameLabel.text = client.name;
     
-    [cell setBackgroundColor:[UIColor redColor]];
     
     return cell;
     
