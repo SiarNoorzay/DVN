@@ -1,19 +1,18 @@
 //
-//  MainWindowPopOver.m
+//  WIPChoicePopOver.m
 //  DNV
 //
-//  Created by USI on 1/7/14.
+//  Created by USI on 1/9/14.
 //  Copyright (c) 2014 USI. All rights reserved.
 //
 
-#import "MainWindowPopOver.h"
+#import "WIPChoicePopOver.h"
 
-@interface MainWindowPopOver ()
-
+@interface WIPChoicePopOver ()
 
 @end
 
-@implementation MainWindowPopOver
+@implementation WIPChoicePopOver
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,7 +27,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -37,11 +35,14 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)btnChoiceMade:(UIButton *)sender
-{
-    [self.clientVC.clientPopOver dismissPopoverAnimated:YES];
-    self.clientVC.auditType = sender.tag;
-    [self.clientVC goToChoice];
+- (IBAction)wipChoiceMade:(UIButton *)sender {
+
+    [self.listOfWIPVC.wipPopOver dismissPopoverAnimated:YES];
+    self.listOfWIPVC.wipChoice = sender.tag;
+    [self.listOfWIPVC goToWIPChoice];
+//    [self.clientVC.clientPopOver dismissPopoverAnimated:YES];
+//    self.clientVC.auditType = sender.tag;
+//    [self.clientVC goToChoice];
 }
 
 @end

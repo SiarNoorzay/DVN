@@ -21,7 +21,7 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *ClientCollectionView;
 
 //Instance of the PopOver Controller
-@property (strong,nonatomic) UIPopoverController * popOver;
+@property (strong,nonatomic) UIPopoverController * clientPopOver;
 
 @property (nonatomic) int auditType;
 

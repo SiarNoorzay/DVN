@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "Audit.h"
 @class DBRestClient;
 
 
@@ -19,10 +18,8 @@
 
 @property (strong, nonatomic) IBOutlet UITableView * auditListTable;
 
-@property (strong, nonatomic) NSString *dbFolderPath;
+@property (strong, nonatomic) NSString *dbNewFolderPath;
 
 @property (nonatomic) NSArray *audits;
-
-@property (strong, nonatomic) Audit * aud;
 
 @end

@@ -34,12 +34,12 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    NSLog(@"\n\nFolder Path recieved: %@", self.dbFolderPath);
+    NSLog(@"\n\nFolder Path recieved: %@", self.dbNewFolderPath);
     
     self.auditListTable.delegate = self;
     
     
-    [[self restClient] loadMetadata:self.dbFolderPath];
+    [[self restClient] loadMetadata:self.dbNewFolderPath];
     
 
 }
@@ -83,8 +83,8 @@
     
     self.chosenAuditPath = temp.folderPath;
     
-    ElementSubElementViewController *vc = [segue destinationViewController];
-    [vc setAuditPath: self.chosenAuditPath];
+    ElementSubElementViewController * eleSubEleVC = [segue destinationViewController];
+    [eleSubEleVC setAuditPath: self.chosenAuditPath];
     
     NSLog(@"path to audit: %@", self.chosenAuditPath);
     

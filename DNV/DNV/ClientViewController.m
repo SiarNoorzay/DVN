@@ -11,6 +11,7 @@
 #import <DropboxSDK/DropboxSDK.h>
 #import "Folder.h"
 #import "AuditSelectionViewController.h"
+#import "ListOfWIPViewController.h"
 
 @interface ClientViewController ()<DBRestClientDelegate>
 
@@ -38,10 +39,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
-    if (![[DBSession sharedSession] isLinked]) {
-        [[DBSession sharedSession] linkFromController:self];
-    }
     
     [[self restClient] loadMetadata:@"/"];
 
@@ -85,17 +82,17 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
     
-    MainWindowPopOver * popContent = [self.storyboard instantiateViewControllerWithIdentifier:@"choices"];
+    MainWindowPopOver * popContent = [self.storyboard instantiateViewControllerWithIdentifier:@"auditChoices"];
     
-    self.popOver= [[UIPopoverController alloc] initWithContentViewController:popContent];
+    self.clientPopOver= [[UIPopoverController alloc] initWithContentViewController:popContent];
    
-    self.popOver.delegate = self;
+    self.clientPopOver.delegate = self;
     
     UICollectionViewCell * cell = [self.ClientCollectionView cellForItemAtIndexPath:indexPath];
     
     popContent.clientVC = self;
     
-    [self.popOver presentPopoverFromRect:cell.frame inView:self.ClientCollectionView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    [self.clientPopOver presentPopoverFromRect:cell.frame inView:self.ClientCollectionView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     
     self.chosenClient = indexPath.row;
     
@@ -162,13 +159,24 @@ loadMetadataFailedWithError:(NSError *)error {
     if ([[segue identifier] isEqualToString:@"NewAuditChoice"]) {
         
         // Get destination view
-        AuditSelectionViewController *vc = [segue destinationViewController];
+        AuditSelectionViewController * newAuditVC = [segue destinationViewController];
         
         // Pass the information to your destination view
         Folder *folder = [self.clients objectAtIndex:self.chosenClient];
         
-        [vc setDbFolderPath: [folder.folderPath stringByAppendingString:@"/New/"]];
+        [newAuditVC setDbNewFolderPath: [folder.folderPath stringByAppendingString:@"/New/"]];
         
+    }
+    
+    if ([[segue identifier] isEqualToString:@"WIPAuditChoice"]) {
+        
+        // Get destination view
+        ListOfWIPViewController * wipAuditVC = [segue destinationViewController];
+        
+        // Pass the information to your destination view
+        Folder *folder = [self.clients objectAtIndex:self.chosenClient];
+        
+        [wipAuditVC setDbWIPFolderPath: [folder.folderPath stringByAppendingString:@"/WIP/"]];
         
     }
 }

@@ -138,7 +138,7 @@
         <!--Main Window Pop Over-->
         <scene sceneID="IVq-fK-IM0">
             <objects>
-                <viewController storyboardIdentifier="choices" id="RcD-eX-J80" customClass="MainWindowPopOver" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="auditChoices" id="RcD-eX-J80" customClass="MainWindowPopOver" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="x2G-Yr-AMN"/>
                         <viewControllerLayoutGuide type="bottom" id="KdH-t2-JDE"/>
@@ -494,10 +494,10 @@
             </objects>
             <point key="canvasLocation" x="6983" y="1233"/>
         </scene>
-        <!--View Controller - List of WIP Audits-->
+        <!--List OfWIP View Controller - List of WIP Audits-->
         <scene sceneID="c8n-iQ-f3f">
             <objects>
-                <viewController id="MKD-O5-KK7" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WIPList" id="MKD-O5-KK7" customClass="ListOfWIPViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bXR-na-joY"/>
                         <viewControllerLayoutGuide type="bottom" id="zCc-eu-CEQ"/>
@@ -523,30 +523,36 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="FGC-61-LzQ" kind="popover" popoverAnchorView="q2t-Hi-jK0" id="h2j-kE-QYJ">
+                                            <segue destination="FGC-61-LzQ" kind="popover" popoverAnchorView="q2t-Hi-jK0" id="XQO-tW-K2x">
                                                 <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                             </segue>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="MKD-O5-KK7" id="47Y-30-ike"/>
+                                    <outlet property="delegate" destination="MKD-O5-KK7" id="2kO-Pv-Gzs"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="List of WIP Audits" id="o7s-Fw-GMX"/>
                     <connections>
-                        <segue destination="kGq-Rt-Of0" kind="push" id="CYG-U4-Oiv"/>
-                        <segue destination="NjM-YN-Li5" kind="push" id="hil-cU-HFZ"/>
+                        <outlet property="wipAuditTable" destination="rYD-5p-YUN" id="xKi-ix-9Dt"/>
+                        <segue destination="NjM-YN-Li5" kind="push" identifier="VerifyQuestions" id="pqk-0L-RP0"/>
+                        <segue destination="kGq-Rt-Of0" kind="push" identifier="ImportMerge" id="x5k-0I-mcE"/>
+                        <segue destination="0p3-Xt-jp1" kind="push" identifier="ContinueAudit" id="2AM-8U-oDD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bbC-2V-P6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2966" y="1090"/>
         </scene>
-        <!--View Controller-->
+        <!--Choice Pop Over-->
         <scene sceneID="lPm-4e-3jG">
             <objects>
-                <viewController id="FGC-61-LzQ" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="wipChoices" id="FGC-61-LzQ" customClass="WIPChoicePopOver" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UYG-it-oDS"/>
                         <viewControllerLayoutGuide type="bottom" id="a1v-ze-Qcz"/>
@@ -561,27 +567,39 @@
                                 <state key="normal" title="Continue Audit">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="wipChoiceMade:" destination="FGC-61-LzQ" eventType="touchUpInside" id="imC-eu-ya9"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gXI-T8-7ZR">
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gXI-T8-7ZR">
                                 <rect key="frame" x="53" y="159" width="195" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="List Open Verified Questions">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="wipChoiceMade:" destination="FGC-61-LzQ" eventType="touchUpInside" id="2TT-yo-xIj"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RpU-Pf-JDH">
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RpU-Pf-JDH">
                                 <rect key="frame" x="87" y="210" width="127" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Export to Dropbox">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="wipChoiceMade:" destination="FGC-61-LzQ" eventType="touchUpInside" id="kbW-gN-210"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MhE-aH-77X">
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MhE-aH-77X">
                                 <rect key="frame" x="97" y="260" width="107" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Import &amp; Merge">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="wipChoiceMade:" destination="FGC-61-LzQ" eventType="touchUpInside" id="5HB-nn-eko"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -626,12 +644,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="List of Open Verify Questions" id="Lrl-G0-E4E"/>
+                    <connections>
+                        <segue destination="8Xc-YB-eLc" kind="push" id="tgm-us-G6v"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WNi-ai-qph" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4637" y="230"/>
         </scene>
-        <!--View Controller-->
+        <!--View Controller - Import & Merge-->
         <scene sceneID="KyX-7H-i0j">
             <objects>
                 <viewController id="kGq-Rt-Of0" sceneMemberID="viewController">
@@ -671,7 +692,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="eU5-3H-cIK"/>
+                    <navigationItem key="navigationItem" title="Import &amp; Merge" id="eU5-3H-cIK"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8kF-09-iCF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -720,6 +741,7 @@
                     <connections>
                         <segue destination="1LI-tS-8fd" kind="push" id="Cip-mv-hdZ"/>
                         <segue destination="Ifz-5G-IlN" kind="push" id="I8c-g1-CBJ"/>
+                        <segue destination="4Hf-nJ-YNg" kind="push" id="vVN-cZ-BnU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9u9-ck-Zna" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -895,7 +917,26 @@
             </objects>
             <point key="canvasLocation" x="4685" y="3882"/>
         </scene>
-        <!--View Controller-->
+        <!--View Controller - Report Summary-->
+        <scene sceneID="3RO-Ae-jEJ">
+            <objects>
+                <viewController id="4Hf-nJ-YNg" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="AWl-bc-x0a"/>
+                        <viewControllerLayoutGuide type="bottom" id="lzX-Me-8vF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rqg-cg-doE">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Report Summary" id="P0y-cS-cnH"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8ea-iy-nq6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4685" y="5410"/>
+        </scene>
+        <!--View Controller - Edit Questions-->
         <scene sceneID="8ds-uN-485">
             <objects>
                 <viewController id="Ifz-5G-IlN" sceneMemberID="viewController">
@@ -929,11 +970,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Iwe-WC-mzq"/>
+                    <navigationItem key="navigationItem" title="Edit Questions" id="Iwe-WC-mzq"/>
+                    <connections>
+                        <segue destination="8Xc-YB-eLc" kind="push" id="ACP-l6-Xqz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ns-Lo-TOq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6045" y="5146"/>
+            <point key="canvasLocation" x="5915" y="4754"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6cQ-aJ-J0n">
@@ -963,4 +1007,8 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="ACP-l6-Xqz"/>
+        <segue reference="2AM-8U-oDD"/>
+    </inferredMetricsTieBreakers>
 </document>

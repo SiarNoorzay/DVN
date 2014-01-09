@@ -11,6 +11,7 @@
 #import <DropboxSDK/DropboxSDK.h>
 
 #import "Questions.h"
+#import "Folder.h"
 
 @interface ElementSubElementViewController ()<DBRestClientDelegate>
 
@@ -33,6 +34,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    NSLog(@"Audit Path: %@", self.auditPath);
     
     NSString *filename = [self.auditPath stringByAppendingPathComponent:@"sampleAudit.json"];
     
@@ -131,6 +134,36 @@
 //    }
 //    return restClient;
 //}
+
+- (void)restClient:(DBRestClient *)client loadedMetadata:(DBMetadata *)metadata {
+    if (metadata.isDirectory) {
+//        NSLog(@"Folder '%@' contains:", metadata.path);
+//        NSMutableArray *auditList = [[NSMutableArray alloc]init];
+//        for (DBMetadata *file in metadata.contents) {
+//            if (file.isDirectory) {
+//                Folder *folder = [[Folder alloc]init];
+//                folder.folderPath = file.path;
+//                folder.contents = file.contents;
+//                folder.name = file.filename;
+//                NSLog(@"	%@", file.filename);
+//                [auditList addObject:folder];
+//            }
+//            
+//        }
+//        self.audits = auditList;
+//        
+//        //   [self.auditListTable reloadData];
+//        [self.auditListTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+        
+    }
+}
+
+- (void)restClient:(DBRestClient *)client
+loadMetadataFailedWithError:(NSError *)error {
+    
+    NSLog(@"Error loading metadata: %@", error);
+}
+
 
 - (void)restClient:(DBRestClient*)client loadedFile:(NSString*)localPath
        contentType:(NSString*)contentType metadata:(DBMetadata*)metadata {
