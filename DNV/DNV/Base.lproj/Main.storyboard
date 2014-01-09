@@ -285,7 +285,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="pFQ-7z-PCC" kind="push" id="mkx-Aa-syS"/>
+                                            <segue destination="pFQ-7z-PCC" kind="push" id="v3t-4g-I2F"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

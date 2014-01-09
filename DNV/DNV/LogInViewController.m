@@ -116,6 +116,7 @@
 - (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
     NSLog(@"There was an error loading the file - %@", error);
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -146,13 +147,11 @@
 //        
 //        NSLog(@"JSON3 contains:\n%@", [dictionary3 description]);
 
-        
-        
-        
         self.arrayOfUsers = [dictionary objectForKey:@"Users"];
     }
     
 }
+
 - (DBRestClient*)restClient {
     if (restClient == nil) {
         restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
@@ -160,6 +159,7 @@
     }
     return restClient;
 }
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == self.passwordTextField) {
         [textField resignFirstResponder];

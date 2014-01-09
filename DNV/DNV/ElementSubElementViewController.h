@@ -29,6 +29,8 @@
 @property (strong, nonatomic) SubElements * subEle;
 @property (strong, nonatomic) NSArray * listOfSubElements;
 
+@property NSString * directoryPath;
+
 @property (strong, nonatomic) IBOutlet UILabel *auditSelectLbl;
 
 @property (strong, nonatomic) IBOutlet UIPickerView *elementPicker;
