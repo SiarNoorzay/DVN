@@ -12,6 +12,7 @@
 @interface QuestionsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic) NSArray * questionArray;
+@property (strong, nonatomic) IBOutlet UITableView *questionsTableView;
 
 
 @end

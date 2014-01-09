@@ -27,7 +27,7 @@
         self.verifyDoneBy = [questionDictionary objectForKey:@"verifyDoneBy"];
         self.attachmentsLocationArray = [questionDictionary objectForKey:@"attachmentsLocationArray"];
         self.imageLocationArray = [questionDictionary objectForKey:@"imageLocationArray"];
-        self.questionType = [[questionDictionary objectForKey:@"isCompleted"] intValue];
+        self.questionType = [[questionDictionary objectForKey:@"questionType"] intValue];
         self.isThumbsUp = [[questionDictionary objectForKey:@"isThumbsUp"] boolValue];
         self.isThumbsDown = [[questionDictionary objectForKey:@"isThumbsUp"] boolValue];
         

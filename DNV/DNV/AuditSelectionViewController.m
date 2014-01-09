@@ -130,4 +130,22 @@ loadMetadataFailedWithError:(NSError *)error {
     NSLog(@"Error loading metadata: %@", error);
 }
 
+#pragma mark Segue Preparation
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    NSIndexPath *indexPath = self.auditListTable.indexPathForSelectedRow;
+    
+    NSLog(@"Selected %@,",[self.audits objectAtIndex:indexPath.row]);
+    
+    Folder *temp =[self.audits objectAtIndex:indexPath.row];
+    
+    self.chosenAuditPath = temp.folderPath;
+    ElementSubElementViewController *vc = [segue destinationViewController];
+    [vc setAuditPath: self.chosenAuditPath];
+    
+    NSLog(@"path to audit: %@", self.chosenAuditPath);
+
+    
+}
+
 @end

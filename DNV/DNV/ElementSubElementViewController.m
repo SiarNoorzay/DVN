@@ -197,7 +197,13 @@ loadMetadataFailedWithError:(NSError *)error {
         
         self.listOfElements = aud.Elements;
         
+        //[self.elementPicker reloadAllComponents];
+        
+        [self.elementPicker selectRow:0 inComponent:0 animated:false];
+        
         [self.elementPicker reloadAllComponents];
+        
+
     }
     
 }

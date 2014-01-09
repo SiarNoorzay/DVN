@@ -10,6 +10,7 @@
 #import "Audit.h"
 #import "Elements.h"
 #import "SubElements.h"
+#import "AnswersViewController.h"
 
 
 @interface QuestionsViewController ()
@@ -79,6 +80,24 @@
     //    cell.imageView.image = [UIImage imageNamed:@"check-mark-button.png"];
     
     return cell;
+}
+
+#pragma mark Segue Preparation
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    NSIndexPath *indexPath = self.questionsTableView.indexPathForSelectedRow;
+    
+    NSLog(@"Selected %@,",[self.questionArray objectAtIndex:indexPath.row]);
+    
+    AnswersViewController *vc = [segue destinationViewController];
+    Questions *question = [[Questions alloc]initWithQuestion:[self.questionArray objectAtIndex:indexPath.row]];
+    
+    
+    [vc setQuestion:question];
+    
+    NSLog(@"Sending question: %@ to answers VC", question.questionText);
+    
+    
 }
 
 
