@@ -320,10 +320,10 @@
             </objects>
             <point key="canvasLocation" x="4389" y="-1815"/>
         </scene>
-        <!--View Controller - Sub Element Questions-->
+        <!--Questions View Controller - Sub Element Questions-->
         <scene sceneID="xFH-aw-b0L">
             <objects>
-                <viewController id="pFQ-7z-PCC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="questions" id="pFQ-7z-PCC" customClass="QuestionsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Mqx-RO-qjT"/>
                         <viewControllerLayoutGuide type="bottom" id="NMq-xU-Qqu"/>
@@ -341,7 +341,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="He0-mY-3Bv">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="QuestionCell" id="He0-mY-3Bv">
                                         <rect key="frame" x="0.0" y="22" width="768" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="He0-mY-3Bv" id="qjK-iT-wRS">
@@ -353,6 +353,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="pFQ-7z-PCC" id="XF3-KH-dfJ"/>
+                                    <outlet property="delegate" destination="pFQ-7z-PCC" id="9ps-HS-yfo"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

@@ -45,6 +45,7 @@
 		76E81F13187C908100441F62 /* usersNOTDB.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F12187C908100441F62 /* usersNOTDB.json */; };
 		76E81F15187CBC0500441F62 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F14187CBC0500441F62 /* users.json */; };
 		76E81F18187DB92600441F62 /* Folder.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F17187DB92600441F62 /* Folder.m */; };
+		76E81F1B187EE78C00441F62 /* QuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F1A187EE78C00441F62 /* QuestionsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +115,8 @@
 		76E81F14187CBC0500441F62 /* users.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = users.json; sourceTree = "<group>"; };
 		76E81F16187DB92600441F62 /* Folder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Folder.h; sourceTree = "<group>"; };
 		76E81F17187DB92600441F62 /* Folder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Folder.m; sourceTree = "<group>"; };
+		76E81F19187EE78C00441F62 /* QuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionsViewController.h; sourceTree = "<group>"; };
+		76E81F1A187EE78C00441F62 /* QuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +187,8 @@
 				7627971B1871D53A00F22E73 /* AppDelegate.h */,
 				7627971C1871D53A00F22E73 /* AppDelegate.m */,
 				7627971E1871D53A00F22E73 /* Main.storyboard */,
+				76E81F19187EE78C00441F62 /* QuestionsViewController.h */,
+				76E81F1A187EE78C00441F62 /* QuestionsViewController.m */,
 				76D4A33A187CE832007AB1A9 /* Images */,
 				76D96A41187B580900961260 /* LogInViewController */,
 				76D96A42187B582000961260 /* ClientViewController */,
@@ -423,6 +428,7 @@
 				762797231871D53A00F22E73 /* ViewController.m in Sources */,
 				76AB3CC3187B22300019603F /* Answers.m in Sources */,
 				76D4A339187CE5F6007AB1A9 /* AuditSelectionViewController.m in Sources */,
+				76E81F1B187EE78C00441F62 /* QuestionsViewController.m in Sources */,
 				76AB3CB1187B17410019603F /* Client.m in Sources */,
 				7627971D1871D53A00F22E73 /* AppDelegate.m in Sources */,
 				76D96A45187B585900961260 /* ClientViewController.m in Sources */,
