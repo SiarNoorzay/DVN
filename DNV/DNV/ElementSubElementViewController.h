@@ -19,7 +19,6 @@
     DBRestClient * restClient;    
 }
 
-
 @property (strong, nonatomic) NSString * auditPath;
 @property (strong,nonatomic) Audit * aud;
 
@@ -28,6 +27,8 @@
 
 @property (strong, nonatomic) SubElements * subEle;
 @property (strong, nonatomic) NSArray * listOfSubElements;
+
+@property NSString * directoryPath;
 
 @property (strong, nonatomic) IBOutlet UILabel *auditSelectLbl;
 
