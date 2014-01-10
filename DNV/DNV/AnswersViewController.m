@@ -13,6 +13,11 @@
 
 @end
 
+float pointTotal = 0.0;
+BOOL answered = false;
+
+
+
 @implementation AnswersViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -38,8 +43,9 @@
     else{
         [self refreshAnswerView];
     }
-    
 }
+
+
 -(void)hideAnswerViews
 {
     self.tableCell.hidden = true;
@@ -51,6 +57,9 @@
     [self.firstButton setEnabled:true];
     [self.lastButton setEnabled:true];
     
+    pointTotal = 0;
+    self.pointsLabel.text = @"0";
+    answered = false;
     
 }
 -(void) refreshAnswerView
@@ -97,6 +106,9 @@
     self.ansArray =  self.question.Answers;
     [self.answersTableView reloadData];
     
+    self.questionNumLabel.text = [NSString stringWithFormat:@"%i.%i.%i", self.elementNumber +1,self.subElementNum +1 , self.currentPosition+1];
+    
+    
     if (self.currentPosition == [self.questionArray count]-1) {
        
         [self.lastButton setEnabled:false];
@@ -105,10 +117,6 @@
         
         [self.firstButton setEnabled:false];
     }
-
-    
-    //TODO: code to show/hide buttons
-
 }
 - (void)didReceiveMemoryWarning
 {
@@ -139,10 +147,27 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Answers *ans = [self.ansArray objectAtIndex:indexPath.row];
-    self.pointsLabel.text = [NSString stringWithFormat:@"%.2f",ans.pointsPossibleOrMultiplier];
+    
+    if (self.question.questionType == 0 ||self.question.questionType == 1)
+    {
+        pointTotal = 0;
+    }
+    
+    pointTotal += ans.pointsPossibleOrMultiplier;
+    
+    self.pointsLabel.text =[NSString stringWithFormat:@"%.2f",pointTotal];
+    
+    answered = true;
     
 }
-
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Answers *ans = [self.ansArray objectAtIndex:indexPath.row];
+    
+    pointTotal -= ans.pointsPossibleOrMultiplier;
+    
+    self.pointsLabel.text =[NSString stringWithFormat:@"%.2f",pointTotal];
+}
 
 #pragma mark Picker View Delegate Methods
 
@@ -174,6 +199,10 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     NSLog(@"Chosen item: %i", row);
+    
+    pointTotal = row;
+    self.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
+    answered = true;
 }
 
 #pragma mark IBactions
@@ -181,12 +210,16 @@
 - (IBAction)submitButton:(id)sender {
     //TODO: actually save stuff
 
+    if (!answered) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"No answer" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+        
+    }
     if (self.currentPosition == ([self.questionArray count]-1))
     {
         //pop 2 view controllers
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-3] animated:YES];
-        
-        
     }
     else{
         self.currentPosition++;
@@ -197,6 +230,10 @@
 
 - (IBAction)sliderChanged:(id)sender {
     self.percentSliderLabel.text = [NSString stringWithFormat:@"%.2f %%", self.percentSlider.value];
+    self.pointsLabel.text = [NSString stringWithFormat:@"%.2f", (self.percentSlider.value * self.question.pointsPossible/100)];
+    
+    answered = true;
+    
 }
 
 - (IBAction)lastButtonPushed:(id)sender {

@@ -37,6 +37,9 @@
     {
         NSLog(@"Getting data from file for now");
         //doing this for now
+        
+        NSLog(@"Number: %i.%i",self.elementNumber,self.subEleNumber);
+        
     
         NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleAudit" ofType:@"json"]];
         NSError *error;
@@ -93,6 +96,8 @@
     Questions *question = [[Questions alloc]initWithQuestion:[self.questionArray objectAtIndex:indexPath.row]];
     
 
+    [vc setElementNumber:self.elementNumber];
+    [vc setSubElementNum:self.subEleNumber];
     
     [vc setQuestion:question];
     [vc setQuestionArray:self.questionArray];

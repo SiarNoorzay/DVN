@@ -18,6 +18,8 @@
 @property (nonatomic, readonly) DBRestClient * restClient;
 
 @end
+int elementNumber;
+int subEleNumber;
 
 @implementation ElementSubElementViewController
 
@@ -84,6 +86,7 @@
     self.listOfSubElements = self.ele.Subelements;
     
     [self.subElementTable reloadData];
+    elementNumber = row;
 }
 
 #pragma maker Tableview methods
@@ -111,6 +114,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    subEleNumber = indexPath.row;
+    
     [self performSegueWithIdentifier:@"toQuestions" sender:self];
 }
 
@@ -122,6 +127,9 @@
     
     self.subEle = [[SubElements alloc]initWithSubElement:self.listOfSubElements[indexPath.row]];
     questionsVC.questionArray = self.subEle.Questions;
+    questionsVC.elementNumber = elementNumber;
+    questionsVC.subEleNumber = subEleNumber;
+    
 }
 
 
