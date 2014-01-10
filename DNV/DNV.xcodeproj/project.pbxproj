@@ -204,6 +204,7 @@
 				76D4A336187CE59C007AB1A9 /* AuditSelectionViewController */,
 				76A2BE39187DBC5A0056CC22 /* ElementSubElementViewController */,
 				76A8AFF5187EFF13007531A9 /* QuestionsViewController */,
+				76E81F1F187F0B4300441F62 /* AnswersViewController */,
 				76A8AFF7187F0A66007531A9 /* ListOfWIPViewController */,
 				762797211871D53A00F22E73 /* ViewController.h */,
 				762797221871D53A00F22E73 /* ViewController.m */,
