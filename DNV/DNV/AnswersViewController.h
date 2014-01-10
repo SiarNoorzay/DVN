@@ -10,7 +10,7 @@
 #import "Questions.h"
 #import "Answers.h"
 
-@interface AnswersViewController : UIViewController<UIPickerViewDataSource,UIPickerViewDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface AnswersViewController : UIViewController<UIPickerViewDataSource,UIPickerViewDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 
 @property (nonatomic, strong) Questions *question;
 @property (nonatomic) NSArray * questionArray;
@@ -24,6 +24,10 @@
 - (IBAction)sliderChanged:(id)sender;
 - (IBAction)lastButtonPushed:(id)sender;
 - (IBAction)firstButtonPushed:(id)sender;
+- (IBAction)nextButtonPushed:(id)sender;
+- (IBAction)previousButtonPushed:(id)sender;
+- (IBAction)textFieldEndedEditing:(id)sender;
+
 
 
 @property (strong, nonatomic) IBOutlet UITableView *answersTableView;
@@ -35,6 +39,11 @@
 @property (strong, nonatomic) IBOutlet UIButton *firstButton;
 @property (strong, nonatomic) IBOutlet UILabel *pointsLabel;
 @property (strong, nonatomic) IBOutlet UIButton *lastButton;
+@property (strong, nonatomic) IBOutlet UIButton *nextButton;
+@property (strong, nonatomic) IBOutlet UIButton *previousButton;
+
+@property (strong, nonatomic) IBOutlet UITextField *questionNumberTextField;
+
 @property (strong, nonatomic) IBOutlet UILabel *questionNumLabel;
 @property (strong, nonatomic) IBOutlet UILabel *percentSliderLabel;
 

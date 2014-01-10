@@ -576,6 +576,9 @@
                                 <state key="normal" title="Next >">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="nextButtonPushed:" destination="8Xc-YB-eLc" eventType="touchUpInside" id="pZd-Pd-fgZ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6n7-vc-9vM">
                                 <rect key="frame" x="223" y="974" width="73" height="30"/>
@@ -583,12 +586,18 @@
                                 <state key="normal" title="&lt; Previous">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="previousButtonPushed:" destination="8Xc-YB-eLc" eventType="touchUpInside" id="9Mm-IE-3EK"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="#" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xOO-hk-2so">
                                 <rect key="frame" x="336" y="974" width="97" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                <connections>
+                                    <action selector="textFieldEndedEditing:" destination="8Xc-YB-eLc" eventType="editingDidEnd" id="R3B-Mj-nUZ"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -598,11 +607,14 @@
                         <outlet property="answersTableView" destination="YJP-VQ-QIa" id="636-RG-kfb"/>
                         <outlet property="firstButton" destination="kpJ-bf-gcS" id="Occ-jY-PfU"/>
                         <outlet property="lastButton" destination="UNB-GJ-4v4" id="7IE-JZ-fAb"/>
+                        <outlet property="nextButton" destination="gx8-cn-DWN" id="AGT-a2-Ozj"/>
                         <outlet property="percentSlider" destination="VKI-aL-NdK" id="dn1-nL-ZgW"/>
                         <outlet property="percentSliderLabel" destination="Two-0N-pSq" id="Q5Y-m7-hPz"/>
                         <outlet property="picker" destination="bTA-JX-wHh" id="SIQ-6j-YXE"/>
                         <outlet property="pointsLabel" destination="b3p-sj-qjt" id="GPp-a5-90G"/>
+                        <outlet property="previousButton" destination="6n7-vc-9vM" id="8g1-a7-fZe"/>
                         <outlet property="questionNumLabel" destination="KYx-EK-Cw5" id="JEj-st-JzV"/>
+                        <outlet property="questionNumberTextField" destination="xOO-hk-2so" id="FPU-49-9Yc"/>
                         <outlet property="questionText" destination="G4q-IP-rVQ" id="9te-Vk-pys"/>
                         <outlet property="tableCell" destination="dr8-0d-3AH" id="Tly-Cv-Klf"/>
                     </connections>

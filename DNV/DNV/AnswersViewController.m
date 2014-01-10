@@ -43,8 +43,32 @@ BOOL answered = false;
     else{
         [self refreshAnswerView];
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+
+}
+- (void)keyboardDidShow:(NSNotification *)notification
+{
+    //Assign new frame to your view
+    CGRect frame =  self.view.frame;
+    
+    //TODO: change hardcoded value
+    frame.origin.y = -264;
+    
+    [self.view setFrame:frame];
+    
 }
 
+-(void)keyboardDidHide:(NSNotification *)notification
+{
+    //Assign new frame to your view
+    CGRect frame =  self.view.frame;
+    
+    //TODO: change hardcoded value
+    frame.origin.y = 0;
+    
+    [self.view setFrame:frame];
+}
 
 -(void)hideAnswerViews
 {
@@ -56,6 +80,8 @@ BOOL answered = false;
     
     [self.firstButton setEnabled:true];
     [self.lastButton setEnabled:true];
+    [self.nextButton setEnabled:true];
+    [self.previousButton setEnabled:true];
     
     pointTotal = 0;
     self.pointsLabel.text = @"0";
@@ -65,7 +91,7 @@ BOOL answered = false;
 -(void) refreshAnswerView
 {
     self.question = [[Questions alloc]initWithQuestion:[self.questionArray objectAtIndex:self.currentPosition]];
-    
+    self.questionNumberTextField.text = [NSString stringWithFormat:@"%i",self.currentPosition];
     
     [self hideAnswerViews];
     NSLog(@"Question Type: %i",self.question.questionType);
@@ -112,10 +138,12 @@ BOOL answered = false;
     if (self.currentPosition == [self.questionArray count]-1) {
        
         [self.lastButton setEnabled:false];
+        [self.nextButton setEnabled:false];
     }
     if (self.currentPosition == 0) {
         
         [self.firstButton setEnabled:false];
+        [self.previousButton setEnabled:false];
     }
 }
 - (void)didReceiveMemoryWarning
@@ -169,7 +197,7 @@ BOOL answered = false;
     self.pointsLabel.text =[NSString stringWithFormat:@"%.2f",pointTotal];
 }
 
-#pragma mark Picker View Delegate Methods
+#pragma mark - Picker View Delegate Methods
 
 // returns the number of 'columns' to display.
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -183,7 +211,7 @@ BOOL answered = false;
    return self.question.pointsPossible;
 }
 
-#pragma mark - UIPickerView Delegate
+#pragma mark  UIPickerView Delegate
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
     return 45.0;
@@ -195,6 +223,8 @@ BOOL answered = false;
     
 }
 
+
+
 //If the user chooses from the pickerview, it calls this function;
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
@@ -204,6 +234,8 @@ BOOL answered = false;
     self.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
     answered = true;
 }
+
+
 
 #pragma mark IBactions
 
@@ -245,5 +277,24 @@ BOOL answered = false;
     self.currentPosition = 0;
     [self refreshAnswerView];
 
+}
+
+- (IBAction)nextButtonPushed:(id)sender {
+    self.currentPosition++;
+    [self refreshAnswerView];
+}
+
+- (IBAction)previousButtonPushed:(id)sender {
+    self.currentPosition--;
+    [self refreshAnswerView];
+}
+
+
+#pragma mark UITextField Delegate
+
+//TODO: START HERE MONDAY SIAR
+- (IBAction)textFieldEndedEditing:(id)sender {
+    self.currentPosition = [self.questionNumberTextField.text intValue]-1;
+    [self refreshAnswerView];
 }
 @end
