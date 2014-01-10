@@ -36,20 +36,16 @@
 	// Do any additional setup after loading the view.
     
     NSLog(@"Audit Path: %@", self.auditPath);
+    NSLog(@"Audit Type: %@", self.audType);
     
-    NSString *filename = [self.auditPath stringByAppendingPathComponent:@"sampleAudit.json"];
+//    if (restClient == nil) {
+//        restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+//        restClient.delegate = self;
+//    }
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents directory
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"sampleAuditFromDB.json"];
-    _directoryPath = filePath;
+    [[self restClient] loadMetadata:self.auditPath];
     
-    if (restClient == nil) {
-        restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
-        restClient.delegate = self;
-    }
-
-    [restClient loadFile:filename intoPath:filePath];
+//    [self loadDropboxFile:@"sampleAudit.json"];
     
 }
 
@@ -124,19 +120,55 @@
     questionsVC.questionArray = self.subEle.Questions;
 }
 
+#pragma mark file selection methods
+
+-(void)loadDropboxFile:(NSString *)file{
+    
+    NSString *filename = [self.auditPath stringByAppendingPathComponent:file];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents directory
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"sampleAuditFromDB.json"];
+    _directoryPath = filePath;
+    
+    [restClient loadFile:filename intoPath:filePath];
+}
 
 #pragma mark Dropbox methods
 
-//- (DBRestClient*)restClient {
-//    if (restClient == nil) {
-//        restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
-//        restClient.delegate = self;
-//    }
-//    return restClient;
-//}
+- (DBRestClient*)restClient {
+    if (restClient == nil) {
+        restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        restClient.delegate = self;
+    }
+    return restClient;
+}
 
 - (void)restClient:(DBRestClient *)client loadedMetadata:(DBMetadata *)metadata {
     if (metadata.isDirectory) {
+        
+        if([self.audType isEqualToString:@"New"])
+        {
+            DBMetadata * JSONFile = metadata.contents[0];
+            
+            NSLog(@"metadata content: %@", metadata.contents[0]);
+            NSLog(@"JSONFile: %@", JSONFile.filename);
+            
+            [self loadDropboxFile:JSONFile.filename];
+        }
+        else if([self.audType isEqualToString:@"importWIP"])
+        {
+            NSMutableArray * JSONList = [[NSMutableArray alloc]init];
+            for (DBMetadata * file in metadata.contents) {
+//                if ([file.filename rangeOfString:@".json"].location == NSNotFound) {
+                    NSLog(@"%@", file.filename);
+                    [JSONList addObject:file.filename];
+//                }
+//                else
+//                    NSLog(@"How did we get here");
+            }
+            
+        }
 //        NSLog(@"Folder '%@' contains:", metadata.path);
 //        NSMutableArray *auditList = [[NSMutableArray alloc]init];
 //        for (DBMetadata *file in metadata.contents) {

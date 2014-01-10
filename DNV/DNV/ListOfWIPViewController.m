@@ -17,6 +17,7 @@
 @interface ListOfWIPViewController ()<DBRestClientDelegate>
 
 @property int chosenWIP;
+@property NSString * WIPType;
 
 @end
 
@@ -117,6 +118,11 @@
     
     self.chosenWIP = indexPath.row;
     
+    if(indexPath.section == 0)
+        _WIPType = @"localWIP";
+    else
+        _WIPType = @"importWIP";
+    
 }
 
 #pragma mark WIP selection methods
@@ -159,6 +165,7 @@
         Folder *folder = [self.wips objectAtIndex:self.chosenWIP];
         
         [contAudit setAuditPath: folder.folderPath];
+        contAudit.audType = _WIPType;
         
         //  [newAuditVC setDbNewFolderPath: [folder.folderPath stringByAppendingString:@"/New/"]];
     }

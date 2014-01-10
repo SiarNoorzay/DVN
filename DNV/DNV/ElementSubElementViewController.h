@@ -20,6 +20,7 @@
 }
 
 @property (strong, nonatomic) NSString * auditPath;
+@property (strong, nonatomic) NSString * audType;
 @property (strong,nonatomic) Audit * aud;
 
 @property (strong, nonatomic) Elements * ele;

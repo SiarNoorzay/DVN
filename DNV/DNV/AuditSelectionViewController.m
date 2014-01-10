@@ -85,6 +85,7 @@
     
     ElementSubElementViewController * eleSubEleVC = [segue destinationViewController];
     [eleSubEleVC setAuditPath: self.chosenAuditPath];
+    eleSubEleVC.audType = @"New";
     
     NSLog(@"path to audit: %@", self.chosenAuditPath);
     
