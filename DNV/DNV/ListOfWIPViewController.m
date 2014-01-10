@@ -131,7 +131,13 @@
             [self performSegueWithIdentifier:@"VerifyQuestions" sender:self];
             break;
         case 2:
+        {
 //            [self performSegueWithIdentifier:@"CompletedAuditChoice" sender:self];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Dropbox Export Complete" message: @"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            
+            [alert show];
+        }
             break;
         case 3:
             [self performSegueWithIdentifier:@"ImportMerge" sender:self];

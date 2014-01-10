@@ -10,7 +10,7 @@
 
 @class DBRestClient;
 
-@interface ListOfWIPViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface ListOfWIPViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 {
     DBRestClient *restClient;
 }
