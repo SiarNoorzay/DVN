@@ -540,6 +540,9 @@
                                 <state key="normal" title="&lt;&lt; First">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="firstButtonPushed:" destination="8Xc-YB-eLc" eventType="touchUpInside" id="8L7-Pp-Kiu"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UNB-GJ-4v4">
                                 <rect key="frame" x="696" y="974" width="52" height="30"/>
@@ -547,6 +550,9 @@
                                 <state key="normal" title="Last >>">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="lastButtonPushed:" destination="8Xc-YB-eLc" eventType="touchUpInside" id="DbK-MS-qYB"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_logo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="6on-af-t4r">
                                 <rect key="frame" x="648" y="85" width="100" height="100"/>
@@ -558,6 +564,8 @@
                     <navigationItem key="navigationItem" title="10.4 Element" id="Oxn-2J-tw0"/>
                     <connections>
                         <outlet property="answersTableView" destination="YJP-VQ-QIa" id="636-RG-kfb"/>
+                        <outlet property="firstButton" destination="kpJ-bf-gcS" id="Occ-jY-PfU"/>
+                        <outlet property="lastButton" destination="UNB-GJ-4v4" id="7IE-JZ-fAb"/>
                         <outlet property="percentSlider" destination="VKI-aL-NdK" id="dn1-nL-ZgW"/>
                         <outlet property="percentSliderLabel" destination="Two-0N-pSq" id="Q5Y-m7-hPz"/>
                         <outlet property="picker" destination="bTA-JX-wHh" id="SIQ-6j-YXE"/>

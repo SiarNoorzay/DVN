@@ -92,8 +92,11 @@
     AnswersViewController *vc = [segue destinationViewController];
     Questions *question = [[Questions alloc]initWithQuestion:[self.questionArray objectAtIndex:indexPath.row]];
     
+
     
     [vc setQuestion:question];
+    [vc setQuestionArray:self.questionArray];
+    [vc setCurrentPosition:indexPath.row];
     
     NSLog(@"Sending question: %@ to answers VC", question.questionText);
     

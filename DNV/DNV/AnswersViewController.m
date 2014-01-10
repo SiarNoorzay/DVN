@@ -7,6 +7,7 @@
 //
 
 #import "AnswersViewController.h"
+#import "ElementSubElementViewController.h"
 
 @interface AnswersViewController ()
 
@@ -30,49 +31,12 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    if (self.question == nil)
+    if (self.question == nil || self.questionArray == nil)
     {
-        NSLog(@"SHOULD NOT GET HERE, (recieved a nil question from previous VC)");
+        NSLog(@"***SHOULD NOT GET HERE***, (recieved a nil question from previous VC)");
     }
     else{
-        [self hideAnswerViews];
-        NSLog(@"Question Type: %i",self.question.questionType);
-        
-        switch (self.question.questionType) {
-            case 0: //bool
-                self.answersTableView.hidden = false;
-                self.answersTableView.allowsMultipleSelection = false;
-                self.tableCell.hidden = false;
-                break;
-            case 1: //multiple choice
-                self.answersTableView.hidden = false;
-                self.answersTableView.allowsMultipleSelection = false;
-                self.tableCell.hidden = false;
-                break;
-            case 2: //percentage
-                self.percentSlider.hidden = false;
-                self.percentSliderLabel.hidden = false;
-                break;
-            case 3: //partial
-                self.answersTableView.hidden = false;
-                self.answersTableView.allowsMultipleSelection = true;
-                self.tableCell.hidden = false;
-                break;
-            case 4: //professional Judgement
-                self.picker.hidden = false;
-                break;
-            case 5: //layered
-                NSLog(@"LAYERED QUESTIONS NOT YET IMPLEMENTED");
-                break;
-            default:
-                NSLog(@"Should never get here");
-                break;
-        }//switch
-        
-        self.questionText.text = self.question.questionText;
-        self.ansArray = self.question.Answers;
-        
-        
+        [self refreshAnswerView];
     }
     
 }
@@ -84,8 +48,68 @@
     self.percentSlider.hidden = true;
     self.picker.hidden = true;
     
+    [self.firstButton setEnabled:true];
+    [self.lastButton setEnabled:true];
+    
+    
 }
+-(void) refreshAnswerView
+{
+    self.question = [[Questions alloc]initWithQuestion:[self.questionArray objectAtIndex:self.currentPosition]];
+    
+    
+    [self hideAnswerViews];
+    NSLog(@"Question Type: %i",self.question.questionType);
+    
+    switch (self.question.questionType) {
+        case 0: //bool
+            self.answersTableView.hidden = false;
+            self.answersTableView.allowsMultipleSelection = false;
+            self.tableCell.hidden = false;
+            break;
+        case 1: //multiple choice
+            self.answersTableView.hidden = false;
+            self.answersTableView.allowsMultipleSelection = false;
+            self.tableCell.hidden = false;
+            break;
+        case 2: //percentage
+            self.percentSlider.hidden = false;
+            self.percentSliderLabel.hidden = false;
+            break;
+        case 3: //partial
+            self.answersTableView.hidden = false;
+            self.answersTableView.allowsMultipleSelection = true;
+            self.tableCell.hidden = false;
+            break;
+        case 4: //professional Judgement
+            self.picker.hidden = false;
+            break;
+        case 5: //layered
+            //TODO: Implement Layered questions
+            NSLog(@"LAYERED QUESTIONS NOT YET IMPLEMENTED");
+            break;
+        default:
+            NSLog(@"Should never get here");
+            break;
+    }//switch
+    
+    self.questionText.text = self.question.questionText;
+    self.ansArray =  self.question.Answers;
+    [self.answersTableView reloadData];
+    
+    if (self.currentPosition == [self.questionArray count]-1) {
+       
+        [self.lastButton setEnabled:false];
+    }
+    if (self.currentPosition == 0) {
+        
+        [self.firstButton setEnabled:false];
+    }
 
+    
+    //TODO: code to show/hide buttons
+
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -155,11 +179,34 @@
 #pragma mark IBactions
 
 - (IBAction)submitButton:(id)sender {
+    //TODO: actually save stuff
+
+    if (self.currentPosition == ([self.questionArray count]-1))
+    {
+        //pop 2 view controllers
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-3] animated:YES];
+        
+        
+    }
+    else{
+        self.currentPosition++;
+        [self refreshAnswerView];
+    }
+
 }
 
 - (IBAction)sliderChanged:(id)sender {
     self.percentSliderLabel.text = [NSString stringWithFormat:@"%.2f %%", self.percentSlider.value];
-    
-    
+}
+
+- (IBAction)lastButtonPushed:(id)sender {
+    self.currentPosition = [self.questionArray count]-1;
+    [self refreshAnswerView];
+}
+
+- (IBAction)firstButtonPushed:(id)sender {
+    self.currentPosition = 0;
+    [self refreshAnswerView];
+
 }
 @end
