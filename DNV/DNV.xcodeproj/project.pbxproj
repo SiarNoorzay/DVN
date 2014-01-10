@@ -25,6 +25,7 @@
 		76A2BE3C187DBF7A0056CC22 /* ElementSubElementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A2BE3B187DBF7A0056CC22 /* ElementSubElementViewController.m */; };
 		76A2BE3F187DC2C70056CC22 /* check-mark-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A2BE3D187DC2C70056CC22 /* check-mark-button.png */; };
 		76A2BE40187DC2C70056CC22 /* USI_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76A2BE3E187DC2C70056CC22 /* USI_logo.jpg */; };
+		76A721A7188061E200E34CFA /* DNV_GL_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A721A6188061E200E34CFA /* DNV_GL_logo.png */; };
 		76A8AFFA187F0B00007531A9 /* ListOfWIPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A8AFF9187F0B00007531A9 /* ListOfWIPViewController.m */; };
 		76A8B001187F28AA007531A9 /* WIPChoicePopOver.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A8B000187F28AA007531A9 /* WIPChoicePopOver.m */; };
 		76AB3CB1187B17410019603F /* Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AB3CB0187B17410019603F /* Client.m */; };
@@ -86,6 +87,7 @@
 		76A2BE3B187DBF7A0056CC22 /* ElementSubElementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementSubElementViewController.m; sourceTree = "<group>"; };
 		76A2BE3D187DC2C70056CC22 /* check-mark-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-mark-button.png"; sourceTree = "<group>"; };
 		76A2BE3E187DC2C70056CC22 /* USI_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = USI_logo.jpg; sourceTree = "<group>"; };
+		76A721A6188061E200E34CFA /* DNV_GL_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DNV_GL_logo.png; sourceTree = "<group>"; };
 		76A8AFF8187F0B00007531A9 /* ListOfWIPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListOfWIPViewController.h; sourceTree = "<group>"; };
 		76A8AFF9187F0B00007531A9 /* ListOfWIPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListOfWIPViewController.m; sourceTree = "<group>"; };
 		76A8AFFF187F28AA007531A9 /* WIPChoicePopOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIPChoicePopOver.h; sourceTree = "<group>"; };
@@ -192,12 +194,12 @@
 		762797121871D53A00F22E73 /* DNV */ = {
 			isa = PBXGroup;
 			children = (
-				76AB3CAE187B16920019603F /* ClassObjects */,
 				7627971E1871D53A00F22E73 /* Main.storyboard */,
 				7627971B1871D53A00F22E73 /* AppDelegate.h */,
 				7627971C1871D53A00F22E73 /* AppDelegate.m */,
 				762797211871D53A00F22E73 /* ViewController.h */,
 				762797221871D53A00F22E73 /* ViewController.m */,
+				76AB3CAE187B16920019603F /* ClassObjects */,
 				76D4A33A187CE832007AB1A9 /* Images */,
 				76D96A41187B580900961260 /* LogInViewController */,
 				76D96A42187B582000961260 /* ClientViewController */,
@@ -320,6 +322,7 @@
 		76D4A33A187CE832007AB1A9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				76A721A6188061E200E34CFA /* DNV_GL_logo.png */,
 				76A2BE3D187DC2C70056CC22 /* check-mark-button.png */,
 				76A2BE3E187DC2C70056CC22 /* USI_logo.jpg */,
 				76A2B22E187362390052F080 /* DNV_logo.jpg */,
@@ -447,6 +450,7 @@
 				76E81F13187C908100441F62 /* usersNOTDB.json in Resources */,
 				762797251871D53A00F22E73 /* Images.xcassets in Resources */,
 				762797171871D53A00F22E73 /* InfoPlist.strings in Resources */,
+				76A721A7188061E200E34CFA /* DNV_GL_logo.png in Resources */,
 				76E81F0C187B559000441F62 /* sampleAudit.json in Resources */,
 				76E81F15187CBC0500441F62 /* users.json in Resources */,
 				762797201871D53A00F22E73 /* Main.storyboard in Resources */,
