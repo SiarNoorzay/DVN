@@ -14,7 +14,7 @@
 
 @class DBRestClient;
 
-@interface ElementSubElementViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface ElementSubElementViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 {
     DBRestClient * restClient;    
 }
@@ -30,6 +30,8 @@
 @property (strong, nonatomic) NSArray * listOfSubElements;
 
 @property NSString * directoryPath;
+
+@property (strong, nonatomic) NSMutableArray * JSONList;
 
 @property (strong, nonatomic) IBOutlet UILabel *auditSelectLbl;
 
