@@ -27,6 +27,8 @@
 - (IBAction)nextButtonPushed:(id)sender;
 - (IBAction)previousButtonPushed:(id)sender;
 - (IBAction)textFieldEndedEditing:(id)sender;
+- (IBAction)thumbsUpPushed:(id)sender;
+- (IBAction)thumbsDownPushed:(id)sender;
 
 
 
@@ -41,6 +43,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *lastButton;
 @property (strong, nonatomic) IBOutlet UIButton *nextButton;
 @property (strong, nonatomic) IBOutlet UIButton *previousButton;
+@property (strong, nonatomic) IBOutlet UIButton *thumbsUpButton;
+@property (strong, nonatomic) IBOutlet UIButton *thumbsDownButton;
 
 @property (strong, nonatomic) IBOutlet UITextField *questionNumberTextField;
 

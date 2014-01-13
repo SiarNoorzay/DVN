@@ -50,6 +50,8 @@
 		76E81F18187DB92600441F62 /* Folder.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F17187DB92600441F62 /* Folder.m */; };
 		76E81F1B187EE78C00441F62 /* QuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F1A187EE78C00441F62 /* QuestionsViewController.m */; };
 		76E81F1E187F071C00441F62 /* AnswersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F1D187F071C00441F62 /* AnswersViewController.m */; };
+		76E81F21188436A500441F62 /* thumbs-up-button-pro.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F20188436A500441F62 /* thumbs-up-button-pro.jpg */; };
+		76E81F2318843F1A00441F62 /* thumbs-down-button.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F2218843F1A00441F62 /* thumbs-down-button.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +130,8 @@
 		76E81F1A187EE78C00441F62 /* QuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsViewController.m; sourceTree = "<group>"; };
 		76E81F1C187F071C00441F62 /* AnswersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswersViewController.h; sourceTree = "<group>"; };
 		76E81F1D187F071C00441F62 /* AnswersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswersViewController.m; sourceTree = "<group>"; };
+		76E81F20188436A500441F62 /* thumbs-up-button-pro.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "thumbs-up-button-pro.jpg"; sourceTree = "<group>"; };
+		76E81F2218843F1A00441F62 /* thumbs-down-button.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "thumbs-down-button.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -322,6 +326,8 @@
 		76D4A33A187CE832007AB1A9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				76E81F20188436A500441F62 /* thumbs-up-button-pro.jpg */,
+				76E81F2218843F1A00441F62 /* thumbs-down-button.jpg */,
 				76A721A6188061E200E34CFA /* DNV_GL_logo.png */,
 				76A2BE3D187DC2C70056CC22 /* check-mark-button.png */,
 				76A2BE3E187DC2C70056CC22 /* USI_logo.jpg */,
@@ -448,9 +454,11 @@
 			files = (
 				76A2BE40187DC2C70056CC22 /* USI_logo.jpg in Resources */,
 				76E81F13187C908100441F62 /* usersNOTDB.json in Resources */,
+				76E81F2318843F1A00441F62 /* thumbs-down-button.jpg in Resources */,
 				762797251871D53A00F22E73 /* Images.xcassets in Resources */,
 				762797171871D53A00F22E73 /* InfoPlist.strings in Resources */,
 				76A721A7188061E200E34CFA /* DNV_GL_logo.png in Resources */,
+				76E81F21188436A500441F62 /* thumbs-up-button-pro.jpg in Resources */,
 				76E81F0C187B559000441F62 /* sampleAudit.json in Resources */,
 				76E81F15187CBC0500441F62 /* users.json in Resources */,
 				762797201871D53A00F22E73 /* Main.storyboard in Resources */,

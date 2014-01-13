@@ -14,7 +14,7 @@
 @end
 
 float pointTotal = 0.0;
-BOOL answered = false;
+BOOL answered = false; //used for submit button logic
 
 
 
@@ -91,7 +91,7 @@ BOOL answered = false;
 -(void) refreshAnswerView
 {
     self.question = [[Questions alloc]initWithQuestion:[self.questionArray objectAtIndex:self.currentPosition]];
-    self.questionNumberTextField.text = [NSString stringWithFormat:@"%i",self.currentPosition];
+    self.questionNumberTextField.text = [NSString stringWithFormat:@"%i",(self.currentPosition +1)];
     
     [self hideAnswerViews];
     NSLog(@"Question Type: %i",self.question.questionType);
@@ -145,6 +145,10 @@ BOOL answered = false;
         [self.firstButton setEnabled:false];
         [self.previousButton setEnabled:false];
     }
+    [self.thumbsUpButton setSelected:self.question.isThumbsUp];
+    [self.thumbsDownButton setSelected:self.question.isThumbsDown];
+    
+    
 }
 - (void)didReceiveMemoryWarning
 {
@@ -165,6 +169,9 @@ BOOL answered = false;
     Answers *ans = [self.ansArray objectAtIndex:indexPath.row];
     
     cell.textLabel.text = ans.answerText;
+    
+    [cell setSelected:ans.isSelected];
+    
     return cell;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -185,7 +192,10 @@ BOOL answered = false;
     
     self.pointsLabel.text =[NSString stringWithFormat:@"%.2f",pointTotal];
     
-    answered = true;
+    [ans setIsSelected:true];
+    
+    
+    answered = true;//used for submit button logic
     
 }
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -195,6 +205,8 @@ BOOL answered = false;
     pointTotal -= ans.pointsPossibleOrMultiplier;
     
     self.pointsLabel.text =[NSString stringWithFormat:@"%.2f",pointTotal];
+    [ans setIsSelected:false];
+    
 }
 
 #pragma mark - Picker View Delegate Methods
@@ -232,6 +244,13 @@ BOOL answered = false;
     
     pointTotal = row;
     self.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
+    
+    Answers *ans = [self.ansArray objectAtIndex:0];
+    
+    [ans setIsSelected:true];
+    
+    [ans setAnswerText:[NSString stringWithFormat:@"%.2f",pointTotal]];
+    
     answered = true;
 }
 
@@ -292,9 +311,34 @@ BOOL answered = false;
 
 #pragma mark UITextField Delegate
 
-//TODO: START HERE MONDAY SIAR
 - (IBAction)textFieldEndedEditing:(id)sender {
-    self.currentPosition = [self.questionNumberTextField.text intValue]-1;
+    
+    //check if out of bounds
+    NSNumber *tempInt = [NSNumber numberWithInt:[self.questionNumberTextField.text intValue]];
+    
+    if (tempInt==nil || tempInt.intValue < 1 || tempInt.intValue > [self.questionArray count]) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Out of range" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    self.currentPosition = tempInt.intValue - 1;
     [self refreshAnswerView];
+}
+
+- (IBAction)thumbsUpPushed:(id)sender {
+    self.question.isThumbsUp = !self.question.isThumbsUp;
+    
+    [self.thumbsUpButton setSelected: !self.thumbsUpButton.selected];
+    
+    //[self refreshAnswerView];
+    
+}
+
+- (IBAction)thumbsDownPushed:(id)sender {
+    self.question.isThumbsDown = !self.question.isThumbsDown;
+    
+    [self.thumbsDownButton setSelected: !self.thumbsDownButton.selected];
 }
 @end
