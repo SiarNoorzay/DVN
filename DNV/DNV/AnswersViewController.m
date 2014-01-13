@@ -8,6 +8,9 @@
 
 #import "AnswersViewController.h"
 #import "ElementSubElementViewController.h"
+#import "helpTextViewController.h"
+#import "NotesViewController.h"
+
 
 @interface AnswersViewController ()
 
@@ -15,7 +18,7 @@
 
 float pointTotal = 0.0;
 BOOL answered = false; //used for submit button logic
-
+BOOL keyboardShouldMove = false;
 
 
 @implementation AnswersViewController
@@ -45,10 +48,15 @@ BOOL answered = false; //used for submit button logic
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+    
+    self.questionNumberTextField.delegate = self;
+    
 
 }
 - (void)keyboardDidShow:(NSNotification *)notification
 {
+    if (keyboardShouldMove){
+        
     //Assign new frame to your view
     CGRect frame =  self.view.frame;
     
@@ -56,7 +64,7 @@ BOOL answered = false; //used for submit button logic
     frame.origin.y = -264;
     
     [self.view setFrame:frame];
-    
+    }
 }
 
 -(void)keyboardDidHide:(NSNotification *)notification
@@ -86,6 +94,10 @@ BOOL answered = false; //used for submit button logic
     pointTotal = 0;
     self.pointsLabel.text = @"0";
     answered = false;
+    self.percentSlider.value = 50;
+    self.percentSliderLabel.text = @"";
+    
+    
     
 }
 -(void) refreshAnswerView
@@ -147,7 +159,8 @@ BOOL answered = false; //used for submit button logic
     }
     [self.thumbsUpButton setSelected:self.question.isThumbsUp];
     [self.thumbsDownButton setSelected:self.question.isThumbsDown];
-    
+    [self.naButton setSelected:!self.question.isApplicable];
+    [self.verifyButton setSelected:self.question.needsVerifying];
     
 }
 - (void)didReceiveMemoryWarning
@@ -282,7 +295,6 @@ BOOL answered = false; //used for submit button logic
 - (IBAction)sliderChanged:(id)sender {
     self.percentSliderLabel.text = [NSString stringWithFormat:@"%.2f %%", self.percentSlider.value];
     self.pointsLabel.text = [NSString stringWithFormat:@"%.2f", (self.percentSlider.value * self.question.pointsPossible/100)];
-    
     answered = true;
     
 }
@@ -310,7 +322,12 @@ BOOL answered = false; //used for submit button logic
 
 
 #pragma mark UITextField Delegate
-
+-(IBAction)textFieldDidBeginEditing:(UITextField *)textField
+{
+    keyboardShouldMove = true;
+    textField.text = @"";
+    
+}
 - (IBAction)textFieldEndedEditing:(id)sender {
     
     //check if out of bounds
@@ -326,19 +343,129 @@ BOOL answered = false; //used for submit button logic
     self.currentPosition = tempInt.intValue - 1;
     [self refreshAnswerView];
 }
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    //check if out of bounds
+    NSNumber *tempInt = [NSNumber numberWithInt:[self.questionNumberTextField.text intValue]];
+    
+    if (tempInt==nil || tempInt.intValue < 1 || tempInt.intValue > [self.questionArray count]) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Out of range" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    }
+    self.currentPosition = tempInt.intValue - 1;
+    [textField resignFirstResponder];
+    [self refreshAnswerView];
+    return YES;
+}
+
+
 
 - (IBAction)thumbsUpPushed:(id)sender {
     self.question.isThumbsUp = !self.question.isThumbsUp;
-    
     [self.thumbsUpButton setSelected: !self.thumbsUpButton.selected];
-    
-    //[self refreshAnswerView];
-    
 }
 
 - (IBAction)thumbsDownPushed:(id)sender {
     self.question.isThumbsDown = !self.question.isThumbsDown;
-    
     [self.thumbsDownButton setSelected: !self.thumbsDownButton.selected];
 }
+
+- (IBAction)naButtonPushed:(id)sender {
+    self.question.isApplicable = !self.question.isApplicable;
+    [self.naButton setSelected: !self.naButton.selected];
+    
+}
+- (IBAction)verifyButtonPushed:(id)sender {
+    self.question.needsVerifying = !self.question.needsVerifying;
+    [self.verifyButton setSelected: !self.verifyButton.selected];
+}
+
+- (IBAction)speechButtonPushed:(id)sender {
+    keyboardShouldMove = false;
+    [self performSegueWithIdentifier:@"notesPopover" sender:sender];
+
+}
+
+- (IBAction)cameraButtonPushed:(id)sender {
+    [self takePicture];
+}
+
+- (IBAction)attachmentButtonPushed:(id)sender {
+}
+
+- (IBAction)helpButtonPushed:(id)sender {
+    
+    //[self performSegueWithIdentifier:@"helpTextPopover" sender:sender];
+}
+
+- (IBAction)notesButtonPushed:(id)sender {
+    
+    keyboardShouldMove = false;
+    //[self performSegueWithIdentifier:@"notesPopover" sender:sender];
+
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"helpTextPopover"]) {
+        
+        // Get destination view
+        helpTextViewController * destVC = [segue destinationViewController];
+        
+        // Pass the information to your destination view
+        [destVC setText:self.question.helpText];
+    }
+    
+    if ([[segue identifier] isEqualToString:@"notesPopover"]) {
+        
+        // Get destination view
+        NotesViewController * destVC = [segue destinationViewController];
+        
+        // Pass the information to your destination view
+        [destVC setText:self.question.helpText];
+    }
+}
+
+#pragma mark - Image picker delegate methdos
+
+- (void)takePicture {
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+#if TARGET_IPHONE_SIMULATOR
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+#else
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+#endif
+    imagePickerController.editing = YES;
+    imagePickerController.delegate = (id)self;
+    
+    [self presentModalViewController:imagePickerController animated:YES];
+    
+}
+
+
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+	UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    // Resize the image from the camera if we need to
+    //	UIImage *scaledImage = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFill bounds:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) interpolationQuality:kCGInterpolationHigh];
+    
+    // Crop the image to a square if we wanted.
+    // UIImage *croppedImage = [scaledImage croppedImage:CGRectMake((scaledImage.size.width -photo.frame.size.width)/2, (scaledImage.size.height -photo.frame.size.height)/2, photo.frame.size.width, photo.frame.size.height)];
+    // Show the photo on the screen
+    
+    //Here is where we would use the image. For now just setting the image as the background of the view.
+   // self.view.backgroundColor = [UIColor colorWithPatternImage: image];
+    self.cameraImage = image;
+    
+    [picker dismissModalViewControllerAnimated:NO];
+}
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissModalViewControllerAnimated:NO];
+}
+
+
+
 @end
