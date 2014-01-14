@@ -11,6 +11,7 @@
 
 #import "WIPChoicePopOver.h"
 #import "ElementSubElementViewController.h"
+#import "VerifyQuestionsViewController.h"
 
 @interface WIPAuditFilesViewController ()<DBRestClientDelegate>
 
@@ -151,6 +152,11 @@ loadMetadataFailedWithError:(NSError *)error {
         eleSubEleVC.audType = self.wipAuditType;
         
     }
+    
+//    if ([segue.identifier isEqualToString:@"VerifyQuestions"]){
+//        
+//        
+//    }
     
 //    NSIndexPath *indexPath = self.subElementTable.indexPathForSelectedRow;
 //    

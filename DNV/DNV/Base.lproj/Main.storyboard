@@ -86,31 +86,34 @@
                                 <rect key="frame" x="0.0" y="193" width="768" height="831"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="mGu-8z-wn8">
-                                    <size key="itemSize" width="150" height="150"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="30" minimumInteritemSpacing="10" id="mGu-8z-wn8">
+                                    <size key="itemSize" width="150" height="160"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="30" minY="15" maxX="30" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ClientCell" id="Juc-f7-ZkS">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                        <rect key="frame" x="30" y="15" width="150" height="160"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="160"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Folder Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TjJ-ln-gJq">
-                                                    <rect key="frame" x="0.0" y="37" width="150" height="26"/>
+                                                    <rect key="frame" x="0.0" y="124" width="150" height="26"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Folder1_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ris-VQ-w8T">
+                                                    <rect key="frame" x="20" y="16" width="110" height="100"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="0.87" colorSpace="calibratedWhite"/>
-                                        <size key="customSize" width="150" height="150"/>
+                                        <size key="customSize" width="150" height="160"/>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -910,10 +913,10 @@
             </objects>
             <point key="canvasLocation" x="5091" y="1366"/>
         </scene>
-        <!--View Controller - List of Open Verify Questions-->
+        <!--Verify Questions View Controller - List of Open Verify Questions-->
         <scene sceneID="PVA-QN-ort">
             <objects>
-                <viewController id="NjM-YN-Li5" sceneMemberID="viewController">
+                <viewController id="NjM-YN-Li5" customClass="VerifyQuestionsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cqP-X1-J7a"/>
                         <viewControllerLayoutGuide type="bottom" id="d5R-E5-nj4"/>
@@ -940,11 +943,18 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="NjM-YN-Li5" id="Ufu-hi-oQG"/>
+                                    <outlet property="delegate" destination="NjM-YN-Li5" id="iu9-3X-AHK"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="List of Open Verify Questions" id="Lrl-G0-E4E"/>
+                    <connections>
+                        <outlet property="VerifyQuestionsTable" destination="wDC-xK-YNQ" id="DfY-eZ-z7T"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WNi-ai-qph" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -970,11 +980,11 @@
                                     <size key="itemSize" width="150" height="150"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="vYr-Jl-vfT">
-                                        <rect key="frame" x="0.0" y="64" width="150" height="150"/>
+                                        <rect key="frame" x="10" y="64" width="150" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
@@ -1314,6 +1324,11 @@
     </scenes>
     <resources>
         <image name="DNV_GL_logo.png" width="180" height="180"/>
+        <image name="Folder1_icon.png" width="1024" height="1024"/>
+        <image name="Help.png" width="256" height="256"/>
+        <image name="NotApplicable.png" width="60" height="60"/>
+        <image name="NotApplicableGray.png" width="60" height="60"/>
+        <image name="Notes-icon.png" width="256" height="256"/>
         <image name="USI_logo.jpg" width="720" height="720"/>
         <image name="attachmentIcon.png" width="128" height="128"/>
         <image name="camera-lens.jpg" width="610" height="458"/>
