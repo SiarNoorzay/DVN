@@ -454,9 +454,10 @@ BOOL keyboardShouldMove = false;
     // Crop the image to a square if we wanted.
     // UIImage *croppedImage = [scaledImage croppedImage:CGRectMake((scaledImage.size.width -photo.frame.size.width)/2, (scaledImage.size.height -photo.frame.size.height)/2, photo.frame.size.width, photo.frame.size.height)];
     // Show the photo on the screen
+
     
-    //Here is where we would use the image. For now just setting the image as the background of the view.
    // self.view.backgroundColor = [UIColor colorWithPatternImage: image];
+    //TODO: save image to imagelocationArray
     self.cameraImage = image;
     
     [picker dismissModalViewControllerAnimated:NO];
