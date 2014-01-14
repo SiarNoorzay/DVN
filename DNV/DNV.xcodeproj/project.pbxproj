@@ -71,6 +71,13 @@
 		76E81F391884863700441F62 /* icon_button_verifyGRAY.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F381884863700441F62 /* icon_button_verifyGRAY.png */; };
 		76E81F3C18848C7F00441F62 /* helpTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F3B18848C7F00441F62 /* helpTextViewController.m */; };
 		76E81F3F18849DB500441F62 /* NotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F3E18849DB500441F62 /* NotesViewController.m */; };
+		76E81F4218859D5F00441F62 /* VoiceRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F4118859D5F00441F62 /* VoiceRecognizer.m */; };
+		76E81F4618859E3B00441F62 /* AcousticModelEnglish.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F4318859E3B00441F62 /* AcousticModelEnglish.bundle */; };
+		76E81F4718859E3B00441F62 /* OpenEars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76E81F4418859E3B00441F62 /* OpenEars.framework */; };
+		76E81F4818859E3B00441F62 /* Slt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76E81F4518859E3B00441F62 /* Slt.framework */; };
+		76E81F4A18859E7000441F62 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76E81F4918859E7000441F62 /* AudioToolbox.framework */; };
+		76E81F4C18859E7D00441F62 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76E81F4B18859E7D00441F62 /* AVFoundation.framework */; };
+		76E81F4E1885A61700441F62 /* DVNCorpusTxt.txt in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F4D1885A61700441F62 /* DVNCorpusTxt.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +182,14 @@
 		76E81F3B18848C7F00441F62 /* helpTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = helpTextViewController.m; sourceTree = "<group>"; };
 		76E81F3D18849DB500441F62 /* NotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotesViewController.h; path = NotesViewController/NotesViewController.h; sourceTree = "<group>"; };
 		76E81F3E18849DB500441F62 /* NotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotesViewController.m; path = NotesViewController/NotesViewController.m; sourceTree = "<group>"; };
+		76E81F4018859D5F00441F62 /* VoiceRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceRecognizer.h; sourceTree = "<group>"; };
+		76E81F4118859D5F00441F62 /* VoiceRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceRecognizer.m; sourceTree = "<group>"; };
+		76E81F4318859E3B00441F62 /* AcousticModelEnglish.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AcousticModelEnglish.bundle; sourceTree = "<group>"; };
+		76E81F4418859E3B00441F62 /* OpenEars.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenEars.framework; sourceTree = "<group>"; };
+		76E81F4518859E3B00441F62 /* Slt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Slt.framework; sourceTree = "<group>"; };
+		76E81F4918859E7000441F62 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		76E81F4B18859E7D00441F62 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		76E81F4D1885A61700441F62 /* DVNCorpusTxt.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DVNCorpusTxt.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,9 +197,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76E81F4C18859E7D00441F62 /* AVFoundation.framework in Frameworks */,
+				76E81F4A18859E7000441F62 /* AudioToolbox.framework in Frameworks */,
+				76E81F4718859E3B00441F62 /* OpenEars.framework in Frameworks */,
 				76BF9C771872237200ACF6DB /* DropboxSDK.framework in Frameworks */,
 				76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */,
 				76BF9C73187222DC00ACF6DB /* Security.framework in Frameworks */,
+				76E81F4818859E3B00441F62 /* Slt.framework in Frameworks */,
 				7627970F1871D53A00F22E73 /* CoreGraphics.framework in Frameworks */,
 				762797111871D53A00F22E73 /* UIKit.framework in Frameworks */,
 				7627970D1871D53A00F22E73 /* Foundation.framework in Frameworks */,
@@ -227,6 +246,11 @@
 		7627970B1871D53A00F22E73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				76E81F4B18859E7D00441F62 /* AVFoundation.framework */,
+				76E81F4918859E7000441F62 /* AudioToolbox.framework */,
+				76E81F4318859E3B00441F62 /* AcousticModelEnglish.bundle */,
+				76E81F4418859E3B00441F62 /* OpenEars.framework */,
+				76E81F4518859E3B00441F62 /* Slt.framework */,
 				76BF9C761872237200ACF6DB /* DropboxSDK.framework */,
 				76BF9C74187222EF00ACF6DB /* QuartzCore.framework */,
 				76BF9C72187222DC00ACF6DB /* Security.framework */,
@@ -269,6 +293,7 @@
 		762797131871D53A00F22E73 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				76E81F4D1885A61700441F62 /* DVNCorpusTxt.txt */,
 				76E81F12187C908100441F62 /* usersNOTDB.json */,
 				76E81F14187CBC0500441F62 /* users.json */,
 				76E81F0B187B559000441F62 /* sampleAudit.json */,
@@ -476,6 +501,8 @@
 				76E81F3B18848C7F00441F62 /* helpTextViewController.m */,
 				76E81F3D18849DB500441F62 /* NotesViewController.h */,
 				76E81F3E18849DB500441F62 /* NotesViewController.m */,
+				76E81F4018859D5F00441F62 /* VoiceRecognizer.h */,
+				76E81F4118859D5F00441F62 /* VoiceRecognizer.m */,
 			);
 			name = AnswersViewController;
 			sourceTree = "<group>";
@@ -559,6 +586,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76E81F4618859E3B00441F62 /* AcousticModelEnglish.bundle in Resources */,
 				76A2BE40187DC2C70056CC22 /* USI_logo.jpg in Resources */,
 				76E81F13187C908100441F62 /* usersNOTDB.json in Resources */,
 				76E81F2F18847A6D00441F62 /* Notes-icon.png in Resources */,
@@ -576,6 +604,7 @@
 				76E81F35188480AA00441F62 /* thumbs-down-button-Gray.jpg in Resources */,
 				76E81F2B1884792C00441F62 /* attachmentIcon.png in Resources */,
 				76E81F15187CBC0500441F62 /* users.json in Resources */,
+				76E81F4E1885A61700441F62 /* DVNCorpusTxt.txt in Resources */,
 				762797201871D53A00F22E73 /* Main.storyboard in Resources */,
 				76E81F391884863700441F62 /* icon_button_verifyGRAY.png in Resources */,
 				76E81F371884823F00441F62 /* icon_button_verify.png in Resources */,
@@ -630,6 +659,7 @@
 				76A0DFBD18847B880038FD61 /* WIPAuditFilesViewController.m in Sources */,
 				76DBFA83187CAD6300F84282 /* MainWindowPopOver.m in Sources */,
 				76AB3CC0187B21700019603F /* Questions.m in Sources */,
+				76E81F4218859D5F00441F62 /* VoiceRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -763,6 +793,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
+					/Users/usi/Desktop/repoDVN/DVN/DNV,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DNV/DNV-Prefix.pch";
@@ -783,6 +814,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
+					/Users/usi/Desktop/repoDVN/DVN/DNV,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DNV/DNV-Prefix.pch";

@@ -51,6 +51,16 @@ BOOL keyboardShouldMove = false;
     
     self.questionNumberTextField.delegate = self;
     
+    UISwipeGestureRecognizer* swipeLeftGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(nextButtonPushed:)];
+    swipeLeftGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    
+    UISwipeGestureRecognizer* swipeRightGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(previousButtonPushed:)];
+    swipeRightGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    
+    [self.view addGestureRecognizer:swipeLeftGestureRecognizer];
+    [self.view addGestureRecognizer:swipeRightGestureRecognizer];
+
+
 
 }
 - (void)keyboardDidShow:(NSNotification *)notification
@@ -77,6 +87,7 @@ BOOL keyboardShouldMove = false;
     
     [self.view setFrame:frame];
 }
+#pragma mark View Changes
 
 -(void)hideAnswerViews
 {
@@ -102,6 +113,7 @@ BOOL keyboardShouldMove = false;
 }
 -(void) refreshAnswerView
 {
+    
     self.question = [[Questions alloc]initWithQuestion:[self.questionArray objectAtIndex:self.currentPosition]];
     self.questionNumberTextField.text = [NSString stringWithFormat:@"%i",(self.currentPosition +1)];
     
@@ -161,6 +173,8 @@ BOOL keyboardShouldMove = false;
     [self.thumbsDownButton setSelected:self.question.isThumbsDown];
     [self.naButton setSelected:!self.question.isApplicable];
     [self.verifyButton setSelected:self.question.needsVerifying];
+    
+    
     
 }
 - (void)didReceiveMemoryWarning
@@ -311,13 +325,21 @@ BOOL keyboardShouldMove = false;
 }
 
 - (IBAction)nextButtonPushed:(id)sender {
-    self.currentPosition++;
-    [self refreshAnswerView];
+    if (self.nextButton.enabled)
+    {
+        self.currentPosition++;
+        [self refreshAnswerView];
+    }
+    
 }
 
 - (IBAction)previousButtonPushed:(id)sender {
-    self.currentPosition--;
-    [self refreshAnswerView];
+    
+    if (self.previousButton.enabled) {
+        self.currentPosition--;
+        [self refreshAnswerView];
+    }
+    
 }
 
 
@@ -390,6 +412,7 @@ BOOL keyboardShouldMove = false;
 
 - (IBAction)cameraButtonPushed:(id)sender {
     [self takePicture];
+    
 }
 
 - (IBAction)attachmentButtonPushed:(id)sender {
@@ -423,7 +446,7 @@ BOOL keyboardShouldMove = false;
         NotesViewController * destVC = [segue destinationViewController];
         
         // Pass the information to your destination view
-        [destVC setText:self.question.helpText];
+        [destVC setText:self.question.notes];
     }
 }
 
@@ -454,9 +477,10 @@ BOOL keyboardShouldMove = false;
     // Crop the image to a square if we wanted.
     // UIImage *croppedImage = [scaledImage croppedImage:CGRectMake((scaledImage.size.width -photo.frame.size.width)/2, (scaledImage.size.height -photo.frame.size.height)/2, photo.frame.size.width, photo.frame.size.height)];
     // Show the photo on the screen
+
     
-    //Here is where we would use the image. For now just setting the image as the background of the view.
    // self.view.backgroundColor = [UIColor colorWithPatternImage: image];
+    //TODO: save image to imagelocationArray / dropbox
     self.cameraImage = image;
     
     [picker dismissModalViewControllerAnimated:NO];
