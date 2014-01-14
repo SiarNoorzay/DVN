@@ -10,23 +10,17 @@
 
 @class DBRestClient;
 
-@interface ListOfWIPViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface ListOfWIPViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 {
     DBRestClient *restClient;
 }
 
 @property (strong, nonatomic) NSArray * sectionHeaders;
 
-@property (strong, nonatomic) UIPopoverController * wipPopOver;
-
 @property (strong, nonatomic) NSString *dbWIPFolderPath;
 
 @property (strong, nonatomic) NSArray * wips;
 
-@property (nonatomic) int wipChoice;
-
 @property (strong, nonatomic) IBOutlet UITableView *wipAuditTable;
-
--(void)goToWIPChoice;
 
 @end

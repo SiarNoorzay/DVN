@@ -336,7 +336,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D5A-wg-0ez" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4389" y="-1815"/>
+            <point key="canvasLocation" x="5013" y="-1815"/>
         </scene>
         <!--Questions View Controller - Sub Element Questions-->
         <scene sceneID="xFH-aw-b0L">
@@ -669,7 +669,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lkK-qJ-2w0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6991" y="1321"/>
+            <point key="canvasLocation" x="7559" y="977"/>
         </scene>
         <!--Help Text View Controller-->
         <scene sceneID="4nF-DD-Wbn">
@@ -750,7 +750,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_logo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="zYI-pv-MSt">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_GL_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="zYI-pv-MSt">
                                 <rect key="frame" x="648" y="85" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -759,17 +759,15 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="q2t-Hi-jK0">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="q2t-Hi-jK0">
                                         <rect key="frame" x="0.0" y="22" width="768" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q2t-Hi-jK0" id="XDL-MO-DBK">
-                                            <rect key="frame" x="0.0" y="0.0" width="768" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="735" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="FGC-61-LzQ" kind="popover" popoverAnchorView="q2t-Hi-jK0" id="XQO-tW-K2x">
-                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                            </segue>
+                                            <segue destination="OXf-Jd-FXZ" kind="push" identifier="listWIPAuditFiles" id="0Ft-rd-CBy"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -784,14 +782,66 @@
                     <navigationItem key="navigationItem" title="List of WIP Audits" id="o7s-Fw-GMX"/>
                     <connections>
                         <outlet property="wipAuditTable" destination="rYD-5p-YUN" id="xKi-ix-9Dt"/>
-                        <segue destination="NjM-YN-Li5" kind="push" identifier="VerifyQuestions" id="pqk-0L-RP0"/>
-                        <segue destination="kGq-Rt-Of0" kind="push" identifier="ImportMerge" id="x5k-0I-mcE"/>
-                        <segue destination="0p3-Xt-jp1" kind="push" identifier="ContinueAudit" id="2AM-8U-oDD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bbC-2V-P6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2966" y="1090"/>
+        </scene>
+        <!--Audit Files View Controller - List of JSON Files-->
+        <scene sceneID="Tge-Us-0QG">
+            <objects>
+                <viewController id="OXf-Jd-FXZ" customClass="WIPAuditFilesViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="o4I-KT-8Bt"/>
+                        <viewControllerLayoutGuide type="bottom" id="z8C-2H-jTI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wfp-hH-GEm">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2rh-xh-qDU">
+                                <rect key="frame" x="0.0" y="193" width="768" height="832"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="yt0-ia-Qii">
+                                        <rect key="frame" x="0.0" y="86" width="768" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yt0-ia-Qii" id="F6d-x1-BCB">
+                                            <rect key="frame" x="0.0" y="0.0" width="768" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="FGC-61-LzQ" kind="popover" popoverAnchorView="yt0-ia-Qii" id="0JZ-db-bVc">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="OXf-Jd-FXZ" id="CWf-Nw-Kax"/>
+                                    <outlet property="delegate" destination="OXf-Jd-FXZ" id="hBc-eq-8RI"/>
+                                </connections>
+                            </tableView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_GL_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="h6j-Ny-HpB">
+                                <rect key="frame" x="648" y="85" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="List of JSON Files" id="8TA-2l-2sz"/>
+                    <connections>
+                        <outlet property="wipJSONFileTable" destination="2rh-xh-qDU" id="14M-v2-die"/>
+                        <segue destination="0p3-Xt-jp1" kind="push" identifier="ContinueAudit" id="0gA-F9-yeZ"/>
+                        <segue destination="NjM-YN-Li5" kind="push" identifier="VerifyQuestions" id="c2D-KO-MSn"/>
+                        <segue destination="kGq-Rt-Of0" kind="push" identifier="ImportMerge" id="L4x-Go-jzZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="49Y-wf-O7U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4023" y="1090"/>
         </scene>
         <!--Choice Pop Over-->
         <scene sceneID="lPm-4e-3jG">
@@ -858,7 +908,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bt9-Y1-1yC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4051" y="1402"/>
+            <point key="canvasLocation" x="5091" y="1366"/>
         </scene>
         <!--View Controller - List of Open Verify Questions-->
         <scene sceneID="PVA-QN-ort">
@@ -872,7 +922,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_logo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Bv6-TZ-k37">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_GL_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Bv6-TZ-k37">
                                 <rect key="frame" x="648" y="85" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -895,13 +945,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="List of Open Verify Questions" id="Lrl-G0-E4E"/>
-                    <connections>
-                        <segue destination="8Xc-YB-eLc" kind="push" id="tgm-us-G6v"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WNi-ai-qph" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4637" y="230"/>
+            <point key="canvasLocation" x="5661" y="-106"/>
         </scene>
         <!--View Controller - Import & Merge-->
         <scene sceneID="KyX-7H-i0j">
@@ -946,7 +993,7 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_logo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="waA-ce-LDG">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_GL_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="waA-ce-LDG">
                                 <rect key="frame" x="648" y="85" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -957,7 +1004,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8kF-09-iCF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4685" y="2088"/>
+            <point key="canvasLocation" x="5661" y="2048"/>
         </scene>
         <!--View Controller - List of Completed Audits-->
         <scene sceneID="Lce-tt-q6a">
@@ -971,7 +1018,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_logo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="wRs-wI-3zD">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_GL_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="wRs-wI-3zD">
                                 <rect key="frame" x="648" y="85" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -1000,9 +1047,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="List of Completed Audits" id="k7m-zh-7kY"/>
                     <connections>
-                        <segue destination="1LI-tS-8fd" kind="push" id="Cip-mv-hdZ"/>
-                        <segue destination="Ifz-5G-IlN" kind="push" id="I8c-g1-CBJ"/>
-                        <segue destination="4Hf-nJ-YNg" kind="push" id="vVN-cZ-BnU"/>
+                        <segue destination="1LI-tS-8fd" kind="push" identifier="EditClient" id="Cip-mv-hdZ"/>
+                        <segue destination="Ifz-5G-IlN" kind="push" identifier="EditQuestions" id="I8c-g1-CBJ"/>
+                        <segue destination="4Hf-nJ-YNg" kind="push" identifier="ViewReport" id="vVN-cZ-BnU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9u9-ck-Zna" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1076,7 +1123,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_logo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="U4d-Ve-J8m">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_GL_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="U4d-Ve-J8m">
                                 <rect key="frame" x="648" y="85" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -1189,6 +1236,12 @@
                     <view key="view" contentMode="scaleToFill" id="rqg-cg-doE">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_GL_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="NXR-PR-39v">
+                                <rect key="frame" x="648" y="85" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Report Summary" id="P0y-cS-cnH"/>
@@ -1209,7 +1262,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_logo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="iDP-Xt-1Pd">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_GL_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="iDP-Xt-1Pd">
                                 <rect key="frame" x="648" y="85" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -1233,7 +1286,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Edit Questions" id="Iwe-WC-mzq"/>
                     <connections>
-                        <segue destination="8Xc-YB-eLc" kind="push" id="ACP-l6-Xqz"/>
+                        <segue destination="8Xc-YB-eLc" kind="push" identifier="EditQuestions" id="ACP-l6-Xqz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ns-Lo-TOq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1261,11 +1314,6 @@
     </scenes>
     <resources>
         <image name="DNV_GL_logo.png" width="180" height="180"/>
-        <image name="DNV_logo.jpg" width="852" height="1332"/>
-        <image name="Help.png" width="256" height="256"/>
-        <image name="NotApplicable.png" width="60" height="60"/>
-        <image name="NotApplicableGray.png" width="60" height="60"/>
-        <image name="Notes-icon.png" width="256" height="256"/>
         <image name="USI_logo.jpg" width="720" height="720"/>
         <image name="attachmentIcon.png" width="128" height="128"/>
         <image name="camera-lens.jpg" width="610" height="458"/>
@@ -1283,7 +1331,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qAv-AD-QyX"/>
-        <segue reference="tgm-us-G6v"/>
+        <segue reference="2VJ-lN-Cgg"/>
+        <segue reference="0gA-F9-yeZ"/>
     </inferredMetricsTieBreakers>
 </document>

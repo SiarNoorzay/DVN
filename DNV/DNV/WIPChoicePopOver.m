@@ -37,9 +37,9 @@
 
 - (IBAction)wipChoiceMade:(UIButton *)sender {
 
-    [self.listOfWIPVC.wipPopOver dismissPopoverAnimated:YES];
-    self.listOfWIPVC.wipChoice = sender.tag;
-    [self.listOfWIPVC goToWIPChoice];
+    [self.WIPAuditFilesVC.wipPopOver dismissPopoverAnimated:YES];
+    self.WIPAuditFilesVC.wipJSONChoice = sender.tag;
+    [self.WIPAuditFilesVC goToWIPChoice];
 //    [self.clientVC.clientPopOver dismissPopoverAnimated:YES];
 //    self.clientVC.auditType = sender.tag;
 //    [self.clientVC goToChoice];

@@ -85,6 +85,7 @@
     
     ElementSubElementViewController * eleSubEleVC = [segue destinationViewController];
     [eleSubEleVC setAuditPath: self.chosenAuditPath];
+    eleSubEleVC.audType = @"New";
     
     NSLog(@"path to audit: %@", self.chosenAuditPath);
     
@@ -114,13 +115,11 @@
                 NSLog(@"	%@", file.filename);
                 [auditList addObject:folder];
             }
-            
         }
         self.audits = auditList;
         
      //   [self.auditListTable reloadData];
         [self.auditListTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-
     }
 }
 
