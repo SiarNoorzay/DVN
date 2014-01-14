@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ImportMergeViewController : UIViewController
+@interface ImportMergeViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate>
+
+@property (strong, nonatomic) NSArray * jsonFiles;
+@property (strong, nonatomic) NSString * currentFile;
+
+@property (strong, nonatomic) IBOutlet UICollectionView *jsonFileCollection;
 
 @end

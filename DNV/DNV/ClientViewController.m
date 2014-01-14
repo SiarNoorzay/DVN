@@ -164,6 +164,7 @@ loadMetadataFailedWithError:(NSError *)error {
         Folder *folder = [self.clients objectAtIndex:self.chosenClient];
         
         [newAuditVC setDbNewFolderPath: [folder.folderPath stringByAppendingString:@"/New/"]];
+        newAuditVC.companyName = folder.name;
         
     }
     

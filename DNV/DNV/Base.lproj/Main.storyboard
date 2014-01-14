@@ -100,14 +100,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="160"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Folder Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TjJ-ln-gJq">
-                                                    <rect key="frame" x="0.0" y="124" width="150" height="26"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Folder Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="150" translatesAutoresizingMaskIntoConstraints="NO" id="TjJ-ln-gJq">
+                                                    <rect key="frame" x="0.0" y="108" width="150" height="45"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Folder1_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ris-VQ-w8T">
-                                                    <rect key="frame" x="20" y="16" width="110" height="100"/>
+                                                    <rect key="frame" x="20" y="0.0" width="110" height="100"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
@@ -128,7 +128,7 @@
                     <connections>
                         <outlet property="ClientCollectionView" destination="2KQ-TK-JK1" id="eRd-lW-61m"/>
                         <segue destination="5TZ-Hl-Ddb" kind="push" identifier="NewAuditChoice" id="lZi-4T-IYR"/>
-                        <segue destination="RcD-eX-J80" kind="popover" id="yyd-jX-zc8">
+                        <segue destination="RcD-eX-J80" kind="popover" identifier="AuditChoicePopOver" id="yyd-jX-zc8">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
                         <segue destination="MKD-O5-KK7" kind="push" identifier="WIPAuditChoice" id="0eX-iJ-HNq"/>
@@ -240,14 +240,10 @@
                                     <outlet property="delegate" destination="5TZ-Hl-Ddb" id="YAM-MD-YUu"/>
                                 </connections>
                             </tableView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="USI_logo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="1lS-iI-qtY">
-                                <rect key="frame" x="20" y="141" width="125" height="125"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Company Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="400" translatesAutoresizingMaskIntoConstraints="NO" id="YVZ-Ux-OhU">
+                                <rect key="frame" x="184" y="85" width="400" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Unbounded Solutions, Inc." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YVZ-Ux-OhU">
-                                <rect key="frame" x="153" y="202" width="205" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="30"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -257,6 +253,7 @@
                     <navigationItem key="navigationItem" title="Audit Selection" id="Nyp-db-WfG"/>
                     <connections>
                         <outlet property="auditListTable" destination="nBJ-Hs-oGc" id="HVL-Wg-tmm"/>
+                        <outlet property="companyNameLbl" destination="YVZ-Ux-OhU" id="cBT-cl-o3I"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jgb-gR-Aq3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -857,7 +854,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="FGC-61-LzQ" kind="popover" popoverAnchorView="yt0-ia-Qii" id="0JZ-db-bVc">
+                                            <segue destination="FGC-61-LzQ" kind="popover" identifier="WIPOptions" popoverAnchorView="yt0-ia-Qii" id="0JZ-db-bVc">
                                                 <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                             </segue>
                                         </connections>
@@ -1001,10 +998,10 @@
             </objects>
             <point key="canvasLocation" x="5661" y="-106"/>
         </scene>
-        <!--View Controller - Import & Merge-->
+        <!--Import Merge View Controller - Import & Merge-->
         <scene sceneID="KyX-7H-i0j">
             <objects>
-                <viewController id="kGq-Rt-Of0" sceneMemberID="viewController">
+                <viewController id="kGq-Rt-Of0" customClass="ImportMergeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rfj-TH-lxr"/>
                         <viewControllerLayoutGuide type="bottom" id="tZL-pk-jkQ"/>
@@ -1014,44 +1011,54 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XgX-l4-J6a">
-                                <rect key="frame" x="0.0" y="193" width="768" height="965"/>
+                                <rect key="frame" x="0.0" y="192" width="768" height="832"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iK3-hh-9jr">
-                                    <size key="itemSize" width="150" height="150"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="40" minimumInteritemSpacing="10" id="iK3-hh-9jr">
+                                    <size key="itemSize" width="200" height="200"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="40" minY="0.0" maxX="40" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="vYr-Jl-vfT">
-                                        <rect key="frame" x="10" y="64" width="150" height="150"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="JSONFileCell" id="vYr-Jl-vfT">
+                                        <rect key="frame" x="40" y="64" width="200" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Filename" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gaL-8d-Ozq">
-                                                    <rect key="frame" x="40" y="38" width="70" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Filename" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="gaL-8d-Ozq">
+                                                    <rect key="frame" x="0.0" y="120" width="200" height="60"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="AuditFile_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="R2C-xN-JNE">
+                                                    <rect key="frame" x="45" y="7" width="110" height="105"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="0.87" colorSpace="calibratedWhite"/>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="kGq-Rt-Of0" id="Qjk-VO-Lh7"/>
+                                    <outlet property="delegate" destination="kGq-Rt-Of0" id="ZNT-xG-LbK"/>
+                                </connections>
                             </collectionView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_GL_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="waA-ce-LDG">
-                                <rect key="frame" x="648" y="85" width="100" height="100"/>
+                                <rect key="frame" x="648" y="84" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Import &amp; Merge" id="eU5-3H-cIK"/>
+                    <connections>
+                        <outlet property="jsonFileCollection" destination="XgX-l4-J6a" id="cp5-I5-iM9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8kF-09-iCF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1364,13 +1371,13 @@
         </scene>
     </scenes>
     <resources>
+        <image name="AuditFile_icon.png" width="128" height="128"/>
         <image name="DNV_GL_logo.png" width="180" height="180"/>
         <image name="Folder1_icon.png" width="1024" height="1024"/>
         <image name="Help.png" width="256" height="256"/>
         <image name="NotApplicable.png" width="60" height="60"/>
         <image name="NotApplicableGray.png" width="60" height="60"/>
         <image name="Notes-icon.png" width="256" height="256"/>
-        <image name="USI_logo.jpg" width="720" height="720"/>
         <image name="attachmentIcon.png" width="128" height="128"/>
         <image name="camera-lens.jpg" width="610" height="458"/>
         <image name="icon_button_verify.png" width="146" height="131"/>
@@ -1387,7 +1394,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="qAv-AD-QyX"/>
         <segue reference="2VJ-lN-Cgg"/>
-        <segue reference="0gA-F9-yeZ"/>
     </inferredMetricsTieBreakers>
 </document>

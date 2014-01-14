@@ -34,6 +34,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.companyNameLbl.text = self.companyName;
+    
     NSLog(@"\n\nFolder Path recieved: %@", self.dbNewFolderPath);
     
     self.auditListTable.delegate = self;

@@ -12,6 +12,7 @@
 #import "WIPChoicePopOver.h"
 #import "ElementSubElementViewController.h"
 #import "VerifyQuestionsViewController.h"
+#import "ImportMergeViewController.h"
 
 @interface WIPAuditFilesViewController ()<DBRestClientDelegate>
 
@@ -81,12 +82,6 @@
     [self.wipPopOver presentPopoverFromRect:cell.frame inView:self.wipJSONFileTable permittedArrowDirections:UIPopoverArrowDirectionAny animated:true];
     
     self.chosenJSONfile = indexPath.row;
-//
-//    if(indexPath.section == 0)
-//        _WIPType = @"localWIP";
-//    else
-//        _WIPType = @"importWIP";
-    
 }
 
 #pragma mark Dropbox methods
@@ -157,6 +152,14 @@ loadMetadataFailedWithError:(NSError *)error {
 //        
 //        
 //    }
+    
+    if ([segue.identifier isEqualToString:@"ImportMerge"]){
+        
+        ImportMergeViewController * importVC = [segue destinationViewController];
+        
+        importVC.jsonFiles = self.JSONList;
+        importVC.currentFile = self.JSONList[self.chosenJSONfile];
+    }
     
 //    NSIndexPath *indexPath = self.subElementTable.indexPathForSelectedRow;
 //    

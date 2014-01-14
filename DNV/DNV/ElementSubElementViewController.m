@@ -227,7 +227,6 @@ loadMetadataFailedWithError:(NSError *)error {
         
         [self.elementPicker reloadAllComponents];
         
-
     }
     
 }
