@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ListOfWIPViewController.h"
+#import "WIPAuditFilesViewController.h"
 
 @interface WIPChoicePopOver : UIViewController
 
-@property (weak, nonatomic) ListOfWIPViewController * listOfWIPVC;
+@property (weak, nonatomic) WIPAuditFilesViewController * WIPAuditFilesVC;
 
 - (IBAction)wipChoiceMade:(UIButton *)sender;
 

@@ -181,25 +181,7 @@
 //                else
 //                    NSLog(@"How did we get here");
             
-        }
-//        NSLog(@"Folder '%@' contains:", metadata.path);
-//        NSMutableArray *auditList = [[NSMutableArray alloc]init];
-//        for (DBMetadata *file in metadata.contents) {
-//            if (file.isDirectory) {
-//                Folder *folder = [[Folder alloc]init];
-//                folder.folderPath = file.path;
-//                folder.contents = file.contents;
-//                folder.name = file.filename;
-//                NSLog(@"	%@", file.filename);
-//                [auditList addObject:folder];
-//            }
-//            
-//        }
-//        self.audits = auditList;
-//        
-//        //   [self.auditListTable reloadData];
-//        [self.auditListTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-        
+        }        
     }
 }
 

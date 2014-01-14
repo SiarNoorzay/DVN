@@ -21,6 +21,7 @@
 		7627972E1871D53A00F22E73 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762797101871D53A00F22E73 /* UIKit.framework */; };
 		762797361871D53A00F22E73 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 762797341871D53A00F22E73 /* InfoPlist.strings */; };
 		762797381871D53A00F22E73 /* DNVTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 762797371871D53A00F22E73 /* DNVTests.m */; };
+		76A0DFBD18847B880038FD61 /* WIPAuditFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A0DFBC18847B880038FD61 /* WIPAuditFilesViewController.m */; };
 		76A2B22F187362390052F080 /* DNV_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76A2B22E187362390052F080 /* DNV_logo.jpg */; };
 		76A2BE3C187DBF7A0056CC22 /* ElementSubElementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A2BE3B187DBF7A0056CC22 /* ElementSubElementViewController.m */; };
 		76A2BE3F187DC2C70056CC22 /* check-mark-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A2BE3D187DC2C70056CC22 /* check-mark-button.png */; };
@@ -82,6 +83,8 @@
 		762797331871D53A00F22E73 /* DNVTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DNVTests-Info.plist"; sourceTree = "<group>"; };
 		762797351871D53A00F22E73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		762797371871D53A00F22E73 /* DNVTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DNVTests.m; sourceTree = "<group>"; };
+		76A0DFBB18847B880038FD61 /* WIPAuditFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIPAuditFilesViewController.h; sourceTree = "<group>"; };
+		76A0DFBC18847B880038FD61 /* WIPAuditFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIPAuditFilesViewController.m; sourceTree = "<group>"; };
 		76A2B22E187362390052F080 /* DNV_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = DNV_logo.jpg; sourceTree = "<group>"; };
 		76A2BE3A187DBF7A0056CC22 /* ElementSubElementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementSubElementViewController.h; sourceTree = "<group>"; };
 		76A2BE3B187DBF7A0056CC22 /* ElementSubElementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementSubElementViewController.m; sourceTree = "<group>"; };
@@ -208,6 +211,7 @@
 				76A8AFF5187EFF13007531A9 /* QuestionsViewController */,
 				76E81F1F187F0B4300441F62 /* AnswersViewController */,
 				76A8AFF7187F0A66007531A9 /* ListOfWIPViewController */,
+				76A0DFBA18847B480038FD61 /* WIPAuditFilesViewController */,
 				762797211871D53A00F22E73 /* ViewController.h */,
 				762797221871D53A00F22E73 /* ViewController.m */,
 				762797241871D53A00F22E73 /* Images.xcassets */,
@@ -248,6 +252,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		76A0DFBA18847B480038FD61 /* WIPAuditFilesViewController */ = {
+			isa = PBXGroup;
+			children = (
+				76A0DFBB18847B880038FD61 /* WIPAuditFilesViewController.h */,
+				76A0DFBC18847B880038FD61 /* WIPAuditFilesViewController.m */,
+				76A8AFFB187F12F8007531A9 /* WIPChoicePopOver */,
+			);
+			name = WIPAuditFilesViewController;
+			sourceTree = "<group>";
+		};
 		76A2BE39187DBC5A0056CC22 /* ElementSubElementViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -271,7 +285,6 @@
 			children = (
 				76A8AFF8187F0B00007531A9 /* ListOfWIPViewController.h */,
 				76A8AFF9187F0B00007531A9 /* ListOfWIPViewController.m */,
-				76A8AFFB187F12F8007531A9 /* WIPChoicePopOver */,
 			);
 			name = ListOfWIPViewController;
 			sourceTree = "<group>";
@@ -494,6 +507,7 @@
 				76AB3CBA187B20C70019603F /* Elements.m in Sources */,
 				76E81F1E187F071C00441F62 /* AnswersViewController.m in Sources */,
 				76AB3CB7187B20520019603F /* Report.m in Sources */,
+				76A0DFBD18847B880038FD61 /* WIPAuditFilesViewController.m in Sources */,
 				76DBFA83187CAD6300F84282 /* MainWindowPopOver.m in Sources */,
 				76AB3CC0187B21700019603F /* Questions.m in Sources */,
 			);
