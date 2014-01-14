@@ -7,10 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VoiceRecognizer.h"
 
-@interface NotesViewController : UIViewController
-@property (strong, nonatomic) IBOutlet UITextView *notesTextView;
+
+@interface NotesViewController : UIViewController<UITextViewDelegate>
+
 @property (strong,nonatomic) NSString *text;
 
+@property (strong, nonatomic) IBOutlet UITextView *notesTextView;
+@property (strong, nonatomic) IBOutlet UIButton *startStopButton;
+@property (strong, nonatomic) IBOutlet UITextView *heardWordsTextView;
+
+@property (strong, atomic) VoiceRecognizer *vr;
+
+
+
+- (IBAction)startStopButtonPushed:(id)sender;
+- (IBAction)submitButtonPushed:(id)sender;
 
 @end
