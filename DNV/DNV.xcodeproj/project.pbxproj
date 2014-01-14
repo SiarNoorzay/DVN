@@ -21,6 +21,8 @@
 		7627972E1871D53A00F22E73 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762797101871D53A00F22E73 /* UIKit.framework */; };
 		762797361871D53A00F22E73 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 762797341871D53A00F22E73 /* InfoPlist.strings */; };
 		762797381871D53A00F22E73 /* DNVTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 762797371871D53A00F22E73 /* DNVTests.m */; };
+		769D3CE6188580C5002DF3B8 /* VerifyQuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 769D3CE5188580C5002DF3B8 /* VerifyQuestionsViewController.m */; };
+		769D3CEA1885A763002DF3B8 /* ImportMergeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 769D3CE91885A763002DF3B8 /* ImportMergeViewController.m */; };
 		76A0DFBD18847B880038FD61 /* WIPAuditFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A0DFBC18847B880038FD61 /* WIPAuditFilesViewController.m */; };
 		76A0DFC11885045A0038FD61 /* AuditFile_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A0DFBE1885045A0038FD61 /* AuditFile_icon.png */; };
 		76A0DFC21885045A0038FD61 /* Folder1_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A0DFBF1885045A0038FD61 /* Folder1_icon.png */; };
@@ -108,6 +110,10 @@
 		762797331871D53A00F22E73 /* DNVTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DNVTests-Info.plist"; sourceTree = "<group>"; };
 		762797351871D53A00F22E73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		762797371871D53A00F22E73 /* DNVTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DNVTests.m; sourceTree = "<group>"; };
+		769D3CE4188580C5002DF3B8 /* VerifyQuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyQuestionsViewController.h; sourceTree = "<group>"; };
+		769D3CE5188580C5002DF3B8 /* VerifyQuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyQuestionsViewController.m; sourceTree = "<group>"; };
+		769D3CE81885A763002DF3B8 /* ImportMergeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportMergeViewController.h; sourceTree = "<group>"; };
+		769D3CE91885A763002DF3B8 /* ImportMergeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImportMergeViewController.m; sourceTree = "<group>"; };
 		76A0DFBB18847B880038FD61 /* WIPAuditFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIPAuditFilesViewController.h; sourceTree = "<group>"; };
 		76A0DFBC18847B880038FD61 /* WIPAuditFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIPAuditFilesViewController.m; sourceTree = "<group>"; };
 		76A0DFBE1885045A0038FD61 /* AuditFile_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AuditFile_icon.png; sourceTree = "<group>"; };
@@ -274,6 +280,8 @@
 				76E81F1F187F0B4300441F62 /* AnswersViewController */,
 				76A8AFF7187F0A66007531A9 /* ListOfWIPViewController */,
 				76A0DFBA18847B480038FD61 /* WIPAuditFilesViewController */,
+				769D3CE31885808D002DF3B8 /* VerifyQuestionsViewController */,
+				769D3CE7188599A6002DF3B8 /* ImportMergeViewController */,
 				762797211871D53A00F22E73 /* ViewController.h */,
 				762797221871D53A00F22E73 /* ViewController.m */,
 				762797241871D53A00F22E73 /* Images.xcassets */,
@@ -313,6 +321,24 @@
 				762797341871D53A00F22E73 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		769D3CE31885808D002DF3B8 /* VerifyQuestionsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				769D3CE4188580C5002DF3B8 /* VerifyQuestionsViewController.h */,
+				769D3CE5188580C5002DF3B8 /* VerifyQuestionsViewController.m */,
+			);
+			name = VerifyQuestionsViewController;
+			sourceTree = "<group>";
+		};
+		769D3CE7188599A6002DF3B8 /* ImportMergeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				769D3CE81885A763002DF3B8 /* ImportMergeViewController.h */,
+				769D3CE91885A763002DF3B8 /* ImportMergeViewController.m */,
+			);
+			name = ImportMergeViewController;
 			sourceTree = "<group>";
 		};
 		76A0DFBA18847B480038FD61 /* WIPAuditFilesViewController */ = {
@@ -614,6 +640,7 @@
 				76AB3CC3187B22300019603F /* Answers.m in Sources */,
 				76D4A339187CE5F6007AB1A9 /* AuditSelectionViewController.m in Sources */,
 				76E81F1B187EE78C00441F62 /* QuestionsViewController.m in Sources */,
+				769D3CE6188580C5002DF3B8 /* VerifyQuestionsViewController.m in Sources */,
 				76AB3CB1187B17410019603F /* Client.m in Sources */,
 				76A8AFFA187F0B00007531A9 /* ListOfWIPViewController.m in Sources */,
 				7627971D1871D53A00F22E73 /* AppDelegate.m in Sources */,
@@ -622,6 +649,7 @@
 				76D96A45187B585900961260 /* ClientViewController.m in Sources */,
 				76A8B001187F28AA007531A9 /* WIPChoicePopOver.m in Sources */,
 				76AB3CBD187B212C0019603F /* SubElements.m in Sources */,
+				769D3CEA1885A763002DF3B8 /* ImportMergeViewController.m in Sources */,
 				76D96A3E187B07EA00961260 /* User.m in Sources */,
 				762797191871D53A00F22E73 /* main.m in Sources */,
 				76A2BE3C187DBF7A0056CC22 /* ElementSubElementViewController.m in Sources */,
