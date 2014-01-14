@@ -60,7 +60,12 @@ BOOL keyboardShouldMove = false;
     [self.view addGestureRecognizer:swipeLeftGestureRecognizer];
     [self.view addGestureRecognizer:swipeRightGestureRecognizer];
 
-
+    
+    [self.thumbsDownButton setImage:[UIImage imageNamed:@"thumbs-down.jpg"] forState:UIControlStateSelected];
+    [self.thumbsDownButton setImage:[UIImage imageNamed:@"thumbs-down-button-Gray.jpg"] forState:UIControlStateNormal];
+    
+    [self.thumbsUpButton setImage:[UIImage imageNamed:@"thumbs-up.jpg"] forState:UIControlStateSelected];
+    [self.thumbsUpButton setImage:[UIImage imageNamed:@"thumbs-up-buttonGray.jpg"] forState:UIControlStateNormal];
 
 }
 - (void)keyboardDidShow:(NSNotification *)notification
@@ -93,7 +98,7 @@ BOOL keyboardShouldMove = false;
 {
     self.tableCell.hidden = true;
     self.answersTableView.hidden = true;
-    self.percentSliderLabel.hidden = true;
+    self.percentSliderTextField.hidden = true;
     self.percentSlider.hidden = true;
     self.picker.hidden = true;
     
@@ -106,7 +111,7 @@ BOOL keyboardShouldMove = false;
     self.pointsLabel.text = @"0";
     answered = false;
     self.percentSlider.value = 50;
-    self.percentSliderLabel.text = @"";
+    self.percentSliderTextField.text = @"";
     
     
     
@@ -133,7 +138,7 @@ BOOL keyboardShouldMove = false;
             break;
         case 2: //percentage
             self.percentSlider.hidden = false;
-            self.percentSliderLabel.hidden = false;
+            self.percentSliderTextField.hidden = false;
             break;
         case 3: //partial
             self.answersTableView.hidden = false;
@@ -307,7 +312,7 @@ BOOL keyboardShouldMove = false;
 }
 
 - (IBAction)sliderChanged:(id)sender {
-    self.percentSliderLabel.text = [NSString stringWithFormat:@"%.2f %%", self.percentSlider.value];
+    self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f %%", self.percentSlider.value];
     self.pointsLabel.text = [NSString stringWithFormat:@"%.2f", (self.percentSlider.value * self.question.pointsPossible/100)];
     answered = true;
     
@@ -330,7 +335,6 @@ BOOL keyboardShouldMove = false;
         self.currentPosition++;
         [self refreshAnswerView];
     }
-    
 }
 
 - (IBAction)previousButtonPushed:(id)sender {
@@ -339,10 +343,7 @@ BOOL keyboardShouldMove = false;
         self.currentPosition--;
         [self refreshAnswerView];
     }
-    
 }
-
-
 #pragma mark UITextField Delegate
 -(IBAction)textFieldDidBeginEditing:(UITextField *)textField
 {
@@ -387,6 +388,7 @@ BOOL keyboardShouldMove = false;
 - (IBAction)thumbsUpPushed:(id)sender {
     self.question.isThumbsUp = !self.question.isThumbsUp;
     [self.thumbsUpButton setSelected: !self.thumbsUpButton.selected];
+
 }
 
 - (IBAction)thumbsDownPushed:(id)sender {
@@ -402,6 +404,29 @@ BOOL keyboardShouldMove = false;
 - (IBAction)verifyButtonPushed:(id)sender {
     self.question.needsVerifying = !self.question.needsVerifying;
     [self.verifyButton setSelected: !self.verifyButton.selected];
+}
+
+- (IBAction)percentTextChanged:(id)sender {
+    
+    float value = [self.percentSliderTextField.text floatValue];
+    if (value < 0) value = 0;
+    if (value > 100) value = 100;
+    self.percentSlider.value = value;
+    self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f", value];
+    if ([self.percentSliderTextField canResignFirstResponder]) [self.percentSliderTextField resignFirstResponder];
+}
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if( textField == self.percentSliderTextField)
+    {
+        if( [string intValue] == 0 && ![string isEqualToString:@"0"] && [string length] > 0 )
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 - (IBAction)speechButtonPushed:(id)sender {

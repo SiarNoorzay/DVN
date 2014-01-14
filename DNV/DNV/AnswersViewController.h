@@ -40,6 +40,7 @@
 - (IBAction)helpButtonPushed:(id)sender;
 - (IBAction)notesButtonPushed:(id)sender;
 - (IBAction)verifyButtonPushed:(id)sender;
+- (IBAction)percentTextChanged:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UITableView *answersTableView;
 @property (strong, nonatomic) IBOutlet UITableViewCell *tableCell;
@@ -60,6 +61,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *questionText;
 @property (strong, nonatomic) IBOutlet UILabel *pointsLabel;
 @property (strong, nonatomic) IBOutlet UILabel *questionNumLabel;
-@property (strong, nonatomic) IBOutlet UILabel *percentSliderLabel;
+@property (strong, nonatomic) IBOutlet UITextField *percentSliderTextField;
 
 @end

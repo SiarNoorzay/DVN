@@ -72,6 +72,22 @@ int subEleNumber;
     
     return 1;
 }
+-(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+{
+    self.ele = [[Elements alloc]initWithElement:self.listOfElements[row]];
+
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, pickerView.frame.size.width, 60)];
+    UIColor *backColor = [[UIColor alloc]initWithRed:153.0 green:217.0 blue:239.0 alpha:.5];
+
+    label.backgroundColor = backColor;
+    label.textColor = [UIColor blackColor];
+    label.tintColor = [UIColor greenColor];
+    label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:24];
+    label.text = self.ele.name; // ASCII 65 is "A"
+    [label setTextAlignment:NSTextAlignmentCenter];
+    
+    return label;
+}
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
     
@@ -79,12 +95,12 @@ int subEleNumber;
     return [self.listOfElements count];
 }
 
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row   forComponent:(NSInteger)component{
+/*-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row   forComponent:(NSInteger)component{
 
     self.ele = [[Elements alloc]initWithElement:self.listOfElements[row]];
 
     return self.ele.name;
-}
+}*/
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     
@@ -223,10 +239,14 @@ loadMetadataFailedWithError:(NSError *)error {
         
         //[self.elementPicker reloadAllComponents];
         
-        [self.elementPicker selectRow:0 inComponent:0 animated:false];
         
         [self.elementPicker reloadAllComponents];
         
+        [self.elementPicker selectRow:0 inComponent:0 animated:false];
+        Elements *tempEle = [[Elements alloc]initWithElement:[self.listOfElements objectAtIndex:0]];
+        self.listOfSubElements = tempEle.Subelements;
+        
+        [self.subElementTable reloadData];
 
     }
     
