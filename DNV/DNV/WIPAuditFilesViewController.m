@@ -142,4 +142,23 @@ loadMetadataFailedWithError:(NSError *)error {
     }
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    if ([segue.identifier isEqualToString:@"ContinueAudit"]) {
+        ElementSubElementViewController * eleSubEleVC = [segue destinationViewController];
+        
+        [eleSubEleVC setAuditPath: [self.wipAuditPath stringByAppendingPathComponent:self.JSONList[self.chosenJSONfile]]];
+        eleSubEleVC.audType = self.wipAuditType;
+        
+    }
+    
+//    NSIndexPath *indexPath = self.subElementTable.indexPathForSelectedRow;
+//    
+//    QuestionsViewController * questionsVC = [segue destinationViewController];
+//    
+//    self.subEle = [[SubElements alloc]initWithSubElement:self.listOfSubElements[indexPath.row]];
+//    questionsVC.questionArray = self.subEle.Questions;
+}
+
+
 @end

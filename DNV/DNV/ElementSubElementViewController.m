@@ -43,9 +43,18 @@
 //        restClient.delegate = self;
 //    }
     
-    [[self restClient] loadMetadata:self.auditPath];
+//    [self loadDropboxFile:self.auditPath];
     
-//    [self loadDropboxFile:@"sampleAudit.json"];
+    if([self.audType isEqualToString:@"New"])
+    {
+        [[self restClient] loadMetadata:self.auditPath];
+    }
+    else if([self.audType isEqualToString:@"importWIP"])
+    {
+        _directoryPath = [self setFilePath];
+        
+        [[self restClient] loadFile:self.auditPath intoPath:_directoryPath];
+    }
     
 }
 
@@ -126,12 +135,21 @@
     
     NSString *filename = [self.auditPath stringByAppendingPathComponent:file];
     
+    NSLog(@"Filename: %@", filename);
+    
+    _directoryPath = [self setFilePath];
+    
+    [restClient loadFile:filename intoPath:_directoryPath];
+}
+
+-(NSString *)setFilePath{
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents directory
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"sampleAuditFromDB.json"];
-    _directoryPath = filePath;
     
-    [restClient loadFile:filename intoPath:filePath];
+    return filePath;
+    
 }
 
 #pragma mark Dropbox methods
@@ -147,41 +165,12 @@
 - (void)restClient:(DBRestClient *)client loadedMetadata:(DBMetadata *)metadata {
     if (metadata.isDirectory) {
         
-        if([self.audType isEqualToString:@"New"])
-        {
-            DBMetadata * JSONFile = metadata.contents[0];
+        DBMetadata * JSONFile = metadata.contents[0];
             
-            NSLog(@"metadata content: %@", metadata.contents[0]);
-            NSLog(@"JSONFile: %@", JSONFile.filename);
+        NSLog(@"metadata content: %@", metadata.contents[0]);
+        NSLog(@"JSONFile: %@", JSONFile.filename);
             
-            [self loadDropboxFile:JSONFile.filename];
-        }
-        else if([self.audType isEqualToString:@"importWIP"])
-        {
-            self.JSONList = [[NSMutableArray alloc]init];
-            for (DBMetadata * file in metadata.contents) {
-                NSLog(@"%@", file.filename);
-                [self.JSONList addObject:file.filename];
-            }
-        
-            UIAlertView * JSONOptions =  [[UIAlertView alloc] initWithTitle:@"JSON File Select" message:@"Select the appropriate JSON file" delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
-            
-            // ObjC Fast Enumeration
-            for (NSString * button in self.JSONList) {
-                [JSONOptions addButtonWithTitle:button];
-            }
-            
-            [JSONOptions addButtonWithTitle:@"Cancel"];
-            JSONOptions.cancelButtonIndex = [self.JSONList count];
-            
-            [JSONOptions show];
-            
-//                if ([file.filename rangeOfString:@".json"].location == NSNotFound) {
-//                }
-//                else
-//                    NSLog(@"How did we get here");
-            
-        }        
+        [self loadDropboxFile:JSONFile.filename];
     }
 }
 
@@ -202,24 +191,6 @@ loadMetadataFailedWithError:(NSError *)error {
 
 - (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
     NSLog(@"There was an error loading the file - %@", error);
-}
-
-#pragma mark Alertview method
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    NSLog(@"Alert Button Index: %d", buttonIndex);
-    
-    [self loadDropboxFile:self.JSONList[buttonIndex]];
-    
-//    if (buttonIndex == 0)
-//    {
-//        //Code for OK button
-//    }
-//    if (buttonIndex == 1)
-//    {
-//        //Code for download button
-//    }
 }
 
 #pragma mark method to get the Audit Object

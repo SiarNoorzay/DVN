@@ -15,8 +15,6 @@
     DBRestClient * restClient;
 }
 
-
-
 @property (strong, nonatomic) NSString * wipAuditType;
 @property (strong, nonatomic) NSString * wipAuditPath;
 @property (strong, nonatomic) NSMutableArray * JSONList;

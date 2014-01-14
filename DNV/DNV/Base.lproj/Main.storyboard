@@ -652,7 +652,7 @@
             </objects>
             <point key="canvasLocation" x="2966" y="1090"/>
         </scene>
-        <!--Audit Files View Controller-->
+        <!--Audit Files View Controller - List of JSON Files-->
         <scene sceneID="Tge-Us-0QG">
             <objects>
                 <viewController id="OXf-Jd-FXZ" customClass="WIPAuditFilesViewController" sceneMemberID="viewController">
@@ -695,7 +695,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="8TA-2l-2sz"/>
+                    <navigationItem key="navigationItem" title="List of JSON Files" id="8TA-2l-2sz"/>
                     <connections>
                         <outlet property="wipJSONFileTable" destination="2rh-xh-qDU" id="14M-v2-die"/>
                         <segue destination="0p3-Xt-jp1" kind="push" identifier="ContinueAudit" id="0gA-F9-yeZ"/>
