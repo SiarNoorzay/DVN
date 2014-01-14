@@ -14,5 +14,8 @@
 @property (nonatomic) NSArray * questionArray;
 @property (strong, nonatomic) IBOutlet UITableView *questionsTableView;
 
+@property(nonatomic) int elementNumber;
+@property(nonatomic) int subEleNumber;
+
 
 @end

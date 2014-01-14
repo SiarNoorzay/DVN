@@ -51,6 +51,21 @@
 		76E81F18187DB92600441F62 /* Folder.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F17187DB92600441F62 /* Folder.m */; };
 		76E81F1B187EE78C00441F62 /* QuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F1A187EE78C00441F62 /* QuestionsViewController.m */; };
 		76E81F1E187F071C00441F62 /* AnswersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F1D187F071C00441F62 /* AnswersViewController.m */; };
+		76E81F21188436A500441F62 /* thumbs-up.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F20188436A500441F62 /* thumbs-up.jpg */; };
+		76E81F2318843F1A00441F62 /* thumbs-down.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F2218843F1A00441F62 /* thumbs-down.jpg */; };
+		76E81F2518845E7500441F62 /* NotApplicable.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F2418845E7500441F62 /* NotApplicable.png */; };
+		76E81F271884744D00441F62 /* siriMic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F261884744D00441F62 /* siriMic.jpg */; };
+		76E81F291884784300441F62 /* camera-lens.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F281884784300441F62 /* camera-lens.jpg */; };
+		76E81F2B1884792C00441F62 /* attachmentIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F2A1884792C00441F62 /* attachmentIcon.png */; };
+		76E81F2D188479AC00441F62 /* Help.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F2C188479AC00441F62 /* Help.png */; };
+		76E81F2F18847A6D00441F62 /* Notes-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F2E18847A6D00441F62 /* Notes-icon.png */; };
+		76E81F3118847FF700441F62 /* NotApplicableGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F3018847FF700441F62 /* NotApplicableGray.png */; };
+		76E81F33188480A300441F62 /* thumbs-up-buttonGray.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F32188480A300441F62 /* thumbs-up-buttonGray.jpg */; };
+		76E81F35188480AA00441F62 /* thumbs-down-button-Gray.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F34188480AA00441F62 /* thumbs-down-button-Gray.jpg */; };
+		76E81F371884823F00441F62 /* icon_button_verify.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F361884823F00441F62 /* icon_button_verify.png */; };
+		76E81F391884863700441F62 /* icon_button_verifyGRAY.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F381884863700441F62 /* icon_button_verifyGRAY.png */; };
+		76E81F3C18848C7F00441F62 /* helpTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F3B18848C7F00441F62 /* helpTextViewController.m */; };
+		76E81F3F18849DB500441F62 /* NotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F3E18849DB500441F62 /* NotesViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +146,23 @@
 		76E81F1A187EE78C00441F62 /* QuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsViewController.m; sourceTree = "<group>"; };
 		76E81F1C187F071C00441F62 /* AnswersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswersViewController.h; sourceTree = "<group>"; };
 		76E81F1D187F071C00441F62 /* AnswersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswersViewController.m; sourceTree = "<group>"; };
+		76E81F20188436A500441F62 /* thumbs-up.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "thumbs-up.jpg"; sourceTree = "<group>"; };
+		76E81F2218843F1A00441F62 /* thumbs-down.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "thumbs-down.jpg"; sourceTree = "<group>"; };
+		76E81F2418845E7500441F62 /* NotApplicable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotApplicable.png; sourceTree = "<group>"; };
+		76E81F261884744D00441F62 /* siriMic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = siriMic.jpg; sourceTree = "<group>"; };
+		76E81F281884784300441F62 /* camera-lens.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "camera-lens.jpg"; sourceTree = "<group>"; };
+		76E81F2A1884792C00441F62 /* attachmentIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attachmentIcon.png; sourceTree = "<group>"; };
+		76E81F2C188479AC00441F62 /* Help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Help.png; sourceTree = "<group>"; };
+		76E81F2E18847A6D00441F62 /* Notes-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Notes-icon.png"; sourceTree = "<group>"; };
+		76E81F3018847FF700441F62 /* NotApplicableGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotApplicableGray.png; sourceTree = "<group>"; };
+		76E81F32188480A300441F62 /* thumbs-up-buttonGray.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "thumbs-up-buttonGray.jpg"; sourceTree = "<group>"; };
+		76E81F34188480AA00441F62 /* thumbs-down-button-Gray.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "thumbs-down-button-Gray.jpg"; sourceTree = "<group>"; };
+		76E81F361884823F00441F62 /* icon_button_verify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_button_verify.png; sourceTree = "<group>"; };
+		76E81F381884863700441F62 /* icon_button_verifyGRAY.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_button_verifyGRAY.png; sourceTree = "<group>"; };
+		76E81F3A18848C7F00441F62 /* helpTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = helpTextViewController.h; sourceTree = "<group>"; };
+		76E81F3B18848C7F00441F62 /* helpTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = helpTextViewController.m; sourceTree = "<group>"; };
+		76E81F3D18849DB500441F62 /* NotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotesViewController.h; path = NotesViewController/NotesViewController.h; sourceTree = "<group>"; };
+		76E81F3E18849DB500441F62 /* NotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotesViewController.m; path = NotesViewController/NotesViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,6 +367,19 @@
 		76D4A33A187CE832007AB1A9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				76E81F381884863700441F62 /* icon_button_verifyGRAY.png */,
+				76E81F361884823F00441F62 /* icon_button_verify.png */,
+				76E81F2E18847A6D00441F62 /* Notes-icon.png */,
+				76E81F2C188479AC00441F62 /* Help.png */,
+				76E81F2A1884792C00441F62 /* attachmentIcon.png */,
+				76E81F281884784300441F62 /* camera-lens.jpg */,
+				76E81F261884744D00441F62 /* siriMic.jpg */,
+				76E81F3018847FF700441F62 /* NotApplicableGray.png */,
+				76E81F2418845E7500441F62 /* NotApplicable.png */,
+				76E81F32188480A300441F62 /* thumbs-up-buttonGray.jpg */,
+				76E81F20188436A500441F62 /* thumbs-up.jpg */,
+				76E81F34188480AA00441F62 /* thumbs-down-button-Gray.jpg */,
+				76E81F2218843F1A00441F62 /* thumbs-down.jpg */,
 				76A721A6188061E200E34CFA /* DNV_GL_logo.png */,
 				76A2BE3D187DC2C70056CC22 /* check-mark-button.png */,
 				76A2BE3E187DC2C70056CC22 /* USI_logo.jpg */,
@@ -376,6 +421,10 @@
 			children = (
 				76E81F1C187F071C00441F62 /* AnswersViewController.h */,
 				76E81F1D187F071C00441F62 /* AnswersViewController.m */,
+				76E81F3A18848C7F00441F62 /* helpTextViewController.h */,
+				76E81F3B18848C7F00441F62 /* helpTextViewController.m */,
+				76E81F3D18849DB500441F62 /* NotesViewController.h */,
+				76E81F3E18849DB500441F62 /* NotesViewController.m */,
 			);
 			name = AnswersViewController;
 			sourceTree = "<group>";
@@ -461,14 +510,27 @@
 			files = (
 				76A2BE40187DC2C70056CC22 /* USI_logo.jpg in Resources */,
 				76E81F13187C908100441F62 /* usersNOTDB.json in Resources */,
+				76E81F2F18847A6D00441F62 /* Notes-icon.png in Resources */,
+				76E81F2318843F1A00441F62 /* thumbs-down.jpg in Resources */,
+				76E81F271884744D00441F62 /* siriMic.jpg in Resources */,
 				762797251871D53A00F22E73 /* Images.xcassets in Resources */,
+				76E81F2518845E7500441F62 /* NotApplicable.png in Resources */,
+				76E81F3118847FF700441F62 /* NotApplicableGray.png in Resources */,
 				762797171871D53A00F22E73 /* InfoPlist.strings in Resources */,
 				76A721A7188061E200E34CFA /* DNV_GL_logo.png in Resources */,
+				76E81F21188436A500441F62 /* thumbs-up.jpg in Resources */,
 				76E81F0C187B559000441F62 /* sampleAudit.json in Resources */,
+				76E81F33188480A300441F62 /* thumbs-up-buttonGray.jpg in Resources */,
+				76E81F35188480AA00441F62 /* thumbs-down-button-Gray.jpg in Resources */,
+				76E81F2B1884792C00441F62 /* attachmentIcon.png in Resources */,
 				76E81F15187CBC0500441F62 /* users.json in Resources */,
 				762797201871D53A00F22E73 /* Main.storyboard in Resources */,
+				76E81F391884863700441F62 /* icon_button_verifyGRAY.png in Resources */,
+				76E81F371884823F00441F62 /* icon_button_verify.png in Resources */,
 				76A2B22F187362390052F080 /* DNV_logo.jpg in Resources */,
 				76A2BE3F187DC2C70056CC22 /* check-mark-button.png in Resources */,
+				76E81F291884784300441F62 /* camera-lens.jpg in Resources */,
+				76E81F2D188479AC00441F62 /* Help.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +560,8 @@
 				76AB3CB1187B17410019603F /* Client.m in Sources */,
 				76A8AFFA187F0B00007531A9 /* ListOfWIPViewController.m in Sources */,
 				7627971D1871D53A00F22E73 /* AppDelegate.m in Sources */,
+				76E81F3C18848C7F00441F62 /* helpTextViewController.m in Sources */,
+				76E81F3F18849DB500441F62 /* NotesViewController.m in Sources */,
 				76D96A45187B585900961260 /* ClientViewController.m in Sources */,
 				76A8B001187F28AA007531A9 /* WIPChoicePopOver.m in Sources */,
 				76AB3CBD187B212C0019603F /* SubElements.m in Sources */,
