@@ -97,6 +97,8 @@
         
         cell.textLabel.text = wip.name;
     }
+    
+    cell.textLabel.font = [UIFont systemFontOfSize:25.0];
     //    cell.imageView.image = [UIImage imageNamed:@"check-mark-button.png"];
     
     return cell;

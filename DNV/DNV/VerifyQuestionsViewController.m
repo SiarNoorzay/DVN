@@ -59,6 +59,7 @@
     
     
     cell.textLabel.text = self.verifyQuestions[indexPath.row];
+    cell.textLabel.font = [UIFont systemFontOfSize:25.0];
     
     return cell;
     
