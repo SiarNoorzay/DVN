@@ -43,6 +43,8 @@
     self.wipAuditTable.delegate = self;
     
     [[self restClient] loadMetadata:self.dbWIPFolderPath];
+    
+    [self.spinner startAnimating];
 }
 
 - (void)didReceiveMemoryWarning
@@ -169,6 +171,7 @@
         self.wips = wipList;
         [self.wipAuditTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     }
+    [self.spinner stopAnimating];
 }
 
 - (void)restClient:(DBRestClient *)client

@@ -39,7 +39,7 @@
     NSLog(@"\n\nFolder Path recieved: %@", self.dbNewFolderPath);
     
     self.auditListTable.delegate = self;
-    
+    [self.spinner startAnimating];
     
     [[self restClient] loadMetadata:self.dbNewFolderPath];
     
@@ -123,6 +123,8 @@
      //   [self.auditListTable reloadData];
         [self.auditListTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     }
+    [self.spinner stopAnimating];
+
 }
 
 - (void)restClient:(DBRestClient *)client

@@ -57,6 +57,8 @@ int subEleNumber;
         
         [[self restClient] loadFile:self.auditPath intoPath:_directoryPath];
     }
+    [self.spinner startAnimating];
+    
     
 }
 
@@ -210,6 +212,7 @@ loadMetadataFailedWithError:(NSError *)error {
     
     NSLog(@"File loaded into path: %@", localPath);
     [self getAudit];
+    [self.spinner stopAnimating];
     
 }
 

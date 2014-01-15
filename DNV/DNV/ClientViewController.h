@@ -31,6 +31,9 @@
 
 -(void)goToChoice;
 
+//Activity Indicator
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+
 
 
 @end

@@ -37,6 +37,8 @@
 	// Do any additional setup after loading the view.
     
     [[self restClient] loadMetadata:self.wipAuditPath];
+    [self.spinner startAnimating];
+    
     
 }
 
@@ -103,6 +105,7 @@
     }
     
     [self.wipJSONFileTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+    [self.spinner stopAnimating];
 }
 
 - (void)restClient:(DBRestClient *)client

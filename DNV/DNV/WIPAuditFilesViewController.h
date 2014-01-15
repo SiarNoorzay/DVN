@@ -26,5 +26,6 @@
 @property (strong, nonatomic) IBOutlet UITableView * wipJSONFileTable;
 
 -(void)goToWIPChoice;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end

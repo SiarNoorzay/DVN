@@ -20,6 +20,7 @@
 
 @property (strong, atomic) VoiceRecognizer *vr;
 
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 
 - (IBAction)startStopButtonPushed:(id)sender;

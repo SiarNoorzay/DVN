@@ -22,5 +22,6 @@
 @property (strong, nonatomic) NSArray * wips;
 
 @property (strong, nonatomic) IBOutlet UITableView *wipAuditTable;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end

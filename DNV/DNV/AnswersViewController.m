@@ -407,6 +407,7 @@ BOOL keyboardShouldMove = false;
     self.percentSlider.value = value;
     answered = true;
     self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f %%", value];
+    self.pointsLabel.text = [NSString stringWithFormat:@"%.2f", (self.percentSlider.value * self.question.pointsPossible/100)];
     if ([self.percentSliderTextField canResignFirstResponder]) [self.percentSliderTextField resignFirstResponder];
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
