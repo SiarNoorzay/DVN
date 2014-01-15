@@ -84,7 +84,7 @@ int subEleNumber;
     label.backgroundColor = backColor;
     label.textColor = [UIColor blackColor];
     label.tintColor = [UIColor greenColor];
-    label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:24];
+    label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:25];
     label.text = self.ele.name; // ASCII 65 is "A"
     [label setTextAlignment:NSTextAlignmentCenter];
     
@@ -130,6 +130,7 @@ int subEleNumber;
     self.subEle = [[SubElements alloc]initWithSubElement:self.listOfSubElements[indexPath.row]];
     
     cell.textLabel.text = self.subEle.name;
+    cell.textLabel.font = [UIFont systemFontOfSize:25.0];
     //    cell.imageView.image = [UIImage imageNamed:@"check-mark-button.png"];
     
     return cell;

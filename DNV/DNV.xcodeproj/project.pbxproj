@@ -32,7 +32,6 @@
 		769D3D0418863436002DF3B8 /* import_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 769D3D0318863436002DF3B8 /* import_icon.png */; };
 		76A0DFBD18847B880038FD61 /* WIPAuditFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A0DFBC18847B880038FD61 /* WIPAuditFilesViewController.m */; };
 		76A2BE3C187DBF7A0056CC22 /* ElementSubElementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A2BE3B187DBF7A0056CC22 /* ElementSubElementViewController.m */; };
-		76A2BE40187DC2C70056CC22 /* USI_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76A2BE3E187DC2C70056CC22 /* USI_logo.jpg */; };
 		76A567FF1886DF70000E32D3 /* verify_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A567FE1886DF70000E32D3 /* verify_icon.png */; };
 		76A568011886E0CC000E32D3 /* export_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A568001886E0CC000E32D3 /* export_icon.png */; };
 		76A568031886E979000E32D3 /* notes_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A568021886E979000E32D3 /* notes_icon.png */; };
@@ -129,7 +128,6 @@
 		76A0DFBC18847B880038FD61 /* WIPAuditFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIPAuditFilesViewController.m; sourceTree = "<group>"; };
 		76A2BE3A187DBF7A0056CC22 /* ElementSubElementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementSubElementViewController.h; sourceTree = "<group>"; };
 		76A2BE3B187DBF7A0056CC22 /* ElementSubElementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementSubElementViewController.m; sourceTree = "<group>"; };
-		76A2BE3E187DC2C70056CC22 /* USI_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = USI_logo.jpg; sourceTree = "<group>"; };
 		76A567FE1886DF70000E32D3 /* verify_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = verify_icon.png; sourceTree = "<group>"; };
 		76A568001886E0CC000E32D3 /* export_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = export_icon.png; sourceTree = "<group>"; };
 		76A568021886E979000E32D3 /* notes_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notes_icon.png; sourceTree = "<group>"; };
@@ -489,13 +487,12 @@
 		76D4A33A187CE832007AB1A9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				76007D801886F58600FA7A39 /* App Icons */,
 				769D3CF11885FA03002DF3B8 /* Audit Choice Buttons */,
 				769D3CFC18862CA6002DF3B8 /* WIP Option Buttons */,
-				76007D801886F58600FA7A39 /* App Icons */,
 				76A0DFC5188504F70038FD61 /* Audit Icons */,
 				76A0DFC4188504640038FD61 /* Dashboard Icons */,
 				76A721A6188061E200E34CFA /* DNV_GL_logo.png */,
-				76A2BE3E187DC2C70056CC22 /* USI_logo.jpg */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -630,7 +627,6 @@
 				76007DB11886FDE800FA7A39 /* dnvlogo76.png in Resources */,
 				76E81F4618859E3B00441F62 /* AcousticModelEnglish.bundle in Resources */,
 				769D3D0418863436002DF3B8 /* import_icon.png in Resources */,
-				76A2BE40187DC2C70056CC22 /* USI_logo.jpg in Resources */,
 				76E81F13187C908100441F62 /* usersNOTDB.json in Resources */,
 				76A568071886ED22000E32D3 /* mic_icon.png in Resources */,
 				76E81F581886D5ED00441F62 /* Help-100.png in Resources */,
@@ -649,10 +645,7 @@
 				76A568011886E0CC000E32D3 /* export_icon.png in Resources */,
 				769D3CF518860C2B002DF3B8 /* flatFolderIcon2.png in Resources */,
 				76A568171886F33B000E32D3 /* thumbs_up.png in Resources */,
-				76E81F33188480A300441F62 /* thumbs-up-buttonGray.jpg in Resources */,
-				76E81F35188480AA00441F62 /* thumbs-down-button-Gray.jpg in Resources */,
 				76007DB21886FDE800FA7A39 /* dvnlogo152.png in Resources */,
-				76E81F2B1884792C00441F62 /* attachmentIcon.png in Resources */,
 				76E81F15187CBC0500441F62 /* users.json in Resources */,
 				76E81F4E1885A61700441F62 /* DVNCorpusTxt.txt in Resources */,
 				76A5681D1886F803000E32D3 /* attachment_icon.png in Resources */,

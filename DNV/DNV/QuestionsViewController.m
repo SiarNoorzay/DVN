@@ -79,7 +79,7 @@
     Questions *question = [[Questions alloc]initWithQuestion:[self.questionArray objectAtIndex:indexPath.row]];
     
     cell.textLabel.text = question.questionText;
-    
+    cell.textLabel.font = [UIFont systemFontOfSize:25.0];
     //    cell.imageView.image = [UIImage imageNamed:@"check-mark-button.png"];
     
     return cell;
