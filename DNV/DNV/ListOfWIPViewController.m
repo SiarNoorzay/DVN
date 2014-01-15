@@ -72,7 +72,7 @@
         numberOfRows = 1;
     }
     else {
-        numberOfRows = [self.wips count];
+        numberOfRows = (int)[self.wips count];
     }
     
     return numberOfRows;
