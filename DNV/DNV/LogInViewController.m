@@ -159,7 +159,6 @@
     }
     return restClient;
 }
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == self.passwordTextField) {
         [textField resignFirstResponder];

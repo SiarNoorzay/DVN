@@ -11,7 +11,7 @@
 
 @class DBRestClient;
 
-@interface LogInViewController : UIViewController{
+@interface LogInViewController : UIViewController<UITextFieldDelegate>{
     
     DBRestClient* restClient;
 }
