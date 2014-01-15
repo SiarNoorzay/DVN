@@ -31,13 +31,14 @@ bool start = true;
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.notesTextView.text = self.text;
-    
+    [self.spinner stopAnimating];
     if (self.vr == nil) {
 		self.vr = [[VoiceRecognizer alloc] init];
         [self.vr setup];
 	}
     [self.vr addObserver:self forKeyPath:@"heardWord" options:0 context:nil];
-    
+    [self.vr addObserver:self forKeyPath:@"listening" options:0 context:nil];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,6 +50,8 @@ bool start = true;
 - (IBAction)startStopButtonPushed:(id)sender {
     
     if (start) {
+        [self.spinner startAnimating];
+        
         [self.vr startVoiceRecognition];
         
         start = false;
@@ -90,7 +93,13 @@ bool start = true;
     if (object == self.vr && [keyPath isEqualToString:@"heardWord"]) {
         
         self.heardWordsTextView.text = self.vr.heardWord;
-        
     }
+    if (object == self.vr && [keyPath isEqualToString:@"listening"]) {
+        
+        if (self.vr.listening) {
+            [self.spinner stopAnimating];
+        }
+    }
+
 }
 @end

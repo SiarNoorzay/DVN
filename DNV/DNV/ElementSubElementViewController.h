@@ -39,5 +39,6 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *subElementTable;
 
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end

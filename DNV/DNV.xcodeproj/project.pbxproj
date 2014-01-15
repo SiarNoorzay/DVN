@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		76007DB11886FDE800FA7A39 /* dnvlogo76.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DAF1886FDE800FA7A39 /* dnvlogo76.png */; };
+		76007DB21886FDE800FA7A39 /* dvnlogo152.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB01886FDE800FA7A39 /* dvnlogo152.png */; };
 		7627970D1871D53A00F22E73 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627970C1871D53A00F22E73 /* Foundation.framework */; };
 		7627970F1871D53A00F22E73 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627970E1871D53A00F22E73 /* CoreGraphics.framework */; };
 		762797111871D53A00F22E73 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762797101871D53A00F22E73 /* UIKit.framework */; };
@@ -93,6 +95,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		76007DAF1886FDE800FA7A39 /* dnvlogo76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dnvlogo76.png; sourceTree = "<group>"; };
+		76007DB01886FDE800FA7A39 /* dvnlogo152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dvnlogo152.png; sourceTree = "<group>"; };
 		762797091871D53A00F22E73 /* DNV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DNV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7627970C1871D53A00F22E73 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7627970E1871D53A00F22E73 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -228,6 +232,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		76007D801886F58600FA7A39 /* App Icons */ = {
+			isa = PBXGroup;
+			children = (
+				76007DAF1886FDE800FA7A39 /* dnvlogo76.png */,
+				76007DB01886FDE800FA7A39 /* dvnlogo152.png */,
+			);
+			path = "App Icons";
+			sourceTree = "<group>";
+		};
 		762797001871D53A00F22E73 = {
 			isa = PBXGroup;
 			children = (
@@ -476,8 +489,7 @@
 		76D4A33A187CE832007AB1A9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				769D3CF11885FA03002DF3B8 /* Audit Choice Buttons */,
-				769D3CFC18862CA6002DF3B8 /* WIP Option Buttons */,
+				76007D801886F58600FA7A39 /* App Icons */,
 				76A0DFC5188504F70038FD61 /* Audit Icons */,
 				76A0DFC4188504640038FD61 /* Dashboard Icons */,
 				76A721A6188061E200E34CFA /* DNV_GL_logo.png */,
@@ -610,9 +622,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				769D3CF01885F9FC002DF3B8 /* new_checklist_icon.png in Resources */,
-				76A567FF1886DF70000E32D3 /* verify_icon.png in Resources */,
-				76A568201886FA24000E32D3 /* not_applicable_icon_gray.png in Resources */,
+				76007DB11886FDE800FA7A39 /* dnvlogo76.png in Resources */,
 				76E81F4618859E3B00441F62 /* AcousticModelEnglish.bundle in Resources */,
 				769D3D0418863436002DF3B8 /* import_icon.png in Resources */,
 				76A2BE40187DC2C70056CC22 /* USI_logo.jpg in Resources */,
@@ -630,10 +640,10 @@
 				76A568051886EA76000E32D3 /* verify_icon_gray.png in Resources */,
 				76A568141886F33B000E32D3 /* thumbs_down_gray.png in Resources */,
 				76E81F0C187B559000441F62 /* sampleAudit.json in Resources */,
-				76A568191886F62B000E32D3 /* camera_icon.png in Resources */,
-				76A568011886E0CC000E32D3 /* export_icon.png in Resources */,
-				769D3CF518860C2B002DF3B8 /* flatFolderIcon2.png in Resources */,
-				76A568171886F33B000E32D3 /* thumbs_up.png in Resources */,
+				76E81F33188480A300441F62 /* thumbs-up-buttonGray.jpg in Resources */,
+				76E81F35188480AA00441F62 /* thumbs-down-button-Gray.jpg in Resources */,
+				76007DB21886FDE800FA7A39 /* dvnlogo152.png in Resources */,
+				76E81F2B1884792C00441F62 /* attachmentIcon.png in Resources */,
 				76E81F15187CBC0500441F62 /* users.json in Resources */,
 				76E81F4E1885A61700441F62 /* DVNCorpusTxt.txt in Resources */,
 				76A5681D1886F803000E32D3 /* attachment_icon.png in Resources */,

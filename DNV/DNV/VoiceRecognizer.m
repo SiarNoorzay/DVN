@@ -97,6 +97,9 @@
 
 - (void) pocketsphinxDidStartListening {
 	NSLog(@"Pocketsphinx is now listening.");
+    
+    self.listening = true;
+    
 }
 
 - (void) pocketsphinxDidDetectSpeech {
@@ -109,6 +112,8 @@
 
 - (void) pocketsphinxDidStopListening {
 	NSLog(@"Pocketsphinx has stopped listening.");
+    self.listening = false;
+    
 }
 
 - (void) pocketsphinxDidSuspendRecognition {

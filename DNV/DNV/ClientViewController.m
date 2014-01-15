@@ -17,7 +17,6 @@
 
 @property int chosenClient;
 
-
 @end
 
 @implementation ClientViewController
@@ -39,6 +38,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    [self.spinner startAnimating];
     
     [[self restClient] loadMetadata:@"/"];
 
@@ -127,6 +128,7 @@
         }
         self.clients = clientList;
         [self.ClientCollectionView reloadData];
+        [self.spinner stopAnimating];
     }
 }
 

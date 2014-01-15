@@ -21,6 +21,8 @@ OpenEarsEventsObserver *openEarsEventsObserver;
 @property (strong, nonatomic) NSString *lmPath;
 @property (strong, nonatomic) NSString *dicPath;
 @property (weak, atomic) NSString *heardWord;
+@property BOOL listening;
+
 
 
 @end

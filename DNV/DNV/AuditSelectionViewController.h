@@ -25,5 +25,6 @@
 @property (strong, nonatomic) NSString *dbNewFolderPath;
 
 @property (nonatomic) NSArray *audits;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end
