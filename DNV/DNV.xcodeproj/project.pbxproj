@@ -79,6 +79,9 @@
 		76E81F4A18859E7000441F62 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76E81F4918859E7000441F62 /* AudioToolbox.framework */; };
 		76E81F4C18859E7D00441F62 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76E81F4B18859E7D00441F62 /* AVFoundation.framework */; };
 		76E81F4E1885A61700441F62 /* DVNCorpusTxt.txt in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F4D1885A61700441F62 /* DVNCorpusTxt.txt */; };
+		76E81F521886CF6800441F62 /* questionMark64x64.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F511886CF6800441F62 /* questionMark64x64.png */; };
+		76E81F581886D5ED00441F62 /* Help-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F571886D5ED00441F62 /* Help-100.png */; };
+		76E81F5B1886D8A400441F62 /* LoginHelpPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F5A1886D8A400441F62 /* LoginHelpPopOverViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -192,6 +195,10 @@
 		76E81F4918859E7000441F62 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		76E81F4B18859E7D00441F62 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		76E81F4D1885A61700441F62 /* DVNCorpusTxt.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DVNCorpusTxt.txt; sourceTree = "<group>"; };
+		76E81F511886CF6800441F62 /* questionMark64x64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = questionMark64x64.png; sourceTree = "<group>"; };
+		76E81F571886D5ED00441F62 /* Help-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Help-100.png"; sourceTree = "<group>"; };
+		76E81F591886D8A400441F62 /* LoginHelpPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginHelpPopOverViewController.h; sourceTree = "<group>"; };
+		76E81F5A1886D8A400441F62 /* LoginHelpPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginHelpPopOverViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -488,6 +495,8 @@
 			children = (
 				76D96A39187B001300961260 /* LogInViewController.h */,
 				76D96A3A187B001300961260 /* LogInViewController.m */,
+				76E81F591886D8A400441F62 /* LoginHelpPopOverViewController.h */,
+				76E81F5A1886D8A400441F62 /* LoginHelpPopOverViewController.m */,
 			);
 			name = LogInViewController;
 			sourceTree = "<group>";
@@ -633,6 +642,7 @@
 				76E81F4E1885A61700441F62 /* DVNCorpusTxt.txt in Resources */,
 				762797201871D53A00F22E73 /* Main.storyboard in Resources */,
 				76E81F291884784300441F62 /* camera-lens.jpg in Resources */,
+				76E81F521886CF6800441F62 /* questionMark64x64.png in Resources */,
 				76E81F2D188479AC00441F62 /* Help.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -679,6 +689,7 @@
 				76A0DFBD18847B880038FD61 /* WIPAuditFilesViewController.m in Sources */,
 				76DBFA83187CAD6300F84282 /* MainWindowPopOver.m in Sources */,
 				76AB3CC0187B21700019603F /* Questions.m in Sources */,
+				76E81F5B1886D8A400441F62 /* LoginHelpPopOverViewController.m in Sources */,
 				76E81F4218859D5F00441F62 /* VoiceRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

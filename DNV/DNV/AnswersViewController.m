@@ -353,21 +353,12 @@ BOOL keyboardShouldMove = false;
 }
 - (IBAction)textFieldEndedEditing:(id)sender {
     
-    //check if out of bounds
-    NSNumber *tempInt = [NSNumber numberWithInt:[self.questionNumberTextField.text intValue]];
     
-    if (tempInt==nil || tempInt.intValue < 1 || tempInt.intValue > [self.questionArray count]) {
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Out of range" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        return;
-    }
-    
-    self.currentPosition = tempInt.intValue - 1;
-    [self refreshAnswerView];
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    if(textField == self.questionNumberTextField){
+
     //check if out of bounds
     NSNumber *tempInt = [NSNumber numberWithInt:[self.questionNumberTextField.text intValue]];
     
@@ -380,6 +371,8 @@ BOOL keyboardShouldMove = false;
     self.currentPosition = tempInt.intValue - 1;
     [textField resignFirstResponder];
     [self refreshAnswerView];
+    
+    }
     return YES;
 }
 
@@ -412,10 +405,30 @@ BOOL keyboardShouldMove = false;
     if (value < 0) value = 0;
     if (value > 100) value = 100;
     self.percentSlider.value = value;
-    self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f", value];
+    answered = true;
+    self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f %%", value];
     if ([self.percentSliderTextField canResignFirstResponder]) [self.percentSliderTextField resignFirstResponder];
 }
-
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if(textField == self.questionNumberTextField)
+    {
+        //check if out of bounds
+        NSNumber *tempInt = [NSNumber numberWithInt:[self.questionNumberTextField.text intValue]];
+        
+        if (tempInt==nil || tempInt.intValue < 1 || tempInt.intValue > [self.questionArray count]) {
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Out of range" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
+        
+        self.currentPosition = tempInt.intValue - 1;
+        
+    }
+    
+    
+}
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if( textField == self.percentSliderTextField)
