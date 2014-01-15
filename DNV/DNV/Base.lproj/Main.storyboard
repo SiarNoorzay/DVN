@@ -195,7 +195,7 @@
                         <viewControllerLayoutGuide type="top" id="x2G-Yr-AMN"/>
                         <viewControllerLayoutGuide type="bottom" id="KdH-t2-JDE"/>
                     </layoutGuides>
-                    <view key="view" alpha="0.29999999999999966" contentMode="scaleToFill" id="bbM-Vg-1KI">
+                    <view key="view" contentMode="scaleToFill" id="bbM-Vg-1KI">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -980,7 +980,7 @@
                         <viewControllerLayoutGuide type="top" id="UYG-it-oDS"/>
                         <viewControllerLayoutGuide type="bottom" id="a1v-ze-Qcz"/>
                     </layoutGuides>
-                    <view key="view" alpha="0.0" contentMode="scaleToFill" id="AOR-Ao-QHA">
+                    <view key="view" contentMode="scaleToFill" id="AOR-Ao-QHA">
                         <rect key="frame" x="0.0" y="0.0" width="500" height="550"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>

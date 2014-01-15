@@ -61,11 +61,11 @@ BOOL keyboardShouldMove = false;
     [self.view addGestureRecognizer:swipeRightGestureRecognizer];
 
     
-    [self.thumbsDownButton setImage:[UIImage imageNamed:@"thumbs-down.jpg"] forState:UIControlStateSelected];
-    [self.thumbsDownButton setImage:[UIImage imageNamed:@"thumbs-down-button-Gray.jpg"] forState:UIControlStateNormal];
+    [self.thumbsDownButton setImage:[UIImage imageNamed:@"thumbs_down.png"] forState:UIControlStateSelected];
+    [self.thumbsDownButton setImage:[UIImage imageNamed:@"thumbs_down_gray.png"] forState:UIControlStateNormal];
     
-    [self.thumbsUpButton setImage:[UIImage imageNamed:@"thumbs-up.jpg"] forState:UIControlStateSelected];
-    [self.thumbsUpButton setImage:[UIImage imageNamed:@"thumbs-up-buttonGray.jpg"] forState:UIControlStateNormal];
+    [self.thumbsUpButton setImage:[UIImage imageNamed:@"thumbs_up.png"] forState:UIControlStateSelected];
+    [self.thumbsUpButton setImage:[UIImage imageNamed:@"thumbs_up_gray.png"] forState:UIControlStateNormal];
 
 }
 - (void)keyboardDidShow:(NSNotification *)notification
