@@ -22,6 +22,7 @@
 @property (strong,nonatomic) UIImage *cameraImage;
 
 
+@property (strong, nonatomic) IBOutlet UISwitch *switchy;
 
 
 - (IBAction)submitButton:(id)sender;
