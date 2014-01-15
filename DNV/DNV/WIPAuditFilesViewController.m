@@ -81,6 +81,10 @@
     
     wipPopContent.WIPAuditFilesVC = self;
     
+    [self.wipPopOver setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0]];
+//    [self.wipPopOver setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:.3]];
+//    [[[self.wipPopOver contentViewController] view] setAlpha:0];
+    
     [self.wipPopOver presentPopoverFromRect:cell.frame inView:self.wipJSONFileTable permittedArrowDirections:UIPopoverArrowDirectionAny animated:true];
     
     self.chosenJSONfile = indexPath.row;

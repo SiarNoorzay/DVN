@@ -92,6 +92,9 @@
     
     popContent.clientVC = self;
     
+    [self.clientPopOver setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.0]];
+//    [[[self.clientPopOver contentViewController] view] setAlpha:0];
+    
     [self.clientPopOver presentPopoverFromRect:cell.frame inView:self.ClientCollectionView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     
     self.chosenClient = indexPath.row;
