@@ -79,7 +79,7 @@
     
     wipPopContent.WIPAuditFilesVC = self;
     
-    [self.wipPopOver setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0]];
+    [self.wipPopOver setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.35]];
 //    [self.wipPopOver setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:.3]];
 //    [[[self.wipPopOver contentViewController] view] setAlpha:0];
     
