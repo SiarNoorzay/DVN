@@ -162,6 +162,8 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == self.passwordTextField) {
         [textField resignFirstResponder];
+        [self attemptToLogin];
+        
     } else if (textField == self.userIDTextField) {
         [self.passwordTextField becomeFirstResponder];
     }
@@ -169,7 +171,9 @@
 }
 
 - (IBAction)LogInButton:(UIBarButtonItem *)sender {
-    
+    [self attemptToLogin];
+}
+-(void)attemptToLogin{
     BOOL foundUser = false;
     
     for (User *usr in self.arrayOfUsers) {
@@ -192,7 +196,7 @@
         else{
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Incorrect Password" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
-           
+            
             NSLog(@"Incorrect password");
         }
     }
@@ -200,7 +204,7 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"User ID not recognized" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         NSLog(@"User ID not recognized");//add alert view here}
-    
+        
     }
 }
 
