@@ -9,6 +9,8 @@
 #import "ElementSubElementViewController.h"
 #import "QuestionsViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
+#import "SubElementCell.h"
+
 
 #import "Questions.h"
 #import "Folder.h"
@@ -120,18 +122,27 @@ int subEleNumber;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString * cellIdentifier = @"AuditCell";
+    static NSString * cellIdentifier = @"SubElementCell";
     
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    SubElementCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if(cell == nil){
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[SubElementCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
     self.subEle = [[SubElements alloc]initWithSubElement:self.listOfSubElements[indexPath.row]];
     
-    cell.textLabel.text = self.subEle.name;
-    cell.textLabel.font = [UIFont systemFontOfSize:25.0];
-    //    cell.imageView.image = [UIImage imageNamed:@"check-mark-button.png"];
+    cell.subElementName.text = self.subEle.name;
+    cell.points.text = [NSString stringWithFormat:@"%.2f / %.2f", self.subEle.pointsAwarded,self.subEle.pointsPossible];
+    //cell.textLabel.font = [UIFont systemFontOfSize:25.0];
+    
+    if (self.subEle.isCompleted)
+    {
+        cell.image.hidden = NO;
+    }
+    else
+    {
+        cell.image.hidden = YES;
+    }
     
     return cell;
 }
@@ -140,7 +151,7 @@ int subEleNumber;
     
     subEleNumber = indexPath.row;
     
-    [self performSegueWithIdentifier:@"toQuestions" sender:self];
+   // [self performSegueWithIdentifier:@"toQuestions" sender:self];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{

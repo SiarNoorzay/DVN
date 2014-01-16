@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		76007DB11886FDE800FA7A39 /* dnvlogo76.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DAF1886FDE800FA7A39 /* dnvlogo76.png */; };
 		76007DB21886FDE800FA7A39 /* dvnlogo152.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB01886FDE800FA7A39 /* dvnlogo152.png */; };
+		76007DB8188725CF00FA7A39 /* QuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DB7188725CF00FA7A39 /* QuestionCell.m */; };
+		76007DBA18872AE900FA7A39 /* Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB918872AE900FA7A39 /* Checkmark.png */; };
+		76007DBD18872BFC00FA7A39 /* SubElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DBC18872BFC00FA7A39 /* SubElementCell.m */; };
 		7627970D1871D53A00F22E73 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627970C1871D53A00F22E73 /* Foundation.framework */; };
 		7627970F1871D53A00F22E73 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627970E1871D53A00F22E73 /* CoreGraphics.framework */; };
 		762797111871D53A00F22E73 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762797101871D53A00F22E73 /* UIKit.framework */; };
@@ -101,6 +104,11 @@
 /* Begin PBXFileReference section */
 		76007DAF1886FDE800FA7A39 /* dnvlogo76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dnvlogo76.png; sourceTree = "<group>"; };
 		76007DB01886FDE800FA7A39 /* dvnlogo152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dvnlogo152.png; sourceTree = "<group>"; };
+		76007DB6188725CF00FA7A39 /* QuestionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionCell.h; sourceTree = "<group>"; };
+		76007DB7188725CF00FA7A39 /* QuestionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionCell.m; sourceTree = "<group>"; };
+		76007DB918872AE900FA7A39 /* Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Checkmark.png; sourceTree = "<group>"; };
+		76007DBB18872BFC00FA7A39 /* SubElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubElementCell.h; sourceTree = "<group>"; };
+		76007DBC18872BFC00FA7A39 /* SubElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementCell.m; sourceTree = "<group>"; };
 		762797091871D53A00F22E73 /* DNV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DNV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7627970C1871D53A00F22E73 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7627970E1871D53A00F22E73 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -398,6 +406,7 @@
 		76A0DFC4188504640038FD61 /* Dashboard Icons */ = {
 			isa = PBXGroup;
 			children = (
+				76007DB918872AE900FA7A39 /* Checkmark.png */,
 				76A5681E1886FA24000E32D3 /* not_applicable_icon_gray.png */,
 				76A5681F1886FA24000E32D3 /* not_applicable_icon.png */,
 				76A5681C1886F803000E32D3 /* attachment_icon.png */,
@@ -427,6 +436,8 @@
 			children = (
 				76A2BE3A187DBF7A0056CC22 /* ElementSubElementViewController.h */,
 				76A2BE3B187DBF7A0056CC22 /* ElementSubElementViewController.m */,
+				76007DBB18872BFC00FA7A39 /* SubElementCell.h */,
+				76007DBC18872BFC00FA7A39 /* SubElementCell.m */,
 			);
 			name = ElementSubElementViewController;
 			sourceTree = "<group>";
@@ -473,6 +484,8 @@
 			children = (
 				76E81F19187EE78C00441F62 /* QuestionsViewController.h */,
 				76E81F1A187EE78C00441F62 /* QuestionsViewController.m */,
+				76007DB6188725CF00FA7A39 /* QuestionCell.h */,
+				76007DB7188725CF00FA7A39 /* QuestionCell.m */,
 			);
 			name = QuestionsViewController;
 			sourceTree = "<group>";
@@ -736,6 +749,7 @@
 				76E81F3C18848C7F00441F62 /* helpTextViewController.m in Sources */,
 				76E81F3F18849DB500441F62 /* NotesViewController.m in Sources */,
 				76D96A45187B585900961260 /* ClientViewController.m in Sources */,
+				76007DBD18872BFC00FA7A39 /* SubElementCell.m in Sources */,
 				76A8B001187F28AA007531A9 /* WIPChoicePopOver.m in Sources */,
 				76AB3CBD187B212C0019603F /* SubElements.m in Sources */,
 				769D3CEA1885A763002DF3B8 /* ImportMergeViewController.m in Sources */,

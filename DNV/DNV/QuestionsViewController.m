@@ -72,16 +72,25 @@
     
     static NSString * cellIdentifier = @"QuestionCell";
     
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    QuestionCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if(cell == nil){
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[QuestionCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     Questions *question = [[Questions alloc]initWithQuestion:[self.questionArray objectAtIndex:indexPath.row]];
     
-    cell.textLabel.text = question.questionText;
-    cell.textLabel.font = [UIFont systemFontOfSize:25.0];
-    //    cell.imageView.image = [UIImage imageNamed:@"check-mark-button.png"];
+    cell.questionText.text = question.questionText;
+    cell.points.text = [NSString stringWithFormat:@"%.2f / %.2f", question.pointsAwarded,question.pointsPossible];
     
+    //cell.textLabel.font = [UIFont systemFontOfSize:25.0];
+    
+    if (question.isCompleted)
+    {
+      //  cell.imageView.image = [UIImage imageNamed:@"check-mark-button.png"];
+        cell.doneImage.hidden = NO;
+    }
+    else{
+       cell.doneImage.hidden = YES;
+    }
     return cell;
 }
 
