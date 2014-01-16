@@ -363,7 +363,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Checkmark.png" translatesAutoresizingMaskIntoConstraints="NO" id="zUb-OC-fQR">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkmark.png" translatesAutoresizingMaskIntoConstraints="NO" id="zUb-OC-fQR">
                                                     <rect key="frame" x="639" y="15" width="76" height="60"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -454,7 +454,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="735" height="89"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Checkmark.png" translatesAutoresizingMaskIntoConstraints="NO" id="nDJ-Nm-vsW">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkmark.png" translatesAutoresizingMaskIntoConstraints="NO" id="nDJ-Nm-vsW">
                                                     <rect key="frame" x="630" y="15" width="76" height="60"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
@@ -1537,11 +1537,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Checkmark.png" width="76" height="60"/>
         <image name="DNV_GL_logo.png" width="180" height="180"/>
         <image name="Help-100.png" width="256" height="256"/>
         <image name="attachment_icon.png" width="256" height="256"/>
         <image name="camera_icon.png" width="256" height="256"/>
+        <image name="checkmark.png" width="76" height="60"/>
         <image name="client_icon.png" width="256" height="256"/>
         <image name="completed_checklist_icon.png" width="300" height="350"/>
         <image name="delete_icon.png" width="256" height="256"/>

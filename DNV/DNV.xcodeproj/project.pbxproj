@@ -12,6 +12,7 @@
 		76007DBD18872BFC00FA7A39 /* SubElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DBC18872BFC00FA7A39 /* SubElementCell.m */; };
 		76007E241887459800FA7A39 /* libKLSwitch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76007E1F1887452F00FA7A39 /* libKLSwitch.a */; };
 		76007E261888317400FA7A39 /* QuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DB7188725CF00FA7A39 /* QuestionCell.m */; };
+		7627430B1888508B00873E9F /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB918872AE900FA7A39 /* checkmark.png */; };
 		7627970D1871D53A00F22E73 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627970C1871D53A00F22E73 /* Foundation.framework */; };
 		7627970F1871D53A00F22E73 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627970E1871D53A00F22E73 /* CoreGraphics.framework */; };
 		762797111871D53A00F22E73 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762797101871D53A00F22E73 /* UIKit.framework */; };
@@ -127,7 +128,7 @@
 		76007DB01886FDE800FA7A39 /* dvnlogo152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dvnlogo152.png; sourceTree = "<group>"; };
 		76007DB6188725CF00FA7A39 /* QuestionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionCell.h; sourceTree = "<group>"; };
 		76007DB7188725CF00FA7A39 /* QuestionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionCell.m; sourceTree = "<group>"; };
-		76007DB918872AE900FA7A39 /* Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Checkmark.png; sourceTree = "<group>"; };
+		76007DB918872AE900FA7A39 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
 		76007DBB18872BFC00FA7A39 /* SubElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubElementCell.h; sourceTree = "<group>"; };
 		76007DBC18872BFC00FA7A39 /* SubElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementCell.m; sourceTree = "<group>"; };
 		76007E191887452E00FA7A39 /* KLSwitch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KLSwitch.xcodeproj; path = "../../../../Downloads/KLSwitch-master 3/KLSwitch/KLSwitch.xcodeproj"; sourceTree = "<group>"; };
@@ -439,7 +440,7 @@
 		76A0DFC4188504640038FD61 /* Dashboard Icons */ = {
 			isa = PBXGroup;
 			children = (
-				76007DB918872AE900FA7A39 /* Checkmark.png */,
+				76007DB918872AE900FA7A39 /* checkmark.png */,
 				76A5681E1886FA24000E32D3 /* not_applicable_icon_gray.png */,
 				76A5681F1886FA24000E32D3 /* not_applicable_icon.png */,
 				76A5681C1886F803000E32D3 /* attachment_icon.png */,
@@ -771,8 +772,8 @@
 				76A5681D1886F803000E32D3 /* attachment_icon.png in Resources */,
 				762797201871D53A00F22E73 /* Main.storyboard in Resources */,
 				76A568161886F33B000E32D3 /* thumbs_up_gray.png in Resources */,
-				76007DBA18872AE900FA7A39 /* Checkmark.png in Resources */,
 				76A56838188746E4000E32D3 /* delete_icon.png in Resources */,
+				7627430B1888508B00873E9F /* checkmark.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -796,8 +797,6 @@
 				76D96A3B187B001300961260 /* LogInViewController.m in Sources */,
 				76E81F18187DB92600441F62 /* Folder.m in Sources */,
 				76AB3CB4187B1FDA0019603F /* Audit.m in Sources */,
-				76007DB8188725CF00FA7A39 /* QuestionCell.m in Sources */,
-				762797231871D53A00F22E73 /* ViewController.m in Sources */,
 				76AB3CC3187B22300019603F /* Answers.m in Sources */,
 				76D4A339187CE5F6007AB1A9 /* AuditSelectionViewController.m in Sources */,
 				76E81F1B187EE78C00441F62 /* QuestionsViewController.m in Sources */,
