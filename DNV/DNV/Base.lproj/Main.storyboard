@@ -796,7 +796,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lkK-qJ-2w0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9519" y="1090"/>
+            <point key="canvasLocation" x="9343" y="1090"/>
         </scene>
         <!--Help Text View Controller-->
         <scene sceneID="4nF-DD-Wbn">
@@ -830,7 +830,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w6z-YH-cw6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10658" y="1201"/>
+            <point key="canvasLocation" x="10330" y="1057"/>
         </scene>
         <!--Notes View Controller-->
         <scene sceneID="7RP-b1-RzF">
@@ -910,7 +910,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dNz-a1-wcy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10618" y="1791"/>
+            <point key="canvasLocation" x="10330" y="1807"/>
         </scene>
         <!--List OfWIP View Controller - List of WIP Audits-->
         <scene sceneID="c8n-iQ-f3f">

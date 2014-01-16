@@ -10,7 +10,6 @@
 		76007DB11886FDE800FA7A39 /* dnvlogo76.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DAF1886FDE800FA7A39 /* dnvlogo76.png */; };
 		76007DB21886FDE800FA7A39 /* dvnlogo152.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB01886FDE800FA7A39 /* dvnlogo152.png */; };
 		76007DBD18872BFC00FA7A39 /* SubElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DBC18872BFC00FA7A39 /* SubElementCell.m */; };
-		76007E241887459800FA7A39 /* libKLSwitch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76007E1F1887452F00FA7A39 /* libKLSwitch.a */; };
 		76007E261888317400FA7A39 /* QuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DB7188725CF00FA7A39 /* QuestionCell.m */; };
 		7627970D1871D53A00F22E73 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627970C1871D53A00F22E73 /* Foundation.framework */; };
 		7627970F1871D53A00F22E73 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627970E1871D53A00F22E73 /* CoreGraphics.framework */; };
@@ -89,36 +88,37 @@
 		76E81F4E1885A61700441F62 /* DVNCorpusTxt.txt in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F4D1885A61700441F62 /* DVNCorpusTxt.txt */; };
 		76E81F581886D5ED00441F62 /* Help-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F571886D5ED00441F62 /* Help-100.png */; };
 		76E81F5B1886D8A400441F62 /* LoginHelpPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F5A1886D8A400441F62 /* LoginHelpPopOverViewController.m */; };
+		76F1015418885254003555F2 /* libKLSwitch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76F1015118885223003555F2 /* libKLSwitch.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		76007E1E1887452F00FA7A39 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76007E191887452E00FA7A39 /* KLSwitch.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7710F4F1176DE33900771BA7;
-			remoteInfo = KLSwitch;
-		};
-		76007E201887452F00FA7A39 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76007E191887452E00FA7A39 /* KLSwitch.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7710F502176DE33900771BA7;
-			remoteInfo = KLSwitchTests;
-		};
-		76007E221887458400FA7A39 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76007E191887452E00FA7A39 /* KLSwitch.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 7710F4F0176DE33900771BA7;
-			remoteInfo = KLSwitch;
-		};
 		7627972F1871D53A00F22E73 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 762797011871D53A00F22E73 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 762797081871D53A00F22E73;
 			remoteInfo = DNV;
+		};
+		76F1015018885223003555F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76F1014B18885223003555F2 /* KLSwitch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7710F4F1176DE33900771BA7;
+			remoteInfo = KLSwitch;
+		};
+		76F1015218885223003555F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76F1014B18885223003555F2 /* KLSwitch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7710F502176DE33900771BA7;
+			remoteInfo = KLSwitchTests;
+		};
+		76F1015518885264003555F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76F1014B18885223003555F2 /* KLSwitch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7710F4F0176DE33900771BA7;
+			remoteInfo = KLSwitch;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -130,7 +130,6 @@
 		76007DB918872AE900FA7A39 /* Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Checkmark.png; sourceTree = "<group>"; };
 		76007DBB18872BFC00FA7A39 /* SubElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubElementCell.h; sourceTree = "<group>"; };
 		76007DBC18872BFC00FA7A39 /* SubElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementCell.m; sourceTree = "<group>"; };
-		76007E191887452E00FA7A39 /* KLSwitch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KLSwitch.xcodeproj; path = "../../../../Downloads/KLSwitch-master 3/KLSwitch/KLSwitch.xcodeproj"; sourceTree = "<group>"; };
 		762797091871D53A00F22E73 /* DNV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DNV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7627970C1871D53A00F22E73 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7627970E1871D53A00F22E73 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -238,6 +237,7 @@
 		76E81F571886D5ED00441F62 /* Help-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Help-100.png"; sourceTree = "<group>"; };
 		76E81F591886D8A400441F62 /* LoginHelpPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginHelpPopOverViewController.h; sourceTree = "<group>"; };
 		76E81F5A1886D8A400441F62 /* LoginHelpPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginHelpPopOverViewController.m; sourceTree = "<group>"; };
+		76F1014B18885223003555F2 /* KLSwitch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KLSwitch.xcodeproj; path = "../../KLSwitch-master/KLSwitch/KLSwitch.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,8 +245,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76F1015418885254003555F2 /* libKLSwitch.a in Frameworks */,
 				76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */,
-				76007E241887459800FA7A39 /* libKLSwitch.a in Frameworks */,
 				76E81F4C18859E7D00441F62 /* AVFoundation.framework in Frameworks */,
 				76E81F4A18859E7000441F62 /* AudioToolbox.framework in Frameworks */,
 				76E81F4718859E3B00441F62 /* OpenEars.framework in Frameworks */,
@@ -281,19 +281,10 @@
 			path = "App Icons";
 			sourceTree = "<group>";
 		};
-		76007E1A1887452E00FA7A39 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				76007E1F1887452F00FA7A39 /* libKLSwitch.a */,
-				76007E211887452F00FA7A39 /* KLSwitchTests.octest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		762797001871D53A00F22E73 = {
 			isa = PBXGroup;
 			children = (
-				76007E191887452E00FA7A39 /* KLSwitch.xcodeproj */,
+				76F1014B18885223003555F2 /* KLSwitch.xcodeproj */,
 				76BF9C761872237200ACF6DB /* DropboxSDK.framework */,
 				762797121871D53A00F22E73 /* DNV */,
 				762797311871D53A00F22E73 /* DNVTests */,
@@ -439,7 +430,6 @@
 		76A0DFC4188504640038FD61 /* Dashboard Icons */ = {
 			isa = PBXGroup;
 			children = (
-				76007DB918872AE900FA7A39 /* Checkmark.png */,
 				76A5681E1886FA24000E32D3 /* not_applicable_icon_gray.png */,
 				76A5681F1886FA24000E32D3 /* not_applicable_icon.png */,
 				76A5681C1886F803000E32D3 /* attachment_icon.png */,
@@ -478,6 +468,7 @@
 		76A568261887240B000E32D3 /* Tableview Icons */ = {
 			isa = PBXGroup;
 			children = (
+				76007DB918872AE900FA7A39 /* Checkmark.png */,
 				76A56822188723F6000E32D3 /* check_gray.png */,
 				76A56823188723F6000E32D3 /* check.png */,
 			);
@@ -635,6 +626,15 @@
 			name = AnswersViewController;
 			sourceTree = "<group>";
 		};
+		76F1014C18885223003555F2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				76F1015118885223003555F2 /* libKLSwitch.a */,
+				76F1015318885223003555F2 /* KLSwitchTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -649,7 +649,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				76007E231887458400FA7A39 /* PBXTargetDependency */,
+				76F1015618885264003555F2 /* PBXTargetDependency */,
 			);
 			name = DNV;
 			productName = DNV;
@@ -704,8 +704,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 76007E1A1887452E00FA7A39 /* Products */;
-					ProjectRef = 76007E191887452E00FA7A39 /* KLSwitch.xcodeproj */;
+					ProductGroup = 76F1014C18885223003555F2 /* Products */;
+					ProjectRef = 76F1014B18885223003555F2 /* KLSwitch.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -717,18 +717,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		76007E1F1887452F00FA7A39 /* libKLSwitch.a */ = {
+		76F1015118885223003555F2 /* libKLSwitch.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libKLSwitch.a;
-			remoteRef = 76007E1E1887452F00FA7A39 /* PBXContainerItemProxy */;
+			remoteRef = 76F1015018885223003555F2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		76007E211887452F00FA7A39 /* KLSwitchTests.octest */ = {
+		76F1015318885223003555F2 /* KLSwitchTests.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = KLSwitchTests.octest;
-			remoteRef = 76007E201887452F00FA7A39 /* PBXContainerItemProxy */;
+			remoteRef = 76F1015218885223003555F2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -771,7 +771,6 @@
 				76A5681D1886F803000E32D3 /* attachment_icon.png in Resources */,
 				762797201871D53A00F22E73 /* Main.storyboard in Resources */,
 				76A568161886F33B000E32D3 /* thumbs_up_gray.png in Resources */,
-				76007DBA18872AE900FA7A39 /* Checkmark.png in Resources */,
 				76A56838188746E4000E32D3 /* delete_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -796,8 +795,6 @@
 				76D96A3B187B001300961260 /* LogInViewController.m in Sources */,
 				76E81F18187DB92600441F62 /* Folder.m in Sources */,
 				76AB3CB4187B1FDA0019603F /* Audit.m in Sources */,
-				76007DB8188725CF00FA7A39 /* QuestionCell.m in Sources */,
-				762797231871D53A00F22E73 /* ViewController.m in Sources */,
 				76AB3CC3187B22300019603F /* Answers.m in Sources */,
 				76D4A339187CE5F6007AB1A9 /* AuditSelectionViewController.m in Sources */,
 				76E81F1B187EE78C00441F62 /* QuestionsViewController.m in Sources */,
@@ -839,15 +836,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		76007E231887458400FA7A39 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = KLSwitch;
-			targetProxy = 76007E221887458400FA7A39 /* PBXContainerItemProxy */;
-		};
 		762797301871D53A00F22E73 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 762797081871D53A00F22E73 /* DNV */;
 			targetProxy = 7627972F1871D53A00F22E73 /* PBXContainerItemProxy */;
+		};
+		76F1015618885264003555F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KLSwitch;
+			targetProxy = 76F1015518885264003555F2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
