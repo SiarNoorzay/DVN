@@ -203,18 +203,20 @@ loadMetadataFailedWithError:(NSError *)error {
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
-    NSIndexPath *indexPath = self.completedAuditTable.indexPathForSelectedRow;
+    if ([segue.identifier isEqualToString:@"EditQuestions"]){
+        
+        NSIndexPath *indexPath = self.completedAuditTable.indexPathForSelectedRow;
     
-    NSLog(@"Selected %@,",[self.completed objectAtIndex:indexPath.row]);
+        NSLog(@"Selected %@,",[self.completed objectAtIndex:indexPath.row]);
     
-    Folder *temp =[self.completed objectAtIndex:indexPath.row];
+        Folder *temp =[self.completed objectAtIndex:indexPath.row];
     
-//    NSLog(@"Path of Audit: %@", temp.folderPath);
+        //    NSLog(@"Path of Audit: %@", temp.folderPath);
     
-    ElementSubElementViewController * eleSubEleVC = [segue destinationViewController];
-    [eleSubEleVC setAuditPath: temp.folderPath];
-    eleSubEleVC.audType = @"Completed";
-    
+        ElementSubElementViewController * eleSubEleVC = [segue destinationViewController];
+        [eleSubEleVC setAuditPath: temp.folderPath];
+        eleSubEleVC.audType = @"Completed";
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
