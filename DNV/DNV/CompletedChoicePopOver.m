@@ -27,6 +27,11 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    NSLog(@"%@", self.compType);
+    
+    if ([self.compType isEqualToString:@"importCompleted"])
+        self.deleteAuditBtn.enabled = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -36,7 +41,7 @@
 }
 
 - (IBAction)completedChoiceMade:(UIButton *)sender {
-
+    
     [self.completedAuditVC.completedPopOver dismissPopoverAnimated:YES];
     self.completedAuditVC.completedChoice = sender.tag;
     [self.completedAuditVC goToCompletedChoice];

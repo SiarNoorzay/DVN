@@ -714,6 +714,7 @@
 				76A5681D1886F803000E32D3 /* attachment_icon.png in Resources */,
 				762797201871D53A00F22E73 /* Main.storyboard in Resources */,
 				76A568161886F33B000E32D3 /* thumbs_up_gray.png in Resources */,
+				76007DBA18872AE900FA7A39 /* Checkmark.png in Resources */,
 				76A56838188746E4000E32D3 /* delete_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -737,6 +738,8 @@
 				76D96A3B187B001300961260 /* LogInViewController.m in Sources */,
 				76E81F18187DB92600441F62 /* Folder.m in Sources */,
 				76AB3CB4187B1FDA0019603F /* Audit.m in Sources */,
+				76007DB8188725CF00FA7A39 /* QuestionCell.m in Sources */,
+				762797231871D53A00F22E73 /* ViewController.m in Sources */,
 				76AB3CC3187B22300019603F /* Answers.m in Sources */,
 				76D4A339187CE5F6007AB1A9 /* AuditSelectionViewController.m in Sources */,
 				76E81F1B187EE78C00441F62 /* QuestionsViewController.m in Sources */,
