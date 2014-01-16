@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Questions.h"
 #import "Answers.h"
+#import <KLSwitch/KLSwitch.h>
 
 @interface AnswersViewController : UIViewController<UIPickerViewDataSource,UIPickerViewDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIPopoverControllerDelegate>
 
@@ -22,7 +23,9 @@
 @property (strong,nonatomic) UIImage *cameraImage;
 
 
-@property (strong, nonatomic) IBOutlet UISwitch *switchy;
+@property (strong, nonatomic) IBOutlet KLSwitch *switchy;
+@property (strong, nonatomic) IBOutlet UILabel *rightSliderLabel;
+@property (strong, nonatomic) IBOutlet UILabel *leftSliderLabel;
 
 
 - (IBAction)submitButton:(id)sender;

@@ -642,10 +642,18 @@
                                         <rect key="frame" x="21" y="265" width="726" height="422"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q3g-g3-Jmp">
-                                                <rect key="frame" x="337" y="250" width="51" height="31"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jJu-2z-Sgy">
+                                                <rect key="frame" x="500" y="175" width="100" height="60"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </switch>
+                                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Left" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vre-Oe-XML">
+                                                <rect key="frame" x="150" y="175" width="100" height="60"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="VKI-aL-NdK">
                                                 <rect key="frame" x="150" y="300" width="400" height="34"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -768,6 +776,7 @@
                         <outlet property="answersTableView" destination="YJP-VQ-QIa" id="636-RG-kfb"/>
                         <outlet property="firstButton" destination="kpJ-bf-gcS" id="Occ-jY-PfU"/>
                         <outlet property="lastButton" destination="UNB-GJ-4v4" id="7IE-JZ-fAb"/>
+                        <outlet property="leftSliderLabel" destination="vre-Oe-XML" id="JZi-nm-PTD"/>
                         <outlet property="naButton" destination="TNe-xw-2l2" id="qJq-aI-Opy"/>
                         <outlet property="nextButton" destination="gx8-cn-DWN" id="AGT-a2-Ozj"/>
                         <outlet property="percentSlider" destination="VKI-aL-NdK" id="dn1-nL-ZgW"/>
@@ -778,6 +787,7 @@
                         <outlet property="questionNumLabel" destination="KYx-EK-Cw5" id="JEj-st-JzV"/>
                         <outlet property="questionNumberTextField" destination="xOO-hk-2so" id="FPU-49-9Yc"/>
                         <outlet property="questionText" destination="G4q-IP-rVQ" id="9te-Vk-pys"/>
+                        <outlet property="rightSliderLabel" destination="jJu-2z-Sgy" id="YW1-MM-To3"/>
                         <outlet property="tableCell" destination="dr8-0d-3AH" id="Tly-Cv-Klf"/>
                         <outlet property="thumbsDownButton" destination="XUi-u3-5zZ" id="5pG-K4-jjn"/>
                         <outlet property="thumbsUpButton" destination="1Dq-Nl-ZYZ" id="S60-Ob-PFl"/>

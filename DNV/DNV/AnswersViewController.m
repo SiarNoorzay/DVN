@@ -16,6 +16,9 @@
 
 @end
 
+BOOL const useSlider = true;
+
+
 float pointTotal = 0.0;
 BOOL answered = false; //used for submit button logic
 BOOL keyboardShouldMove = false;
@@ -66,6 +69,36 @@ BOOL keyboardShouldMove = false;
     
     [self.thumbsUpButton setImage:[UIImage imageNamed:@"thumbs_up.png"] forState:UIControlStateSelected];
     [self.thumbsUpButton setImage:[UIImage imageNamed:@"thumbs_up_gray.png"] forState:UIControlStateNormal];
+    
+    if (useSlider){
+    self.switchy = [[KLSwitch alloc]initWithFrame:CGRectMake(300, 615, 160, 96)];
+    
+    [self.view addSubview:self.switchy];
+    [self.switchy setOnTintColor: [UIColor colorWithWhite:.85 alpha:.5]];
+    
+    [self.switchy setOn: YES animated: YES];
+    
+    [self.switchy setDidChangeHandler:^(BOOL isOn) {
+        NSLog(@"Switchy changed to %d", isOn);
+        answered = true;
+        Answers *leftAns = self.ansArray[1];
+        //[[Answers alloc]initWithAnswer:[self.ansArray objectAtIndex:0]];
+        Answers *rightAns = self.ansArray[0];
+        
+        //[[Answers alloc]initWithAnswer:[self.ansArray objectAtIndex:1]];
+        
+        if (isOn) {
+            self.pointsLabel.text = [NSString stringWithFormat:@"%.2f",rightAns.pointsPossibleOrMultiplier];
+            rightAns.isSelected = true;
+            leftAns.isSelected = false;
+        }
+        else{
+            self.pointsLabel.text = [NSString stringWithFormat:@"%.2f",leftAns.pointsPossibleOrMultiplier];
+            leftAns.isSelected = true;
+            rightAns.isSelected = true;
+        }
+    }];
+    }
 
 }
 - (void)keyboardDidShow:(NSNotification *)notification
@@ -113,6 +146,10 @@ BOOL keyboardShouldMove = false;
     self.percentSlider.value = 50;
     self.percentSliderTextField.text = @"";
     
+    self.leftSliderLabel.hidden = true;
+    self.rightSliderLabel.hidden = true;
+    self.switchy.hidden = true;
+    
     
     
 }
@@ -121,15 +158,35 @@ BOOL keyboardShouldMove = false;
     
     self.question = [[Questions alloc]initWithQuestion:[self.questionArray objectAtIndex:self.currentPosition]];
     self.questionNumberTextField.text = [NSString stringWithFormat:@"%i",(self.currentPosition +1)];
-    
+    self.ansArray =  self.question.Answers;
+
     [self hideAnswerViews];
     NSLog(@"Question Type: %i",self.question.questionType);
     
     switch (self.question.questionType) {
         case 0: //bool
-            self.answersTableView.hidden = false;
-            self.answersTableView.allowsMultipleSelection = false;
-            self.tableCell.hidden = false;
+            if (useSlider)
+            {
+                self.switchy.hidden = false;
+                self.leftSliderLabel.hidden = false;
+                self.rightSliderLabel.hidden = false;
+                Answers *leftAns = self.ansArray[1];
+                
+                //[[Answers alloc]initWithAnswer:[self.ansArray objectAtIndex:0]];
+                Answers *rightAns =self.ansArray[0];
+                //[[Answers alloc]initWithAnswer:[self.ansArray objectAtIndex:1]];
+
+                self.leftSliderLabel.text = leftAns.answerText;
+                self.rightSliderLabel.text = rightAns.answerText;
+        
+            }
+            else
+            {
+                self.answersTableView.hidden = false;
+                self.answersTableView.allowsMultipleSelection = false;
+                self.tableCell.hidden = false;
+            }
+           
             break;
         case 1: //multiple choice
             self.answersTableView.hidden = false;
@@ -158,7 +215,6 @@ BOOL keyboardShouldMove = false;
     }//switch
     
     self.questionText.text = self.question.questionText;
-    self.ansArray =  self.question.Answers;
     [self.answersTableView reloadData];
     
     self.questionNumLabel.text = [NSString stringWithFormat:@"%i.%i.%i", self.elementNumber +1,self.subElementNum +1 , self.currentPosition+1];
