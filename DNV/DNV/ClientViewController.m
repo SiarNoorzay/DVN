@@ -9,9 +9,11 @@
 #import "ClientViewController.h"
 #import "MainWindowPopOver.h"
 #import <DropboxSDK/DropboxSDK.h>
+
 #import "Folder.h"
 #import "AuditSelectionViewController.h"
 #import "ListOfWIPViewController.h"
+#import "ListOfCompletedViewController.h"
 
 @interface ClientViewController ()<DBRestClientDelegate>
 
@@ -20,9 +22,6 @@
 @end
 
 @implementation ClientViewController
-
-
-
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -183,6 +182,17 @@ loadMetadataFailedWithError:(NSError *)error {
         
         [wipAuditVC setDbWIPFolderPath: [folder.folderPath stringByAppendingString:@"/WIP/"]];
         
+    }
+    
+    if ([[segue identifier] isEqualToString:@"CompletedAuditChoice"]){
+        
+        // Get destination view
+        ListOfCompletedViewController * completedAuditVC = [segue destinationViewController];
+        
+        // Pass the information to your destination view
+        Folder *folder = [self.clients objectAtIndex:self.chosenClient];
+        
+        [completedAuditVC setDbCompletedFolderPath: [folder.folderPath stringByAppendingString:@"/Completed/"]];
     }
 }
 

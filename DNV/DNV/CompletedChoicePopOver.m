@@ -1,18 +1,18 @@
 //
-//  WIPChoicePopOver.m
+//  CompletedChoicePopOver.m
 //  DNV
 //
-//  Created by USI on 1/9/14.
+//  Created by USI on 1/15/14.
 //  Copyright (c) 2014 USI. All rights reserved.
 //
 
-#import "WIPChoicePopOver.h"
+#import "CompletedChoicePopOver.h"
 
-@interface WIPChoicePopOver ()
+@interface CompletedChoicePopOver ()
 
 @end
 
-@implementation WIPChoicePopOver
+@implementation CompletedChoicePopOver
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,11 +35,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)wipChoiceMade:(UIButton *)sender {
+- (IBAction)completedChoiceMade:(UIButton *)sender {
 
-    [self.WIPAuditFilesVC.wipPopOver dismissPopoverAnimated:YES];
-    self.WIPAuditFilesVC.wipJSONChoice = sender.tag;
-    [self.WIPAuditFilesVC goToWIPChoice];
+    [self.completedAuditVC.completedPopOver dismissPopoverAnimated:YES];
+    self.completedAuditVC.completedChoice = sender.tag;
+    [self.completedAuditVC goToCompletedChoice];
 }
 
 @end

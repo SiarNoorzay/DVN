@@ -106,7 +106,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O59-De-B2R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="838" y="1880"/>
+            <point key="canvasLocation" x="858" y="1947"/>
         </scene>
         <!--Client View Controller - List of Clients-->
         <scene sceneID="OU5-it-9Cx">
@@ -1230,10 +1230,10 @@
             </objects>
             <point key="canvasLocation" x="5661" y="2048"/>
         </scene>
-        <!--View Controller - List of Completed Audits-->
+        <!--List Of Completed View Controller - List of Completed Audits-->
         <scene sceneID="Lce-tt-q6a">
             <objects>
-                <viewController id="28Y-W0-upZ" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="completedList" id="28Y-W0-upZ" customClass="ListOfCompletedViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Dzu-xJ-dcP"/>
                         <viewControllerLayoutGuide type="bottom" id="xB7-db-vZn"/>
@@ -1246,13 +1246,13 @@
                                 <rect key="frame" x="648" y="85" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mYt-om-ZhN">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="40" sectionFooterHeight="40" translatesAutoresizingMaskIntoConstraints="NO" id="mYt-om-ZhN">
                                 <rect key="frame" x="0.0" y="193" width="768" height="831"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="mlT-iA-5v9">
-                                        <rect key="frame" x="0.0" y="22" width="768" height="90"/>
+                                        <rect key="frame" x="0.0" y="40" width="768" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mlT-iA-5v9" id="OtH-3I-aXt">
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="89"/>
@@ -1265,12 +1265,23 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="28Y-W0-upZ" id="Mzk-55-fhb"/>
+                                    <outlet property="delegate" destination="28Y-W0-upZ" id="xdI-oH-JL5"/>
+                                </connections>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="SYi-gh-IIV">
+                                <rect key="frame" x="374" y="502" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" red="0.1004554288" green="0.12551632679999999" blue="0.38758916440000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="List of Completed Audits" id="k7m-zh-7kY"/>
                     <connections>
+                        <outlet property="completedAuditTable" destination="mYt-om-ZhN" id="PaI-9M-oT8"/>
+                        <outlet property="spinner" destination="SYi-gh-IIV" id="tE5-YO-nSe"/>
                         <segue destination="1LI-tS-8fd" kind="push" identifier="EditClient" id="Cip-mv-hdZ"/>
                         <segue destination="Ifz-5G-IlN" kind="push" identifier="EditQuestions" id="I8c-g1-CBJ"/>
                         <segue destination="4Hf-nJ-YNg" kind="push" identifier="ViewReport" id="vVN-cZ-BnU"/>
@@ -1280,60 +1291,89 @@
             </objects>
             <point key="canvasLocation" x="2934" y="4490"/>
         </scene>
-        <!--View Controller-->
+        <!--Completed Choice Pop Over-->
         <scene sceneID="vax-GB-1Gx">
             <objects>
-                <viewController id="0MP-Qu-AX9" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="completedChoices" id="0MP-Qu-AX9" customClass="CompletedChoicePopOver" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OzN-vF-ZYC"/>
                         <viewControllerLayoutGuide type="bottom" id="ONE-Pa-nsI"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Jwe-yE-MHx">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="550"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BvO-54-SNw">
-                                <rect key="frame" x="100" y="90" width="101" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BvO-54-SNw">
+                                <rect key="frame" x="90" y="85" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Edit Client Info">
+                                <state key="normal" title="Edit Client" image="client_icon.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="completedChoiceMade:" destination="0MP-Qu-AX9" eventType="touchUpInside" id="LyK-TQ-o2d"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BWS-xv-9Tj">
-                                <rect key="frame" x="100" y="140" width="101" height="30"/>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BWS-xv-9Tj">
+                                <rect key="frame" x="272" y="60" width="150" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Edit Questions">
+                                <state key="normal" title="Edit Questions" image="Help-100.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="completedChoiceMade:" destination="0MP-Qu-AX9" eventType="touchUpInside" id="Oas-Cg-130"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1an-l2-Stj">
-                                <rect key="frame" x="100" y="190" width="100" height="30"/>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1an-l2-Stj">
+                                <rect key="frame" x="77" y="311" width="125" height="125"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Submit Report">
+                                <state key="normal" title="Submit Report" image="notes_icon.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="completedChoiceMade:" destination="0MP-Qu-AX9" eventType="touchUpInside" id="WXe-qY-Oh9"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kAP-1g-zfH">
-                                <rect key="frame" x="96" y="240" width="109" height="30"/>
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sK4-cZ-mVe">
+                                <rect key="frame" x="291" y="324" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Dropbox Export">
+                                <state key="normal" title="Delete Audit" image="delete_icon.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="completedChoiceMade:" destination="0MP-Qu-AX9" eventType="touchUpInside" id="t6c-2C-ujy"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sK4-cZ-mVe">
-                                <rect key="frame" x="108" y="290" width="84" height="30"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Edit Client Info" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="100" translatesAutoresizingMaskIntoConstraints="NO" id="fYd-Bx-GhR">
+                                <rect key="frame" x="90" y="175" width="100" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Delete Audit">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Edit Questions" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="100" translatesAutoresizingMaskIntoConstraints="NO" id="6gj-HE-PZT">
+                                <rect key="frame" x="291" y="175" width="100" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Delete Audit" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="100" translatesAutoresizingMaskIntoConstraints="NO" id="Tlp-MR-Ce1">
+                                <rect key="frame" x="291" y="418" width="100" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Submit Report" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="100" translatesAutoresizingMaskIntoConstraints="NO" id="hKX-1z-nhU">
+                                <rect key="frame" x="90" y="418" width="100" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZNW-6t-Wps" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3915" y="4026"/>
+            <point key="canvasLocation" x="3939" y="3824"/>
         </scene>
         <!--View Controller - Client Information-->
         <scene sceneID="l57-cJ-IDU">
@@ -1542,7 +1582,9 @@
         <image name="Help-100.png" width="256" height="256"/>
         <image name="attachment_icon.png" width="256" height="256"/>
         <image name="camera_icon.png" width="256" height="256"/>
+        <image name="client_icon.png" width="256" height="256"/>
         <image name="completed_checklist_icon.png" width="300" height="350"/>
+        <image name="delete_icon.png" width="256" height="256"/>
         <image name="export_icon.png" width="300" height="294"/>
         <image name="flatFolderIcon2.png" width="252" height="170"/>
         <image name="import_icon.png" width="299" height="297"/>
