@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		76007DB11886FDE800FA7A39 /* dnvlogo76.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DAF1886FDE800FA7A39 /* dnvlogo76.png */; };
 		76007DB21886FDE800FA7A39 /* dvnlogo152.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB01886FDE800FA7A39 /* dvnlogo152.png */; };
-		76007DB8188725CF00FA7A39 /* QuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DB7188725CF00FA7A39 /* QuestionCell.m */; };
-		76007DBA18872AE900FA7A39 /* Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB918872AE900FA7A39 /* Checkmark.png */; };
 		76007DBD18872BFC00FA7A39 /* SubElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DBC18872BFC00FA7A39 /* SubElementCell.m */; };
+		76007E241887459800FA7A39 /* libKLSwitch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76007E1F1887452F00FA7A39 /* libKLSwitch.a */; };
+		76007E261888317400FA7A39 /* QuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DB7188725CF00FA7A39 /* QuestionCell.m */; };
 		7627970D1871D53A00F22E73 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627970C1871D53A00F22E73 /* Foundation.framework */; };
 		7627970F1871D53A00F22E73 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627970E1871D53A00F22E73 /* CoreGraphics.framework */; };
 		762797111871D53A00F22E73 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762797101871D53A00F22E73 /* UIKit.framework */; };
@@ -92,6 +92,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		76007E1E1887452F00FA7A39 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76007E191887452E00FA7A39 /* KLSwitch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7710F4F1176DE33900771BA7;
+			remoteInfo = KLSwitch;
+		};
+		76007E201887452F00FA7A39 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76007E191887452E00FA7A39 /* KLSwitch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7710F502176DE33900771BA7;
+			remoteInfo = KLSwitchTests;
+		};
+		76007E221887458400FA7A39 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76007E191887452E00FA7A39 /* KLSwitch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7710F4F0176DE33900771BA7;
+			remoteInfo = KLSwitch;
+		};
 		7627972F1871D53A00F22E73 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 762797011871D53A00F22E73 /* Project object */;
@@ -109,6 +130,7 @@
 		76007DB918872AE900FA7A39 /* Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Checkmark.png; sourceTree = "<group>"; };
 		76007DBB18872BFC00FA7A39 /* SubElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubElementCell.h; sourceTree = "<group>"; };
 		76007DBC18872BFC00FA7A39 /* SubElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementCell.m; sourceTree = "<group>"; };
+		76007E191887452E00FA7A39 /* KLSwitch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KLSwitch.xcodeproj; path = "../../../../Downloads/KLSwitch-master 3/KLSwitch/KLSwitch.xcodeproj"; sourceTree = "<group>"; };
 		762797091871D53A00F22E73 /* DNV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DNV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7627970C1871D53A00F22E73 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7627970E1871D53A00F22E73 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -223,11 +245,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */,
+				76007E241887459800FA7A39 /* libKLSwitch.a in Frameworks */,
 				76E81F4C18859E7D00441F62 /* AVFoundation.framework in Frameworks */,
 				76E81F4A18859E7000441F62 /* AudioToolbox.framework in Frameworks */,
 				76E81F4718859E3B00441F62 /* OpenEars.framework in Frameworks */,
 				76BF9C771872237200ACF6DB /* DropboxSDK.framework in Frameworks */,
-				76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */,
 				76BF9C73187222DC00ACF6DB /* Security.framework in Frameworks */,
 				76E81F4818859E3B00441F62 /* Slt.framework in Frameworks */,
 				7627970F1871D53A00F22E73 /* CoreGraphics.framework in Frameworks */,
@@ -258,9 +281,19 @@
 			path = "App Icons";
 			sourceTree = "<group>";
 		};
+		76007E1A1887452E00FA7A39 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				76007E1F1887452F00FA7A39 /* libKLSwitch.a */,
+				76007E211887452F00FA7A39 /* KLSwitchTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		762797001871D53A00F22E73 = {
 			isa = PBXGroup;
 			children = (
+				76007E191887452E00FA7A39 /* KLSwitch.xcodeproj */,
 				76BF9C761872237200ACF6DB /* DropboxSDK.framework */,
 				762797121871D53A00F22E73 /* DNV */,
 				762797311871D53A00F22E73 /* DNVTests */,
@@ -616,6 +649,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				76007E231887458400FA7A39 /* PBXTargetDependency */,
 			);
 			name = DNV;
 			productName = DNV;
@@ -668,6 +702,12 @@
 			mainGroup = 762797001871D53A00F22E73;
 			productRefGroup = 7627970A1871D53A00F22E73 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 76007E1A1887452E00FA7A39 /* Products */;
+					ProjectRef = 76007E191887452E00FA7A39 /* KLSwitch.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				762797081871D53A00F22E73 /* DNV */,
@@ -675,6 +715,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		76007E1F1887452F00FA7A39 /* libKLSwitch.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libKLSwitch.a;
+			remoteRef = 76007E1E1887452F00FA7A39 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		76007E211887452F00FA7A39 /* KLSwitchTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = KLSwitchTests.octest;
+			remoteRef = 76007E201887452F00FA7A39 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		762797071871D53A00F22E73 /* Resources */ = {
@@ -735,6 +792,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76007E261888317400FA7A39 /* QuestionCell.m in Sources */,
 				76D96A3B187B001300961260 /* LogInViewController.m in Sources */,
 				76E81F18187DB92600441F62 /* Folder.m in Sources */,
 				76AB3CB4187B1FDA0019603F /* Audit.m in Sources */,
@@ -781,6 +839,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		76007E231887458400FA7A39 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KLSwitch;
+			targetProxy = 76007E221887458400FA7A39 /* PBXContainerItemProxy */;
+		};
 		762797301871D53A00F22E73 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 762797081871D53A00F22E73 /* DNV */;
