@@ -1213,8 +1213,8 @@
                                     <outlet property="delegate" destination="28Y-W0-upZ" id="xdI-oH-JL5"/>
                                 </connections>
                             </tableView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="rBF-Rw-rVX">
-                                <rect key="frame" x="0.0" y="494" width="768" height="37"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="SYi-gh-IIV">
+                                <rect key="frame" x="374" y="502" width="37" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="color" red="0.1004554288" green="0.12551632679999999" blue="0.38758916440000002" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
@@ -1224,7 +1224,7 @@
                     <navigationItem key="navigationItem" title="List of Completed Audits" id="k7m-zh-7kY"/>
                     <connections>
                         <outlet property="completedAuditTable" destination="mYt-om-ZhN" id="PaI-9M-oT8"/>
-                        <outlet property="spinner" destination="rBF-Rw-rVX" id="QW6-mV-1vd"/>
+                        <outlet property="spinner" destination="SYi-gh-IIV" id="tE5-YO-nSe"/>
                         <segue destination="1LI-tS-8fd" kind="push" identifier="EditClient" id="Cip-mv-hdZ"/>
                         <segue destination="Ifz-5G-IlN" kind="push" identifier="EditQuestions" id="I8c-g1-CBJ"/>
                         <segue destination="4Hf-nJ-YNg" kind="push" identifier="ViewReport" id="vVN-cZ-BnU"/>
