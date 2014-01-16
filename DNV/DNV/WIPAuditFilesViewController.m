@@ -78,13 +78,14 @@
     
     WIPChoicePopOver * wipPopContent = [self.storyboard instantiateViewControllerWithIdentifier:@"wipChoices"];
     
+    wipPopContent.WIPAuditFilesVC = self;
+    
     self.wipPopOver = [[UIPopoverController alloc] initWithContentViewController:wipPopContent];
     
     self.wipPopOver.delegate = self;
     
     UITableViewCell * cell = [self.wipJSONFileTable cellForRowAtIndexPath:indexPath];
     
-    wipPopContent.WIPAuditFilesVC = self;
     
     [self.wipPopOver setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.35]];
 //    [self.wipPopOver setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:.3]];

@@ -49,16 +49,17 @@ int subEleNumber;
     
 //    [self loadDropboxFile:self.auditPath];
     
-    if([self.audType isEqualToString:@"New"])
-    {
-        [[self restClient] loadMetadata:self.auditPath];
-    }
-    else if([self.audType isEqualToString:@"importWIP"])
+    if([self.audType isEqualToString:@"importWIP"])
     {
         _directoryPath = [self setFilePath];
         
         [[self restClient] loadFile:self.auditPath intoPath:_directoryPath];
     }
+    else
+    {
+        [[self restClient] loadMetadata:self.auditPath];
+    }
+
     [self.spinner startAnimating];
     
     
@@ -76,6 +77,7 @@ int subEleNumber;
     
     return 1;
 }
+
 -(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
 {
     self.ele = [[Elements alloc]initWithElement:self.listOfElements[row]];

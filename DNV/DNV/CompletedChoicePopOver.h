@@ -13,6 +13,10 @@
 
 @property (weak, nonatomic) ListOfCompletedViewController * completedAuditVC;
 
+@property (strong, nonatomic) NSString * compType;
+
+@property (strong, nonatomic) IBOutlet UIButton *deleteAuditBtn;
+
 - (IBAction)completedChoiceMade:(UIButton *)sender;
 
 

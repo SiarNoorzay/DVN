@@ -255,7 +255,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ntM-3l-IgC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2690" y="618"/>
+            <point key="canvasLocation" x="3218" y="302"/>
         </scene>
         <!--Audit Selection View Controller - Audit Selection-->
         <scene sceneID="YiP-4h-pjt">
@@ -319,7 +319,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jgb-gR-Aq3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2966" y="-1815"/>
+            <point key="canvasLocation" x="4023" y="-1681"/>
         </scene>
         <!--Element Sub Element View Controller - Audit Elements & Sub Elements-->
         <scene sceneID="Rat-H4-JtR">
@@ -424,7 +424,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D5A-wg-0ez" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5013" y="-1815"/>
+            <point key="canvasLocation" x="7485" y="1090"/>
         </scene>
         <!--Questions View Controller - Sub Element Questions-->
         <scene sceneID="xFH-aw-b0L">
@@ -496,7 +496,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RWE-h0-Y6S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5915" y="-1815"/>
+            <point key="canvasLocation" x="8387" y="1090"/>
         </scene>
         <!--Answers View Controller - Dashboard-->
         <scene sceneID="SR4-5J-5UJ">
@@ -796,7 +796,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lkK-qJ-2w0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7543" y="993"/>
+            <point key="canvasLocation" x="10207" y="1090"/>
         </scene>
         <!--Help Text View Controller-->
         <scene sceneID="4nF-DD-Wbn">
@@ -830,7 +830,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w6z-YH-cw6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8682" y="1104"/>
+            <point key="canvasLocation" x="11346" y="1201"/>
         </scene>
         <!--Notes View Controller-->
         <scene sceneID="7RP-b1-RzF">
@@ -910,7 +910,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dNz-a1-wcy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8642" y="1694"/>
+            <point key="canvasLocation" x="11306" y="1791"/>
         </scene>
         <!--List OfWIP View Controller - List of WIP Audits-->
         <scene sceneID="c8n-iQ-f3f">
@@ -1115,7 +1115,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bt9-Y1-1yC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5091" y="1366"/>
+            <point key="canvasLocation" x="5107" y="1327"/>
         </scene>
         <!--Verify Questions View Controller - List of Open Verify Questions-->
         <scene sceneID="PVA-QN-ort">
@@ -1162,7 +1162,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WNi-ai-qph" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5661" y="-106"/>
+            <point key="canvasLocation" x="4989" y="-122"/>
         </scene>
         <!--Import Merge View Controller - Import & Merge-->
         <scene sceneID="KyX-7H-i0j">
@@ -1228,7 +1228,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8kF-09-iCF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5661" y="2048"/>
+            <point key="canvasLocation" x="4989" y="2160"/>
         </scene>
         <!--List Of Completed View Controller - List of Completed Audits-->
         <scene sceneID="Lce-tt-q6a">
@@ -1283,13 +1283,13 @@
                         <outlet property="completedAuditTable" destination="mYt-om-ZhN" id="PaI-9M-oT8"/>
                         <outlet property="spinner" destination="SYi-gh-IIV" id="tE5-YO-nSe"/>
                         <segue destination="1LI-tS-8fd" kind="push" identifier="EditClient" id="Cip-mv-hdZ"/>
-                        <segue destination="Ifz-5G-IlN" kind="push" identifier="EditQuestions" id="I8c-g1-CBJ"/>
                         <segue destination="4Hf-nJ-YNg" kind="push" identifier="ViewReport" id="vVN-cZ-BnU"/>
+                        <segue destination="0p3-Xt-jp1" kind="push" identifier="EditQuestions" id="Kjd-jP-nx9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9u9-ck-Zna" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2934" y="4490"/>
+            <point key="canvasLocation" x="4023" y="4290"/>
         </scene>
         <!--Completed Choice Pop Over-->
         <scene sceneID="vax-GB-1Gx">
@@ -1323,7 +1323,7 @@
                                     <action selector="completedChoiceMade:" destination="0MP-Qu-AX9" eventType="touchUpInside" id="Oas-Cg-130"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1an-l2-Stj">
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1an-l2-Stj">
                                 <rect key="frame" x="77" y="311" width="125" height="125"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Submit Report" image="notes_icon.png">
@@ -1370,10 +1370,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="deleteAuditBtn" destination="sK4-cZ-mVe" id="MLt-uG-h9C"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZNW-6t-Wps" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3939" y="3824"/>
+            <point key="canvasLocation" x="5467" y="4290"/>
         </scene>
         <!--View Controller - Client Information-->
         <scene sceneID="l57-cJ-IDU">
@@ -1487,7 +1490,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9gN-17-4H7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4685" y="3882"/>
+            <point key="canvasLocation" x="5885" y="5018"/>
         </scene>
         <!--View Controller - Report Summary-->
         <scene sceneID="3RO-Ae-jEJ">
@@ -1512,50 +1515,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ea-iy-nq6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4685" y="5410"/>
-        </scene>
-        <!--View Controller - Edit Questions-->
-        <scene sceneID="8ds-uN-485">
-            <objects>
-                <viewController id="Ifz-5G-IlN" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ebI-wd-M4g"/>
-                        <viewControllerLayoutGuide type="bottom" id="0dn-Ii-0AE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="c8x-ps-SB2">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DNV_GL_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="iDP-Xt-1Pd">
-                                <rect key="frame" x="648" y="85" width="100" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="yg8-34-CEz">
-                                <rect key="frame" x="0.0" y="193" width="768" height="831"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="G1m-0y-gg6">
-                                        <rect key="frame" x="0.0" y="22" width="768" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G1m-0y-gg6" id="eSk-E4-O4H">
-                                            <rect key="frame" x="0.0" y="0.0" width="735" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Edit Questions" id="Iwe-WC-mzq"/>
-                    <connections>
-                        <segue destination="8Xc-YB-eLc" kind="push" identifier="EditQuestions" id="ACP-l6-Xqz"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7ns-Lo-TOq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5915" y="4754"/>
+            <point key="canvasLocation" x="5885" y="6546"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6cQ-aJ-J0n">
@@ -1607,7 +1567,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qAv-AD-QyX"/>
-        <segue reference="2VJ-lN-Cgg"/>
+        <segue reference="Kjd-jP-nx9"/>
     </inferredMetricsTieBreakers>
 </document>

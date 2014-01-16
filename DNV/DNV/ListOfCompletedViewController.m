@@ -9,6 +9,7 @@
 #import "ListOfCompletedViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
 
+#import "ElementSubElementViewController.h"
 #import "CompletedChoicePopOver.h"
 #import "Folder.h"
 
@@ -106,22 +107,6 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    CompletedChoicePopOver * completedPopContent = [self.storyboard instantiateViewControllerWithIdentifier:@"completedChoices"];
-    
-    self.completedPopOver = [[UIPopoverController alloc] initWithContentViewController:completedPopContent];
-    
-    self.completedPopOver.delegate = self;
-    
-    UITableViewCell * cell = [self.completedAuditTable cellForRowAtIndexPath:indexPath];
-    
-    completedPopContent.completedAuditVC = self;
-    
-    [self.completedPopOver setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.35]];
-    //    [self.wipPopOver setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:.3]];
-    //    [[[self.wipPopOver contentViewController] view] setAlpha:0];
-    
-    [self.completedPopOver presentPopoverFromRect:cell.frame inView:self.completedAuditTable permittedArrowDirections:UIPopoverArrowDirectionAny animated:true];
-    
     if (indexPath.section == 0) {
         self.completedType = @"localCompleted";
     }
@@ -130,6 +115,23 @@
     }
     
     self.chosenCompleted = indexPath.row;
+    
+    CompletedChoicePopOver * completedPopContent = [self.storyboard instantiateViewControllerWithIdentifier:@"completedChoices"];
+    
+    completedPopContent.completedAuditVC = self;
+    completedPopContent.compType = self.completedType;
+    
+    self.completedPopOver = [[UIPopoverController alloc] initWithContentViewController:completedPopContent];
+    
+    self.completedPopOver.delegate = self;
+    
+    UITableViewCell * cell = [self.completedAuditTable cellForRowAtIndexPath:indexPath];
+    
+    
+    [self.completedPopOver setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.35]];
+    
+    
+    [self.completedPopOver presentPopoverFromRect:cell.frame inView:self.completedAuditTable permittedArrowDirections:UIPopoverArrowDirectionAny animated:true];
     
 }
 
@@ -197,6 +199,22 @@ loadMetadataFailedWithError:(NSError *)error {
         default:
             break;
     }
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    NSIndexPath *indexPath = self.completedAuditTable.indexPathForSelectedRow;
+    
+    NSLog(@"Selected %@,",[self.completed objectAtIndex:indexPath.row]);
+    
+    Folder *temp =[self.completed objectAtIndex:indexPath.row];
+    
+//    NSLog(@"Path of Audit: %@", temp.folderPath);
+    
+    ElementSubElementViewController * eleSubEleVC = [segue destinationViewController];
+    [eleSubEleVC setAuditPath: temp.folderPath];
+    eleSubEleVC.audType = @"Completed";
+    
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
