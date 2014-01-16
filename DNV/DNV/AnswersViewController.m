@@ -345,7 +345,6 @@ BOOL keyboardShouldMove = false;
 #pragma mark IBactions
 
 - (IBAction)submitButton:(id)sender {
-    //TODO: actually save stuff
 
     if (!answered) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"No answer" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -353,6 +352,11 @@ BOOL keyboardShouldMove = false;
         return;
         
     }
+    
+    //TODO: actually save stuff
+    self.question.isCompleted = true;
+    self.question.pointsAwarded = pointTotal;
+    
     if (self.currentPosition == ([self.questionArray count]-1))
     {
         //pop 2 view controllers
