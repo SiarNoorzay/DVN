@@ -46,9 +46,7 @@ BOOL keyboardShouldMove = false;
     {
         NSLog(@"***SHOULD NOT GET HERE***, (recieved a nil question from previous VC)");
     }
-    else{
-        [self refreshAnswerView];
-    }
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
     
@@ -71,7 +69,9 @@ BOOL keyboardShouldMove = false;
     [self.thumbsUpButton setImage:[UIImage imageNamed:@"thumbs_up_gray.png"] forState:UIControlStateNormal];
     
     if (useSlider){
-    self.switchy = [[KLSwitch alloc]initWithFrame:CGRectMake(300, 615, 160, 96)];
+        if (self.switchy == nil) {
+            self.switchy = [[KLSwitch alloc]initWithFrame:CGRectMake(300, 615, 160, 96)];
+        }
     
     [self.view addSubview:self.switchy];
     [self.switchy setOnTintColor: [UIColor colorWithWhite:.85 alpha:.5]];
@@ -99,6 +99,7 @@ BOOL keyboardShouldMove = false;
         }
     }];
     }
+    [self refreshAnswerView];
 
 }
 - (void)keyboardDidShow:(NSNotification *)notification
@@ -146,9 +147,11 @@ BOOL keyboardShouldMove = false;
     self.percentSlider.value = 50;
     self.percentSliderTextField.text = @"";
     
-    self.leftSliderLabel.hidden = true;
-    self.rightSliderLabel.hidden = true;
-    self.switchy.hidden = true;
+    if (useSlider){
+        self.leftSliderLabel.hidden = true;
+        self.rightSliderLabel.hidden = true;
+        self.switchy.hidden = true;
+    }
     
     
     
@@ -171,14 +174,9 @@ BOOL keyboardShouldMove = false;
                 self.leftSliderLabel.hidden = false;
                 self.rightSliderLabel.hidden = false;
                 Answers *leftAns = self.ansArray[1];
-                
-                //[[Answers alloc]initWithAnswer:[self.ansArray objectAtIndex:0]];
                 Answers *rightAns =self.ansArray[0];
-                //[[Answers alloc]initWithAnswer:[self.ansArray objectAtIndex:1]];
-
                 self.leftSliderLabel.text = leftAns.answerText;
                 self.rightSliderLabel.text = rightAns.answerText;
-        
             }
             else
             {

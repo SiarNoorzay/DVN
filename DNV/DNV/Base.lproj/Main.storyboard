@@ -655,7 +655,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="VKI-aL-NdK">
-                                                <rect key="frame" x="150" y="300" width="400" height="34"/>
+                                                <rect key="frame" x="18" y="300" width="690" height="34"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <connections>
                                                     <action selector="sliderChanged:" destination="8Xc-YB-eLc" eventType="valueChanged" id="1lt-Kv-xJt"/>
