@@ -57,7 +57,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return 2;
+    return self.sectionHeaders.count;
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
@@ -107,7 +107,6 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
     if (indexPath.section == 0) {
         self.WIPType = @"localWIP";
     }
@@ -129,15 +128,17 @@
         // Get destination view
         
         // Pass the information to your destination view
-//    NSLog(@"Selected %@,",[self.wips objectAtIndex:self.chosenWIP]);
-    
-    Folder *temp =[self.wips objectAtIndex:self.chosenWIP];
-    
-    
-    self.dbWIPFolderPath = temp.folderPath;
-
     WIPAuditFilesViewController * wipAuditFileVC = [segue destinationViewController];
-    [wipAuditFileVC setWipAuditPath: self.dbWIPFolderPath];
+    
+    if ([self.WIPType isEqualToString:@"importWIP"]){
+    
+        Folder *temp =[self.wips objectAtIndex:self.chosenWIP];
+    
+        self.dbWIPFolderPath = temp.folderPath;
+
+        [wipAuditFileVC setWipAuditPath: self.dbWIPFolderPath];
+    }
+    
     wipAuditFileVC.wipAuditType = _WIPType;
 
 }

@@ -35,10 +35,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    if ([self.wipAuditType isEqualToString:@"importWIP"]){
+        [[self restClient] loadMetadata:self.wipAuditPath];
+    }
+    else{
+        NSLog(@"%@", self.wipAuditType);
+    }
     
-    [[self restClient] loadMetadata:self.wipAuditPath];
     [self.spinner startAnimating];
-    
     
 }
 
