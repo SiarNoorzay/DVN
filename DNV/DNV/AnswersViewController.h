@@ -38,7 +38,7 @@
 - (IBAction)thumbsUpPushed:(id)sender;
 - (IBAction)thumbsDownPushed:(id)sender;
 - (IBAction)naButtonPushed:(id)sender;
-- (IBAction)speechButtonPushed:(id)sender;
+- (IBAction)calculatorButtonPushed:(id)sender;
 - (IBAction)cameraButtonPushed:(id)sender;
 - (IBAction)attachmentButtonPushed:(id)sender;
 - (IBAction)helpButtonPushed:(id)sender;
