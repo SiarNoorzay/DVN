@@ -614,6 +614,9 @@
                                         </state>
                                         <connections>
                                             <action selector="calculatorButtonPushed:" destination="8Xc-YB-eLc" eventType="touchUpInside" id="Zxr-MY-1cX"/>
+                                            <segue destination="fuF-Ln-BzO" kind="popover" popoverAnchorView="rpS-wk-8Bo" id="geW-xr-teH">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TNe-xw-2l2">
@@ -832,16 +835,16 @@
             </objects>
             <point key="canvasLocation" x="10330" y="1057"/>
         </scene>
-        <!--View Controller-->
+        <!--Calculator View Controller-->
         <scene sceneID="fmy-b2-3DP">
             <objects>
-                <viewController id="fuF-Ln-BzO" sceneMemberID="viewController">
+                <viewController id="fuF-Ln-BzO" customClass="CalculatorViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="riC-1V-Wcm"/>
                         <viewControllerLayoutGuide type="bottom" id="BI1-qf-veQ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="NYt-hn-nq3">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -849,7 +852,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VG5-2d-ZO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9343" y="2352"/>
+            <point key="canvasLocation" x="9803" y="2252"/>
         </scene>
         <!--Notes View Controller-->
         <scene sceneID="7RP-b1-RzF">
