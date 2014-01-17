@@ -501,9 +501,11 @@ BOOL keyboardShouldMove = false;
     return YES;
 }
 
-- (IBAction)speechButtonPushed:(id)sender {
+- (IBAction)calculatorButtonPushed:(id)sender {
     keyboardShouldMove = false;
-    [self performSegueWithIdentifier:@"notesPopover" sender:sender];
+    
+#warning: Do calculator logic
+//    [self performSegueWithIdentifier:@"notesPopover" sender:sender];
 
 }
 
