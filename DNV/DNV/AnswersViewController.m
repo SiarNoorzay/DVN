@@ -195,6 +195,8 @@ BOOL keyboardShouldMove = false;
         case 2: //percentage
             self.percentSlider.hidden = false;
             self.percentSliderTextField.hidden = false;
+            self.percentSlider.maximumValue = 100.0;
+            self.percentSlider.minimumValue = 0;
             break;
         case 3: //partial
             self.answersTableView.hidden = false;
@@ -202,7 +204,12 @@ BOOL keyboardShouldMove = false;
             self.tableCell.hidden = false;
             break;
         case 4: //professional Judgement
-            self.picker.hidden = false;
+            //self.picker.hidden = false;
+            self.percentSlider.hidden = false;
+            self.percentSliderTextField.hidden = false;
+            self.percentSlider.maximumValue = self.question.pointsPossible;
+            self.percentSlider.value = self.percentSlider.maximumValue /2;
+            
             break;
         case 5: //layered
             //TODO: Implement Layered questions
@@ -371,8 +378,17 @@ BOOL keyboardShouldMove = false;
 }
 
 - (IBAction)sliderChanged:(id)sender {
-    self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f %%", self.percentSlider.value];
-    self.pointsLabel.text = [NSString stringWithFormat:@"%.2f", (self.percentSlider.value * self.question.pointsPossible/100)];
+    if (self.question.questionType == 2)
+    {
+        self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f %%", self.percentSlider.value];
+        self.pointsLabel.text = [NSString stringWithFormat:@"%.2f", (self.percentSlider.value * self.question.pointsPossible/100)];
+    }
+    if (self.question.questionType == 4) {
+        self.pointsLabel.text = [NSString stringWithFormat:@"%i", (int) self.percentSlider.value];
+        self.percentSliderTextField.text = [NSString stringWithFormat:@"%i", (int) self.percentSlider.value];
+        
+    }
+    
     answered = true;
     
 }
@@ -460,15 +476,29 @@ BOOL keyboardShouldMove = false;
 }
 
 - (IBAction)percentTextChanged:(id)sender {
+    if (self.question.questionType == 2) {
+        float value = [self.percentSliderTextField.text floatValue];
+        if (value < 0) value = 0;
+        if (value > 100) value = 100;
+        self.percentSlider.value = value;
+        self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f %%", value];
+        self.pointsLabel.text = [NSString stringWithFormat:@"%.2f", (self.percentSlider.value * self.question.pointsPossible/100)];
+        
+    }
     
-    float value = [self.percentSliderTextField.text floatValue];
-    if (value < 0) value = 0;
-    if (value > 100) value = 100;
-    self.percentSlider.value = value;
+    else if (self.question.questionType == 4) {
+        int value = [self.percentSliderTextField.text intValue];
+        if (value < 0) value = 0;
+        if (value > self.percentSlider.maximumValue) value = self.percentSlider.maximumValue;
+        self.percentSlider.value = value;
+        self.percentSliderTextField.text = [NSString stringWithFormat:@"%i", value];
+        self.pointsLabel.text = [NSString stringWithFormat:@"%i", value];
+
+        
+    }
     answered = true;
-    self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f %%", value];
-    self.pointsLabel.text = [NSString stringWithFormat:@"%.2f", (self.percentSlider.value * self.question.pointsPossible/100)];
     if ([self.percentSliderTextField canResignFirstResponder]) [self.percentSliderTextField resignFirstResponder];
+    
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
