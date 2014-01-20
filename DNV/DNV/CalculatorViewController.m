@@ -78,9 +78,20 @@
     resultLabel.backgroundColor = [UIColor whiteColor];
     
     
-    
     // Add it to the view
     [self.view addSubview:resultLabel];
+    
+    
+    //change submit button title based on question type
+    
+    if (self.ansVC.question.questionType == 2 || self.ansVC.question.questionType == 4) {
+        [self.submitButton setTitle:@"Submit Answer" forState:UIControlStateNormal];
+
+    }
+    else{
+        [self.submitButton setTitle:@"Close Calculator" forState:UIControlStateNormal];
+    }
+    
     
     // initialize memory to 0
     memory = 0;

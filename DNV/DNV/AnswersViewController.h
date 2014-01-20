@@ -12,7 +12,7 @@
 #import <KLSwitch/KLSwitch.h>
 
 
-@interface AnswersViewController : UIViewController<UIPickerViewDataSource,UIPickerViewDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIPopoverControllerDelegate>
+@interface AnswersViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIPopoverControllerDelegate>
 
 @property (nonatomic, strong) Questions *question;
 @property (nonatomic) NSArray * questionArray;
@@ -49,7 +49,6 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *answersTableView;
 @property (strong, nonatomic) IBOutlet UITableViewCell *tableCell;
-@property (strong, nonatomic) IBOutlet UIPickerView *picker;
 
 @property (strong, nonatomic) IBOutlet UIButton *firstButton;
 @property (strong, nonatomic) IBOutlet UIButton *lastButton;

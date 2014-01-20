@@ -75,7 +75,7 @@ BOOL keyboardShouldMove = false;
         }
     
     [self.view addSubview:self.switchy];
-    [self.switchy setOnTintColor: [UIColor colorWithWhite:.85 alpha:.5]];
+ //   [self.switchy setOnTintColor: [UIColor colorWithWhite:.85 alpha:.5]];
     
     [self.switchy setOn: YES animated: YES];
     
@@ -135,7 +135,6 @@ BOOL keyboardShouldMove = false;
     self.answersTableView.hidden = true;
     self.percentSliderTextField.hidden = true;
     self.percentSlider.hidden = true;
-    self.picker.hidden = true;
     
     [self.firstButton setEnabled:true];
     [self.lastButton setEnabled:true];
@@ -204,7 +203,6 @@ BOOL keyboardShouldMove = false;
             self.tableCell.hidden = false;
             break;
         case 4: //professional Judgement
-            //self.picker.hidden = false;
             self.percentSlider.hidden = false;
             self.percentSliderTextField.hidden = false;
             self.percentSlider.maximumValue = self.question.pointsPossible;
@@ -303,50 +301,6 @@ BOOL keyboardShouldMove = false;
     
 }
 
-#pragma mark - Picker View Delegate Methods
-
-// returns the number of 'columns' to display.
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-// returns the # of rows in each component..
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-   return self.question.pointsPossible;
-}
-
-#pragma mark  UIPickerView Delegate
-- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
-{
-    return 45.0;
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    return [NSString stringWithFormat:@"%i", row];
-    
-}
-
-
-
-//If the user chooses from the pickerview, it calls this function;
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    NSLog(@"Chosen item: %i", row);
-    
-    pointTotal = row;
-    self.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
-    
-    Answers *ans = [self.ansArray objectAtIndex:0];
-    
-    [ans setIsSelected:true];
-    
-    [ans setAnswerText:[NSString stringWithFormat:@"%.2f",pointTotal]];
-    
-    answered = true;
-}
 
 
 
@@ -448,6 +402,12 @@ BOOL keyboardShouldMove = false;
     [self refreshAnswerView];
     
     }
+    else if (textField == self.percentSliderTextField)
+    {
+
+        [self percentTextChanged:nil];
+        
+    }
     return YES;
 }
 
@@ -538,20 +498,13 @@ BOOL keyboardShouldMove = false;
 
     CalculatorViewController * calcVC = [self.storyboard instantiateViewControllerWithIdentifier:@"calcVC"];
 
+    self.calcPopOver.delegate = self;
+    calcVC.ansVC = self;
     
     self.calcPopOver= [[UIPopoverController alloc] initWithContentViewController:calcVC];
     
-    self.calcPopOver.delegate = self;
-    
-    calcVC.ansVC = self;
-    
- //   [self.clientPopOver presentPopoverFromRect:cell.frame inView:self.ClientCollectionView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-
     [self.calcPopOver presentPopoverFromRect:self.calculatorButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     
-    
-
-
 }
 
 - (IBAction)cameraButtonPushed:(id)sender {

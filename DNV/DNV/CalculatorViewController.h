@@ -59,6 +59,7 @@ typedef enum {
 @property (nonatomic, retain) NSMutableString *resultText;
 
 
+@property (strong, nonatomic) IBOutlet UIButton *submitButton;
 
 
 - (IBAction)calcSubmitPushed:(id)sender;

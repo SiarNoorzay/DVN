@@ -629,14 +629,6 @@
                                                     <action selector="sliderChanged:" destination="8Xc-YB-eLc" eventType="valueChanged" id="1lt-Kv-xJt"/>
                                                 </connections>
                                             </slider>
-                                            <pickerView hidden="YES" contentMode="scaleToFill" id="bTA-JX-wHh">
-                                                <rect key="frame" x="0.0" y="103" width="726" height="216"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                                <connections>
-                                                    <outlet property="dataSource" destination="8Xc-YB-eLc" id="YKt-ag-Vfu"/>
-                                                    <outlet property="delegate" destination="8Xc-YB-eLc" id="1UN-HY-CQx"/>
-                                                </connections>
-                                            </pickerView>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="50.00 %" borderStyle="roundedRect" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" id="f43-Fe-Otd">
                                                 <rect key="frame" x="285" y="185" width="132" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -750,7 +742,6 @@
                         <outlet property="nextButton" destination="gx8-cn-DWN" id="AGT-a2-Ozj"/>
                         <outlet property="percentSlider" destination="VKI-aL-NdK" id="dn1-nL-ZgW"/>
                         <outlet property="percentSliderTextField" destination="f43-Fe-Otd" id="jMe-Pe-zhz"/>
-                        <outlet property="picker" destination="bTA-JX-wHh" id="SIQ-6j-YXE"/>
                         <outlet property="pointsLabel" destination="b3p-sj-qjt" id="GPp-a5-90G"/>
                         <outlet property="previousButton" destination="6n7-vc-9vM" id="8g1-a7-fZe"/>
                         <outlet property="questionNumLabel" destination="KYx-EK-Cw5" id="JEj-st-JzV"/>
@@ -813,7 +804,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="Submit Answer"/>
+                                <state key="normal" title="default"/>
                                 <connections>
                                     <action selector="calcSubmitPushed:" destination="fuF-Ln-BzO" eventType="touchUpInside" id="SZi-Ox-ztM"/>
                                 </connections>
@@ -822,6 +813,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <value key="contentSizeForViewInPopover" type="size" width="320" height="480"/>
+                    <connections>
+                        <outlet property="submitButton" destination="2UA-cv-xYz" id="uip-SO-9Ww"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VG5-2d-ZO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
