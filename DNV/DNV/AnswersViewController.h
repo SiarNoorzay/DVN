@@ -11,6 +11,7 @@
 #import "Answers.h"
 #import <KLSwitch/KLSwitch.h>
 
+
 @interface AnswersViewController : UIViewController<UIPickerViewDataSource,UIPickerViewDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIPopoverControllerDelegate>
 
 @property (nonatomic, strong) Questions *question;
@@ -22,7 +23,7 @@
 @property (strong,nonatomic) UIPopoverController * helpPopOver;
 @property (strong,nonatomic) UIImage *cameraImage;
 
-
+@property (strong, nonatomic) IBOutlet UIButton *calculatorButton;
 @property (strong, nonatomic) IBOutlet KLSwitch *switchy;
 @property (strong, nonatomic) IBOutlet UILabel *rightSliderLabel;
 @property (strong, nonatomic) IBOutlet UILabel *leftSliderLabel;
@@ -66,5 +67,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *pointsLabel;
 @property (strong, nonatomic) IBOutlet UILabel *questionNumLabel;
 @property (strong, nonatomic) IBOutlet UITextField *percentSliderTextField;
+
+@property (strong,nonatomic) UIPopoverController * calcPopOver;
+
 
 @end

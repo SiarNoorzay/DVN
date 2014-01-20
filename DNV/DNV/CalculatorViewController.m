@@ -63,6 +63,8 @@
     
     // the initial result
     self.resultText = [NSMutableString stringWithString:@"0"];
+    self.view.frame = CGRectMake(150, 300, 320, 480);
+    
     
     // Add a nice background color to our view
     self.view.backgroundColor = [UIColor lightGrayColor];
@@ -205,6 +207,34 @@
 
 // This is a macro function that I use below to DRY up the code
 #define ADD_DIGIT(x) [self.resultText appendFormat:@"%d", x]
+
+- (IBAction)calcSubmitPushed:(id)sender {
+    
+    //TODO: save information from resultLabel to answerViewController percentSliderTextField.text
+    //and call percentTextChanged
+
+    [self.ansVC.calcPopOver dismissPopoverAnimated:YES];
+    
+    if (self.ansVC.question.questionType == 2) {
+        float answer = [resultLabel.text floatValue];
+        if (answer <=1.0 && answer > 0.0)
+        {
+            answer *= 100.0;
+        }
+        self.ansVC.percentSliderTextField.text = [NSString stringWithFormat:@"%f",answer];
+        
+        [self.ansVC percentTextChanged:self];
+    }
+    
+    
+   // [self dismissViewControllerAnimated:YES completion:^{
+        //self.ansVC
+      //  [self.ansVC setValue:resultLabel forKey:@"percentSliderTextField.text"];
+      //  [self.parentViewController performSelector:@selector(percentTextChanged)];
+  //  }];
+    
+    
+}
 
 - (void)buttonPressed:(id)sender
 {

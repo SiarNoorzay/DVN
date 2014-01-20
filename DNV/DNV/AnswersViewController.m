@@ -10,6 +10,7 @@
 #import "ElementSubElementViewController.h"
 #import "helpTextViewController.h"
 #import "NotesViewController.h"
+#import "CalculatorViewController.h"
 
 
 @interface AnswersViewController ()
@@ -434,6 +435,7 @@ BOOL keyboardShouldMove = false;
     return YES;
 }
 
+#pragma mark - Dashboard Buttons
 
 
 - (IBAction)thumbsUpPushed:(id)sender {
@@ -503,9 +505,22 @@ BOOL keyboardShouldMove = false;
 
 - (IBAction)calculatorButtonPushed:(id)sender {
     keyboardShouldMove = false;
+
+    CalculatorViewController * calcVC = [self.storyboard instantiateViewControllerWithIdentifier:@"calcVC"];
+
     
-#warning: Do calculator logic
-//    [self performSegueWithIdentifier:@"notesPopover" sender:sender];
+    self.calcPopOver= [[UIPopoverController alloc] initWithContentViewController:calcVC];
+    
+    self.calcPopOver.delegate = self;
+    
+    calcVC.ansVC = self;
+    
+ //   [self.clientPopOver presentPopoverFromRect:cell.frame inView:self.ClientCollectionView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+
+    [self.calcPopOver presentPopoverFromRect:self.calculatorButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    
+    
+
 
 }
 
@@ -564,8 +579,6 @@ BOOL keyboardShouldMove = false;
     [self presentModalViewController:imagePickerController animated:YES];
     
 }
-
-
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 	UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
