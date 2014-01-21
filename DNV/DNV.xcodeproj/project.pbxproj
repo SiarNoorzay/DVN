@@ -12,6 +12,8 @@
 		76007DBD18872BFC00FA7A39 /* SubElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DBC18872BFC00FA7A39 /* SubElementCell.m */; };
 		76007E261888317400FA7A39 /* QuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DB7188725CF00FA7A39 /* QuestionCell.m */; };
 		7627430B1888508B00873E9F /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB918872AE900FA7A39 /* checkmark.png */; };
+		7627431018897BB500873E9F /* CalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7627430F18897BB500873E9F /* CalculatorViewController.m */; };
+		7627431318898D3900873E9F /* DrawingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7627431218898D3900873E9F /* DrawingViewController.m */; };
 		7627970D1871D53A00F22E73 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627970C1871D53A00F22E73 /* Foundation.framework */; };
 		7627970F1871D53A00F22E73 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627970E1871D53A00F22E73 /* CoreGraphics.framework */; };
 		762797111871D53A00F22E73 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762797101871D53A00F22E73 /* UIKit.framework */; };
@@ -73,6 +75,7 @@
 		76D96A3E187B07EA00961260 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3D187B07EA00961260 /* User.m */; };
 		76D96A45187B585900961260 /* ClientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A44187B585900961260 /* ClientViewController.m */; };
 		76DBFA83187CAD6300F84282 /* MainWindowPopOver.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DBFA82187CAD6300F84282 /* MainWindowPopOver.m */; };
+		76DCB9201889ACD700314C5D /* drawingBackGroundLines.png.png in Resources */ = {isa = PBXBuildFile; fileRef = 76DCB91F1889ACD700314C5D /* drawingBackGroundLines.png.png */; };
 		76E81F0C187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
 		76E81F0D187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
 		76E81F13187C908100441F62 /* usersNOTDB.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F12187C908100441F62 /* usersNOTDB.json */; };
@@ -134,6 +137,10 @@
 		76007DB918872AE900FA7A39 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
 		76007DBB18872BFC00FA7A39 /* SubElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubElementCell.h; sourceTree = "<group>"; };
 		76007DBC18872BFC00FA7A39 /* SubElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementCell.m; sourceTree = "<group>"; };
+		7627430E18897BB500873E9F /* CalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorViewController.h; sourceTree = "<group>"; };
+		7627430F18897BB500873E9F /* CalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculatorViewController.m; sourceTree = "<group>"; };
+		7627431118898D3900873E9F /* DrawingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingViewController.h; sourceTree = "<group>"; };
+		7627431218898D3900873E9F /* DrawingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingViewController.m; sourceTree = "<group>"; };
 		762797091871D53A00F22E73 /* DNV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DNV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7627970C1871D53A00F22E73 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7627970E1871D53A00F22E73 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -220,6 +227,7 @@
 		76D96A44187B585900961260 /* ClientViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientViewController.m; sourceTree = "<group>"; };
 		76DBFA81187CAD6300F84282 /* MainWindowPopOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowPopOver.h; sourceTree = "<group>"; };
 		76DBFA82187CAD6300F84282 /* MainWindowPopOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowPopOver.m; sourceTree = "<group>"; };
+		76DCB91F1889ACD700314C5D /* drawingBackGroundLines.png.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drawingBackGroundLines.png.png; sourceTree = "<group>"; };
 		76E81F0B187B559000441F62 /* sampleAudit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sampleAudit.json; sourceTree = "<group>"; };
 		76E81F12187C908100441F62 /* usersNOTDB.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = usersNOTDB.json; sourceTree = "<group>"; };
 		76E81F14187CBC0500441F62 /* users.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = users.json; sourceTree = "<group>"; };
@@ -288,6 +296,19 @@
 				76007DB01886FDE800FA7A39 /* dvnlogo152.png */,
 			);
 			path = "App Icons";
+			sourceTree = "<group>";
+		};
+		7627431418898D4200873E9F /* NotesViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7627431118898D3900873E9F /* DrawingViewController.h */,
+				7627431218898D3900873E9F /* DrawingViewController.m */,
+				76E81F3D18849DB500441F62 /* NotesViewController.h */,
+				76E81F3E18849DB500441F62 /* NotesViewController.m */,
+				76E81F4018859D5F00441F62 /* VoiceRecognizer.h */,
+				76E81F4118859D5F00441F62 /* VoiceRecognizer.m */,
+			);
+			name = NotesViewController;
 			sourceTree = "<group>";
 		};
 		762797001871D53A00F22E73 = {
@@ -441,6 +462,7 @@
 		76A0DFC4188504640038FD61 /* Dashboard Icons */ = {
 			isa = PBXGroup;
 			children = (
+				76DCB91F1889ACD700314C5D /* drawingBackGroundLines.png.png */,
 				76F1015B18888F88003555F2 /* calculator_icon.png */,
 				76A5681E1886FA24000E32D3 /* not_applicable_icon_gray.png */,
 				76A5681F1886FA24000E32D3 /* not_applicable_icon.png */,
@@ -635,14 +657,13 @@
 		76E81F1F187F0B4300441F62 /* AnswersViewController */ = {
 			isa = PBXGroup;
 			children = (
+				7627431418898D4200873E9F /* NotesViewController */,
 				76E81F1C187F071C00441F62 /* AnswersViewController.h */,
 				76E81F1D187F071C00441F62 /* AnswersViewController.m */,
 				76E81F3A18848C7F00441F62 /* helpTextViewController.h */,
 				76E81F3B18848C7F00441F62 /* helpTextViewController.m */,
-				76E81F3D18849DB500441F62 /* NotesViewController.h */,
-				76E81F3E18849DB500441F62 /* NotesViewController.m */,
-				76E81F4018859D5F00441F62 /* VoiceRecognizer.h */,
-				76E81F4118859D5F00441F62 /* VoiceRecognizer.m */,
+				7627430E18897BB500873E9F /* CalculatorViewController.h */,
+				7627430F18897BB500873E9F /* CalculatorViewController.m */,
 			);
 			name = AnswersViewController;
 			sourceTree = "<group>";
@@ -784,6 +805,7 @@
 				76A568191886F62B000E32D3 /* camera_icon.png in Resources */,
 				76A568011886E0CC000E32D3 /* export_icon.png in Resources */,
 				769D3CF518860C2B002DF3B8 /* flatFolderIcon2.png in Resources */,
+				76DCB9201889ACD700314C5D /* drawingBackGroundLines.png.png in Resources */,
 				76A568171886F33B000E32D3 /* thumbs_up.png in Resources */,
 				76007DB21886FDE800FA7A39 /* dvnlogo152.png in Resources */,
 				76A56825188723F6000E32D3 /* check.png in Resources */,
@@ -841,10 +863,12 @@
 				76AB3CBA187B20C70019603F /* Elements.m in Sources */,
 				76E81F1E187F071C00441F62 /* AnswersViewController.m in Sources */,
 				76AB3CB7187B20520019603F /* Report.m in Sources */,
+				7627431318898D3900873E9F /* DrawingViewController.m in Sources */,
 				76A0DFBD18847B880038FD61 /* WIPAuditFilesViewController.m in Sources */,
 				76DBFA83187CAD6300F84282 /* MainWindowPopOver.m in Sources */,
 				76AB3CC0187B21700019603F /* Questions.m in Sources */,
 				76E81F5B1886D8A400441F62 /* LoginHelpPopOverViewController.m in Sources */,
+				7627431018897BB500873E9F /* CalculatorViewController.m in Sources */,
 				76E81F4218859D5F00441F62 /* VoiceRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
