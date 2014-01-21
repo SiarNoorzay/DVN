@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
+#import "DNVDatabaseManagerClass.h"
 
 @class DBRestClient;
 
@@ -27,6 +28,8 @@
 //User properties
 @property (strong, nonatomic) User * user;
 @property (strong, nonatomic) NSArray * arrayOfUsers;
+
+@property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
 
 //Log In Button
 - (IBAction)LogInButton:(UIBarButtonItem *)sender;

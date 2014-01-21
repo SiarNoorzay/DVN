@@ -54,6 +54,8 @@
 		76A56838188746E4000E32D3 /* delete_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A56837188746E4000E32D3 /* delete_icon.png */; };
 		76A5683C18875A08000E32D3 /* CompletedChoicePopOver.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A5683B18875A08000E32D3 /* CompletedChoicePopOver.m */; };
 		76A721A7188061E200E34CFA /* DNV_GL_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A721A6188061E200E34CFA /* DNV_GL_logo.png */; };
+		76A7C9941889DC02004E4F39 /* DNVDatabaseManagerClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A7C9931889DC02004E4F39 /* DNVDatabaseManagerClass.m */; };
+		76A7C9961889DCCA004E4F39 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A7C9951889DCCA004E4F39 /* libsqlite3.dylib */; };
 		76A8AFFA187F0B00007531A9 /* ListOfWIPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A8AFF9187F0B00007531A9 /* ListOfWIPViewController.m */; };
 		76A8B001187F28AA007531A9 /* WIPChoicePopOver.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A8B000187F28AA007531A9 /* WIPChoicePopOver.m */; };
 		76AB3CB1187B17410019603F /* Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AB3CB0187B17410019603F /* Client.m */; };
@@ -184,6 +186,9 @@
 		76A5683A18875A08000E32D3 /* CompletedChoicePopOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompletedChoicePopOver.h; sourceTree = "<group>"; };
 		76A5683B18875A08000E32D3 /* CompletedChoicePopOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompletedChoicePopOver.m; sourceTree = "<group>"; };
 		76A721A6188061E200E34CFA /* DNV_GL_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DNV_GL_logo.png; sourceTree = "<group>"; };
+		76A7C9921889DC02004E4F39 /* DNVDatabaseManagerClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNVDatabaseManagerClass.h; sourceTree = "<group>"; };
+		76A7C9931889DC02004E4F39 /* DNVDatabaseManagerClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNVDatabaseManagerClass.m; sourceTree = "<group>"; };
+		76A7C9951889DCCA004E4F39 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		76A8AFF8187F0B00007531A9 /* ListOfWIPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListOfWIPViewController.h; sourceTree = "<group>"; };
 		76A8AFF9187F0B00007531A9 /* ListOfWIPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListOfWIPViewController.m; sourceTree = "<group>"; };
 		76A8AFFF187F28AA007531A9 /* WIPChoicePopOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIPChoicePopOver.h; sourceTree = "<group>"; };
@@ -248,6 +253,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76A7C9961889DCCA004E4F39 /* libsqlite3.dylib in Frameworks */,
 				76F1015418885254003555F2 /* libKLSwitch.a in Frameworks */,
 				76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */,
 				76E81F4C18859E7D00441F62 /* AVFoundation.framework in Frameworks */,
@@ -308,6 +314,7 @@
 		7627970B1871D53A00F22E73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				76A7C9951889DCCA004E4F39 /* libsqlite3.dylib */,
 				76E81F4B18859E7D00441F62 /* AVFoundation.framework */,
 				76E81F4918859E7000441F62 /* AudioToolbox.framework */,
 				76E81F4318859E3B00441F62 /* AcousticModelEnglish.bundle */,
@@ -330,6 +337,7 @@
 				7627971E1871D53A00F22E73 /* Main.storyboard */,
 				7627971B1871D53A00F22E73 /* AppDelegate.h */,
 				7627971C1871D53A00F22E73 /* AppDelegate.m */,
+				76A7C9901889DBB6004E4F39 /* DNV Database Manager */,
 				76AB3CAE187B16920019603F /* ClassObjects */,
 				76D4A33A187CE832007AB1A9 /* Images */,
 				76D96A41187B580900961260 /* LogInViewController */,
@@ -505,6 +513,15 @@
 				76A5683B18875A08000E32D3 /* CompletedChoicePopOver.m */,
 			);
 			name = CompletedChoicePopOver;
+			sourceTree = "<group>";
+		};
+		76A7C9901889DBB6004E4F39 /* DNV Database Manager */ = {
+			isa = PBXGroup;
+			children = (
+				76A7C9921889DC02004E4F39 /* DNVDatabaseManagerClass.h */,
+				76A7C9931889DC02004E4F39 /* DNVDatabaseManagerClass.m */,
+			);
+			name = "DNV Database Manager";
 			sourceTree = "<group>";
 		};
 		76A8AFF5187EFF13007531A9 /* QuestionsViewController */ = {
@@ -799,6 +816,7 @@
 			files = (
 				76007E261888317400FA7A39 /* QuestionCell.m in Sources */,
 				76D96A3B187B001300961260 /* LogInViewController.m in Sources */,
+				76A7C9941889DC02004E4F39 /* DNVDatabaseManagerClass.m in Sources */,
 				76E81F18187DB92600441F62 /* Folder.m in Sources */,
 				76AB3CB4187B1FDA0019603F /* Audit.m in Sources */,
 				76AB3CC3187B22300019603F /* Answers.m in Sources */,

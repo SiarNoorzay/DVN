@@ -94,7 +94,10 @@
     _directoryPath = filePath;
     
     [self.restClient loadFile:@"/users.json" intoPath:filePath];
-
+    
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+    
+    [self.dnvDBManager createUserTable];
     
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -148,6 +151,7 @@
 //        NSLog(@"JSON3 contains:\n%@", [dictionary3 description]);
 
         self.arrayOfUsers = [dictionary objectForKey:@"Users"];
+        
     }
     
 }
@@ -178,13 +182,16 @@
     
     for (User *usr in self.arrayOfUsers) {
         
+        [self.dnvDBManager saveUser:usr];
+        
         if ([[usr objectForKey:@"userID" ] isEqualToString:self.userIDTextField.text]) {
             
             self.user = usr;
             foundUser = true;
-            break;
+           // break;
         }
-    }
+    }    
+    
     if (foundUser) {
         BOOL passwordCorrect = false;
         
@@ -204,8 +211,8 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"User ID not recognized" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         NSLog(@"User ID not recognized");//add alert view here}
-        
     }
+    
 }
 
 @end
