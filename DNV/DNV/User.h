@@ -12,9 +12,10 @@
 
 @property (nonatomic) NSString * userID;
 @property (nonatomic) NSString * password;
+@property (nonatomic) NSString * fullname;
+@property (nonatomic) int rank;
 @property (nonatomic) NSString * otherUserInfo;
 
 -(id)initWithUserID:(NSString *)userID andPassword:(NSString *)password andInfo:(NSString *)otherInfo;
-
 
 @end
