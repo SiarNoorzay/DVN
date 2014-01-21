@@ -50,6 +50,14 @@
 @property (strong, nonatomic) IBOutlet UITableView *answersTableView;
 @property (strong, nonatomic) IBOutlet UITableViewCell *tableCell;
 
+@property (strong, nonatomic) IBOutlet UIView *layeredQuestionsView;
+
+//layered question outlets
+@property (strong, nonatomic) IBOutlet UITableView *subQuesionsTableView;
+@property (strong, nonatomic) IBOutlet UITableViewCell *subQuestionsCell;
+@property (strong, nonatomic) IBOutlet UIButton *mainLayeredQuesionButton;
+- (IBAction)mainLayeredPushed:(id)sender;
+
 @property (strong, nonatomic) IBOutlet UIButton *firstButton;
 @property (strong, nonatomic) IBOutlet UIButton *lastButton;
 @property (strong, nonatomic) IBOutlet UIButton *nextButton;

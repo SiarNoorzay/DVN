@@ -73,7 +73,7 @@
 		76D96A3E187B07EA00961260 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3D187B07EA00961260 /* User.m */; };
 		76D96A45187B585900961260 /* ClientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A44187B585900961260 /* ClientViewController.m */; };
 		76DBFA83187CAD6300F84282 /* MainWindowPopOver.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DBFA82187CAD6300F84282 /* MainWindowPopOver.m */; };
-		76DCB9201889ACD700314C5D /* drawingBackGroundLines.png.png in Resources */ = {isa = PBXBuildFile; fileRef = 76DCB91F1889ACD700314C5D /* drawingBackGroundLines.png.png */; };
+		76DCB9201889ACD700314C5D /* drawingBackGroundLines.png in Resources */ = {isa = PBXBuildFile; fileRef = 76DCB91F1889ACD700314C5D /* drawingBackGroundLines.png */; };
 		76E81F0C187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
 		76E81F0D187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
 		76E81F13187C908100441F62 /* usersNOTDB.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F12187C908100441F62 /* usersNOTDB.json */; };
@@ -222,7 +222,7 @@
 		76D96A44187B585900961260 /* ClientViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientViewController.m; sourceTree = "<group>"; };
 		76DBFA81187CAD6300F84282 /* MainWindowPopOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowPopOver.h; sourceTree = "<group>"; };
 		76DBFA82187CAD6300F84282 /* MainWindowPopOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowPopOver.m; sourceTree = "<group>"; };
-		76DCB91F1889ACD700314C5D /* drawingBackGroundLines.png.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drawingBackGroundLines.png.png; sourceTree = "<group>"; };
+		76DCB91F1889ACD700314C5D /* drawingBackGroundLines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drawingBackGroundLines.png; sourceTree = "<group>"; };
 		76E81F0B187B559000441F62 /* sampleAudit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sampleAudit.json; sourceTree = "<group>"; };
 		76E81F12187C908100441F62 /* usersNOTDB.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = usersNOTDB.json; sourceTree = "<group>"; };
 		76E81F14187CBC0500441F62 /* users.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = users.json; sourceTree = "<group>"; };
@@ -454,7 +454,7 @@
 		76A0DFC4188504640038FD61 /* Dashboard Icons */ = {
 			isa = PBXGroup;
 			children = (
-				76DCB91F1889ACD700314C5D /* drawingBackGroundLines.png.png */,
+				76DCB91F1889ACD700314C5D /* drawingBackGroundLines.png */,
 				76F1015B18888F88003555F2 /* calculator_icon.png */,
 				76A5681E1886FA24000E32D3 /* not_applicable_icon_gray.png */,
 				76A5681F1886FA24000E32D3 /* not_applicable_icon.png */,
@@ -788,7 +788,7 @@
 				76A568191886F62B000E32D3 /* camera_icon.png in Resources */,
 				76A568011886E0CC000E32D3 /* export_icon.png in Resources */,
 				769D3CF518860C2B002DF3B8 /* flatFolderIcon2.png in Resources */,
-				76DCB9201889ACD700314C5D /* drawingBackGroundLines.png.png in Resources */,
+				76DCB9201889ACD700314C5D /* drawingBackGroundLines.png in Resources */,
 				76A568171886F33B000E32D3 /* thumbs_up.png in Resources */,
 				76007DB21886FDE800FA7A39 /* dvnlogo152.png in Resources */,
 				76A56825188723F6000E32D3 /* check.png in Resources */,
