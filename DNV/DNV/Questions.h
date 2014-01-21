@@ -25,6 +25,8 @@
 @property (nonatomic) int questionType;
 @property (nonatomic) BOOL isThumbsUp;
 @property (nonatomic) BOOL isThumbsDown;
+@property (nonatomic) float pointsNeededForLayered;
+@property (nonatomic) NSArray * layeredQuesions;
 
 
 -(id)initWithQuestion:(NSDictionary *)questionDictionary;

@@ -11,7 +11,8 @@
 #import "Answers.h"
 #import <KLSwitch/KLSwitch.h>
 
-@interface AnswersViewController : UIViewController<UIPickerViewDataSource,UIPickerViewDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIPopoverControllerDelegate>
+
+@interface AnswersViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIPopoverControllerDelegate>
 
 @property (nonatomic, strong) Questions *question;
 @property (nonatomic) NSArray * questionArray;
@@ -22,7 +23,7 @@
 @property (strong,nonatomic) UIPopoverController * helpPopOver;
 @property (strong,nonatomic) UIImage *cameraImage;
 
-
+@property (strong, nonatomic) IBOutlet UIButton *calculatorButton;
 @property (strong, nonatomic) IBOutlet KLSwitch *switchy;
 @property (strong, nonatomic) IBOutlet UILabel *rightSliderLabel;
 @property (strong, nonatomic) IBOutlet UILabel *leftSliderLabel;
@@ -48,7 +49,14 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *answersTableView;
 @property (strong, nonatomic) IBOutlet UITableViewCell *tableCell;
-@property (strong, nonatomic) IBOutlet UIPickerView *picker;
+
+@property (strong, nonatomic) IBOutlet UIView *layeredQuestionsView;
+
+//layered question outlets
+@property (strong, nonatomic) IBOutlet UITableView *subQuesionsTableView;
+@property (strong, nonatomic) IBOutlet UITableViewCell *subQuestionsCell;
+@property (strong, nonatomic) IBOutlet UIButton *mainLayeredQuesionButton;
+- (IBAction)mainLayeredPushed:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIButton *firstButton;
 @property (strong, nonatomic) IBOutlet UIButton *lastButton;
@@ -66,5 +74,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *pointsLabel;
 @property (strong, nonatomic) IBOutlet UILabel *questionNumLabel;
 @property (strong, nonatomic) IBOutlet UITextField *percentSliderTextField;
+
+@property (strong,nonatomic) UIPopoverController * calcPopOver;
+
 
 @end

@@ -30,6 +30,8 @@
         self.questionType = [[questionDictionary objectForKey:@"questionType"] intValue];
         self.isThumbsUp = [[questionDictionary objectForKey:@"isThumbsUp"] boolValue];
         self.isThumbsDown = [[questionDictionary objectForKey:@"isThumbsUp"] boolValue];
+        self.pointsNeededForLayered = [[questionDictionary objectForKey:@"pointsNeededForLayered"] floatValue];
+        
         
         NSMutableArray *tempArray = [questionDictionary objectForKey:@"Answers"];
         NSMutableArray *objectArray = [NSMutableArray arrayWithCapacity:[tempArray count]];
@@ -42,6 +44,17 @@
         }
         self.Answers = objectArray;
         
+        
+        NSMutableArray *tempArray1 = [questionDictionary objectForKey:@"LayeredQuestions"];
+        NSMutableArray *objectArray1 = [NSMutableArray arrayWithCapacity:[tempArray1 count]];
+        
+        for (int i = 0; i < [tempArray1 count]; i++) {
+            Questions *question = [[Questions alloc]initWithQuestion:[tempArray1 objectAtIndex:i]];
+            
+            // [tempArray replaceObjectAtIndex:i withObject:answer];
+            [objectArray1 addObject:question];
+        }
+        self.layeredQuesions = objectArray1;
         
     }
     return self;
