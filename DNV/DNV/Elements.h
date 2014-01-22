@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SubElements.h"
 
 @interface Elements : NSDictionary
 
@@ -16,8 +17,10 @@
 @property (nonatomic) float  pointsPossible;
 @property (nonatomic) float  pointsAwarded;
 @property (nonatomic) NSArray * Subelements;
+@property (nonatomic) float modifierForPointsPossible;
 
 -(id)initWithElement:(NSDictionary *)elementDictionary;
 
+-(Elements *)mergeElements:(Elements *)primaryElements with:(Elements *)secondaryElements;
 
 @end

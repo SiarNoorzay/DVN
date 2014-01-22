@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Answers.h"
 
 @interface Questions : NSDictionary
 
@@ -16,9 +17,9 @@
 @property (nonatomic) NSString * questionText;
 @property (nonatomic) NSString * helpText;
 @property (nonatomic) BOOL isApplicable;
+@property (nonatomic) BOOL isVerifiedDone;
 @property (nonatomic) NSString * notes;
-@property (nonatomic) BOOL needsVerifying;
-@property (nonatomic) NSString * verifyDoneBy;
+@property (nonatomic) int needsVerifying;
 @property (nonatomic) NSArray * attachmentsLocationArray;
 @property (nonatomic) NSArray * imageLocationArray;
 @property (nonatomic) NSArray * Answers;
@@ -28,9 +29,8 @@
 @property (nonatomic) float pointsNeededForLayered;
 @property (nonatomic) NSArray * layeredQuesions;
 
-
 -(id)initWithQuestion:(NSDictionary *)questionDictionary;
 
-
+-(Questions *)mergeQuestion:(Questions *)primaryQuestion with:(Questions *)secondaryQuestion;
 
 @end

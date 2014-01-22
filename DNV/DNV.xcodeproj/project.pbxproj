@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4AC04091188F0AF2006A2F3C /* libKLSwitch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AC0408C188F0AD5006A2F3C /* libKLSwitch.a */; };
+		4AC04094188F71C4006A2F3C /* MergeClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC04093188F71C4006A2F3C /* MergeClass.m */; };
 		76007DB11886FDE800FA7A39 /* dnvlogo76.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DAF1886FDE800FA7A39 /* dnvlogo76.png */; };
 		76007DB21886FDE800FA7A39 /* dvnlogo152.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB01886FDE800FA7A39 /* dvnlogo152.png */; };
 		76007DBD18872BFC00FA7A39 /* SubElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DBC18872BFC00FA7A39 /* SubElementCell.m */; };
@@ -131,6 +132,8 @@
 
 /* Begin PBXFileReference section */
 		4AC04086188F0AD4006A2F3C /* KLSwitch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KLSwitch.xcodeproj; path = "KLSwitch-master/KLSwitch/KLSwitch.xcodeproj"; sourceTree = "<group>"; };
+		4AC04092188F71C4006A2F3C /* MergeClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MergeClass.h; sourceTree = "<group>"; };
+		4AC04093188F71C4006A2F3C /* MergeClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MergeClass.m; sourceTree = "<group>"; };
 		76007DAF1886FDE800FA7A39 /* dnvlogo76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dnvlogo76.png; sourceTree = "<group>"; };
 		76007DB01886FDE800FA7A39 /* dvnlogo152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dvnlogo152.png; sourceTree = "<group>"; };
 		76007DB6188725CF00FA7A39 /* QuestionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionCell.h; sourceTree = "<group>"; };
@@ -591,10 +594,10 @@
 				76D96A3D187B07EA00961260 /* User.m */,
 				76AB3CAF187B17410019603F /* Client.h */,
 				76AB3CB0187B17410019603F /* Client.m */,
-				76AB3CB2187B1FDA0019603F /* Audit.h */,
-				76AB3CB3187B1FDA0019603F /* Audit.m */,
 				76AB3CB5187B20520019603F /* Report.h */,
 				76AB3CB6187B20520019603F /* Report.m */,
+				76AB3CB2187B1FDA0019603F /* Audit.h */,
+				76AB3CB3187B1FDA0019603F /* Audit.m */,
 				76AB3CB8187B20C70019603F /* Elements.h */,
 				76AB3CB9187B20C70019603F /* Elements.m */,
 				76AB3CBB187B212C0019603F /* SubElements.h */,
@@ -605,6 +608,8 @@
 				76AB3CC2187B22300019603F /* Answers.m */,
 				76E81F16187DB92600441F62 /* Folder.h */,
 				76E81F17187DB92600441F62 /* Folder.m */,
+				4AC04092188F71C4006A2F3C /* MergeClass.h */,
+				4AC04093188F71C4006A2F3C /* MergeClass.m */,
 			);
 			name = ClassObjects;
 			sourceTree = "<group>";
@@ -838,6 +843,7 @@
 			files = (
 				76007E261888317400FA7A39 /* QuestionCell.m in Sources */,
 				76D96A3B187B001300961260 /* LogInViewController.m in Sources */,
+				4AC04094188F71C4006A2F3C /* MergeClass.m in Sources */,
 				76A7C9941889DC02004E4F39 /* DNVDatabaseManagerClass.m in Sources */,
 				76E81F18187DB92600441F62 /* Folder.m in Sources */,
 				76AB3CB4187B1FDA0019603F /* Audit.m in Sources */,

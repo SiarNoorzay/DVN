@@ -7,8 +7,6 @@
 //
 
 #import "Elements.h"
-#import "SubElements.h"
-
 
 @implementation Elements
 
@@ -35,7 +33,7 @@
             
        //     [tempArray replaceObjectAtIndex:i withObject:subEle];
         }
-        self.Subelements = tempArray;
+        self.Subelements = objectArray;
         
         
         
@@ -44,6 +42,38 @@
     return self;
 }
 
+//Merge two elements
+-(Elements *)mergeElements:(Elements *)primaryElements with:(Elements *)secondaryElements
+{
+    Elements *mergedElements = [Elements new];
+    
+    MergeClass *dataMerger = [MergeClass new];
+    dataMerger.bRank2Higher = true; // rank2 > rank2;
+    
+    //bools
+    mergedElements.isCompleted = [dataMerger mergeBool:primaryElements.isCompleted with:secondaryElements.isCompleted];
+    mergedElements.isRequired = [dataMerger mergeBool:primaryElements.isRequired with:secondaryElements.isRequired];
+    
+    //float
+    mergedElements.pointsPossible = [dataMerger mergeFloat:primaryElements.pointsPossible with:secondaryElements.pointsPossible];
+    mergedElements.pointsAwarded = [dataMerger mergeFloat:primaryElements.pointsAwarded with:secondaryElements.pointsAwarded];
+    mergedElements.modifierForPointsPossible = [dataMerger mergeFloat:primaryElements.modifierForPointsPossible with:secondaryElements.modifierForPointsPossible];
+    
+    //string
+    mergedElements.name = [dataMerger mergeString:primaryElements.name with:secondaryElements.name];
+    
+    //questions array
+    NSMutableArray *mergedSubElements = [NSMutableArray new];
+    SubElements *someSubElement = [SubElements new];
+    for( int i = 0; i < [primaryElements.Subelements count]; i++ )
+    {
+        [mergedSubElements addObject:[someSubElement mergeSubElements:[primaryElements.Subelements objectAtIndex:i] with:[secondaryElements.Subelements objectAtIndex:i]]];
+    }
+    
+    mergedElements.Subelements = [NSArray arrayWithArray:mergedSubElements];
+    
+    return  mergedElements;
+}
 
 @end
 
