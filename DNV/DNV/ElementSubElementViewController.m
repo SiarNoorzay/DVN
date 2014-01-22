@@ -282,6 +282,11 @@ loadMetadataFailedWithError:(NSError *)error {
         
         self.listOfElements = aud.Elements;
         
+        Audit *second = [[Audit alloc] initWithAudit:theAudit];
+        
+        //just to test
+        Audit *aha = [aud mergeAudit:aud with:second];
+        
         //[self.elementPicker reloadAllComponents];
         
         

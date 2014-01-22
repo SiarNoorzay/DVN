@@ -7,15 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MergeClass.h"
 
-@interface Report : NSObject
+@interface Report : NSDictionary
 
 @property (nonatomic) NSString * summary;
 @property (nonatomic) NSString * preparedBy;
-@property (nonatomic) NSString * verifiedBy;
 @property (nonatomic) NSString * approvedBy;
 @property (nonatomic) NSString * projectNum;
 @property (nonatomic) NSString * conclusion;
 @property (nonatomic) NSString * methodologyDiagramLocation;
+
+-(id)initWithReport:(NSDictionary *)dictionary;
+
+-(Report *)mergeReports:(Report *)primaryReport with:(Report *)secondaryReport;
 
 @end

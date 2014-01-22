@@ -11,7 +11,6 @@
 
 @implementation Answers
 
-
 -(id)initWithAnswer:(NSDictionary *)answerDictionary{
     
 
@@ -46,11 +45,31 @@
             }
         }
         
-        self.Questions = tempArray;
-    
-    
-    
+       // self.Questions = tempArray;
+
+    }
+    return self;
+
 }
-return self;
+
+//Merge two answers
+-(Answers *)mergeAnswer:(Answers *)primaryAnswer with:(Answers *)secondaryAnswer
+{
+    Answers *mergedAnswer = [Answers new];
+    
+    MergeClass *dataMerger = [MergeClass new];
+    dataMerger.bRank2Higher = true; // rank2 > rank2;
+    
+    //bool
+    mergedAnswer.isSelected = [dataMerger mergeBool:primaryAnswer.isSelected with:secondaryAnswer.isSelected];
+    
+    //float
+    mergedAnswer.pointsPossibleOrMultiplier = [dataMerger mergeFloat:primaryAnswer.pointsPossibleOrMultiplier with:secondaryAnswer.pointsPossibleOrMultiplier];
+    
+    //string
+    mergedAnswer.answerText = [dataMerger mergeString:primaryAnswer.answerText with:secondaryAnswer.answerText];
+    
+    return  mergedAnswer;
 }
+
 @end
