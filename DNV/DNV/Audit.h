@@ -10,20 +10,21 @@
 #import "Report.h"
 #import "Client.h"
 
-
+#import "Elements.h"
 
 @interface Audit : NSDictionary
+
 
 @property (nonatomic) NSInteger auditType;
 @property (nonatomic) NSString * name;
 @property (nonatomic) NSArray * Elements;
 @property (nonatomic) float physicalConditionScore;
-@property (nonatomic) NSString * awardLevel;
 @property (nonatomic) NSString * lastModefied;
 @property (nonatomic) Report * report;
 @property (nonatomic) Client * client;
 
 -(id)initWithAudit:(NSDictionary *)auditDictionary;
 
+-(Audit*)mergeAudit:(Audit*)primaryAudit with:(Audit*)secondaryAudit;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Questions.h"
 
 @interface SubElements : NSDictionary
 
@@ -15,7 +16,12 @@
 @property (nonatomic) float  pointsPossible;
 @property (nonatomic) float  pointsAwarded;
 @property (nonatomic) NSArray * Questions;
+@property (nonatomic) float modifierForPointsPossible;
+
+@property (nonatomic) float modefiedNAPoints;
 
 -(id)initWithSubElement:(NSDictionary *)subElementDictionary;
+
+-(SubElements *)mergeSubElements:(SubElements *)primarySubElements with:(SubElements *)secondarySubElements;
 
 @end

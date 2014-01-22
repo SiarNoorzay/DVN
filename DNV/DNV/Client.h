@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MergeClass.h"
 
-@interface Client : NSObject
+@interface Client : NSDictionary
 
 @property (nonatomic) NSString * companyName;
 @property (nonatomic) NSString * division;
@@ -25,5 +26,6 @@
 
 -(id)initWithClient:(NSDictionary *)clientDictionary;
 
+-(Client *)mergeClients:(Client *)primaryClient with:(Client *)secondaryClient;
 
 @end

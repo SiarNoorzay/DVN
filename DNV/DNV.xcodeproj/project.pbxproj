@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4AC04091188F0AF2006A2F3C /* libKLSwitch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AC0408C188F0AD5006A2F3C /* libKLSwitch.a */; };
+		4AC04094188F71C4006A2F3C /* MergeClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC04093188F71C4006A2F3C /* MergeClass.m */; };
 		76007DB11886FDE800FA7A39 /* dnvlogo76.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DAF1886FDE800FA7A39 /* dnvlogo76.png */; };
 		76007DB21886FDE800FA7A39 /* dvnlogo152.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB01886FDE800FA7A39 /* dvnlogo152.png */; };
 		76007DBD18872BFC00FA7A39 /* SubElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DBC18872BFC00FA7A39 /* SubElementCell.m */; };
@@ -27,6 +29,10 @@
 		7627972E1871D53A00F22E73 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762797101871D53A00F22E73 /* UIKit.framework */; };
 		762797361871D53A00F22E73 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 762797341871D53A00F22E73 /* InfoPlist.strings */; };
 		762797381871D53A00F22E73 /* DNVTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 762797371871D53A00F22E73 /* DNVTests.m */; };
+		768D564E188F0FD300175EB4 /* SummaryOfRatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D564D188F0FD300175EB4 /* SummaryOfRatingsViewController.m */; };
+		768D5651188F0FF500175EB4 /* ElementRatingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D5650188F0FF500175EB4 /* ElementRatingsCell.m */; };
+		768D5653188F18CC00175EB4 /* sampleCompletedAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 768D5652188F18CC00175EB4 /* sampleCompletedAudit.json */; };
+		768D56561890145500175EB4 /* ReportDocViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D56551890145500175EB4 /* ReportDocViewController.m */; };
 		769D3CE6188580C5002DF3B8 /* VerifyQuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 769D3CE5188580C5002DF3B8 /* VerifyQuestionsViewController.m */; };
 		769D3CEA1885A763002DF3B8 /* ImportMergeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 769D3CE91885A763002DF3B8 /* ImportMergeViewController.m */; };
 		769D3CEE1885F9FC002DF3B8 /* completed_checklist_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 769D3CEB1885F9FC002DF3B8 /* completed_checklist_icon.png */; };
@@ -75,7 +81,7 @@
 		76D96A3E187B07EA00961260 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3D187B07EA00961260 /* User.m */; };
 		76D96A45187B585900961260 /* ClientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A44187B585900961260 /* ClientViewController.m */; };
 		76DBFA83187CAD6300F84282 /* MainWindowPopOver.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DBFA82187CAD6300F84282 /* MainWindowPopOver.m */; };
-		76DCB9201889ACD700314C5D /* drawingBackGroundLines.png.png in Resources */ = {isa = PBXBuildFile; fileRef = 76DCB91F1889ACD700314C5D /* drawingBackGroundLines.png.png */; };
+		76DCB9201889ACD700314C5D /* drawingBackGroundLines.png in Resources */ = {isa = PBXBuildFile; fileRef = 76DCB91F1889ACD700314C5D /* drawingBackGroundLines.png */; };
 		76E81F0C187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
 		76E81F0D187B559000441F62 /* sampleAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F0B187B559000441F62 /* sampleAudit.json */; };
 		76E81F13187C908100441F62 /* usersNOTDB.json in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F12187C908100441F62 /* usersNOTDB.json */; };
@@ -94,11 +100,31 @@
 		76E81F4E1885A61700441F62 /* DVNCorpusTxt.txt in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F4D1885A61700441F62 /* DVNCorpusTxt.txt */; };
 		76E81F581886D5ED00441F62 /* Help-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E81F571886D5ED00441F62 /* Help-100.png */; };
 		76E81F5B1886D8A400441F62 /* LoginHelpPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E81F5A1886D8A400441F62 /* LoginHelpPopOverViewController.m */; };
-		76F1015418885254003555F2 /* libKLSwitch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76F1015118885223003555F2 /* libKLSwitch.a */; };
 		76F1015C18888F88003555F2 /* calculator_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76F1015B18888F88003555F2 /* calculator_icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4AC0408B188F0AD5006A2F3C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4AC04086188F0AD4006A2F3C /* KLSwitch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7710F4F1176DE33900771BA7;
+			remoteInfo = KLSwitch;
+		};
+		4AC0408D188F0AD5006A2F3C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4AC04086188F0AD4006A2F3C /* KLSwitch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7710F502176DE33900771BA7;
+			remoteInfo = KLSwitchTests;
+		};
+		4AC0408F188F0AE7006A2F3C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4AC04086188F0AD4006A2F3C /* KLSwitch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7710F4F0176DE33900771BA7;
+			remoteInfo = KLSwitch;
+		};
 		7627972F1871D53A00F22E73 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 762797011871D53A00F22E73 /* Project object */;
@@ -106,30 +132,12 @@
 			remoteGlobalIDString = 762797081871D53A00F22E73;
 			remoteInfo = DNV;
 		};
-		76F1015018885223003555F2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76F1014B18885223003555F2 /* KLSwitch.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7710F4F1176DE33900771BA7;
-			remoteInfo = KLSwitch;
-		};
-		76F1015218885223003555F2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76F1014B18885223003555F2 /* KLSwitch.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7710F502176DE33900771BA7;
-			remoteInfo = KLSwitchTests;
-		};
-		76F1015518885264003555F2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76F1014B18885223003555F2 /* KLSwitch.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 7710F4F0176DE33900771BA7;
-			remoteInfo = KLSwitch;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4AC04086188F0AD4006A2F3C /* KLSwitch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KLSwitch.xcodeproj; path = "KLSwitch-master/KLSwitch/KLSwitch.xcodeproj"; sourceTree = "<group>"; };
+		4AC04092188F71C4006A2F3C /* MergeClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MergeClass.h; sourceTree = "<group>"; };
+		4AC04093188F71C4006A2F3C /* MergeClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MergeClass.m; sourceTree = "<group>"; };
 		76007DAF1886FDE800FA7A39 /* dnvlogo76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dnvlogo76.png; sourceTree = "<group>"; };
 		76007DB01886FDE800FA7A39 /* dvnlogo152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dvnlogo152.png; sourceTree = "<group>"; };
 		76007DB6188725CF00FA7A39 /* QuestionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionCell.h; sourceTree = "<group>"; };
@@ -158,6 +166,13 @@
 		762797331871D53A00F22E73 /* DNVTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DNVTests-Info.plist"; sourceTree = "<group>"; };
 		762797351871D53A00F22E73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		762797371871D53A00F22E73 /* DNVTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DNVTests.m; sourceTree = "<group>"; };
+		768D564C188F0FD300175EB4 /* SummaryOfRatingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SummaryOfRatingsViewController.h; sourceTree = "<group>"; };
+		768D564D188F0FD300175EB4 /* SummaryOfRatingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SummaryOfRatingsViewController.m; sourceTree = "<group>"; };
+		768D564F188F0FF500175EB4 /* ElementRatingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementRatingsCell.h; sourceTree = "<group>"; };
+		768D5650188F0FF500175EB4 /* ElementRatingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementRatingsCell.m; sourceTree = "<group>"; };
+		768D5652188F18CC00175EB4 /* sampleCompletedAudit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sampleCompletedAudit.json; sourceTree = "<group>"; };
+		768D56541890145500175EB4 /* ReportDocViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportDocViewController.h; sourceTree = "<group>"; };
+		768D56551890145500175EB4 /* ReportDocViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportDocViewController.m; sourceTree = "<group>"; };
 		769D3CE4188580C5002DF3B8 /* VerifyQuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyQuestionsViewController.h; sourceTree = "<group>"; };
 		769D3CE5188580C5002DF3B8 /* VerifyQuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyQuestionsViewController.m; sourceTree = "<group>"; };
 		769D3CE81885A763002DF3B8 /* ImportMergeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportMergeViewController.h; sourceTree = "<group>"; };
@@ -227,7 +242,7 @@
 		76D96A44187B585900961260 /* ClientViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientViewController.m; sourceTree = "<group>"; };
 		76DBFA81187CAD6300F84282 /* MainWindowPopOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowPopOver.h; sourceTree = "<group>"; };
 		76DBFA82187CAD6300F84282 /* MainWindowPopOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowPopOver.m; sourceTree = "<group>"; };
-		76DCB91F1889ACD700314C5D /* drawingBackGroundLines.png.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drawingBackGroundLines.png.png; sourceTree = "<group>"; };
+		76DCB91F1889ACD700314C5D /* drawingBackGroundLines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drawingBackGroundLines.png; sourceTree = "<group>"; };
 		76E81F0B187B559000441F62 /* sampleAudit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sampleAudit.json; sourceTree = "<group>"; };
 		76E81F12187C908100441F62 /* usersNOTDB.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = usersNOTDB.json; sourceTree = "<group>"; };
 		76E81F14187CBC0500441F62 /* users.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = users.json; sourceTree = "<group>"; };
@@ -252,7 +267,6 @@
 		76E81F571886D5ED00441F62 /* Help-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Help-100.png"; sourceTree = "<group>"; };
 		76E81F591886D8A400441F62 /* LoginHelpPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginHelpPopOverViewController.h; sourceTree = "<group>"; };
 		76E81F5A1886D8A400441F62 /* LoginHelpPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginHelpPopOverViewController.m; sourceTree = "<group>"; };
-		76F1014B18885223003555F2 /* KLSwitch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KLSwitch.xcodeproj; path = "../../KLSwitch-master/KLSwitch/KLSwitch.xcodeproj"; sourceTree = "<group>"; };
 		76F1015B18888F88003555F2 /* calculator_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calculator_icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -261,8 +275,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AC04091188F0AF2006A2F3C /* libKLSwitch.a in Frameworks */,
 				76A7C9961889DCCA004E4F39 /* libsqlite3.dylib in Frameworks */,
-				76F1015418885254003555F2 /* libKLSwitch.a in Frameworks */,
 				76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */,
 				76E81F4C18859E7D00441F62 /* AVFoundation.framework in Frameworks */,
 				76E81F4A18859E7000441F62 /* AudioToolbox.framework in Frameworks */,
@@ -289,6 +303,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4AC04087188F0AD4006A2F3C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4AC0408C188F0AD5006A2F3C /* libKLSwitch.a */,
+				4AC0408E188F0AD5006A2F3C /* KLSwitchTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		76007D801886F58600FA7A39 /* App Icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -314,7 +337,7 @@
 		762797001871D53A00F22E73 = {
 			isa = PBXGroup;
 			children = (
-				76F1014B18885223003555F2 /* KLSwitch.xcodeproj */,
+				4AC04086188F0AD4006A2F3C /* KLSwitch.xcodeproj */,
 				76BF9C761872237200ACF6DB /* DropboxSDK.framework */,
 				762797121871D53A00F22E73 /* DNV */,
 				762797311871D53A00F22E73 /* DNVTests */,
@@ -372,6 +395,7 @@
 				769D3CE31885808D002DF3B8 /* VerifyQuestionsViewController */,
 				769D3CE7188599A6002DF3B8 /* ImportMergeViewController */,
 				76A56827188733BE000E32D3 /* ListOfCompletedViewController */,
+				768D564B188F0FA300175EB4 /* Reporting */,
 				762797241871D53A00F22E73 /* Images.xcassets */,
 				762797131871D53A00F22E73 /* Supporting Files */,
 			);
@@ -381,6 +405,7 @@
 		762797131871D53A00F22E73 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				768D5652188F18CC00175EB4 /* sampleCompletedAudit.json */,
 				76E81F4D1885A61700441F62 /* DVNCorpusTxt.txt */,
 				76E81F12187C908100441F62 /* usersNOTDB.json */,
 				76E81F14187CBC0500441F62 /* users.json */,
@@ -409,6 +434,19 @@
 				762797341871D53A00F22E73 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		768D564B188F0FA300175EB4 /* Reporting */ = {
+			isa = PBXGroup;
+			children = (
+				768D564C188F0FD300175EB4 /* SummaryOfRatingsViewController.h */,
+				768D564D188F0FD300175EB4 /* SummaryOfRatingsViewController.m */,
+				768D564F188F0FF500175EB4 /* ElementRatingsCell.h */,
+				768D5650188F0FF500175EB4 /* ElementRatingsCell.m */,
+				768D56541890145500175EB4 /* ReportDocViewController.h */,
+				768D56551890145500175EB4 /* ReportDocViewController.m */,
+			);
+			name = Reporting;
 			sourceTree = "<group>";
 		};
 		769D3CE31885808D002DF3B8 /* VerifyQuestionsViewController */ = {
@@ -462,7 +500,7 @@
 		76A0DFC4188504640038FD61 /* Dashboard Icons */ = {
 			isa = PBXGroup;
 			children = (
-				76DCB91F1889ACD700314C5D /* drawingBackGroundLines.png.png */,
+				76DCB91F1889ACD700314C5D /* drawingBackGroundLines.png */,
 				76F1015B18888F88003555F2 /* calculator_icon.png */,
 				76A5681E1886FA24000E32D3 /* not_applicable_icon_gray.png */,
 				76A5681F1886FA24000E32D3 /* not_applicable_icon.png */,
@@ -582,10 +620,10 @@
 				76D96A3D187B07EA00961260 /* User.m */,
 				76AB3CAF187B17410019603F /* Client.h */,
 				76AB3CB0187B17410019603F /* Client.m */,
-				76AB3CB2187B1FDA0019603F /* Audit.h */,
-				76AB3CB3187B1FDA0019603F /* Audit.m */,
 				76AB3CB5187B20520019603F /* Report.h */,
 				76AB3CB6187B20520019603F /* Report.m */,
+				76AB3CB2187B1FDA0019603F /* Audit.h */,
+				76AB3CB3187B1FDA0019603F /* Audit.m */,
 				76AB3CB8187B20C70019603F /* Elements.h */,
 				76AB3CB9187B20C70019603F /* Elements.m */,
 				76AB3CBB187B212C0019603F /* SubElements.h */,
@@ -596,6 +634,8 @@
 				76AB3CC2187B22300019603F /* Answers.m */,
 				76E81F16187DB92600441F62 /* Folder.h */,
 				76E81F17187DB92600441F62 /* Folder.m */,
+				4AC04092188F71C4006A2F3C /* MergeClass.h */,
+				4AC04093188F71C4006A2F3C /* MergeClass.m */,
 			);
 			name = ClassObjects;
 			sourceTree = "<group>";
@@ -668,15 +708,6 @@
 			name = AnswersViewController;
 			sourceTree = "<group>";
 		};
-		76F1014C18885223003555F2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				76F1015118885223003555F2 /* libKLSwitch.a */,
-				76F1015318885223003555F2 /* KLSwitchTests.octest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -691,7 +722,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				76F1015618885264003555F2 /* PBXTargetDependency */,
+				4AC04090188F0AE7006A2F3C /* PBXTargetDependency */,
 			);
 			name = DNV;
 			productName = DNV;
@@ -746,8 +777,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 76F1014C18885223003555F2 /* Products */;
-					ProjectRef = 76F1014B18885223003555F2 /* KLSwitch.xcodeproj */;
+					ProductGroup = 4AC04087188F0AD4006A2F3C /* Products */;
+					ProjectRef = 4AC04086188F0AD4006A2F3C /* KLSwitch.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -759,18 +790,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		76F1015118885223003555F2 /* libKLSwitch.a */ = {
+		4AC0408C188F0AD5006A2F3C /* libKLSwitch.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libKLSwitch.a;
-			remoteRef = 76F1015018885223003555F2 /* PBXContainerItemProxy */;
+			remoteRef = 4AC0408B188F0AD5006A2F3C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		76F1015318885223003555F2 /* KLSwitchTests.octest */ = {
+		4AC0408E188F0AD5006A2F3C /* KLSwitchTests.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = KLSwitchTests.octest;
-			remoteRef = 76F1015218885223003555F2 /* PBXContainerItemProxy */;
+			remoteRef = 4AC0408D188F0AD5006A2F3C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -791,6 +822,7 @@
 				76A568071886ED22000E32D3 /* mic_icon.png in Resources */,
 				76E81F581886D5ED00441F62 /* Help-100.png in Resources */,
 				76A568031886E979000E32D3 /* notes_icon.png in Resources */,
+				768D5653188F18CC00175EB4 /* sampleCompletedAudit.json in Resources */,
 				76A56824188723F6000E32D3 /* check_gray.png in Resources */,
 				76A568211886FA24000E32D3 /* not_applicable_icon.png in Resources */,
 				769D3CEE1885F9FC002DF3B8 /* completed_checklist_icon.png in Resources */,
@@ -805,7 +837,7 @@
 				76A568191886F62B000E32D3 /* camera_icon.png in Resources */,
 				76A568011886E0CC000E32D3 /* export_icon.png in Resources */,
 				769D3CF518860C2B002DF3B8 /* flatFolderIcon2.png in Resources */,
-				76DCB9201889ACD700314C5D /* drawingBackGroundLines.png.png in Resources */,
+				76DCB9201889ACD700314C5D /* drawingBackGroundLines.png in Resources */,
 				76A568171886F33B000E32D3 /* thumbs_up.png in Resources */,
 				76007DB21886FDE800FA7A39 /* dvnlogo152.png in Resources */,
 				76A56825188723F6000E32D3 /* check.png in Resources */,
@@ -838,9 +870,11 @@
 			files = (
 				76007E261888317400FA7A39 /* QuestionCell.m in Sources */,
 				76D96A3B187B001300961260 /* LogInViewController.m in Sources */,
+				4AC04094188F71C4006A2F3C /* MergeClass.m in Sources */,
 				76A7C9941889DC02004E4F39 /* DNVDatabaseManagerClass.m in Sources */,
 				76E81F18187DB92600441F62 /* Folder.m in Sources */,
 				76AB3CB4187B1FDA0019603F /* Audit.m in Sources */,
+				768D5651188F0FF500175EB4 /* ElementRatingsCell.m in Sources */,
 				76AB3CC3187B22300019603F /* Answers.m in Sources */,
 				76D4A339187CE5F6007AB1A9 /* AuditSelectionViewController.m in Sources */,
 				76E81F1B187EE78C00441F62 /* QuestionsViewController.m in Sources */,
@@ -855,8 +889,10 @@
 				76D96A45187B585900961260 /* ClientViewController.m in Sources */,
 				76007DBD18872BFC00FA7A39 /* SubElementCell.m in Sources */,
 				76A8B001187F28AA007531A9 /* WIPChoicePopOver.m in Sources */,
+				768D564E188F0FD300175EB4 /* SummaryOfRatingsViewController.m in Sources */,
 				76AB3CBD187B212C0019603F /* SubElements.m in Sources */,
 				769D3CEA1885A763002DF3B8 /* ImportMergeViewController.m in Sources */,
+				768D56561890145500175EB4 /* ReportDocViewController.m in Sources */,
 				76D96A3E187B07EA00961260 /* User.m in Sources */,
 				762797191871D53A00F22E73 /* main.m in Sources */,
 				76A2BE3C187DBF7A0056CC22 /* ElementSubElementViewController.m in Sources */,
@@ -884,15 +920,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4AC04090188F0AE7006A2F3C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KLSwitch;
+			targetProxy = 4AC0408F188F0AE7006A2F3C /* PBXContainerItemProxy */;
+		};
 		762797301871D53A00F22E73 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 762797081871D53A00F22E73 /* DNV */;
 			targetProxy = 7627972F1871D53A00F22E73 /* PBXContainerItemProxy */;
-		};
-		76F1015618885264003555F2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = KLSwitch;
-			targetProxy = 76F1015518885264003555F2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -7,15 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MergeClass.h"
 
 @interface Answers : NSDictionary
 
 @property (nonatomic) NSString * answerText;
 @property (nonatomic) float pointsPossibleOrMultiplier;
 @property (nonatomic) BOOL isSelected;
-@property (nonatomic) NSArray * Questions;
-
 
 -(id)initWithAnswer:(NSDictionary *)answerDictionary;
+
+-(Answers *)mergeAnswer:(Answers *)primaryAnswer with:(Answers *)secondaryAnswer;
+
 
 @end

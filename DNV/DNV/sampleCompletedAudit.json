@@ -1,0 +1,292 @@
+{
+    "Audit": {
+        "auditType": "1",
+        "name": "Kitchen Audit",
+        "physicalConditionScore": 5.5,
+        "awardLevel": 5,
+        "lastModefied": "20120513",
+        "Report": { "companyName": "USI",
+            "summary": "The company had very nice kitchens",
+            "preparedBy": "The guy that prepares stuff",
+            "verifiedBy": " The Verifier",
+            "approvedBy": "The guy that verifies things",
+            "projectNum": 134111231,
+            "conclusion": "In conclusion USI's kitchens are pretty standard.",
+            "methodologyDiagramLocation":"/USI/audit1/diagram.png"
+        },
+        "Client": {
+            "companyName": "USI",
+            "division": "4",
+            "SICNumber": 12345,
+            "auditedSite": "Corporate Headquarters",
+            "address": "123 Fake St.",
+            "cityStateProvince": "Georgia",
+            "country": "USA",
+            "postalCode": "83912",
+            "auditDate": "01042014",
+            "auditor": "Bob Loblaw",
+            "numEmployees": "250",
+            "baselineAudit": false,
+            "licenseNum": "451RJ301J"
+            
+        },
+        "Elements": [
+                     {
+                     "isCompleted": true,
+                     "name": "Refridgeration",
+                     "isRequired": true,
+                     "pointsPossible": 20,
+                     "pointsAwarded": 16.5,
+                     "SubElements": [
+                                     {
+                                     "isCompleted": true,
+                                     "name": "freezers",
+                                     "pointsPossible": 10,
+                                     "pointsAwarded": 7.5,
+                                     "Questions": [
+                                                   {
+                                                   "isCompleted": true,
+                                                   "pointsPossible": 5,
+                                                   "pointsAwarded": 0,
+                                                   "questionText": "Is the freezer working?",
+                                                   "helpText": "See if its cold inside the freezer.",
+                                                   "isApplicable": false,
+                                                   "notes": "There was ice on the walls of the freezer so it is cold",
+                                                   "needsVerifying": false,
+                                                   "verifyDoneBy": "That one guy",
+                                                   "attachmentsLocationArray": [],
+                                                   "imageLocationArray": [],
+                                                   "Answers": [
+                                                               {
+                                                               "answerText": "\"Yes\"",
+                                                               "pointsPossibleOrMultiplier": 5,
+                                                               "isSelected": true
+                                                               },
+                                                               {
+                                                               "answerText": "\"No\"",
+                                                               "pointsPossibleOrMultiplier": 0,
+                                                               "isSelected": false
+                                                               }
+                                                               ],
+                                                   "questionType": "0",
+                                                   "isThumbsUp": 0,
+                                                   "isThumbsDown": 0
+                                                   },
+                                                   {
+                                                   "isCompleted": true,
+                                                   "pointsPossible": 5,
+                                                   "pointsAwarded": 2.5,
+                                                   "questionText": "How full is the freezer?",
+                                                   "helpText": "See how much room is left for products.",
+                                                   "isApplicable": true,
+                                                   "notes": "",
+                                                   "needsVerifying": false,
+                                                   "verifyDoneBy": "That one guy",
+                                                   "attachmentsLocationArray": [],
+                                                   "imageLocationArray": [],
+                                                   "Answers": [
+                                                               {
+                                                               "answerText": "\"%\"",
+                                                               "pointsPossibleOrMultiplier": 5,
+                                                               "isSelected": true
+                                                               }
+                                                               ],
+                                                   "questionType": "2",
+                                                   "isThumbsUp": false,
+                                                   "isThumbsDown": false
+                                                   }
+                                                   ]
+                                     },
+                                     {
+                                     "isCompleted": true,
+                                     "name": "freezers",
+                                     "pointsPossible": 10,
+                                     "pointsAwarded": 9,
+                                     "Questions": [
+                                                   {
+                                                   "isCompleted": true,
+                                                   "pointsPossible": 5,
+                                                   "pointsAwarded": 5,
+                                                   "questionText": "Is the freezer working?",
+                                                   "helpText": "See if its cold inside the freezer.",
+                                                   "isApplicable": true,
+                                                   "notes": "There was ice on the walls of the freezer so it is cold",
+                                                   "needsVerifying": false,
+                                                   "verifyDoneBy": "That one guy",
+                                                   "attachmentsLocationArray": [],
+                                                   "imageLocationArray": [],
+                                                   "Answers": [
+                                                               {
+                                                               "answerText": "\"Yes\"",
+                                                               "pointsPossibleOrMultiplier": 5,
+                                                               "isSelected": true
+                                                               },
+                                                               {
+                                                               "answerText": "\"No\"",
+                                                               "pointsPossibleOrMultiplier": 0,
+                                                               "isSelected": false
+                                                               }
+                                                               ],
+                                                   "questionType": "0",
+                                                   "isThumbsUp": false,
+                                                   "isThumbsDown": false
+                                                   },
+                                                   {
+                                                   "isCompleted": true,
+                                                   "pointsPossible": 5,
+                                                   "pointsAwarded": 4,
+                                                   "questionText": "How full is the freezer?",
+                                                   "helpText": "See how much room is left for products.",
+                                                   "isApplicable": true,
+                                                   "notes": "",
+                                                   "needsVerifying": false,
+                                                   "verifyDoneBy": "That one guy",
+                                                   "attachmentsLocationArray": [],
+                                                   "imageLocationArray": [],
+                                                   "Answers": [
+                                                               {
+                                                               "answerText": "\"%\"",
+                                                               "pointsPossibleOrMultiplier": 5,
+                                                               "isSelected": true
+                                                               }
+                                                               ],
+                                                   "questionType": "2",
+                                                   "isThumbsUp": false,
+                                                   "isThumbsDown": true
+                                                   }
+                                                   ]
+                                     }
+                                     ]
+                     },
+                     {
+                     "isCompleted": true,
+                     "name": "Utensils",
+                     "isRequired": true,
+                     "pointsPossible": 30,
+                     "pointsAwarded": 25,
+                     "SubElements": [
+                                     {
+                                     "isCompleted": true,
+                                     "name": "Knives",
+                                     "pointsPossible": 20,
+                                     "pointsAwarded": 17,
+                                     "Questions": [
+                                                   {
+                                                   "isCompleted": false,
+                                                   "pointsPossible": 10,
+                                                   "pointsAwarded": 10,
+                                                   "questionText": "What type of knives are they using?",
+                                                   "helpText": "See knife recognition chart.",
+                                                   "isApplicable": true,
+                                                   "notes": "",
+                                                   "needsVerifying": false,
+                                                   "verifyDoneBy": "Jack ",
+                                                   "attachmentsLocationArray": [],
+                                                   "imageLocationArray": [],
+                                                   "Answers": [
+                                                               {
+                                                               "answerText": "Chefs",
+                                                               "pointsPossibleOrMultiplier": 4,
+                                                               "isSelected": true
+                                                               },
+                                                               {
+                                                               "answerText": "Carving",
+                                                               "pointsPossibleOrMultiplier": 3,
+                                                               "isSelected": true
+                                                               },
+                                                               {
+                                                               "answerText": "Paring",
+                                                               "pointsPossibleOrMultiplier": 2,
+                                                               "isSelected": true
+                                                               },
+                                                               {
+                                                               "answerText": "Steak",
+                                                               "pointsPossibleOrMultiplier": 1,
+                                                               "isSelected": true
+                                                               },
+                                                               {
+                                                               "answerText": "Two Handed Swords",
+                                                               "pointsPossibleOrMultiplier": 0,
+                                                               "isSelected": false
+                                                               }
+                                                               ],
+                                                   "questionType": "3",
+                                                   "isThumbsUp": false,
+                                                   "isThumbsDown": false
+                                                   },
+                                                   {
+                                                   "isCompleted": true,
+                                                   "pointsPossible": 10,
+                                                   "pointsAwarded": 7,
+                                                   "questionText": "How many knives per person?",
+                                                   "helpText": "Knives/people",
+                                                   "isApplicable": true,
+                                                   "notes": "",
+                                                   "needsVerifying": false,
+                                                   "verifyDoneBy": "In the box",
+                                                   "attachmentsLocationArray": [],
+                                                   "imageLocationArray": [],
+                                                   "Answers": [
+                                                               {
+                                                               "answerText": "5+",
+                                                               "pointsPossibleOrMultiplier": 10,
+                                                               "isSelected": false
+                                                               },
+                                                               {
+                                                               "answerText": "3-4",
+                                                               "pointsPossibleOrMultiplier": 7,
+                                                               "isSelected": true
+                                                               },
+                                                               {
+                                                               "answerText": "1-2",
+                                                               "pointsPossibleOrMultiplier": 4,
+                                                               "isSelected": false
+                                                               },
+                                                               {
+                                                               "answerText": "0",
+                                                               "pointsPossibleOrMultiplier": 0,
+                                                               "isSelected": false
+                                                               }
+                                                               ],
+                                                   "questionType": "1",
+                                                   "isThumbsUp": false,
+                                                   "isThumbsDown": true
+                                                   }
+                                                   ]
+                                     },
+                                     {
+                                     "isCompleted": true,
+                                     "name": "Spoons",
+                                     "pointsPossible": 10,
+                                     "pointsAwarded": 8,
+                                     "Questions": [
+                                                   {
+                                                   "isCompleted": true,
+                                                   "pointsPossible": 10,
+                                                   "pointsAwarded": 8,
+                                                   "questionText": "Is there enough spoons?",
+                                                   "helpText": "Use your professional judgement",
+                                                   "isApplicable": true,
+                                                   "notes": "",
+                                                   "needsVerifying": false,
+                                                   "verifyDoneBy": "SpoonMan",
+                                                   "attachmentsLocationArray": [],
+                                                   "imageLocationArray": [],
+                                                   "Answers": [
+                                                               {
+                                                               "answerText": "8",
+                                                               "pointsPossibleOrMultiplier": 2,
+                                                               "isSelected": true
+                                                               }
+                                                               ],
+                                                   "questionType": "4",
+                                                   "isThumbsUp": true,
+                                                   "isThumbsDown": true
+                                                   }
+                                                   ]
+                                     }
+                                     ]
+                     }
+                     ]
+    }
+}

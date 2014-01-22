@@ -7,7 +7,6 @@
 //
 
 #import "SubElements.h"
-#import "Questions.h"
 
 @implementation SubElements
 @synthesize isCompleted;
@@ -28,7 +27,7 @@
          @property (nonatomic) float  pointsAwarded;
          @property (nonatomic) NSArray * Questions;
          */
-        
+
         self.isCompleted = [[subElementDictionary objectForKey:@"isCompleted"] boolValue];
         self.name = [subElementDictionary objectForKey:@"name"];
         self.pointsPossible = [[subElementDictionary objectForKey:@"pointsPossible"]floatValue];
@@ -47,13 +46,45 @@
             //[tempArray replaceObjectAtIndex:i withObject:question];
             
         }
-        self.Questions = tempArray;
+        self.Questions = objectArray;
         
         
         
         
     }
     return self;
+}
+
+//Merge two subelements
+-(SubElements *)mergeSubElements:(SubElements *)primarySubElements with:(SubElements *)secondarySubElements
+{
+    SubElements *mergedSubElements = [SubElements new];
+    
+    MergeClass *dataMerger = [MergeClass new];
+    dataMerger.bRank2Higher = true; // rank2 > rank2;
+    
+    //bools
+    mergedSubElements.isCompleted = [dataMerger mergeBool:primarySubElements.isCompleted with:secondarySubElements.isCompleted];
+    
+    //float
+    mergedSubElements.modifierForPointsPossible = [dataMerger mergeFloat:primarySubElements.modifierForPointsPossible with:secondarySubElements.modifierForPointsPossible];
+    mergedSubElements.pointsPossible = [dataMerger mergeFloat:primarySubElements.pointsPossible with:secondarySubElements.pointsPossible];
+    mergedSubElements.pointsAwarded = [dataMerger mergeFloat:primarySubElements.pointsAwarded with:secondarySubElements.pointsAwarded];
+    
+    //string
+    mergedSubElements.name = [dataMerger mergeString:primarySubElements.name with:secondarySubElements.name];
+    
+    //questions array
+    NSMutableArray *mergedQuestions = [NSMutableArray new];
+    Questions *someQuestion = [Questions new];
+    for( int i = 0; i < [primarySubElements.Questions count]; i++ )
+    {
+        [mergedQuestions addObject:[someQuestion mergeQuestion:[primarySubElements.Questions objectAtIndex:i] with:[secondarySubElements.Questions objectAtIndex:i]]];
+    }
+    
+    mergedSubElements.Questions = [NSArray arrayWithArray:mergedQuestions];
+    
+    return  mergedSubElements;
 }
 
 

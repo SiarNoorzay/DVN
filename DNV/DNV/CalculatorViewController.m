@@ -226,7 +226,7 @@
 
     [self.ansVC.calcPopOver dismissPopoverAnimated:YES];
     
-    if (self.ansVC.question.questionType == 2) {
+    if (self.ansVC.question.questionType == 2 || self.ansVC.question.questionType == 4) {
         float answer = [resultLabel.text floatValue];
         if (answer <=1.0 && answer > 0.0)
         {
@@ -236,14 +236,6 @@
         
         [self.ansVC percentTextChanged:self];
     }
-    
-    
-   // [self dismissViewControllerAnimated:YES completion:^{
-        //self.ansVC
-      //  [self.ansVC setValue:resultLabel forKey:@"percentSliderTextField.text"];
-      //  [self.parentViewController performSelector:@selector(percentTextChanged)];
-  //  }];
-    
     
 }
 

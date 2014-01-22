@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MergeClass.h"
 
-@interface Report : NSObject
+@interface Report : NSDictionary
 
 @property (nonatomic) NSString * summary;
 @property (nonatomic) NSString * preparedBy;

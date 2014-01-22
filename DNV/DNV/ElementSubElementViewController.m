@@ -33,7 +33,35 @@ int subEleNumber;
     }
     return self;
 }
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    if (self.listOfElements != nil){
+        
+        for (int i = 0; i< [self.listOfElements count]; i++) {
+            Elements *ele = [[Elements alloc]initWithElement:[self.listOfElements objectAtIndex:i]];
+            float tempElePoints = 0;
+            
+            for (int j = 0; j<[ele.Subelements count];j++) {
+                SubElements *subEle = [[SubElements alloc]initWithSubElement:[ele.Subelements objectAtIndex:j]];
+                float tempSubPoints = 0;
+                
+                for (int k = 0; k < [subEle.Questions count]; k++) {
+                    Questions *question =[[Questions alloc]initWithQuestion: [subEle.Questions objectAtIndex:k]];
+                    
+                    if (!question.isApplicable) {
+                        tempSubPoints += question.pointsPossible;
+                        tempElePoints += question.pointsPossible;
+                    }
+                    subEle.modefiedNAPoints = tempSubPoints;
+                }
+                ele.modefiedNAPoints = tempElePoints;
+                
+                //TODO: save ele back to DB
+            }
+        }
+    }
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -136,7 +164,7 @@ int subEleNumber;
     self.subEle = [[SubElements alloc]initWithSubElement:self.listOfSubElements[indexPath.row]];
     
     cell.subElementName.text = self.subEle.name;
-    cell.points.text = [NSString stringWithFormat:@"%.2f / %.2f", self.subEle.pointsAwarded,self.subEle.pointsPossible];
+    cell.points.text = [NSString stringWithFormat:@"%.2f / %.2f", self.subEle.pointsAwarded,(self.subEle.pointsPossible - self.subEle.modefiedNAPoints)];
     //cell.textLabel.font = [UIFont systemFontOfSize:25.0];
     
     if (self.subEle.isCompleted)
@@ -257,6 +285,11 @@ loadMetadataFailedWithError:(NSError *)error {
         [self.dnvDBManager saveAudit:aud];
         
         self.listOfElements = aud.Elements;
+        
+        Audit *second = [[Audit alloc] initWithAudit:theAudit];
+        
+        //just to test
+        Audit *aha = [aud mergeAudit:aud with:second];
         
         //[self.elementPicker reloadAllComponents];
         

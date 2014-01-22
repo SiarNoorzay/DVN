@@ -7,31 +7,19 @@
 //
 
 #import "Audit.h"
-#import "Elements.h"
 
 @implementation Audit
+
+
 
 -(id)initWithAudit:(NSDictionary *)auditDictionary{
     
     self = [super init];
     
     if(self){
-    
-    /*
-     @property (nonatomic) enum auditType;
-     @property (nonatomic) NSString * name;
-     @property (nonatomic) NSArray * Elements;
-     @property (nonatomic) float * physicalConditionScore;
-     @property (nonatomic) NSString * awardLevel;
-     @property (nonatomic) NSString * lastModefied;
-     @property (nonatomic) Report * report;
-     */
-    
-    
         self.auditType = [[auditDictionary objectForKey:@"auditType"] integerValue];
         self.name = [auditDictionary objectForKey:@"name"];
         self.physicalConditionScore = [[auditDictionary objectForKey:@"physicalConditionScore"]floatValue];
-        self.awardLevel = [auditDictionary objectForKey:@"awardLevel"];
         self.lastModefied = [auditDictionary objectForKey:@"lastModefied"];
         self.report = [[Report alloc] initWithReport:[auditDictionary objectForKey:@"Report"]];
         self.client = [[Client alloc] initWithClient:[auditDictionary objectForKey:@"Client"]];
@@ -47,12 +35,51 @@
         //    [tempArray replaceObjectAtIndex:i withObject:ele];
             
         }
-        self.Elements = tempArray;
+        self.Elements = objectArray;
 
     }
     
     return self;
 }
 
+//Merge two audits
+-(Audit*)mergeAudit:(Audit*)primaryAudit with:(Audit*)secondaryAudit
+{
+    Audit *mergedAudits = [Audit new];
+    
+    MergeClass *dataMerger = [MergeClass new];
+    dataMerger.bRank2Higher = true; // rank2 > rank2;
+    
+    //int
+    mergedAudits.auditType = (NSInteger)[dataMerger mergeInt:(int)primaryAudit.auditType with:(int)secondaryAudit.auditType];
+    
+    //float
+    mergedAudits.physicalConditionScore = [dataMerger mergeFloat:primaryAudit.physicalConditionScore with:secondaryAudit.physicalConditionScore];
+    
+    //string
+    mergedAudits.name = [dataMerger mergeString:primaryAudit.name with:secondaryAudit.name];
+    mergedAudits.lastModefied = [dataMerger mergeString:primaryAudit.lastModefied with:secondaryAudit.lastModefied];
+    
+    //report
+    Report *aReport = [Report new];
+    mergedAudits.report = [aReport mergeReports:primaryAudit.report with:secondaryAudit.report ];
+    
+    //client
+    Client *aClient = [Client new];
+    mergedAudits.client = [aClient mergeClients:primaryAudit.client with:secondaryAudit.client ];
+    
+    
+    //elements array
+    NSMutableArray *mergedElements = [NSMutableArray new];
+    Elements *someElement = [Elements new];
+    for( int i = 0; i < [primaryAudit.Elements count]; i++ )
+    {
+        [mergedElements addObject:[someElement mergeElements:[primaryAudit.Elements objectAtIndex:i] with:[secondaryAudit.Elements objectAtIndex:i]]];
+    }
+    
+    mergedAudits.Elements = [NSArray arrayWithArray:mergedElements];
+    
+    return  mergedAudits;
+}
 
 @end
