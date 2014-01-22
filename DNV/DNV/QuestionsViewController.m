@@ -47,8 +47,8 @@
         NSDictionary *auditDict = [dict objectForKey:@"Audit"];
         Audit *aud = [[Audit alloc]initWithAudit:auditDict];
         
-        Elements *ele = [[Elements alloc]initWithElement:aud.Elements[0]];
-        SubElements *sub = [[SubElements alloc]initWithSubElement:ele.Subelements[0]];
+        Elements *ele = aud.Elements[0];
+        SubElements *sub = ele.Subelements[0];
         
         self.questionArray = sub.Questions;
         
@@ -76,7 +76,7 @@
     if(cell == nil){
         cell = [[QuestionCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    Questions *question = [[Questions alloc]initWithQuestion:[self.questionArray objectAtIndex:indexPath.row]];
+    Questions *question = [self.questionArray objectAtIndex:indexPath.row];
     
     cell.questionText.text = question.questionText;
     if (question.isApplicable) {
@@ -106,10 +106,10 @@
     
     NSIndexPath *indexPath = self.questionsTableView.indexPathForSelectedRow;
     
-    NSLog(@"Selected %@,",[self.questionArray objectAtIndex:indexPath.row]);
+  //  NSLog(@"Selected %@,",[self.questionArray objectAtIndex:indexPath.row]);
     
     AnswersViewController *vc = [segue destinationViewController];
-    Questions *question = [[Questions alloc]initWithQuestion:[self.questionArray objectAtIndex:indexPath.row]];
+    Questions *question = [self.questionArray objectAtIndex:indexPath.row];
     
 
     [vc setElementNumber:self.elementNumber];
