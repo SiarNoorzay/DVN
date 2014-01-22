@@ -18,6 +18,8 @@
 @property (nonatomic) NSString * conclusion;
 @property (nonatomic) NSString * methodologyDiagramLocation;
 
--(id)initWithReport:(NSDictionary *)reportDictionary;
+-(id)initWithReport:(NSDictionary *)dictionary;
+
+-(Report *)mergeReports:(Report *)primaryReport with:(Report *)secondaryReport;
 
 @end

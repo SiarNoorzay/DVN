@@ -21,7 +21,7 @@
         self.name = [auditDictionary objectForKey:@"name"];
         self.physicalConditionScore = [[auditDictionary objectForKey:@"physicalConditionScore"]floatValue];
         self.lastModefied = [auditDictionary objectForKey:@"lastModefied"];
-        self.report = [[Report alloc] initWithReport:[auditDictionary objectForKey:@"Report"]];
+        self.report = [[Report alloc ]initWithReport:[auditDictionary objectForKey:@"Report"]];
         self.client = [[Client alloc] initWithClient:[auditDictionary objectForKey:@"Client"]];
     
         NSMutableArray *tempArray = [auditDictionary objectForKey:@"Elements"];

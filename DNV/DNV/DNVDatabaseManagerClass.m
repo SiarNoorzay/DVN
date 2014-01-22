@@ -171,6 +171,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         
         sqlite3_stmt * statement;
         
+        //
         NSString * insertAuditSQL = [NSString stringWithFormat:@"INSERT INTO AUDIT (AUDITNAME, AUDITTYPE, LASTMODIFIED) VALUES ('%@', %d, '%@')", audit.name, 1, audit.lastModefied];
         
         //Preparing
@@ -188,8 +189,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         NSString * userID = @"cliff";
         
         Client * client = audit.client;
-        [self saveClient:client];
-        
+//        [self saveClient:client];
         
         NSString * insertClientSQL = [NSString stringWithFormat:@"INSERT INTO CLIENT (AUDITID, USERID, CLIENTNAME, DIVISION, SIC, NUMBEREMPLOYEES, AUDITSITE, AUDITDATE, BASELINEAUDIT, STREETADDRESS, CITYSTATEPROVINCE, COUNTRY) VALUES (%d, '%@', '%@', '%@', '%@', %d, '%@', '%@', %d, '%@', '%@', '%@'", auditID, userID, client.companyName, client.division, client.SICNumber, client.numEmployees, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.country];
         

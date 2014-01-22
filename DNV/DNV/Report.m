@@ -10,21 +10,39 @@
 
 @implementation Report
 
--(id)initWithReport:(NSDictionary *)reportDictionary{
+-(id)initWithReport:(NSDictionary *)dictionary{
     
     self = [super init];
     
     if(self){
         
-        self.summary = [reportDictionary objectForKey:@"summary"];
-        self.approvedBy = [reportDictionary objectForKey:@"approvedBy"];
-        self.preparedBy = [reportDictionary objectForKey:@"preparedBy"];
-        self.projectNum = [reportDictionary objectForKey:@"projectNum"];
-        self.conclusion = [reportDictionary objectForKey:@"conclusion"];
-        self.methodologyDiagramLocation = [reportDictionary objectForKey:@"methodologyDiagramLocation"];
+        self.summary = [dictionary objectForKey:@"summary"];
+        self.preparedBy = [dictionary objectForKey:@"preparedBy"];
+        self.approvedBy = [dictionary objectForKey:@"approvedBy"];
+        self.projectNum = [dictionary objectForKey:@"projectNum"];
+        self.conclusion = [dictionary objectForKey:@"conclusion"];
+        self.methodologyDiagramLocation = [dictionary objectForKey:@"methodologyDiagramLocation"];
     }
     
     return self;
+}
+//Merge two reports
+-(Report *)mergeReports:(Report *)primaryReport with:(Report *)secondaryReport
+{
+    Report *mergedReports = [Report new];
+    
+    MergeClass *dataMerger = [MergeClass new];
+    dataMerger.bRank2Higher = true; // rank2 > rank2;
+    
+    //string
+    mergedReports.summary = [dataMerger mergeString:primaryReport.summary with:secondaryReport.summary];
+    mergedReports.preparedBy = [dataMerger mergeString:primaryReport.preparedBy with:secondaryReport.preparedBy];
+    mergedReports.approvedBy = [dataMerger mergeString:primaryReport.approvedBy with:secondaryReport.approvedBy];
+    mergedReports.projectNum = [dataMerger mergeString:primaryReport.projectNum with:secondaryReport.projectNum];
+    mergedReports.conclusion = [dataMerger mergeString:primaryReport.conclusion with:secondaryReport.conclusion];
+    mergedReports.methodologyDiagramLocation = [dataMerger mergeString:primaryReport.methodologyDiagramLocation with:secondaryReport.methodologyDiagramLocation];
+    
+    return  mergedReports;
 }
 
 
