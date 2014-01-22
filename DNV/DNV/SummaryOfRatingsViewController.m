@@ -59,7 +59,7 @@
     float tempAwarded = 0;
     
     for (int i = 0; i< [self.elementsArray count]; i++) {
-        Elements *ele = [[Elements alloc]initWithElement:[self.elementsArray objectAtIndex:i]];
+        Elements *ele = [self.elementsArray objectAtIndex:i];
         
         tempPointsPossible += ele.pointsPossible;
         tempNAPoints += ele.modefiedNAPoints;
@@ -90,7 +90,7 @@
     if(cell == nil){
         cell = [[ElementRatingsCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    Elements *element = [[Elements alloc]initWithElement:[self.elementsArray objectAtIndex:indexPath.row]];
+    Elements *element = [self.elementsArray objectAtIndex:indexPath.row];
     
     cell.elementName.text = element.name;
     if (element.isRequired) {

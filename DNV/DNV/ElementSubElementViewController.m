@@ -38,15 +38,15 @@ int subEleNumber;
     if (self.listOfElements != nil){
         
         for (int i = 0; i< [self.listOfElements count]; i++) {
-            Elements *ele = [[Elements alloc]initWithElement:[self.listOfElements objectAtIndex:i]];
+            Elements *ele = [self.listOfElements objectAtIndex:i];
             float tempElePoints = 0;
             
             for (int j = 0; j<[ele.Subelements count];j++) {
-                SubElements *subEle = [[SubElements alloc]initWithSubElement:[ele.Subelements objectAtIndex:j]];
+                SubElements *subEle = [ele.Subelements objectAtIndex:j];
                 float tempSubPoints = 0;
                 
                 for (int k = 0; k < [subEle.Questions count]; k++) {
-                    Questions *question =[[Questions alloc]initWithQuestion: [subEle.Questions objectAtIndex:k]];
+                    Questions *question =[subEle.Questions objectAtIndex:k];
                     
                     if (!question.isApplicable) {
                         tempSubPoints += question.pointsPossible;
@@ -108,7 +108,7 @@ int subEleNumber;
 
 -(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
 {
-    self.ele = [[Elements alloc]initWithElement:self.listOfElements[row]];
+    self.ele = self.listOfElements[row];
 
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, pickerView.frame.size.width, 60)];
     UIColor *backColor = [[UIColor alloc]initWithRed:153.0 green:217.0 blue:239.0 alpha:.5];
@@ -159,7 +159,7 @@ int subEleNumber;
         cell = [[SubElementCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    self.subEle = [[SubElements alloc]initWithSubElement:self.listOfSubElements[indexPath.row]];
+    self.subEle = self.listOfSubElements[indexPath.row];
     
     cell.subElementName.text = self.subEle.name;
     cell.points.text = [NSString stringWithFormat:@"%.2f / %.2f", self.subEle.pointsAwarded,(self.subEle.pointsPossible - self.subEle.modefiedNAPoints)];
@@ -190,7 +190,7 @@ int subEleNumber;
     
     QuestionsViewController * questionsVC = [segue destinationViewController];
     
-    self.subEle = [[SubElements alloc]initWithSubElement:self.listOfSubElements[indexPath.row]];
+    self.subEle = self.listOfSubElements[indexPath.row];
     questionsVC.questionArray = self.subEle.Questions;
     questionsVC.elementNumber = elementNumber;
     questionsVC.subEleNumber = subEleNumber;
@@ -285,7 +285,7 @@ loadMetadataFailedWithError:(NSError *)error {
         Audit *second = [[Audit alloc] initWithAudit:theAudit];
         
         //just to test
-        Audit *aha = [aud mergeAudit:aud with:second];
+   //     Audit *aha = [aud mergeAudit:aud with:second];
         
         //[self.elementPicker reloadAllComponents];
         
@@ -293,7 +293,7 @@ loadMetadataFailedWithError:(NSError *)error {
         [self.elementPicker reloadAllComponents];
         
         [self.elementPicker selectRow:0 inComponent:0 animated:false];
-        Elements *tempEle = [[Elements alloc]initWithElement:[self.listOfElements objectAtIndex:0]];
+        Elements *tempEle = [self.listOfElements objectAtIndex:0];
         self.listOfSubElements = tempEle.Subelements;
         
         [self.subElementTable reloadData];
