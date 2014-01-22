@@ -41,6 +41,7 @@
 -(Audit *)retrieveAudit:(NSInteger *) auditID;
 -(NSArray *)retrieveAllAudits;
 -(void)saveAudit:(Audit *) audit;
+-(void)saveClient:(Client *) client;
 -(void)updateAudit:(NSInteger *) auditID auditType:(NSInteger *) auditType;
 -(void)updateElement:(NSInteger *) elementID isCompleted:(BOOL) isCompleted;
 -(void)updateSubElment:(NSInteger *) subElementID isCompleted:(BOOL) isCompleted;

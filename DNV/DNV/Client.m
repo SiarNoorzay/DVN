@@ -30,7 +30,6 @@
         self.auditor = [dictionary objectForKey:@"auditor"];
         self.numEmployees = [[dictionary objectForKey:@"numEmployees"] integerValue];
         self.baselineAudit = [[dictionary objectForKey:@"baselineAudit"] boolValue];
-        self.licenseNum = [dictionary objectForKey:@"licenseNum"];
         self.companyName = [dictionary objectForKey:@"companyName"];
                 
     }

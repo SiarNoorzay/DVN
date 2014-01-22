@@ -12,10 +12,11 @@
 
 @property (nonatomic) NSString * summary;
 @property (nonatomic) NSString * preparedBy;
-@property (nonatomic) NSString * verifiedBy;
 @property (nonatomic) NSString * approvedBy;
 @property (nonatomic) NSString * projectNum;
 @property (nonatomic) NSString * conclusion;
 @property (nonatomic) NSString * methodologyDiagramLocation;
+
+-(id)initWithReport:(NSDictionary *)reportDictionary;
 
 @end

@@ -33,8 +33,8 @@
         self.physicalConditionScore = [[auditDictionary objectForKey:@"physicalConditionScore"]floatValue];
         self.awardLevel = [auditDictionary objectForKey:@"awardLevel"];
         self.lastModefied = [auditDictionary objectForKey:@"lastModefied"];
-        self.report = [auditDictionary objectForKey:@"Report"];
-        self.client = [auditDictionary objectForKey:@"Client"];
+        self.report = [[Report alloc] initWithReport:[auditDictionary objectForKey:@"Report"]];
+        self.client = [[Client alloc] initWithClient:[auditDictionary objectForKey:@"Client"]];
     
         NSMutableArray *tempArray = [auditDictionary objectForKey:@"Elements"];
         NSMutableArray *objectArray = [NSMutableArray arrayWithCapacity:[tempArray count]];

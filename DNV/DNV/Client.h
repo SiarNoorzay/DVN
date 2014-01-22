@@ -22,7 +22,6 @@
 @property (nonatomic) NSString * auditor;
 @property (nonatomic) NSInteger numEmployees;
 @property (nonatomic) BOOL baselineAudit;
-@property (nonatomic) NSString * licenseNum;
 
 -(id)initWithClient:(NSDictionary *)clientDictionary;
 

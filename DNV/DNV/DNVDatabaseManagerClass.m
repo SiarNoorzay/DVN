@@ -132,13 +132,44 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
 //    }
 }
 
-
--(void)saveAudit:(Audit *)audit{
-    
-    sqlite3_stmt * statement;
+-(void)saveClient:(Client *)client{
     
     //Open the DB
     if(sqlite3_open([self.databasePath UTF8String] , &dnvAuditDB)==SQLITE_OK){
+        
+        sqlite3_stmt * statement;
+        
+        int auditID = [self getID:@"AUDIT"];
+        NSString * userID = @"cliff";
+        
+        NSString * insertClientSQL = [NSString stringWithFormat:@"INSERT INTO CLIENT (AUDITID, USERID, CLIENTNAME, DIVISION, SIC, NUMBEREMPLOYEES, AUDITSITE, AUDITDATE, BASELINEAUDIT, STREETADDRESS, CITYSTATEPROVINCE, COUNTRY) VALUES (%d, '%@', '%@', '%@', '%@', %d, '%@', '%@', %d, '%@', '%@', '%@'", auditID, userID, client.companyName, client.division, client.SICNumber, client.numEmployees, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.country];
+        
+        //Preparing
+        sqlite3_prepare_v2(dnvAuditDB, [insertClientSQL UTF8String], -1, &statement, NULL);
+        
+        if(sqlite3_step(statement)==SQLITE_DONE){
+            NSLog(@"Client added to DB.");
+        }
+        else{
+            NSLog(@"Failed to add client.");
+        }
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
+    }
+    
+}
+
+
+-(void)saveAudit:(Audit *)audit{
+    
+    //Open the DB
+    if(sqlite3_open([self.databasePath UTF8String] , &dnvAuditDB)==SQLITE_OK){
+        
+        sqlite3_stmt * statement;
         
         NSString * insertAuditSQL = [NSString stringWithFormat:@"INSERT INTO AUDIT (AUDITNAME, AUDITTYPE, LASTMODIFIED) VALUES ('%@', %d, '%@')", audit.name, 1, audit.lastModefied];
         
@@ -157,6 +188,8 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         NSString * userID = @"cliff";
         
         Client * client = audit.client;
+        [self saveClient:client];
+        
         
         NSString * insertClientSQL = [NSString stringWithFormat:@"INSERT INTO CLIENT (AUDITID, USERID, CLIENTNAME, DIVISION, SIC, NUMBEREMPLOYEES, AUDITSITE, AUDITDATE, BASELINEAUDIT, STREETADDRESS, CITYSTATEPROVINCE, COUNTRY) VALUES (%d, '%@', '%@', '%@', '%@', %d, '%@', '%@', %d, '%@', '%@', '%@'", auditID, userID, client.companyName, client.division, client.SICNumber, client.numEmployees, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.country];
         
@@ -391,10 +424,10 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     sqlite3_stmt * statement;
     int ID = -1;
 
-    NSString * getAuditIDSQL = [NSString stringWithFormat:@"SELECT MAX(ID) FROM '%@'", table];
+    NSString * getIDSQL = [NSString stringWithFormat:@"SELECT MAX(ID) FROM '%@'", table];
     
     //Prepare the Query
-    if(sqlite3_prepare_v2(dnvAuditDB, [getAuditIDSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
+    if(sqlite3_prepare_v2(dnvAuditDB, [getIDSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
         
         //If this work, there must be a row if the data was there
         while (sqlite3_step(statement) == SQLITE_ROW){
