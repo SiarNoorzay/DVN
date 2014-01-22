@@ -211,7 +211,7 @@ BOOL isSublayeredQuestion = false;
         
     }
     else{
-        self.question = [[Questions alloc]initWithQuestion:[self.questionArray objectAtIndex:self.currentPosition]];
+        self.question = [self.questionArray objectAtIndex:self.currentPosition];
         self.questionNumberTextField.text = [NSString stringWithFormat:@"%i",(self.currentPosition +1)];
     }
     
