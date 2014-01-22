@@ -24,12 +24,14 @@
         self.isApplicable = [[questionDictionary objectForKey:@"isApplicable"] boolValue];
         self.notes = [questionDictionary objectForKey:@"notes"];
         self.needsVerifying = [[questionDictionary objectForKey:@"needsVerifying"] boolValue];
-        self.verifyDoneBy = [questionDictionary objectForKey:@"verifyDoneBy"];
+        self.isVerifyDone = [[questionDictionary objectForKey:@"isVerifyDone"] boolValue];
         self.attachmentsLocationArray = [questionDictionary objectForKey:@"attachmentsLocationArray"];
         self.imageLocationArray = [questionDictionary objectForKey:@"imageLocationArray"];
         self.questionType = [[questionDictionary objectForKey:@"questionType"] intValue];
         self.isThumbsUp = [[questionDictionary objectForKey:@"isThumbsUp"] boolValue];
         self.isThumbsDown = [[questionDictionary objectForKey:@"isThumbsUp"] boolValue];
+        self.pointsNeededForLayered = [[questionDictionary objectForKey:@"pointsNeededForLayered"]floatValue];
+        self.layeredQuestion = [questionDictionary objectForKey:@"layeredQuestions"];
         
         NSMutableArray *tempArray = [questionDictionary objectForKey:@"Answers"];
         NSMutableArray *objectArray = [NSMutableArray arrayWithCapacity:[tempArray count]];

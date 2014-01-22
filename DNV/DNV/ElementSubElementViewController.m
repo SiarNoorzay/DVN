@@ -62,6 +62,8 @@ int subEleNumber;
 
     [self.spinner startAnimating];
     
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+    
     
 }
 
@@ -251,6 +253,8 @@ loadMetadataFailedWithError:(NSError *)error {
         //use this to access the audit and its components dictionary style
         Audit *aud = [[Audit alloc]initWithAudit:theAudit];
         self.auditSelectLbl.text = aud.name;
+        
+        [self.dnvDBManager saveAudit:aud];
         
         self.listOfElements = aud.Elements;
         

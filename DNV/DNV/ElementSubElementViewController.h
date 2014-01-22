@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DNVDatabaseManagerClass.h"
 
 #import "Audit.h"
 #import "Elements.h"
@@ -32,6 +33,8 @@
 @property NSString * directoryPath;
 
 @property (strong, nonatomic) NSMutableArray * JSONList;
+
+@property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
 
 @property (strong, nonatomic) IBOutlet UILabel *auditSelectLbl;
 

@@ -18,14 +18,15 @@
 @property (nonatomic) BOOL isApplicable;
 @property (nonatomic) NSString * notes;
 @property (nonatomic) BOOL needsVerifying;
-@property (nonatomic) NSString * verifyDoneBy;
+@property (nonatomic) BOOL isVerifyDone;
 @property (nonatomic) NSArray * attachmentsLocationArray;
 @property (nonatomic) NSArray * imageLocationArray;
 @property (nonatomic) NSArray * Answers;
 @property (nonatomic) int questionType;
 @property (nonatomic) BOOL isThumbsUp;
 @property (nonatomic) BOOL isThumbsDown;
-
+@property (nonatomic) NSArray * layeredQuestion;
+@property (nonatomic) float pointsNeededForLayered;
 
 -(id)initWithQuestion:(NSDictionary *)questionDictionary;
 

@@ -98,6 +98,7 @@
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
     
     [self.dnvDBManager createUserTable];
+    [self.dnvDBManager createAuditTables];
     
 }
 -(void)viewWillAppear:(BOOL)animated{
