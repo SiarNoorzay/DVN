@@ -28,7 +28,7 @@
          @property (nonatomic) float  pointsAwarded;
          @property (nonatomic) NSArray * Questions;
          */
-        
+
         self.isCompleted = [[subElementDictionary objectForKey:@"isCompleted"] boolValue];
         self.name = [subElementDictionary objectForKey:@"name"];
         self.pointsPossible = [[subElementDictionary objectForKey:@"pointsPossible"]floatValue];

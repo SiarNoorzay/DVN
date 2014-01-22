@@ -79,7 +79,14 @@
     Questions *question = [[Questions alloc]initWithQuestion:[self.questionArray objectAtIndex:indexPath.row]];
     
     cell.questionText.text = question.questionText;
-    cell.points.text = [NSString stringWithFormat:@"%.2f / %.2f", question.pointsAwarded,question.pointsPossible];
+    if (question.isApplicable) {
+        cell.points.text = [NSString stringWithFormat:@"%.2f / %.2f", question.pointsAwarded,question.pointsPossible];
+    }
+    else
+    {
+        cell.points.text = @" 0 / 0 ";
+    }
+    
     
     //cell.textLabel.font = [UIFont systemFontOfSize:25.0];
     

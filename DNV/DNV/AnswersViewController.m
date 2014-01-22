@@ -593,6 +593,10 @@ BOOL isSublayeredQuestion = false;
     self.question.isApplicable = !self.question.isApplicable;
     [self.naButton setSelected: !self.naButton.selected];
     
+    if (self.question.isApplicable) {
+        
+    }
+    
 }
 - (IBAction)verifyButtonPushed:(id)sender {
     self.question.needsVerifying = !self.question.needsVerifying;

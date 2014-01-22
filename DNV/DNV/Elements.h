@@ -17,6 +17,9 @@
 @property (nonatomic) float  pointsAwarded;
 @property (nonatomic) NSArray * Subelements;
 
+@property (nonatomic) float modefiedNAPoints;
+
+
 -(id)initWithElement:(NSDictionary *)elementDictionary;
 
 
