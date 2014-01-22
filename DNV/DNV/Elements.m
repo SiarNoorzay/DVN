@@ -34,10 +34,7 @@
        //     [tempArray replaceObjectAtIndex:i withObject:subEle];
         }
         self.Subelements = objectArray;
-        
-        
-        
-        
+    
     }
     return self;
 }
