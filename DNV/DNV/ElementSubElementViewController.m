@@ -9,11 +9,11 @@
 #import "ElementSubElementViewController.h"
 #import "QuestionsViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
+
 #import "SubElementCell.h"
-
-
 #import "Questions.h"
 #import "Folder.h"
+#import "AuditIDObject.h"
 
 @interface ElementSubElementViewController ()<DBRestClientDelegate>
 
@@ -282,14 +282,23 @@ loadMetadataFailedWithError:(NSError *)error {
         Audit *aud = [[Audit alloc]initWithAudit:theAudit];
         self.auditSelectLbl.text = aud.name;
         
-//        [self.dnvDBManager saveAudit:aud];
+        //Just a DB test
+        [self.dnvDBManager saveAudit:aud];
+        
+        NSArray * auditIDS = [self.dnvDBManager retrieveAllWIPAudits];
+        
+        AuditIDObject * aID = auditIDS[1];
+        
+        NSLog(@"Audit ID: %d Audit Name: %@", aID.auditID, aID.auditName);
+        //end of DB test
+        
         
         self.listOfElements = aud.Elements;
         
         Audit *second = [[Audit alloc] initWithAudit:theAudit];
         
         //just to test
-   //     Audit *aha = [aud mergeAudit:aud with:second];
+        Audit *aha = [aud mergeAudit:aud with:second];
         
         //[self.elementPicker reloadAllComponents];
         

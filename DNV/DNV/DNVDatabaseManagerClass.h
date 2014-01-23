@@ -39,9 +39,16 @@
 
 -(void)createAuditTables;
 -(Audit *)retrieveAudit:(NSInteger *) auditID;
--(NSArray *)retrieveAllAudits;
+-(NSArray *)retrieveAllWIPAudits;
+-(NSArray *)retrieveAllCompletedAudits;
 -(void)saveAudit:(Audit *) audit;
 -(void)saveClient:(Client *) client;
+-(void)saveReport:(Report *) report;
+-(void)saveElement:(Elements *) element;
+-(void)saveSubElement:(SubElements *) subElement;
+-(void)saveQuestion:(Questions *) question;
+-(void)saveAnswer:(Answers *) answer;
+-(void)saveAttachment:(NSArray *) attach images:(int) numOfImages;
 -(void)updateAudit:(NSInteger *) auditID auditType:(NSInteger *) auditType;
 -(void)updateElement:(NSInteger *) elementID isCompleted:(BOOL) isCompleted;
 -(void)updateSubElment:(NSInteger *) subElementID isCompleted:(BOOL) isCompleted;
