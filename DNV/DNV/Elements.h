@@ -17,7 +17,6 @@
 @property (nonatomic) float  pointsPossible;
 @property (nonatomic) float  pointsAwarded;
 @property (nonatomic) NSArray * Subelements;
-@property (nonatomic) float modifierForPointsPossible;
 
 @property (nonatomic) float modefiedNAPoints;
 

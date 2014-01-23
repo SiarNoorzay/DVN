@@ -23,6 +23,8 @@
         self.pointsPossible = [[elementDictionary objectForKey:@"pointsPossible"]floatValue];
         self.pointsAwarded = [[elementDictionary objectForKey:@"pointsAwarded"]floatValue];
         
+        self.modefiedNAPoints = [[elementDictionary objectForKey:@"modefiedNAPoints"]floatValue];
+
         NSMutableArray *tempArray = [elementDictionary objectForKey:@"SubElements"];
         NSMutableArray *objectArray = [NSMutableArray arrayWithCapacity:[tempArray count]];
 
@@ -57,7 +59,7 @@
     //float
     mergedElements.pointsPossible = [dataMerger mergeFloat:primaryElements.pointsPossible with:secondaryElements.pointsPossible];
     mergedElements.pointsAwarded = [dataMerger mergeFloat:primaryElements.pointsAwarded with:secondaryElements.pointsAwarded];
-    mergedElements.modifierForPointsPossible = [dataMerger mergeFloat:primaryElements.modifierForPointsPossible with:secondaryElements.modifierForPointsPossible];
+    mergedElements.modefiedNAPoints = [dataMerger mergeFloat:primaryElements.modefiedNAPoints with:secondaryElements.modefiedNAPoints];
     
     //string
     mergedElements.name = [dataMerger mergeString:primaryElements.name with:secondaryElements.name];

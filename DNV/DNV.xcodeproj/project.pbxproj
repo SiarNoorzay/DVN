@@ -33,6 +33,17 @@
 		768D5651188F0FF500175EB4 /* ElementRatingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D5650188F0FF500175EB4 /* ElementRatingsCell.m */; };
 		768D5653188F18CC00175EB4 /* sampleCompletedAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 768D5652188F18CC00175EB4 /* sampleCompletedAudit.json */; };
 		768D56561890145500175EB4 /* ReportDocViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D56551890145500175EB4 /* ReportDocViewController.m */; };
+		768D56651890634600175EB4 /* ECCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D565B1890634600175EB4 /* ECCommon.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		768D56661890634600175EB4 /* ECGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D565E1890634600175EB4 /* ECGraph.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		768D56671890634600175EB4 /* ECGraphItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D56601890634600175EB4 /* ECGraphItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		768D56681890634600175EB4 /* ECGraphLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D56621890634600175EB4 /* ECGraphLine.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		768D56691890634600175EB4 /* ECGraphPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D56641890634600175EB4 /* ECGraphPoint.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		768D566D1890678600175EB4 /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D566C1890678600175EB4 /* GraphView.m */; };
+		768D567018915C5200175EB4 /* TitleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D566F18915C5200175EB4 /* TitleViewController.m */; };
+		768D567318915FFD00175EB4 /* ReportDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D567218915FFD00175EB4 /* ReportDetailsViewController.m */; };
+		768D5676189165C600175EB4 /* ExecutiveSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D5675189165C600175EB4 /* ExecutiveSummaryViewController.m */; };
+		768D5679189167C900175EB4 /* TableofContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D5678189167C900175EB4 /* TableofContentsViewController.m */; };
+		768D567C18916A6300175EB4 /* ConclusionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D567B18916A6300175EB4 /* ConclusionViewController.m */; };
 		769D3CE6188580C5002DF3B8 /* VerifyQuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 769D3CE5188580C5002DF3B8 /* VerifyQuestionsViewController.m */; };
 		769D3CEA1885A763002DF3B8 /* ImportMergeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 769D3CE91885A763002DF3B8 /* ImportMergeViewController.m */; };
 		769D3CEE1885F9FC002DF3B8 /* completed_checklist_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 769D3CEB1885F9FC002DF3B8 /* completed_checklist_icon.png */; };
@@ -173,6 +184,28 @@
 		768D5652188F18CC00175EB4 /* sampleCompletedAudit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sampleCompletedAudit.json; sourceTree = "<group>"; };
 		768D56541890145500175EB4 /* ReportDocViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportDocViewController.h; sourceTree = "<group>"; };
 		768D56551890145500175EB4 /* ReportDocViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportDocViewController.m; sourceTree = "<group>"; };
+		768D565A1890634600175EB4 /* ECCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECCommon.h; sourceTree = "<group>"; };
+		768D565B1890634600175EB4 /* ECCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECCommon.m; sourceTree = "<group>"; };
+		768D565D1890634600175EB4 /* ECGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECGraph.h; sourceTree = "<group>"; };
+		768D565E1890634600175EB4 /* ECGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECGraph.m; sourceTree = "<group>"; };
+		768D565F1890634600175EB4 /* ECGraphItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECGraphItem.h; sourceTree = "<group>"; };
+		768D56601890634600175EB4 /* ECGraphItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECGraphItem.m; sourceTree = "<group>"; };
+		768D56611890634600175EB4 /* ECGraphLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECGraphLine.h; sourceTree = "<group>"; };
+		768D56621890634600175EB4 /* ECGraphLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECGraphLine.m; sourceTree = "<group>"; };
+		768D56631890634600175EB4 /* ECGraphPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECGraphPoint.h; sourceTree = "<group>"; };
+		768D56641890634600175EB4 /* ECGraphPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECGraphPoint.m; sourceTree = "<group>"; };
+		768D566B1890678600175EB4 /* GraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphView.h; sourceTree = "<group>"; };
+		768D566C1890678600175EB4 /* GraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphView.m; sourceTree = "<group>"; };
+		768D566E18915C5200175EB4 /* TitleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleViewController.h; sourceTree = "<group>"; };
+		768D566F18915C5200175EB4 /* TitleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleViewController.m; sourceTree = "<group>"; };
+		768D567118915FFD00175EB4 /* ReportDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportDetailsViewController.h; sourceTree = "<group>"; };
+		768D567218915FFD00175EB4 /* ReportDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportDetailsViewController.m; sourceTree = "<group>"; };
+		768D5674189165C600175EB4 /* ExecutiveSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExecutiveSummaryViewController.h; sourceTree = "<group>"; };
+		768D5675189165C600175EB4 /* ExecutiveSummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExecutiveSummaryViewController.m; sourceTree = "<group>"; };
+		768D5677189167C900175EB4 /* TableofContentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableofContentsViewController.h; sourceTree = "<group>"; };
+		768D5678189167C900175EB4 /* TableofContentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableofContentsViewController.m; sourceTree = "<group>"; };
+		768D567A18916A6300175EB4 /* ConclusionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConclusionViewController.h; sourceTree = "<group>"; };
+		768D567B18916A6300175EB4 /* ConclusionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConclusionViewController.m; sourceTree = "<group>"; };
 		769D3CE4188580C5002DF3B8 /* VerifyQuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyQuestionsViewController.h; sourceTree = "<group>"; };
 		769D3CE5188580C5002DF3B8 /* VerifyQuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyQuestionsViewController.m; sourceTree = "<group>"; };
 		769D3CE81885A763002DF3B8 /* ImportMergeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportMergeViewController.h; sourceTree = "<group>"; };
@@ -358,6 +391,7 @@
 		7627970B1871D53A00F22E73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				768D56591890634600175EB4 /* Core */,
 				76A7C9951889DCCA004E4F39 /* libsqlite3.dylib */,
 				76E81F4B18859E7D00441F62 /* AVFoundation.framework */,
 				76E81F4918859E7000441F62 /* AudioToolbox.framework */,
@@ -445,8 +479,45 @@
 				768D5650188F0FF500175EB4 /* ElementRatingsCell.m */,
 				768D56541890145500175EB4 /* ReportDocViewController.h */,
 				768D56551890145500175EB4 /* ReportDocViewController.m */,
+				768D566B1890678600175EB4 /* GraphView.h */,
+				768D566C1890678600175EB4 /* GraphView.m */,
+				768D566E18915C5200175EB4 /* TitleViewController.h */,
+				768D566F18915C5200175EB4 /* TitleViewController.m */,
+				768D567118915FFD00175EB4 /* ReportDetailsViewController.h */,
+				768D567218915FFD00175EB4 /* ReportDetailsViewController.m */,
+				768D5674189165C600175EB4 /* ExecutiveSummaryViewController.h */,
+				768D5675189165C600175EB4 /* ExecutiveSummaryViewController.m */,
+				768D5677189167C900175EB4 /* TableofContentsViewController.h */,
+				768D5678189167C900175EB4 /* TableofContentsViewController.m */,
+				768D567A18916A6300175EB4 /* ConclusionViewController.h */,
+				768D567B18916A6300175EB4 /* ConclusionViewController.m */,
 			);
 			name = Reporting;
+			sourceTree = "<group>";
+		};
+		768D56591890634600175EB4 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				768D565A1890634600175EB4 /* ECCommon.h */,
+				768D565B1890634600175EB4 /* ECCommon.m */,
+				768D565C1890634600175EB4 /* ECGraph */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		768D565C1890634600175EB4 /* ECGraph */ = {
+			isa = PBXGroup;
+			children = (
+				768D565D1890634600175EB4 /* ECGraph.h */,
+				768D565E1890634600175EB4 /* ECGraph.m */,
+				768D565F1890634600175EB4 /* ECGraphItem.h */,
+				768D56601890634600175EB4 /* ECGraphItem.m */,
+				768D56611890634600175EB4 /* ECGraphLine.h */,
+				768D56621890634600175EB4 /* ECGraphLine.m */,
+				768D56631890634600175EB4 /* ECGraphPoint.h */,
+				768D56641890634600175EB4 /* ECGraphPoint.m */,
+			);
+			path = ECGraph;
 			sourceTree = "<group>";
 		};
 		769D3CE31885808D002DF3B8 /* VerifyQuestionsViewController */ = {
@@ -871,6 +942,7 @@
 				76007E261888317400FA7A39 /* QuestionCell.m in Sources */,
 				76D96A3B187B001300961260 /* LogInViewController.m in Sources */,
 				4AC04094188F71C4006A2F3C /* MergeClass.m in Sources */,
+				768D566D1890678600175EB4 /* GraphView.m in Sources */,
 				76A7C9941889DC02004E4F39 /* DNVDatabaseManagerClass.m in Sources */,
 				76E81F18187DB92600441F62 /* Folder.m in Sources */,
 				76AB3CB4187B1FDA0019603F /* Audit.m in Sources */,
@@ -878,7 +950,10 @@
 				76AB3CC3187B22300019603F /* Answers.m in Sources */,
 				76D4A339187CE5F6007AB1A9 /* AuditSelectionViewController.m in Sources */,
 				76E81F1B187EE78C00441F62 /* QuestionsViewController.m in Sources */,
+				768D5676189165C600175EB4 /* ExecutiveSummaryViewController.m in Sources */,
 				769D3CE6188580C5002DF3B8 /* VerifyQuestionsViewController.m in Sources */,
+				768D56671890634600175EB4 /* ECGraphItem.m in Sources */,
+				768D56691890634600175EB4 /* ECGraphPoint.m in Sources */,
 				76A5682B18873419000E32D3 /* ListOfCompletedViewController.m in Sources */,
 				76A5683C18875A08000E32D3 /* CompletedChoicePopOver.m in Sources */,
 				76AB3CB1187B17410019603F /* Client.m in Sources */,
@@ -887,19 +962,26 @@
 				76E81F3C18848C7F00441F62 /* helpTextViewController.m in Sources */,
 				76E81F3F18849DB500441F62 /* NotesViewController.m in Sources */,
 				76D96A45187B585900961260 /* ClientViewController.m in Sources */,
+				768D567018915C5200175EB4 /* TitleViewController.m in Sources */,
 				76007DBD18872BFC00FA7A39 /* SubElementCell.m in Sources */,
 				76A8B001187F28AA007531A9 /* WIPChoicePopOver.m in Sources */,
 				768D564E188F0FD300175EB4 /* SummaryOfRatingsViewController.m in Sources */,
 				76AB3CBD187B212C0019603F /* SubElements.m in Sources */,
 				769D3CEA1885A763002DF3B8 /* ImportMergeViewController.m in Sources */,
 				768D56561890145500175EB4 /* ReportDocViewController.m in Sources */,
+				768D567C18916A6300175EB4 /* ConclusionViewController.m in Sources */,
 				76D96A3E187B07EA00961260 /* User.m in Sources */,
 				762797191871D53A00F22E73 /* main.m in Sources */,
+				768D56681890634600175EB4 /* ECGraphLine.m in Sources */,
 				76A2BE3C187DBF7A0056CC22 /* ElementSubElementViewController.m in Sources */,
 				76AB3CBA187B20C70019603F /* Elements.m in Sources */,
 				76E81F1E187F071C00441F62 /* AnswersViewController.m in Sources */,
+				768D5679189167C900175EB4 /* TableofContentsViewController.m in Sources */,
+				768D56661890634600175EB4 /* ECGraph.m in Sources */,
 				76AB3CB7187B20520019603F /* Report.m in Sources */,
 				7627431318898D3900873E9F /* DrawingViewController.m in Sources */,
+				768D56651890634600175EB4 /* ECCommon.m in Sources */,
+				768D567318915FFD00175EB4 /* ReportDetailsViewController.m in Sources */,
 				76A0DFBD18847B880038FD61 /* WIPAuditFilesViewController.m in Sources */,
 				76DBFA83187CAD6300F84282 /* MainWindowPopOver.m in Sources */,
 				76AB3CC0187B21700019603F /* Questions.m in Sources */,

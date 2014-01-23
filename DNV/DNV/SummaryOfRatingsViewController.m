@@ -13,6 +13,8 @@
 #import "Questions.h"
 #import "ReportDocViewController.h"
 
+
+
 @interface SummaryOfRatingsViewController ()
 
 @end
@@ -54,29 +56,40 @@
     }
     self.elementsArray = tempArr;
     
-    float tempPointsPossible = 0;
-    float tempNAPoints = 0;
-    float tempAwarded = 0;
+    float auditPointsPossible = 0;
+    float auditNAPoints = 0;
+    float auditAwarded = 0;
+    
+    NSMutableArray *eleNames = [[NSMutableArray alloc]initWithCapacity:[self.elementsArray count]];
+    NSMutableArray *percents = [[NSMutableArray alloc]initWithCapacity:[self.elementsArray count]];
+    
     
     for (int i = 0; i< [self.elementsArray count]; i++) {
         Elements *ele = [self.elementsArray objectAtIndex:i];
         
-        tempPointsPossible += ele.pointsPossible;
-        tempNAPoints += ele.modefiedNAPoints;
-        tempAwarded += ele.pointsAwarded;
+        auditPointsPossible += ele.pointsPossible;
+        auditNAPoints += ele.modefiedNAPoints;
+        auditAwarded += ele.pointsAwarded;
+        NSString *eleName = ele.name;
+        NSString *percent = [NSString stringWithFormat:@"%.2f",((ele.pointsAwarded / (ele.pointsPossible - ele.modefiedNAPoints)) *100)];
+        
+        [eleNames addObject:eleName];
+        [percents addObject:percent];
+        
         //TODO: save ele back to DB
     }
-    self.totalPossibleLabel.text = [NSString stringWithFormat:@"%.1f",tempPointsPossible];
-    self.totalAwardedLabel.text = [NSString stringWithFormat:@"%.1f",tempAwarded];
-    self.totalPercentageLabel.text = [NSString stringWithFormat:@"%.2f",((tempAwarded / tempPointsPossible) *100)];
+    self.totalPossibleLabel.text = [NSString stringWithFormat:@"%.1f",auditPointsPossible];
+    self.totalAwardedLabel.text = [NSString stringWithFormat:@"%.1f",auditAwarded];
+    self.totalPercentageLabel.text = [NSString stringWithFormat:@"%.2f",((auditAwarded / auditPointsPossible) *100)];
     
     
-    self.evaluatedPossibleLabel.text = [NSString stringWithFormat: @"%.1f",(tempAwarded - tempNAPoints)];
-    self.evaluatedAwardedLabel.text = [NSString stringWithFormat:@"%.1f",tempAwarded];
+    self.evaluatedPossibleLabel.text = [NSString stringWithFormat: @"%.1f",(auditPointsPossible - auditNAPoints)];
+    self.evaluatedAwardedLabel.text = [NSString stringWithFormat:@"%.1f",auditAwarded];
     
-    self.evaluatedPercentageLabel.text = [NSString stringWithFormat:@"%.2f",((tempAwarded / (tempAwarded - tempNAPoints)) *100)];
+    self.evaluatedPercentageLabel.text = [NSString stringWithFormat:@"%.2f",((auditAwarded / (auditPointsPossible - auditNAPoints)) *100)];
     
-    
+    [self.graphView setElementNames:eleNames];
+    [self.graphView setElementPercent:percents];
     
     
 }
@@ -98,12 +111,11 @@
     }
     else cell.required.text = @"O";
     
-    cell.pointsPossible.text = [NSString stringWithFormat:@"%.1f",element.pointsPossible];
+    cell.pointsPossible.text = [NSString stringWithFormat:@"%.1f",element.pointsPossible-element.modefiedNAPoints];
     cell.pointsAwarded.text = [NSString stringWithFormat:@"%.1f",element.pointsAwarded];
     
-    cell.percentage.text = [NSString stringWithFormat:@"%.2f %%", (element.pointsAwarded/element.pointsPossible)*100];
+    cell.percentage.text = [NSString stringWithFormat:@"%.2f %%", (element.pointsAwarded/(element.pointsPossible - element.modefiedNAPoints))*100];
     return cell;
-
     
     
 }
@@ -130,5 +142,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 @end

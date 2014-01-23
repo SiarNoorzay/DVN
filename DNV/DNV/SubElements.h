@@ -16,8 +16,6 @@
 @property (nonatomic) float  pointsPossible;
 @property (nonatomic) float  pointsAwarded;
 @property (nonatomic) NSArray * Questions;
-@property (nonatomic) float modifierForPointsPossible;
-
 @property (nonatomic) float modefiedNAPoints;
 
 -(id)initWithSubElement:(NSDictionary *)subElementDictionary;
