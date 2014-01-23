@@ -76,9 +76,14 @@
     return cell;
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
     NSIndexPath *indexPath = self.auditListTable.indexPathForSelectedRow;
+    
+    //store current user in NSUSERDEFAULTS
+    NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
+    [nsDefaults setObject:[[self.audits objectAtIndex:indexPath.row] name] forKey:@"currentAudit"];
+    [nsDefaults synchronize];
     
     NSLog(@"Selected %@,",[self.audits objectAtIndex:indexPath.row]);
     

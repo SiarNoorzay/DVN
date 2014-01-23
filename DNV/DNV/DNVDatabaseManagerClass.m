@@ -62,9 +62,9 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
          
             //Create the DB
-            const char * sql_stmt = "CREATE TABLE IF NOT EXISTS AUDIT (ID INTEGER PRIMARY KEY AUTOINCREMENT, AUDITNAME TEXT, AUDITTYPE INTEGER, LASTMODIFIED TEXT)";
+            const char * sql_stmt = "CREATE TABLE IF NOT EXISTS AUDIT (ID TEXT PRIMARY KEY, AUDITNAME TEXT, AUDITTYPE INTEGER, LASTMODIFIED TEXT)";
             
-            const char * sql_stmt2 = "CREATE TABLE IF NOT EXISTS ELEMENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, AUDITID INTEGER, ELEMENTNAME TEXT, ISCOMPLETED INTEGER, ISREQUIRED INTEGER, POINTSPOSSIBLE REAL, POINTSAWARDED REAL)";
+            const char * sql_stmt2 = "CREATE TABLE IF NOT EXISTS ELEMENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, AUDITID TEXT, ELEMENTNAME TEXT, ISCOMPLETED INTEGER, ISREQUIRED INTEGER, POINTSPOSSIBLE REAL, POINTSAWARDED REAL)";
             
             const char * sql_stmt3 = "CREATE TABLE IF NOT EXISTS SUBELEMENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, ELEMENTID INTEGER, SUBELEMENTNAME TEXT, ISCOMPLETED INTEGER, POINTSPOSSIBLE REAL, POINTSAWARDED REAL)";
             
@@ -74,9 +74,9 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             
             const char * sql_stmt6 = "CREATE TABLE IF NOT EXISTS ATTACHMENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, QUESTIONID INTEGER, ATTACHMENTNAME TEXT, ISIMAGE INTEGER)";
             
-            const char * sql_stmt7 = "CREATE TABLE IF NOT EXISTS CLIENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, AUDITID INTEGER, USERID TEXT, CLIENTNAME TEXT, DIVISION TEXT, SIC TEXT, NUMBEREMPLOYEES INTEGER, AUDITSITE TEXT, AUDITDATE TEXT, BASELINEAUDIT INTEGER, STREETADDRESS TEXT, CITYSTATEPROVINCE TEXT, COUNTRY TEXT)";
+            const char * sql_stmt7 = "CREATE TABLE IF NOT EXISTS CLIENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, AUDITID TEXT, USERID TEXT, CLIENTNAME TEXT, DIVISION TEXT, SIC TEXT, NUMBEREMPLOYEES INTEGER, AUDITSITE TEXT, AUDITDATE TEXT, BASELINEAUDIT INTEGER, STREETADDRESS TEXT, CITYSTATEPROVINCE TEXT, COUNTRY TEXT)";
             
-            const char * sql_stmt8 = "CREATE TABLE IF NOT EXISTS REPORT (ID INTEGER PRIMARY KEY AUTOINCREMENT, AUDITID INTEGER, CLIENTID INTEGER, USERID TEXT, SUMMARY TEXT, APPROVEDBY TEXT, PROJECTNUMBER TEXT, CONCLUSION TEXT, DIAGRAMFILENAME TEXT)";
+            const char * sql_stmt8 = "CREATE TABLE IF NOT EXISTS REPORT (ID INTEGER PRIMARY KEY AUTOINCREMENT, AUDITID TEXT, CLIENTID INTEGER, USERID TEXT, SUMMARY TEXT, APPROVEDBY TEXT, PROJECTNUMBER TEXT, CONCLUSION TEXT, DIAGRAMFILENAME TEXT)";
             
             //Verifying the execution of the create table SQL script
             if(!(sqlite3_exec(dnvAuditDB, sql_stmt, NULL, NULL, &errMsg)==SQLITE_OK))
@@ -141,140 +141,152 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         
         sqlite3_stmt * statement;
         
-        NSString * insertAuditSQL = [NSString stringWithFormat:@"INSERT INTO AUDIT (AUDITNAME, AUDITTYPE, LASTMODIFIED) VALUES (\"%@\", %d, \"%@\")", audit.name, 1, audit.lastModefied];
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        NSString * auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
+        auditID = [auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
         
-        [self insertRowInTable:insertAuditSQL];
+        NSString * insertAuditSQL = [NSString stringWithFormat:@"INSERT INTO AUDIT (ID, AUDITNAME, AUDITTYPE, LASTMODIFIED) VALUES (\"%@\", \"%@\", %d, \"%@\")", auditID, audit.name, 1, audit.lastModefied];
         
-        int auditID = [self getID:@"AUDIT"];
-        NSString * userID = @"cliff";
+        //Preparing
+        sqlite3_prepare_v2(dnvAuditDB, [insertAuditSQL UTF8String], -1, &statement, NULL);
         
-        Client * client = audit.client;
+        if(sqlite3_step(statement)==SQLITE_DONE){
+            NSLog(@"audit added to DB.");
         
-        NSString * insertClientSQL = [NSString stringWithFormat:@"INSERT INTO CLIENT (AUDITID, USERID, CLIENTNAME, DIVISION, SIC, NUMBEREMPLOYEES, AUDITSITE, AUDITDATE, BASELINEAUDIT, STREETADDRESS, CITYSTATEPROVINCE, COUNTRY) VALUES (%d, \"%@\", \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\")", auditID, userID, client.companyName, client.division, client.SICNumber, client.numEmployees, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.country];
+            NSString * userID = @"cliff";
         
-        [self insertRowInTable:insertClientSQL];
+            Client * client = audit.client;
         
-        int clientID = [self getID:@"CLIENT"];
+            NSString * insertClientSQL = [NSString stringWithFormat:@"INSERT INTO CLIENT (AUDITID, USERID, CLIENTNAME, DIVISION, SIC, NUMBEREMPLOYEES, AUDITSITE, AUDITDATE, BASELINEAUDIT, STREETADDRESS, CITYSTATEPROVINCE, COUNTRY) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\")", auditID, userID, client.companyName, client.division, client.SICNumber, client.numEmployees, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.country];
         
-        Report * report = audit.report;
+            [self insertRowInTable:insertClientSQL forTable:@"client"];
         
-        NSString * insertReportSQL = [NSString stringWithFormat:@"INSERT INTO REPORT (AUDITID, CLIENTID, USERID, SUMMARY, APPROVEDBY, PROJECTNUMBER, CONCLUSION, DIAGRAMFILENAME) VALUES (%d, %d, \"%@\", \"%@\", \"%@\",\"%@\", \"%@\", \"%@\")", auditID, clientID, userID, report.summary, report.approvedBy, report.projectNum, report.conclusion, report.methodologyDiagramLocation];
+            int clientID = [self getID:@"CLIENT"];
         
-        [self insertRowInTable:insertReportSQL];
+            Report * report = audit.report;
+        
+            NSString * insertReportSQL = [NSString stringWithFormat:@"INSERT INTO REPORT (AUDITID, CLIENTID, USERID, SUMMARY, APPROVEDBY, PROJECTNUMBER, CONCLUSION, DIAGRAMFILENAME) VALUES (\"%@\", %d, \"%@\", \"%@\", \"%@\",\"%@\", \"%@\", \"%@\")", auditID, clientID, userID, report.summary, report.approvedBy, report.projectNum, report.conclusion, report.methodologyDiagramLocation];
+        
+            [self insertRowInTable:insertReportSQL forTable:@"report"];
     
-        NSArray * elements = audit.Elements;
+            NSArray * elements = audit.Elements;
         
-        for (Elements * ele in elements){
+            for (Elements * ele in elements){
         
-            NSString * insertElementSQL = [NSString stringWithFormat:@"INSERT INTO ELEMENT (AUDITID, ELEMENTNAME, ISCOMPLETED, ISREQUIRED, POINTSPOSSIBLE, POINTSAWARDED) VALUES (%d, \"%@\", %d, %d, %f, %f)", auditID, ele.name, ele.isCompleted, ele.isRequired, ele.pointsPossible, ele.pointsAwarded];
+                NSString * insertElementSQL = [NSString stringWithFormat:@"INSERT INTO ELEMENT (AUDITID, ELEMENTNAME, ISCOMPLETED, ISREQUIRED, POINTSPOSSIBLE, POINTSAWARDED) VALUES (\"%@\", \"%@\", %d, %d, %f, %f)", auditID, ele.name, ele.isCompleted, ele.isRequired, ele.pointsPossible, ele.pointsAwarded];
             
-            [self insertRowInTable:insertElementSQL];
+                [self insertRowInTable:insertElementSQL forTable:@"element"];
         
-            int elementID = [self getID:@"ELEMENT"];
+                int elementID = [self getID:@"ELEMENT"];
         
-            NSArray * subElements = ele.Subelements;
+                NSArray * subElements = ele.Subelements;
         
-            for (SubElements * subEle in subElements){
+                for (SubElements * subEle in subElements){
             
-                NSString * insertSubElementSQL = [NSString stringWithFormat:@"INSERT INTO SUBELEMENT (ELEMENTID, SUBELEMENTNAME, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED) VALUES (%d, \"%@\", %d, %f, %f)", elementID, subEle.name, subEle.isCompleted, subEle.pointsPossible, subEle.pointsAwarded];
+                    NSString * insertSubElementSQL = [NSString stringWithFormat:@"INSERT INTO SUBELEMENT (ELEMENTID, SUBELEMENTNAME, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED) VALUES (%d, \"%@\", %d, %f, %f)", elementID, subEle.name, subEle.isCompleted, subEle.pointsPossible, subEle.pointsAwarded];
         
-                [self insertRowInTable:insertSubElementSQL];
+                    [self insertRowInTable:insertSubElementSQL forTable:@"sub element"];
                 
-                int subElementID = [self getID:@"SUBELEMENT"];
+                    int subElementID = [self getID:@"SUBELEMENT"];
             
-                NSArray * questions = subEle.Questions;
+                    NSArray * questions = subEle.Questions;
             
-                for (Questions * question in questions){
+                    for (Questions * question in questions){
                 
-                    NSString * insertQuestionSQL = [NSString stringWithFormat:@"INSERT INTO QUESTION (SUBELEMENTID, QUESTIONTEXT, QUESTIONTYPE, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, HELPTEXT, NOTES, ISTHUMBSUP, ISTHUMBSDOWN, ISAPPLICABLE, NEEDSVERIFYING, ISVERIFYDONE, PARENTQUESTIONID, POINTSNEEDEFORLAYER) VALUES (%d, \"%@\", %d, %d, %f, %f, \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %f)", subElementID, question.questionText, question.questionType, question.isCompleted, question.pointsPossible, question.pointsAwarded, question.helpText, question.notes, question.isThumbsUp, question.isThumbsDown, question.isApplicable, question.needsVerifying, question.isVerifyDone, nil, question.pointsNeededForLayered];
+                        NSString * insertQuestionSQL = [NSString stringWithFormat:@"INSERT INTO QUESTION (SUBELEMENTID, QUESTIONTEXT, QUESTIONTYPE, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, HELPTEXT, NOTES, ISTHUMBSUP, ISTHUMBSDOWN, ISAPPLICABLE, NEEDSVERIFYING, ISVERIFYDONE, PARENTQUESTIONID, POINTSNEEDEFORLAYER) VALUES (%d, \"%@\", %d, %d, %f, %f, \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %f)", subElementID, question.questionText, question.questionType, question.isCompleted, question.pointsPossible, question.pointsAwarded, question.helpText, question.notes, question.isThumbsUp, question.isThumbsDown, question.isApplicable, question.needsVerifying, question.isVerifyDone, nil, question.pointsNeededForLayered];
                 
-                    //Preparing
-                    sqlite3_prepare_v2(dnvAuditDB, [insertQuestionSQL UTF8String], -1, &statement, NULL);
+                        //Preparing
+                        sqlite3_prepare_v2(dnvAuditDB, [insertQuestionSQL UTF8String], -1, &statement, NULL);
                 
-                    if(sqlite3_step(statement)==SQLITE_DONE){
-                        NSLog(@"Row added to DB.");
-                    
-                        if (question.layeredQuesions.count > 0){
+                        if(sqlite3_step(statement)==SQLITE_DONE){
+                            NSLog(@"question added to DB.");
                         
                             sqlite3_reset(statement);
                         
                             int questionID = [self getID:@"QUESTION"];
                         
-                            NSArray * layeredQuest = question.layeredQuesions;
+                            NSArray * answers = question.Answers;
                         
-                            for (Questions * lQ in layeredQuest){
+                            for (Answers * answer in answers){
                             
-                                NSString * insertLQSQL = [NSString stringWithFormat:@"INSERT INTO QUESTION (SUBELEMENTID, QUESTIONTEXT, QUESTIONTYPE, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, HELPTEXT, NOTES, ISTHUMBSUP, ISTHUMBSDOWN, ISAPPLICABLE, NEEDSVERIFYING, ISVERIFYDONE, PARENTQUESTIONID, POINTSNEEDEFORLAYER) VALUES (%d, \"%@\", %d, %d, %f, %f, \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %f)", subElementID, lQ.questionText, lQ.questionType, lQ.isCompleted, lQ.pointsPossible, lQ.pointsAwarded, lQ.helpText, lQ.notes, lQ.isThumbsUp, lQ.isThumbsDown, lQ.isApplicable, lQ.needsVerifying, lQ.isVerifyDone, questionID, lQ.pointsNeededForLayered];
+                                NSString * insertAnswerSQL = [NSString stringWithFormat:@"INSERT INTO ANSWER (QUESTIONID, ANSWERTEXT, POINTSPOSSIBLE, ISSELECTED) VALUES (%d, \"%@\", %f, %d)", questionID, answer.answerText, answer.pointsPossibleOrMultiplier, answer.isSelected];
                             
-                                [self insertRowInTable:insertLQSQL];
+                                [self insertRowInTable:insertAnswerSQL forTable:@"answer"];
+                            }
+                        
+                            NSMutableArray * attachments = [NSMutableArray arrayWithArray:question.imageLocationArray];
+                        
+                            for (NSString * attach in question.attachmentsLocationArray)
+                                [attachments addObject:attach];
+                        
+                            for (int i = 0; i < attachments.count; i++){
                             
-                                int LQID = [self getID:@"QUESTION"];
+                                BOOL isImage;
+                                if (i < question.imageLocationArray.count)
+                                    isImage = true;
+                                else
+                                    isImage = false;
                             
-                                NSArray * LQanswers = lQ.Answers;
+                                NSString * insertAttachSQL = [NSString stringWithFormat:@"INSERT INTO ATTACHMENT (QUESTIONID, ATTACHMENTNAME, ISIMAGE) VALUES (%d, \"%@\", %d)", questionID, attachments[i], isImage];
                             
-                                for (Answers * answer in LQanswers){
+                                [self insertRowInTable:insertAttachSQL forTable:@"attachment"];
+                            }
+                    
+                            if (question.layeredQuesions.count > 0){
+                        
+                                sqlite3_reset(statement);
+                        
+                                int questionID = [self getID:@"QUESTION"];
+                        
+                                NSArray * layeredQuest = question.layeredQuesions;
+                        
+                                for (Questions * lQ in layeredQuest){
+                            
+                                    NSString * insertLQSQL = [NSString stringWithFormat:@"INSERT INTO QUESTION (SUBELEMENTID, QUESTIONTEXT, QUESTIONTYPE, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, HELPTEXT, NOTES, ISTHUMBSUP, ISTHUMBSDOWN, ISAPPLICABLE, NEEDSVERIFYING, ISVERIFYDONE, PARENTQUESTIONID, POINTSNEEDEFORLAYER) VALUES (%d, \"%@\", %d, %d, %f, %f, \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %f)", subElementID, lQ.questionText, lQ.questionType, lQ.isCompleted, lQ.pointsPossible, lQ.pointsAwarded, lQ.helpText, lQ.notes, lQ.isThumbsUp, lQ.isThumbsDown, lQ.isApplicable, lQ.needsVerifying, lQ.isVerifyDone, questionID, lQ.pointsNeededForLayered];
+                            
+                                    [self insertRowInTable:insertLQSQL forTable:@"layered question"];
+                            
+                                    int LQID = [self getID:@"QUESTION"];
+                            
+                                    NSArray * LQanswers = lQ.Answers;
+                            
+                                    for (Answers * answer in LQanswers){
                                 
-                                    NSString * insertLQAnswerSQL = [NSString stringWithFormat:@"INSERT INTO ANSWER (QUESTIONID, ANSWERTEXT, POINTSPOSSIBLE, ISSELECTED) VALUES (%d, \"%@\", %f, %d)", LQID, answer.answerText, answer.pointsPossibleOrMultiplier, answer.isSelected];
+                                        NSString * insertLQAnswerSQL = [NSString stringWithFormat:@"INSERT INTO ANSWER (QUESTIONID, ANSWERTEXT, POINTSPOSSIBLE, ISSELECTED) VALUES (%d, \"%@\", %f, %d)", LQID, answer.answerText, answer.pointsPossibleOrMultiplier, answer.isSelected];
                                 
-                                    [self insertRowInTable:insertLQAnswerSQL];
-                                }
+                                        [self insertRowInTable:insertLQAnswerSQL forTable:@"layered answer"];
+                                    }
                             
-                                NSMutableArray * attachments = [NSMutableArray arrayWithArray:lQ.imageLocationArray];
+                                    NSMutableArray * attachments = [NSMutableArray arrayWithArray:lQ.imageLocationArray];
                             
-                                for (NSString * attach in lQ.attachmentsLocationArray)
-                                    [attachments addObject:attach];
+                                    for (NSString * attach in lQ.attachmentsLocationArray)
+                                        [attachments addObject:attach];
                             
-                                for (int i = 0; i < attachments.count; i++){
+                                    for (int i = 0; i < attachments.count; i++){
                                 
-                                    BOOL isImage;
+                                        BOOL isImage;
                                     
-                                    if (i < lQ.imageLocationArray.count)
-                                        isImage = true;
-                                    else
-                                        isImage = false;
+                                        if (i < lQ.imageLocationArray.count)
+                                            isImage = true;
+                                        else
+                                            isImage = false;
                                 
-                                    NSString * insertAttachSQL = [NSString stringWithFormat:@"INSERT INTO ATTACHMENT (QUESTIONID, ATTACHMENTNAME, ISIMAGE) VALUES (%d, \"%@\", %d)", LQID, attachments[i], isImage];
+                                        NSString * insertAttachSQL = [NSString stringWithFormat:@"INSERT INTO ATTACHMENT (QUESTIONID, ATTACHMENTNAME, ISIMAGE) VALUES (%d, \"%@\", %d)", LQID, attachments[i], isImage];
                                 
-                                    [self insertRowInTable:insertAttachSQL];
+                                        [self insertRowInTable:insertAttachSQL forTable:@"layered attachment"];
+                                    }
                                 }
                             }
                         }
+                        else{
+                            NSLog(@"Failed to add question.");
+                        }
                     }
-                    else{
-                        NSLog(@"Failed to add row.");
-                    }
-                    
-                    sqlite3_reset(statement);
-                    
-                    int questionID = [self getID:@"QUESTION"];
-                        
-                    NSArray * answers = question.Answers;
-                        
-                    for (Answers * answer in answers){
-                            
-                        NSString * insertAnswerSQL = [NSString stringWithFormat:@"INSERT INTO ANSWER (QUESTIONID, ANSWERTEXT, POINTSPOSSIBLE, ISSELECTED) VALUES (%d, \"%@\", %f, %d)", questionID, answer.answerText, answer.pointsPossibleOrMultiplier, answer.isSelected];
-                            
-                        [self insertRowInTable:insertAnswerSQL];
-                    }
-                        
-                    NSMutableArray * attachments = [NSMutableArray arrayWithArray:question.imageLocationArray];
-                
-                    for (NSString * attach in question.attachmentsLocationArray)
-                        [attachments addObject:attach];
-                        
-                    for (int i = 0; i < attachments.count; i++){
-                            
-                        BOOL isImage;
-                        if (i < question.imageLocationArray.count)
-                            isImage = true;
-                        else
-                            isImage = false;
-                            
-                        NSString * insertAttachSQL = [NSString stringWithFormat:@"INSERT INTO ATTACHMENT (QUESTIONID, ATTACHMENTNAME, ISIMAGE) VALUES (%d, \"%@\", %d)", questionID, attachments[i], isImage];
-                            
-                        [self insertRowInTable:insertAttachSQL];                    }
                 }
             }
+        }
+        else{
+            NSLog(@"Failed to add audit.");
         }
         
         sqlite3_finalize(statement);
@@ -312,7 +324,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                 //Gets the middle name data from DB and adding it to the temp Person Object
                 NSString * name = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
                 
-                AuditIDObject * auditIDObj = [[AuditIDObject alloc]initWithID:[identify integerValue] name:name];
+                AuditIDObject * auditIDObj = [[AuditIDObject alloc]initWithID:identify name:name];
                 
                 [auditArray addObject:auditIDObj];
                 
@@ -350,7 +362,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                 //Gets the middle name data from DB and adding it to the temp Person Object
                 NSString * name = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
                 
-                AuditIDObject * auditIDObj = [[AuditIDObject alloc]initWithID:[identify integerValue] name:name];
+                AuditIDObject * auditIDObj = [[AuditIDObject alloc]initWithID:identify name:name];
                 
                 [auditArray addObject:auditIDObj];
                 
@@ -584,7 +596,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     return ID;
 }
 
--(void)insertRowInTable:(NSString *)insertSQL{
+-(void)insertRowInTable:(NSString *)insertSQL forTable:(NSString *) table{
     
     sqlite3_stmt * statement;
     
@@ -592,10 +604,10 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     sqlite3_prepare_v2(dnvAuditDB, [insertSQL UTF8String], -1, &statement, NULL);
     
     if(sqlite3_step(statement)==SQLITE_DONE){
-        NSLog(@"Row added to DB.");
+        NSLog(@"%@ added to DB.", table);
     }
     else{
-        NSLog(@"Failed to add row.");
+        NSLog(@"Failed to add %@.", table);
     }
     sqlite3_finalize(statement);
 }

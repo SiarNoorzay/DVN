@@ -10,9 +10,9 @@
 
 @interface AuditIDObject : NSObject
 
-@property (nonatomic) int auditID;
+@property (nonatomic) NSString * auditID;
 @property (nonatomic) NSString * auditName;
 
--(id)initWithID:(int) ID name:(NSString *) name;
+-(id)initWithID:(NSString *) ID name:(NSString *) name;
 
 @end

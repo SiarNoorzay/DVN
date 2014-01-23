@@ -287,9 +287,9 @@ loadMetadataFailedWithError:(NSError *)error {
         
         NSArray * auditIDS = [self.dnvDBManager retrieveAllWIPAudits];
         
-        AuditIDObject * aID = auditIDS[1];
+        AuditIDObject * aID = auditIDS[0];
         
-        NSLog(@"Audit ID: %d Audit Name: %@", aID.auditID, aID.auditName);
+        NSLog(@"Audit ID: %@ Audit Name: %@", aID.auditID, aID.auditName);
         //end of DB test
         
         

@@ -159,6 +159,12 @@ loadMetadataFailedWithError:(NSError *)error {
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    
+    //store current user in NSUSERDEFAULTS
+    NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
+    [nsDefaults setObject:[[self.clients objectAtIndex:self.chosenClient] name] forKey:@"currentClient"];
+    [nsDefaults synchronize];
+    
     if ([[segue identifier] isEqualToString:@"NewAuditChoice"]) {
         
         // Get destination view

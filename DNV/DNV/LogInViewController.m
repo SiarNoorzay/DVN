@@ -200,6 +200,11 @@
             passwordCorrect= true;
             NSLog(@"User name and password correct");
             [self performSegueWithIdentifier:@"loginSuccess" sender:nil];
+            
+            //store current user in NSUSERDEFAULTS
+            NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
+            [nsDefaults setObject:self.userIDTextField.text forKey:@"currentUser"];
+            [nsDefaults synchronize];
         }
         else{
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Incorrect Password" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];

@@ -10,7 +10,7 @@
 
 @implementation AuditIDObject
 
--(id)initWithID:(int)ID name:(NSString *)name{
+-(id)initWithID:(NSString *)ID name:(NSString *)name{
     
     self = [super init];
     
