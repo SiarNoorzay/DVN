@@ -285,11 +285,9 @@ loadMetadataFailedWithError:(NSError *)error {
         //Just a DB test
         [self.dnvDBManager saveAudit:aud];
         
-        NSArray * auditIDS = [self.dnvDBManager retrieveAllWIPAudits];
+        NSArray * auditIDS = [self.dnvDBManager retrieveAllAuditIDsOfType:1];
         
-        AuditIDObject * aID = auditIDS[0];
-        
-        NSLog(@"Audit ID: %@ Audit Name: %@", aID.auditID, aID.auditName);
+        NSLog(@"Audit ID: %@", auditIDS[0]);
         //end of DB test
         
         
@@ -298,7 +296,7 @@ loadMetadataFailedWithError:(NSError *)error {
         Audit *second = [[Audit alloc] initWithAudit:theAudit];
         
         //just to test
-        Audit *aha = [aud mergeAudit:aud with:second];
+//         Audit *aha = [aud mergeAudit:aud with:second];
         
         //[self.elementPicker reloadAllComponents];
         

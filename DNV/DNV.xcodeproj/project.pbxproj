@@ -974,6 +974,7 @@
 				76AB3CBD187B212C0019603F /* SubElements.m in Sources */,
 				769D3CEA1885A763002DF3B8 /* ImportMergeViewController.m in Sources */,
 				768D56561890145500175EB4 /* ReportDocViewController.m in Sources */,
+				768D567C18916A6300175EB4 /* ConclusionViewController.m in Sources */,
 				76D734861890AA44000884D8 /* AuditIDObject.m in Sources */,
 				76D96A3E187B07EA00961260 /* User.m in Sources */,
 				762797191871D53A00F22E73 /* main.m in Sources */,
