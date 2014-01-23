@@ -36,13 +36,15 @@
                      "name": "Refridgeration",
                      "isRequired": true,
                      "pointsPossible": 20,
-                     "pointsAwarded": 16.5,
+                     "pointsAwarded": 11.5,
+                     "modefiedNAPoints": 5,
                      "SubElements": [
                                      {
                                      "isCompleted": true,
                                      "name": "freezers",
                                      "pointsPossible": 10,
-                                     "pointsAwarded": 7.5,
+                                     "pointsAwarded": 2.5,
+                                     "modefiedNAPoints": 5,
                                      "Questions": [
                                                    {
                                                    "isCompleted": true,
@@ -102,6 +104,7 @@
                                      "name": "freezers",
                                      "pointsPossible": 10,
                                      "pointsAwarded": 9,
+                                     "modefiedNAPoints": 0,
                                      "Questions": [
                                                    {
                                                    "isCompleted": true,
@@ -164,12 +167,14 @@
                      "isRequired": true,
                      "pointsPossible": 30,
                      "pointsAwarded": 25,
+                     "modefiedNAPoints": 0,
                      "SubElements": [
                                      {
                                      "isCompleted": true,
                                      "name": "Knives",
                                      "pointsPossible": 20,
                                      "pointsAwarded": 17,
+                                     "modefiedNAPoints": 0,
                                      "Questions": [
                                                    {
                                                    "isCompleted": false,
@@ -259,6 +264,7 @@
                                      "name": "Spoons",
                                      "pointsPossible": 10,
                                      "pointsAwarded": 8,
+                                     "modefiedNAPoints": 0,
                                      "Questions": [
                                                    {
                                                    "isCompleted": true,

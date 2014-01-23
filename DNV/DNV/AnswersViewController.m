@@ -90,11 +90,8 @@ BOOL isSublayeredQuestion = false;
         NSLog(@"Switchy changed to %d", isOn);
         answered = true;
         Answers *leftAns = self.ansArray[1];
-        //[[Answers alloc]initWithAnswer:[self.ansArray objectAtIndex:0]];
         Answers *rightAns = self.ansArray[0];
         
-        //[[Answers alloc]initWithAnswer:[self.ansArray objectAtIndex:1]];
-       
         
         if (isOn) {
             rightAns.isSelected = true;
@@ -245,8 +242,6 @@ BOOL isSublayeredQuestion = false;
             self.answersTableView.hidden = false;
             self.answersTableView.allowsMultipleSelection = false;
             self.tableCell.hidden = false;
-            self.layeredQuestionsView.hidden = false;
-            
             break;
         case 2: //percentage
             self.percentSlider.hidden = false;
@@ -267,7 +262,7 @@ BOOL isSublayeredQuestion = false;
             
             break;
         default:
-            NSLog(@"Should never get here");
+            NSLog(@"Should never get here!! Questions type incorrect");
             break;
     }//switch
     
