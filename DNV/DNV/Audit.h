@@ -19,7 +19,7 @@
 @property (nonatomic) NSString * name;
 @property (nonatomic) NSArray * Elements;
 @property (nonatomic) float physicalConditionScore;
-@property (nonatomic) NSString * lastModefied;
+@property (nonatomic) NSString * lastModified;
 @property (nonatomic) Report * report;
 @property (nonatomic) Client * client;
 

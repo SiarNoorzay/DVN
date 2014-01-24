@@ -20,7 +20,7 @@
         self.auditType = [[auditDictionary objectForKey:@"auditType"] integerValue];
         self.name = [auditDictionary objectForKey:@"name"];
         self.physicalConditionScore = [[auditDictionary objectForKey:@"physicalConditionScore"]floatValue];
-        self.lastModefied = [auditDictionary objectForKey:@"lastModefied"];
+        self.lastModified = [auditDictionary objectForKey:@"lastModified"];
         self.report = [[Report alloc ]initWithReport:[auditDictionary objectForKey:@"Report"]];
         self.client = [[Client alloc] initWithClient:[auditDictionary objectForKey:@"Client"]];
     
@@ -58,7 +58,7 @@
     
     //string
     mergedAudits.name = [dataMerger mergeString:primaryAudit.name with:secondaryAudit.name];
-    mergedAudits.lastModefied = [dataMerger mergeString:primaryAudit.lastModefied with:secondaryAudit.lastModefied];
+    mergedAudits.lastModified = [dataMerger mergeString:primaryAudit.lastModified with:secondaryAudit.lastModified];
     
     //report
     Report *aReport = [Report new];
