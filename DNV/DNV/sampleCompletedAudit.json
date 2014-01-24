@@ -1,15 +1,14 @@
 {
     "Audit": {
-        "auditType": "1",
+        "auditType": "2",
         "name": "Kitchen Audit",
         "physicalConditionScore": 5.5,
         "awardLevel": 5,
         "lastModefied": "20120513",
         "Report": { "companyName": "USI",
             "summary": "The company had very nice kitchens",
-            "preparedBy": "The guy that prepares stuff",
-            "verifiedBy": " The Verifier",
-            "approvedBy": "The guy that verifies things",
+            "preparedBy": "Patty the Preparer",
+            "approvedBy": "Approver McProverson",
             "projectNum": 134111231,
             "conclusion": "In conclusion USI's kitchens are pretty standard.",
             "methodologyDiagramLocation":"/USI/audit1/diagram.png"

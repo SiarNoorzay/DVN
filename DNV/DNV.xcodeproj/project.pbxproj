@@ -44,6 +44,9 @@
 		768D5676189165C600175EB4 /* ExecutiveSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D5675189165C600175EB4 /* ExecutiveSummaryViewController.m */; };
 		768D5679189167C900175EB4 /* TableofContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D5678189167C900175EB4 /* TableofContentsViewController.m */; };
 		768D567C18916A6300175EB4 /* ConclusionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D567B18916A6300175EB4 /* ConclusionViewController.m */; };
+		768D56801891ABD400175EB4 /* ReportPagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D567F1891ABD400175EB4 /* ReportPagesViewController.m */; };
+		768D56CD1892CE2600175EB4 /* KeySuggestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D56CC1892CE2600175EB4 /* KeySuggestionsViewController.m */; };
+		768D56D01892CFBD00175EB4 /* KeySuggesstionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D56CF1892CFBD00175EB4 /* KeySuggesstionCell.m */; };
 		769D3CE6188580C5002DF3B8 /* VerifyQuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 769D3CE5188580C5002DF3B8 /* VerifyQuestionsViewController.m */; };
 		769D3CEA1885A763002DF3B8 /* ImportMergeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 769D3CE91885A763002DF3B8 /* ImportMergeViewController.m */; };
 		769D3CEE1885F9FC002DF3B8 /* completed_checklist_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 769D3CEB1885F9FC002DF3B8 /* completed_checklist_icon.png */; };
@@ -206,6 +209,12 @@
 		768D5678189167C900175EB4 /* TableofContentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableofContentsViewController.m; sourceTree = "<group>"; };
 		768D567A18916A6300175EB4 /* ConclusionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConclusionViewController.h; sourceTree = "<group>"; };
 		768D567B18916A6300175EB4 /* ConclusionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConclusionViewController.m; sourceTree = "<group>"; };
+		768D567E1891ABD400175EB4 /* ReportPagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportPagesViewController.h; sourceTree = "<group>"; };
+		768D567F1891ABD400175EB4 /* ReportPagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportPagesViewController.m; sourceTree = "<group>"; };
+		768D56CB1892CE2600175EB4 /* KeySuggestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeySuggestionsViewController.h; sourceTree = "<group>"; };
+		768D56CC1892CE2600175EB4 /* KeySuggestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeySuggestionsViewController.m; sourceTree = "<group>"; };
+		768D56CE1892CFBD00175EB4 /* KeySuggesstionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeySuggesstionCell.h; sourceTree = "<group>"; };
+		768D56CF1892CFBD00175EB4 /* KeySuggesstionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeySuggesstionCell.m; sourceTree = "<group>"; };
 		769D3CE4188580C5002DF3B8 /* VerifyQuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyQuestionsViewController.h; sourceTree = "<group>"; };
 		769D3CE5188580C5002DF3B8 /* VerifyQuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyQuestionsViewController.m; sourceTree = "<group>"; };
 		769D3CE81885A763002DF3B8 /* ImportMergeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportMergeViewController.h; sourceTree = "<group>"; };
@@ -473,14 +482,9 @@
 		768D564B188F0FA300175EB4 /* Reporting */ = {
 			isa = PBXGroup;
 			children = (
-				768D564C188F0FD300175EB4 /* SummaryOfRatingsViewController.h */,
-				768D564D188F0FD300175EB4 /* SummaryOfRatingsViewController.m */,
-				768D564F188F0FF500175EB4 /* ElementRatingsCell.h */,
-				768D5650188F0FF500175EB4 /* ElementRatingsCell.m */,
-				768D56541890145500175EB4 /* ReportDocViewController.h */,
-				768D56551890145500175EB4 /* ReportDocViewController.m */,
-				768D566B1890678600175EB4 /* GraphView.h */,
-				768D566C1890678600175EB4 /* GraphView.m */,
+				768D567D1891A8F100175EB4 /* Report Summary and Graph */,
+				768D567E1891ABD400175EB4 /* ReportPagesViewController.h */,
+				768D567F1891ABD400175EB4 /* ReportPagesViewController.m */,
 				768D566E18915C5200175EB4 /* TitleViewController.h */,
 				768D566F18915C5200175EB4 /* TitleViewController.m */,
 				768D567118915FFD00175EB4 /* ReportDetailsViewController.h */,
@@ -491,6 +495,12 @@
 				768D5678189167C900175EB4 /* TableofContentsViewController.m */,
 				768D567A18916A6300175EB4 /* ConclusionViewController.h */,
 				768D567B18916A6300175EB4 /* ConclusionViewController.m */,
+				768D56CB1892CE2600175EB4 /* KeySuggestionsViewController.h */,
+				768D56CC1892CE2600175EB4 /* KeySuggestionsViewController.m */,
+				768D56CE1892CFBD00175EB4 /* KeySuggesstionCell.h */,
+				768D56CF1892CFBD00175EB4 /* KeySuggesstionCell.m */,
+				768D56541890145500175EB4 /* ReportDocViewController.h */,
+				768D56551890145500175EB4 /* ReportDocViewController.m */,
 			);
 			name = Reporting;
 			sourceTree = "<group>";
@@ -518,6 +528,19 @@
 				768D56641890634600175EB4 /* ECGraphPoint.m */,
 			);
 			path = ECGraph;
+			sourceTree = "<group>";
+		};
+		768D567D1891A8F100175EB4 /* Report Summary and Graph */ = {
+			isa = PBXGroup;
+			children = (
+				768D564C188F0FD300175EB4 /* SummaryOfRatingsViewController.h */,
+				768D564D188F0FD300175EB4 /* SummaryOfRatingsViewController.m */,
+				768D564F188F0FF500175EB4 /* ElementRatingsCell.h */,
+				768D5650188F0FF500175EB4 /* ElementRatingsCell.m */,
+				768D566B1890678600175EB4 /* GraphView.h */,
+				768D566C1890678600175EB4 /* GraphView.m */,
+			);
+			name = "Report Summary and Graph";
 			sourceTree = "<group>";
 		};
 		769D3CE31885808D002DF3B8 /* VerifyQuestionsViewController */ = {
@@ -944,6 +967,7 @@
 				4AC04094188F71C4006A2F3C /* MergeClass.m in Sources */,
 				768D566D1890678600175EB4 /* GraphView.m in Sources */,
 				76A7C9941889DC02004E4F39 /* DNVDatabaseManagerClass.m in Sources */,
+				768D56CD1892CE2600175EB4 /* KeySuggestionsViewController.m in Sources */,
 				76E81F18187DB92600441F62 /* Folder.m in Sources */,
 				76AB3CB4187B1FDA0019603F /* Audit.m in Sources */,
 				768D5651188F0FF500175EB4 /* ElementRatingsCell.m in Sources */,
@@ -953,6 +977,7 @@
 				768D5676189165C600175EB4 /* ExecutiveSummaryViewController.m in Sources */,
 				769D3CE6188580C5002DF3B8 /* VerifyQuestionsViewController.m in Sources */,
 				768D56671890634600175EB4 /* ECGraphItem.m in Sources */,
+				768D56D01892CFBD00175EB4 /* KeySuggesstionCell.m in Sources */,
 				768D56691890634600175EB4 /* ECGraphPoint.m in Sources */,
 				76A5682B18873419000E32D3 /* ListOfCompletedViewController.m in Sources */,
 				76A5683C18875A08000E32D3 /* CompletedChoicePopOver.m in Sources */,
@@ -960,6 +985,7 @@
 				76A8AFFA187F0B00007531A9 /* ListOfWIPViewController.m in Sources */,
 				7627971D1871D53A00F22E73 /* AppDelegate.m in Sources */,
 				76E81F3C18848C7F00441F62 /* helpTextViewController.m in Sources */,
+				768D56801891ABD400175EB4 /* ReportPagesViewController.m in Sources */,
 				76E81F3F18849DB500441F62 /* NotesViewController.m in Sources */,
 				76D96A45187B585900961260 /* ClientViewController.m in Sources */,
 				768D567018915C5200175EB4 /* TitleViewController.m in Sources */,

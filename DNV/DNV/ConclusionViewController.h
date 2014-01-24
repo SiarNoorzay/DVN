@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Audit.h"
 
 @interface ConclusionViewController : UIViewController
+@property(strong,nonatomic) Audit *audit;
+
+
+@property (strong, nonatomic) IBOutlet UITextField *percent;
+
+@property (strong, nonatomic) IBOutlet UITextView *conclusionTextView;
+
 
 @end

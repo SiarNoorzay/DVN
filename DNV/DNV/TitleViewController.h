@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Audit.h"
 
-@interface TitleViewController : UIViewController
+@interface TitleViewController : UIViewController<UIPageViewControllerDataSource>
+
+@property (strong, atomic) Audit *audit;
+
+@property (strong, nonatomic) IBOutlet UITextField *clientName;
+@property (strong, nonatomic) IBOutlet UITextField *date;
 
 @end

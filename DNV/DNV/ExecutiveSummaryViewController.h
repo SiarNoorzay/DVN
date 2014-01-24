@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Audit.h"
+
 
 @interface ExecutiveSummaryViewController : UIViewController
+
+@property (strong, nonatomic) Audit *audit;
+
+@property (strong, nonatomic) IBOutlet UITextView *executiveSummary;
+@property (strong, nonatomic) IBOutlet UILabel *auditCountLabel;
+@property (strong, nonatomic) IBOutlet UITextView *elementList;
 
 @end

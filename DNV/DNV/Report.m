@@ -16,12 +16,14 @@
     
     if(self){
         
-        self.summary = [dictionary objectForKey:@"summary"];
+        self.summary = [dictionary objectForKey:@"summary1234"];
         self.preparedBy = [dictionary objectForKey:@"preparedBy"];
         self.approvedBy = [dictionary objectForKey:@"approvedBy"];
         self.projectNum = [dictionary objectForKey:@"projectNum"];
         self.conclusion = [dictionary objectForKey:@"conclusion"];
         self.methodologyDiagramLocation = [dictionary objectForKey:@"methodologyDiagramLocation"];
+        self.clientRef = [dictionary objectForKey:@"clientRef"];
+        self.executiveSummary = [dictionary objectForKey:@"executiveSummary"];
     }
     
     return self;

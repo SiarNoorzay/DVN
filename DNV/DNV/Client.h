@@ -18,7 +18,7 @@
 @property (nonatomic) NSString * address;
 @property (nonatomic) NSString * cityStateProvince;
 @property (nonatomic) NSString * country;
-@property (nonatomic) NSInteger postalCode;
+@property (nonatomic) NSString * postalCode;
 @property (nonatomic) NSString * auditDate;
 @property (nonatomic) NSString * auditor;
 @property (nonatomic) NSInteger numEmployees;

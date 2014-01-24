@@ -1,18 +1,18 @@
 //
-//  ConclusionViewController.m
+//  KeySuggestionsViewController.m
 //  DNV
 //
-//  Created by USI on 1/23/14.
+//  Created by USI on 1/24/14.
 //  Copyright (c) 2014 USI. All rights reserved.
 //
 
-#import "ConclusionViewController.h"
+#import "KeySuggestionsViewController.h"
 
-@interface ConclusionViewController ()
+@interface KeySuggestionsViewController ()
 
 @end
 
-@implementation ConclusionViewController
+@implementation KeySuggestionsViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,24 +41,6 @@
     NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
     
     self.audit = [[Audit alloc]initWithAudit:theAudit];
-    
-    float auditPointsPossible = 0;
-    float auditNAPoints = 0;
-    float auditAwarded = 0;
-    
-    for (int i = 0; i< [self.audit.Elements count]; i++) {
-        Elements *ele = [self.audit.Elements objectAtIndex:i];
-        
-        auditPointsPossible += ele.pointsPossible;
-        auditNAPoints += ele.modefiedNAPoints;
-        auditAwarded += ele.pointsAwarded;
-    }
-    self.percent.text = [NSString stringWithFormat:@"%.2f %%",((auditAwarded / (auditPointsPossible - auditNAPoints)) *100)];
-    
-    if (self.audit.report.conclusion != nil) {
-        self.conclusionTextView.text = self.audit.report.conclusion;
-    }
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,11 +48,15 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)viewWillDisappear:(BOOL)animated
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+
+    return 0;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.audit.report.conclusion = self.conclusionTextView.text;
+    return nil;
     
-    //TODO:save audit back to DB
 }
 
+    
 @end
