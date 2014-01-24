@@ -70,6 +70,7 @@ bool start = true;
 - (IBAction)submitButtonPushed:(id)sender {
     
     //TODO: add heard words to cursor position instead of at end
+    
     /* Something like:
      NSString *contentsToAdd = @"some string";
      NSRange cursorPosition = [tf selectedRange];

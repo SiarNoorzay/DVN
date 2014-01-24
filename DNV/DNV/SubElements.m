@@ -32,6 +32,7 @@
         self.name = [subElementDictionary objectForKey:@"name"];
         self.pointsPossible = [[subElementDictionary objectForKey:@"pointsPossible"]floatValue];
         self.pointsAwarded = [[subElementDictionary objectForKey:@"pointsAwarded"]floatValue];
+        self.modefiedNAPoints = [[subElementDictionary objectForKey:@"modefiedNAPoints"]floatValue];
         
         NSMutableArray *tempArray = [subElementDictionary objectForKey:@"Questions"];
         NSMutableArray *objectArray = [NSMutableArray arrayWithCapacity:[tempArray count]];
@@ -67,7 +68,7 @@
     mergedSubElements.isCompleted = [dataMerger mergeBool:primarySubElements.isCompleted with:secondarySubElements.isCompleted];
     
     //float
-    mergedSubElements.modifierForPointsPossible = [dataMerger mergeFloat:primarySubElements.modifierForPointsPossible with:secondarySubElements.modifierForPointsPossible];
+    mergedSubElements.modefiedNAPoints = [dataMerger mergeFloat:primarySubElements.modefiedNAPoints with:secondarySubElements.modefiedNAPoints];
     mergedSubElements.pointsPossible = [dataMerger mergeFloat:primarySubElements.pointsPossible with:secondarySubElements.pointsPossible];
     mergedSubElements.pointsAwarded = [dataMerger mergeFloat:primarySubElements.pointsAwarded with:secondarySubElements.pointsAwarded];
     

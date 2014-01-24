@@ -24,7 +24,7 @@
         self.address = [dictionary objectForKey:@"address"];
         self.cityStateProvince = [dictionary objectForKey:@"cityStateProvince"];
         self.country = [dictionary objectForKey:@"country"];
-        self.postalCode = [[dictionary objectForKey:@"postalCode"] integerValue];
+        self.postalCode = [dictionary objectForKey:@"postalCode"];
         self.auditDate = [dictionary objectForKey:@"auditDate"];
         self.auditor = [dictionary objectForKey:@"auditor"];
         self.numEmployees = [[dictionary objectForKey:@"numEmployees"] integerValue];
@@ -49,7 +49,7 @@
     
     //int
     mergedClient.numEmployees = (NSInteger)[dataMerger mergeInt:(int)primaryClient.numEmployees with:(int)secondaryClient.numEmployees];
-    mergedClient.postalCode = (NSInteger)[dataMerger mergeInt:(int)primaryClient.postalCode with:(int)secondaryClient.postalCode];
+    
     
     //string
     mergedClient.companyName = [dataMerger mergeString:primaryClient.companyName with:secondaryClient.companyName];
@@ -61,6 +61,7 @@
     mergedClient.country = [dataMerger mergeString:primaryClient.country with:secondaryClient.country];
     mergedClient.auditDate = [dataMerger mergeString:primaryClient.auditDate with:secondaryClient.auditDate];
     mergedClient.auditor = [dataMerger mergeString:primaryClient.auditor with:secondaryClient.auditor];
+    mergedClient.postalCode = [dataMerger mergeString:primaryClient.postalCode with:secondaryClient.postalCode];
     
     return  mergedClient;
 }

@@ -90,22 +90,19 @@ BOOL isSublayeredQuestion = false;
         NSLog(@"Switchy changed to %d", isOn);
         answered = true;
         Answers *leftAns = self.ansArray[1];
-        //[[Answers alloc]initWithAnswer:[self.ansArray objectAtIndex:0]];
         Answers *rightAns = self.ansArray[0];
         
-        //[[Answers alloc]initWithAnswer:[self.ansArray objectAtIndex:1]];
-       
         
         if (isOn) {
             rightAns.isSelected = true;
             leftAns.isSelected = false;
-            pointTotal = rightAns.pointsPossibleOrMultiplier;
+            pointTotal = rightAns.pointsPossible;
             self.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
         }
         else{
             leftAns.isSelected = true;
             rightAns.isSelected = true;
-            pointTotal = leftAns.pointsPossibleOrMultiplier;
+            pointTotal = leftAns.pointsPossible;
             self.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
 
         }
@@ -245,8 +242,6 @@ BOOL isSublayeredQuestion = false;
             self.answersTableView.hidden = false;
             self.answersTableView.allowsMultipleSelection = false;
             self.tableCell.hidden = false;
-            self.layeredQuestionsView.hidden = false;
-            
             break;
         case 2: //percentage
             self.percentSlider.hidden = false;
@@ -267,7 +262,7 @@ BOOL isSublayeredQuestion = false;
             
             break;
         default:
-            NSLog(@"Should never get here");
+            NSLog(@"Should never get here!! Questions type incorrect");
             break;
     }//switch
     
@@ -384,7 +379,7 @@ BOOL isSublayeredQuestion = false;
             pointTotal = 0;
         }
         
-        pointTotal += ans.pointsPossibleOrMultiplier;
+        pointTotal += ans.pointsPossible;
         
         self.pointsLabel.text =[NSString stringWithFormat:@"%.2f",pointTotal];
         
@@ -409,7 +404,7 @@ BOOL isSublayeredQuestion = false;
     if (tableView == self.answersTableView) {
         Answers *ans = [self.ansArray objectAtIndex:indexPath.row];
         
-        pointTotal -= ans.pointsPossibleOrMultiplier;
+        pointTotal -= ans.pointsPossible;
         
         self.pointsLabel.text =[NSString stringWithFormat:@"%.2f",pointTotal];
         [ans setIsSelected:false];

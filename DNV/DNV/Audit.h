@@ -18,8 +18,8 @@
 @property (nonatomic) NSInteger auditType;
 @property (nonatomic) NSString * name;
 @property (nonatomic) NSArray * Elements;
-@property (nonatomic) float physicalConditionScore;
-@property (nonatomic) NSString * lastModified;
+//@property (nonatomic) float physicalConditionScore;
+@property (nonatomic) NSString * lastModefied;
 @property (nonatomic) Report * report;
 @property (nonatomic) Client * client;
 

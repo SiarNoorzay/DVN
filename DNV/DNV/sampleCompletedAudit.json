@@ -1,15 +1,14 @@
 {
     "Audit": {
-        "auditType": "1",
+        "auditType": "2",
         "name": "Kitchen Audit",
         "physicalConditionScore": 5.5,
         "awardLevel": 5,
         "lastModefied": "20120513",
         "Report": { "companyName": "USI",
             "summary": "The company had very nice kitchens",
-            "preparedBy": "The guy that prepares stuff",
-            "verifiedBy": " The Verifier",
-            "approvedBy": "The guy that verifies things",
+            "preparedBy": "Patty the Preparer",
+            "approvedBy": "Approver McProverson",
             "projectNum": 134111231,
             "conclusion": "In conclusion USI's kitchens are pretty standard.",
             "methodologyDiagramLocation":"/USI/audit1/diagram.png"
@@ -36,13 +35,15 @@
                      "name": "Refridgeration",
                      "isRequired": true,
                      "pointsPossible": 20,
-                     "pointsAwarded": 16.5,
+                     "pointsAwarded": 11.5,
+                     "modefiedNAPoints": 5,
                      "SubElements": [
                                      {
                                      "isCompleted": true,
                                      "name": "freezers",
                                      "pointsPossible": 10,
-                                     "pointsAwarded": 7.5,
+                                     "pointsAwarded": 2.5,
+                                     "modefiedNAPoints": 5,
                                      "Questions": [
                                                    {
                                                    "isCompleted": true,
@@ -102,6 +103,7 @@
                                      "name": "freezers",
                                      "pointsPossible": 10,
                                      "pointsAwarded": 9,
+                                     "modefiedNAPoints": 0,
                                      "Questions": [
                                                    {
                                                    "isCompleted": true,
@@ -164,12 +166,14 @@
                      "isRequired": true,
                      "pointsPossible": 30,
                      "pointsAwarded": 25,
+                     "modefiedNAPoints": 0,
                      "SubElements": [
                                      {
                                      "isCompleted": true,
                                      "name": "Knives",
                                      "pointsPossible": 20,
                                      "pointsAwarded": 17,
+                                     "modefiedNAPoints": 0,
                                      "Questions": [
                                                    {
                                                    "isCompleted": false,
@@ -259,6 +263,7 @@
                                      "name": "Spoons",
                                      "pointsPossible": 10,
                                      "pointsAwarded": 8,
+                                     "modefiedNAPoints": 0,
                                      "Questions": [
                                                    {
                                                    "isCompleted": true,

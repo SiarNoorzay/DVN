@@ -10,7 +10,8 @@
 
 @implementation User
 
--(id)initWithUserID:(NSString *)userID andPassword:(NSString *)password andInfo:(NSString *)otherInfo{
+-(id)initWithUserID:(NSString *)userID andPassword:(NSString *)password andInfo:(NSString *)otherInfo andRank:(int)rank andName: (NSString *)fullName
+{
 
     self = [super init];
     
@@ -19,6 +20,9 @@
         self.userID = userID;
         self.password = password;
         self.otherUserInfo = otherInfo;
+        self.rank = rank;
+        self.fullname = fullName;
+        
     }
     
     return self;

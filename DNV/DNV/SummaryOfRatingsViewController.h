@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "Audit.h"
 #import "Elements.h"
+#import "GraphView.h"
 
-@interface SummaryOfRatingsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+
+@interface SummaryOfRatingsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate,UIScrollViewDelegate>
 
 @property (strong, atomic) Audit *audit;
 
@@ -24,5 +26,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *evaluatedPossibleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *evaluatedAwardedLabel;
 @property (strong, nonatomic) IBOutlet UILabel *evaluatedPercentageLabel;
+@property (nonatomic) IBOutlet GraphView *graphView;
+
 
 @end

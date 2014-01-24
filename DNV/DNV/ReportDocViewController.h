@@ -13,6 +13,5 @@
 
 @property (strong, nonatomic) Audit *audit;
 
-@property (strong, nonatomic) IBOutlet UIScrollView *reportScrollView;
 
 @end

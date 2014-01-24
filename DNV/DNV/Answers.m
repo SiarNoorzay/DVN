@@ -21,13 +21,13 @@
     
     /*
      @property (nonatomic) NSString * answerText;
-     @property (nonatomic) float pointsPossibleOrMultiplier;
+     @property (nonatomic) float pointsPossible;
      @property (nonatomic) BOOL isSelected;
      @property (nonatomic) NSArray * Questions;
      */
     
         self.answerText = [answerDictionary objectForKey:@"answerText"];
-        self.pointsPossibleOrMultiplier = [[answerDictionary objectForKey:@"pointsPossibleOrMultiplier"]floatValue];
+        self.pointsPossible = [[answerDictionary objectForKey:@"pointsPossible"]floatValue];
         self.isSelected = [[answerDictionary objectForKey:@"isSelected"] boolValue];
         
         NSMutableArray *tempArray = [answerDictionary objectForKey:@"Questions"];
@@ -64,7 +64,7 @@
     mergedAnswer.isSelected = [dataMerger mergeBool:primaryAnswer.isSelected with:secondaryAnswer.isSelected];
     
     //float
-    mergedAnswer.pointsPossibleOrMultiplier = [dataMerger mergeFloat:primaryAnswer.pointsPossibleOrMultiplier with:secondaryAnswer.pointsPossibleOrMultiplier];
+    mergedAnswer.pointsPossible = [dataMerger mergeFloat:primaryAnswer.pointsPossible with:secondaryAnswer.pointsPossible];
     
     //string
     mergedAnswer.answerText = [dataMerger mergeString:primaryAnswer.answerText with:secondaryAnswer.answerText];
