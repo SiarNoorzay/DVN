@@ -285,9 +285,13 @@ loadMetadataFailedWithError:(NSError *)error {
         //Just a DB test
         [self.dnvDBManager saveAudit:aud];
         
-        NSArray * auditIDS = [self.dnvDBManager retrieveAllAuditIDsOfType:1];
+//        NSArray * auditIDS = [self.dnvDBManager retrieveDistinctAuditNamesForClientOfType:1];
+//        
+//        NSLog(@"Audit ID: %@", auditIDS[0]);
         
-        NSLog(@"Audit ID: %@", auditIDS[0]);
+        Audit * dbTestAudit = [self.dnvDBManager retrieveAudit:@"USI.KitchenAudit.cliff"];
+        
+        NSLog(@"Audit Name: %@", dbTestAudit.name);
         //end of DB test
         
         

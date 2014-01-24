@@ -41,8 +41,8 @@
 //Audit methods
 -(void)createAuditTables;
 -(Audit *)retrieveAudit:(NSString *) auditID;
--(NSArray *)retrieveDistinctAuditNamesOfType:(int) auditType;
--(NSArray *)retrieveAllAuditIDsOfType:(int) auditType;
+-(NSArray *)retrieveDistinctAuditNamesForClientOfType:(int) auditType;
+-(NSArray *)retrieveAllAuditIDsOfType:(int) auditType forAuditName:(NSString *) auditName;
 -(void)saveAudit:(Audit *) audit;
 -(void)saveClient:(Client *) client;
 -(void)saveReport:(Report *) report;
