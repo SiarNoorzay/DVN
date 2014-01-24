@@ -24,6 +24,8 @@
         self.methodologyDiagramLocation = [dictionary objectForKey:@"methodologyDiagramLocation"];
         self.clientRef = [dictionary objectForKey:@"clientRef"];
         self.executiveSummary = [dictionary objectForKey:@"executiveSummary"];
+        self.scoringAssumptions = [dictionary objectForKey:@"scoringAssumptions"];
+
     }
     
     return self;
