@@ -56,7 +56,7 @@
 -(void)updateSubElment:(NSInteger *) subElementID isCompleted:(BOOL) isCompleted ofAudit:(NSString *) auditID;
 -(void)updateQuestion:(NSInteger *) questionID isCompleted:(BOOL) isCompleted ofAudit:(NSString *) auditID;
 -(void)updateAnswer:(NSInteger *) answerID isCompleted:(BOOL) isSelected ofAudit:(NSString *) auditID;
--(void)deleteAudit:(NSInteger *) auditID;
+-(void)deleteAudit:(NSString *) auditID;
 
 
 

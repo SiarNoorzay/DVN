@@ -292,6 +292,8 @@ loadMetadataFailedWithError:(NSError *)error {
         Audit * dbTestAudit = [self.dnvDBManager retrieveAudit:@"USI.KitchenAudit.cliff"];
         
         NSLog(@"Audit Name: %@", dbTestAudit.name);
+        
+        [self.dnvDBManager deleteAudit:@"USI.KitchenAudit.cliff"];
         //end of DB test
         
         

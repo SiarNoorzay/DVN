@@ -736,9 +736,180 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
 }
 
 
--(void)deleteAudit:(NSInteger *)auditID{
-  
+-(void)deleteAudit:(NSString *)auditID{
     
+    //Opening the SQLite DB
+    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
+        
+        //Object to save errors
+        sqlite3_stmt * statement;
+        
+        NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM AUDIT WHERE ID = \"%@\"", auditID];
+        
+        //Prepare the Query
+        sqlite3_prepare_v2(dnvAuditDB, [deleteSQL UTF8String], -1, &statement, NULL);
+        
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            NSLog(@"Row deleted from Audit table.");
+            [self deleteClient:auditID];
+            [self deleteReport:auditID];
+            [self deleleElements:auditID];
+        }
+        else {
+            
+            NSLog(@"Failed to delete row from Audit table.");
+        }
+        
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
+    }
+}
+
+-(void)deleteClient:(NSString *)auditID{
+    
+    NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM CLIENT WHERE AUDITID = \"%@\"", auditID];
+    
+    sqlite3_stmt * statement;
+    
+    //Prepare the Query
+    sqlite3_prepare_v2(dnvAuditDB, [deleteSQL UTF8String], -1, &statement, NULL);
+    
+    if(sqlite3_step(statement)==SQLITE_DONE)
+    {
+        NSLog(@"Row deleted from Client table.");
+    }
+    else {
+        NSLog(@"Failed to delete row from Client table.");
+    }
+    
+    sqlite3_finalize(statement);
+    
+}
+
+-(void)deleteReport:(NSString *)auditID{
+    
+    NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM REPORT WHERE AUDITID = \"%@\"", auditID];
+    
+    sqlite3_stmt * statement;
+    
+    //Prepare the Query
+    sqlite3_prepare_v2(dnvAuditDB, [deleteSQL UTF8String], -1, &statement, NULL);
+    
+    if(sqlite3_step(statement)==SQLITE_DONE)
+    {
+        NSLog(@"Row deleted from Report table.");
+    }
+    else {
+        NSLog(@"Failed to delete row from Report table.");
+    }
+    
+    sqlite3_finalize(statement);
+}
+
+-(void)deleleElements:(NSString *)auditID{
+    
+    NSArray * elementIDS = [self getElementIDSFrom:@"ELEMENT" where:@"AUDITID" equals:auditID];
+        
+    NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM ELEMENT WHERE AUDITID = \"%@\"", auditID];
+    
+    sqlite3_stmt * statement;
+
+    //Prepare the Query
+    sqlite3_prepare_v2(dnvAuditDB, [deleteSQL UTF8String], -1, &statement, NULL);
+    
+    if(sqlite3_step(statement)==SQLITE_DONE)
+    {
+        NSLog(@"Row deleted from Element table.");
+        
+        for (NSNumber * ID in elementIDS)
+            [self deleteSubElements:[ID integerValue]];
+        
+    }
+    else {
+        NSLog(@"Failed to delete row from Element table.");
+    }
+    
+    sqlite3_finalize(statement);
+    
+}
+
+-(void)deleteSubElements:(int)elementID{
+    
+    NSArray * subElementIDS = [self getIDSFrom:@"SUBELEMENT" where:@"ELEMENTID" equals:elementID];
+    
+    NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM SUBELEMENT WHERE ELEMENTID = %d", elementID];
+    
+    sqlite3_stmt * statement;
+    
+    //Prepare the Query
+    sqlite3_prepare_v2(dnvAuditDB, [deleteSQL UTF8String], -1, &statement, NULL);
+    
+    if(sqlite3_step(statement)==SQLITE_DONE)
+    {
+        NSLog(@"Row deleted from Sub Element table.");
+        
+        for (NSNumber * ID in subElementIDS)
+            [self deleteQuestions:[ID integerValue]];
+        
+    }
+    else {
+        NSLog(@"Failed to delete row from Sub Element table.");
+    }
+    
+    sqlite3_finalize(statement);
+    
+}
+
+-(void)deleteQuestions:(int)subElementID{
+    
+    NSArray * questionIDS = [self getIDSFrom:@"QUESTION" where:@"SUBELEMENTID" equals:subElementID];
+    
+    NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM QUESTION WHERE SUBELEMENTID = %d", subElementID];
+    
+    sqlite3_stmt * statement;
+    
+    //Prepare the Query
+    sqlite3_prepare_v2(dnvAuditDB, [deleteSQL UTF8String], -1, &statement, NULL);
+    
+    if(sqlite3_step(statement)==SQLITE_DONE)
+    {
+        NSLog(@"Row deleted from Question table.");
+        
+        for (NSNumber * ID in questionIDS)
+            [self deleteAnswers:[ID integerValue]];
+        
+    }
+    else {
+        NSLog(@"Failed to delete row from Question table.");
+    }
+    
+    sqlite3_finalize(statement);
+    
+}
+
+-(void)deleteAnswers:(int)questionID{
+    
+    NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM ANSWER WHERE QUESTIONID = %d", questionID];
+    
+    sqlite3_stmt * statement;
+    
+    //Prepare the Query
+    sqlite3_prepare_v2(dnvAuditDB, [deleteSQL UTF8String], -1, &statement, NULL);
+    
+    if(sqlite3_step(statement)==SQLITE_DONE)
+    {
+        NSLog(@"Row deleted from Answer table.");
+        
+    }
+    else {
+        NSLog(@"Failed to delete row from Answer table.");
+    }
+    
+    sqlite3_finalize(statement);
     
 }
 
@@ -928,7 +1099,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         //If this work, there must be a row if the data was there
         while (sqlite3_step(statement) == SQLITE_ROW){
             
-            //Gets the first name data from DB and adding it to the temp Person Object
+            //Gets the id data from DB
             NSString * identify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
             
             ID = [identify integerValue];
@@ -939,6 +1110,61 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     
     return ID;
 }
+
+-(NSArray *)getElementIDSFrom:(NSString *) table where:(NSString *) fKeyName equals:(NSString *) fKeyValue{
+    
+    NSMutableArray * tableIDS = [NSMutableArray new];
+    
+    sqlite3_stmt * statement;
+    
+    NSString * getIdsArraySQL = [NSString stringWithFormat:@"SELECT ID FROM \"%@\" WHERE \"%@\" = \"%@\"", table, fKeyName, fKeyValue];
+    
+    //Prepare the Query
+    if(sqlite3_prepare_v2(dnvAuditDB, [getIdsArraySQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
+        
+        //If this work, there must be a row if the data was there
+        while (sqlite3_step(statement) == SQLITE_ROW){
+            
+            //Gets the id data from DB
+            NSString * identify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+            NSNumber * ID = [NSNumber numberWithInt:[identify integerValue]];
+            
+            [tableIDS addObject:ID];
+        }
+    }
+    
+    sqlite3_finalize(statement);
+    
+    return tableIDS;
+}
+
+-(NSArray *)getIDSFrom:(NSString *) table where:(NSString *) fKeyName equals:(int) fKeyValue{
+    
+    NSMutableArray * tableIDS = [NSMutableArray new];
+    
+    sqlite3_stmt * statement;
+    
+    NSString * getIdsArraySQL = [NSString stringWithFormat:@"SELECT ID FROM \"%@\" WHERE \"%@\" = %d", table, fKeyName, fKeyValue];
+    
+    //Prepare the Query
+    if(sqlite3_prepare_v2(dnvAuditDB, [getIdsArraySQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
+        
+        //If this work, there must be a row if the data was there
+        while (sqlite3_step(statement) == SQLITE_ROW){
+            
+            //Gets the id data from DB
+            NSString * identify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+            NSNumber * ID = [NSNumber numberWithInt:[identify integerValue]];
+            
+            [tableIDS addObject:ID];
+        }
+    }
+    
+    sqlite3_finalize(statement);
+    
+    return tableIDS;
+}
+
 
 -(void)insertRowInTable:(NSString *)insertSQL forTable:(NSString *) table{
     
