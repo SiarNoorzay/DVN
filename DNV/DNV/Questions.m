@@ -33,7 +33,7 @@
         self.imageLocationArray = [questionDictionary objectForKey:@"imageLocationArray"];
         self.questionType = [[questionDictionary objectForKey:@"questionType"] intValue];
         self.isThumbsUp = [[questionDictionary objectForKey:@"isThumbsUp"] boolValue];
-        self.isThumbsDown = [[questionDictionary objectForKey:@"isThumbsUp"] boolValue];
+        self.isThumbsDown = [[questionDictionary objectForKey:@"isThumbsDown"] boolValue];
         self.pointsNeededForLayered = [[questionDictionary objectForKey:@"pointsNeededForLayered"] floatValue];
         //TODO: add isVerfiedDone
         

@@ -15,4 +15,7 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *KeySugsTableView;
 
+@property (strong,nonatomic) NSMutableArray *thumbsDowndQuestions;
+@property (strong,nonatomic) NSMutableArray *positions;
+
 @end

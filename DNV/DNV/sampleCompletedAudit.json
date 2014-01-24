@@ -69,9 +69,9 @@
                                                                "isSelected": false
                                                                }
                                                                ],
-                                                   "questionType": "0",
+                                                   "questionType": 0,
                                                    "isThumbsUp": 0,
-                                                   "isThumbsDown": 0
+                                                   "isThumbsDown": true
                                                    },
                                                    {
                                                    "isCompleted": true,
@@ -94,7 +94,7 @@
                                                                ],
                                                    "questionType": "2",
                                                    "isThumbsUp": false,
-                                                   "isThumbsDown": false
+                                                   "isThumbsDown": true
                                                    }
                                                    ]
                                      },
@@ -272,7 +272,7 @@
                                                    "questionText": "Is there enough spoons?",
                                                    "helpText": "Use your professional judgement",
                                                    "isApplicable": true,
-                                                   "notes": "",
+                                                   "notes": "They only have 1 spoon for everyone",
                                                    "needsVerifying": false,
                                                    "verifyDoneBy": "SpoonMan",
                                                    "attachmentsLocationArray": [],

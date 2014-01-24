@@ -20,7 +20,7 @@
         self.auditType = [[auditDictionary objectForKey:@"auditType"] integerValue];
         self.name = [auditDictionary objectForKey:@"name"];
        // self.physicalConditionScore = [[auditDictionary objectForKey:@"physicalConditionScore"]floatValue];
-        self.lastModefied = [auditDictionary objectForKey:@"lastModefied"];
+        self.lastModefied = [auditDictionary objectForKey:@"lastModified"];
         self.report = [[Report alloc ]initWithReport:[auditDictionary objectForKey:@"Report"]];
         self.client = [[Client alloc] initWithClient:[auditDictionary objectForKey:@"Client"]];
     
