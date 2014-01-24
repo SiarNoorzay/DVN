@@ -74,9 +74,9 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             
             const char * sql_stmt6 = "CREATE TABLE IF NOT EXISTS ATTACHMENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, QUESTIONID INTEGER, ATTACHMENTNAME TEXT, ISIMAGE INTEGER)";
             
-            const char * sql_stmt7 = "CREATE TABLE IF NOT EXISTS CLIENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, AUDITID TEXT, USERID TEXT, CLIENTNAME TEXT, DIVISION TEXT, SIC TEXT, NUMBEREMPLOYEES INTEGER, AUDITSITE TEXT, AUDITDATE TEXT, BASELINEAUDIT INTEGER, STREETADDRESS TEXT, CITYSTATEPROVINCE TEXT, COUNTRY TEXT)";
+            const char * sql_stmt7 = "CREATE TABLE IF NOT EXISTS CLIENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, AUDITID TEXT, CLIENTNAME TEXT, DIVISION TEXT, SIC TEXT, NUMBEREMPLOYEES INTEGER, AUDITOR TEXT, AUDITSITE TEXT, AUDITDATE TEXT, BASELINEAUDIT INTEGER, STREETADDRESS TEXT, CITYSTATEPROVINCE TEXT, POSTALCODE TEXT, COUNTRY TEXT)";
             
-            const char * sql_stmt8 = "CREATE TABLE IF NOT EXISTS REPORT (ID INTEGER PRIMARY KEY AUTOINCREMENT, AUDITID TEXT, CLIENTID INTEGER, USERID TEXT, SUMMARY TEXT, APPROVEDBY TEXT, PROJECTNUMBER TEXT, CONCLUSION TEXT, DIAGRAMFILENAME TEXT)";
+            const char * sql_stmt8 = "CREATE TABLE IF NOT EXISTS REPORT (ID INTEGER PRIMARY KEY AUTOINCREMENT, AUDITID TEXT, CLIENTREF TEXT, SUMMARY TEXT, EXECSUMMARY TEXT, PREPAREDBY TEXT, APPROVEDBY TEXT, PROJECTNUMBER TEXT, SCORINGASSUMPTIONS TEXT, CONCLUSION TEXT, DIAGRAMFILENAME TEXT)";
             
             //Verifying the execution of the create table SQL script
             if(!(sqlite3_exec(dnvAuditDB, sql_stmt, NULL, NULL, &errMsg)==SQLITE_OK))
@@ -156,21 +156,18 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         if(sqlite3_step(statement)==SQLITE_DONE){
             NSLog(@"audit added to DB.");
         
-            NSString * userID = [defaults objectForKey:@"currentUser"];
             Client * client = audit.client;
         
             //Query to insert into the client table
-            NSString * insertClientSQL = [NSString stringWithFormat:@"INSERT INTO CLIENT (AUDITID, USERID, CLIENTNAME, DIVISION, SIC, NUMBEREMPLOYEES, AUDITSITE, AUDITDATE, BASELINEAUDIT, STREETADDRESS, CITYSTATEPROVINCE, COUNTRY) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\")", auditID, userID, client.companyName, client.division, client.SICNumber, client.numEmployees, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.country];
+            NSString * insertClientSQL = [NSString stringWithFormat:@"INSERT INTO CLIENT (AUDITID, CLIENTNAME, DIVISION, SIC, NUMBEREMPLOYEES, AUDITOR, AUDITSITE, AUDITDATE, BASELINEAUDIT, STREETADDRESS, CITYSTATEPROVINCE, POSTALCODE, COUNTRY) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", \"%@\")", auditID, client.companyName, client.division, client.SICNumber, client.numEmployees, client.auditor, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.postalCode, client.country];
         
             //Call to insert a row into a table
             [self insertRowInTable:insertClientSQL forTable:@"client"];
         
-            //Call to get an ID from a particular table
-            int clientID = [self getID:@"CLIENT"];
             Report * report = audit.report;
         
             //Query to insert into the report table
-            NSString * insertReportSQL = [NSString stringWithFormat:@"INSERT INTO REPORT (AUDITID, CLIENTID, USERID, SUMMARY, APPROVEDBY, PROJECTNUMBER, CONCLUSION, DIAGRAMFILENAME) VALUES (\"%@\", %d, \"%@\", \"%@\", \"%@\",\"%@\", \"%@\", \"%@\")", auditID, clientID, userID, report.summary, report.approvedBy, report.projectNum, report.conclusion, report.methodologyDiagramLocation];
+            NSString * insertReportSQL = [NSString stringWithFormat:@"INSERT INTO REPORT (AUDITID, SUMMARY, EXECSUMMARY, PREPAREDBY, APPROVEDBY, PROJECTNUMBER, SCORINGASSUMPTIONS, CONCLUSION, DIAGRAMFILENAME) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\",\"%@\", \"%@\", \"%@\", \"%@\")", auditID, report.summary, report.executiveSummary, report.preparedBy, report.approvedBy, report.projectNum, report.scoringAssumptions, report.conclusion, report.methodologyDiagramLocation];
         
             //Call to insert a row into a table
             [self insertRowInTable:insertReportSQL forTable:@"report"];
@@ -225,7 +222,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                             for (Answers * answer in answers){
                             
                                 //Query to insert into the answer table
-                                NSString * insertAnswerSQL = [NSString stringWithFormat:@"INSERT INTO ANSWER (QUESTIONID, ANSWERTEXT, POINTSPOSSIBLE, ISSELECTED) VALUES (%d, \"%@\", %f, %d)", questionID, answer.answerText, answer.pointsPossibleOrMultiplier, answer.isSelected];
+                                NSString * insertAnswerSQL = [NSString stringWithFormat:@"INSERT INTO ANSWER (QUESTIONID, ANSWERTEXT, POINTSPOSSIBLE, ISSELECTED) VALUES (%d, \"%@\", %f, %d)", questionID, answer.answerText, answer.pointsPossible, answer.isSelected];
                             
                                 //Call to insert a row into a table
                                 [self insertRowInTable:insertAnswerSQL forTable:@"answer"];
@@ -278,7 +275,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                                     for (Answers * answer in LQanswers){
                                 
                                         //Query to insert LQ answers into the answers table
-                                        NSString * insertLQAnswerSQL = [NSString stringWithFormat:@"INSERT INTO ANSWER (QUESTIONID, ANSWERTEXT, POINTSPOSSIBLE, ISSELECTED) VALUES (%d, \"%@\", %f, %d)", LQID, answer.answerText, answer.pointsPossibleOrMultiplier, answer.isSelected];
+                                        NSString * insertLQAnswerSQL = [NSString stringWithFormat:@"INSERT INTO ANSWER (QUESTIONID, ANSWERTEXT, POINTSPOSSIBLE, ISSELECTED) VALUES (%d, \"%@\", %f, %d)", LQID, answer.answerText, answer.pointsPossible, answer.isSelected];
                                 
                                         //Call to insert a row into a table
                                         [self insertRowInTable:insertLQAnswerSQL forTable:@"layered answer"];
@@ -696,7 +693,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                 
             
                 tempAnswer.answerText = text;
-                tempAnswer.pointsPossibleOrMultiplier = [ptsPoss floatValue];
+                tempAnswer.pointsPossible = [ptsPoss floatValue];
                 tempAnswer.isSelected = [selected boolValue];
                 
                 [answerArray addObject:tempAnswer];
@@ -740,6 +737,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
 
 
 -(void)deleteAudit:(NSInteger *)auditID{
+  
     
     
 }
@@ -755,7 +753,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         //Object to save errors
         char * errMsg;
         
-        const char * sql_stmt = "CREATE TABLE IF NOT EXISTS USER (ID TEXT PRIMARY KEY, PASSWORD TEXT, USERFULLNAME TEXT, RANK INTEGER, OTHERINFO TEXT)";
+        const char * sql_stmt = "CREATE TABLE IF NOT EXISTS USER (ID TEXT PRIMARY KEY, PASSWORD TEXT, FULLNAME TEXT, RANK INTEGER, OTHERINFO TEXT)";
         
         //Verifying the execution of the create table SQL script
         if(!(sqlite3_exec(dnvAuditDB, sql_stmt, NULL, NULL, &errMsg)==SQLITE_OK))
@@ -778,7 +776,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //Open the DB
     if(sqlite3_open([self.databasePath UTF8String] , &dnvAuditDB)==SQLITE_OK){
         
-        NSString * insertUserSQL = [NSString stringWithFormat:@"INSERT INTO USER (ID, PASSWORD, OTHERINFO) VALUES (\"%@\", \"%@\", \"%@\")", [user objectForKey:@"userID"], [user objectForKey:@"password"], [user objectForKey:@"otherInfo"]];
+        NSString * insertUserSQL = [NSString stringWithFormat:@"INSERT INTO USER (ID, PASSWORD, FULLNAME, RANK, OTHERINFO) VALUES (\"%@\", \"%@\", \"%@\", %d, \"%@\")", [user objectForKey:@"userID"], [user objectForKey:@"password"], [user objectForKey:@"fullName"], [[user objectForKey:@"rank"] integerValue], [user objectForKey:@"otherInfo"]];
         
         //Preparing
         sqlite3_prepare_v2(dnvAuditDB, [insertUserSQL UTF8String], -1, &statement, NULL);
@@ -800,14 +798,14 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //create the statement Object
     sqlite3_stmt * statement;
     
-    //Temperary person to hold the person information from DB
-    User * tempUser = [[User alloc]init];
+    //Temperary user to hold the user information from DB
+    User * tempUser = [User new];
     
     //Open the DB
     if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
         
         //Creating the SQL statment to retrieve the data from the database
-        NSString * queryUserSQL = [NSString stringWithFormat:@"SELECT PASSWORD, OTHERINFO FROM USER WHERE ID=\"%@\"", userID];
+        NSString * queryUserSQL = [NSString stringWithFormat:@"SELECT PASSWORD, FULLNAME, RANK, OTHERINFO FROM USER WHERE ID=\"%@\"", userID];
         
         //Prepare the Query
         if(sqlite3_prepare_v2(dnvAuditDB, [queryUserSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
@@ -815,14 +813,22 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             //If this work, there must be a row if the data was there
             while (sqlite3_step(statement) == SQLITE_ROW){
                 
-                //Gets the middle name data from DB and adding it to the temp Person Object
+                //Gets the password data from DB and adding it to the temp User Object
                 NSString * password = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
                 
-                //Gets the last name data from DB and adding it to the temp Person Object
-                NSString * otherInfo = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
+                //Gets the password data from DB and adding it to the temp User Object
+                NSString * name = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
+                
+                //Gets the password data from DB and adding it to the temp User Object
+                NSString * rank = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
+                
+                //Gets the other info data from DB and adding it to the temp User Object
+                NSString * otherInfo = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
                 
                 tempUser.userID = userID;
                 tempUser.password = password;
+                tempUser.fullname = name;
+                tempUser.rank = [rank integerValue];
                 tempUser.otherUserInfo = otherInfo;
             }
         }
@@ -843,7 +849,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
         
         //Creating the SQL statment to retrieve the data from the database
-        NSString * queryUserSQL = [NSString stringWithFormat:@"SELECT ID, PASSWORD, OTHERINFO FROM USER"];
+        NSString * queryUserSQL = [NSString stringWithFormat:@"SELECT ID, PASSWORD, FULLNAME, RANK, OTHERINFO FROM USER"];
         
         //Prepare the Query
         if(sqlite3_prepare_v2(dnvAuditDB, [queryUserSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
@@ -851,7 +857,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             //If this work, there must be a row if the data was there
             while (sqlite3_step(statement) == SQLITE_ROW){
                 
-                User * tempUser = [[User alloc]init];
+                User * tempUser = [User new];
                 
                 //Gets the first name data from DB and adding it to the temp Person Object
                 NSString * identify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
@@ -859,11 +865,19 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                 //Gets the middle name data from DB and adding it to the temp Person Object
                 NSString * password = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
                 
+                //Gets the password data from DB and adding it to the temp User Object
+                NSString * name = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
+                
+                //Gets the password data from DB and adding it to the temp User Object
+                NSString * rank = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
+                
                 //Gets the last name data from DB and adding it to the temp Person Object
-                NSString * otherInfo = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
+                NSString * otherInfo = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
                 
                 tempUser.userID = identify;
                 tempUser.password = password;
+                tempUser.fullname = name;
+                tempUser.rank = [rank integerValue];
                 tempUser.otherUserInfo = otherInfo;
                 
                 [userArray addObject:tempUser];

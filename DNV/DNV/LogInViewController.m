@@ -204,6 +204,7 @@
             //store current user in NSUSERDEFAULTS
             NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
             [nsDefaults setObject:self.userIDTextField.text forKey:@"currentUser"];
+            [nsDefaults setObject:[self.user objectForKey:@"fullName"] forKey:@"currentUserName"];
             [nsDefaults synchronize];
         }
         else{
