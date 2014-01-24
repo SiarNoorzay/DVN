@@ -12,7 +12,7 @@
 @interface Answers : NSDictionary
 
 @property (nonatomic) NSString * answerText;
-@property (nonatomic) float pointsPossibleOrMultiplier;
+@property (nonatomic) float pointsPossible;
 @property (nonatomic) BOOL isSelected;
 
 -(id)initWithAnswer:(NSDictionary *)answerDictionary;

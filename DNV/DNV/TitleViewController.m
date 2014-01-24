@@ -7,6 +7,7 @@
 //
 
 #import "TitleViewController.h"
+#import "ReportDetailsViewController.h"
 
 @interface TitleViewController ()
 
@@ -27,6 +28,26 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    //TODO: get audit from DB instead of bundle
+    // self.audit = getAuditFromDB with ID from previous selection
+    
+    
+    NSError *error;
+    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
+    
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+    
+    NSLog(@"JSON contains:\n%@", [dictionary description]);
+    
+    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
+    
+    self.audit = [[Audit alloc]initWithAudit:theAudit];
+    
+    self.clientName.text = self.audit.client.companyName;
+    
+    self.date.text = self.audit.client.auditDate;
+
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,4 +56,29 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
+    
+    
+    return nil;
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
+    
+    if ([viewController isKindOfClass:[TitleViewController class]]) {
+        ReportDetailsViewController *rdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ReportDetailsViewController"];
+        return  rdvc;
+        
+    }
+    
+    else return nil;
+    
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+     self.audit.client.companyName = self.clientName.text;
+    
+     self.audit.client.auditDate = self.date.text;
+    
+    //TODO: save audit
+}
 @end

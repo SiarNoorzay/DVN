@@ -21,7 +21,12 @@
         self.pointsAwarded = [[questionDictionary objectForKey:@"pointsAwarded"]floatValue];
         self.questionText = [questionDictionary objectForKey:@"questionText"];
         self.helpText = [questionDictionary objectForKey:@"helpText"];
-        self.isApplicable = [[questionDictionary objectForKey:@"isApplicable"] boolValue];
+        
+        if ([questionDictionary objectForKey:@"isApplicable"] == nil) {
+            self.isApplicable = true;
+        }
+        else self.isApplicable = [[questionDictionary objectForKey:@"isApplicable"]boolValue];
+        
         self.notes = [questionDictionary objectForKey:@"notes"];
         self.needsVerifying = [[questionDictionary objectForKey:@"needsVerifying"] integerValue];
         self.isVerifyDone = [[questionDictionary objectForKey:@"isVerifyDone"] boolValue];
@@ -29,9 +34,9 @@
         self.imageLocationArray = [questionDictionary objectForKey:@"imageLocationArray"];
         self.questionType = [[questionDictionary objectForKey:@"questionType"] intValue];
         self.isThumbsUp = [[questionDictionary objectForKey:@"isThumbsUp"] boolValue];
-        self.isThumbsDown = [[questionDictionary objectForKey:@"isThumbsUp"] boolValue];
+        self.isThumbsDown = [[questionDictionary objectForKey:@"isThumbsDown"] boolValue];
         self.pointsNeededForLayered = [[questionDictionary objectForKey:@"pointsNeededForLayered"] floatValue];
-        
+        //TODO: add isVerfiedDone
         
         NSMutableArray *tempArray = [questionDictionary objectForKey:@"Answers"];
         NSMutableArray *objectArray = [NSMutableArray arrayWithCapacity:[tempArray count]];

@@ -80,13 +80,13 @@
     }
     self.totalPossibleLabel.text = [NSString stringWithFormat:@"%.1f",auditPointsPossible];
     self.totalAwardedLabel.text = [NSString stringWithFormat:@"%.1f",auditAwarded];
-    self.totalPercentageLabel.text = [NSString stringWithFormat:@"%.2f",((auditAwarded / auditPointsPossible) *100)];
+    self.totalPercentageLabel.text = [NSString stringWithFormat:@"%.2f %%",((auditAwarded / auditPointsPossible) *100)];
     
     
     self.evaluatedPossibleLabel.text = [NSString stringWithFormat: @"%.1f",(auditPointsPossible - auditNAPoints)];
     self.evaluatedAwardedLabel.text = [NSString stringWithFormat:@"%.1f",auditAwarded];
     
-    self.evaluatedPercentageLabel.text = [NSString stringWithFormat:@"%.2f",((auditAwarded / (auditPointsPossible - auditNAPoints)) *100)];
+    self.evaluatedPercentageLabel.text = [NSString stringWithFormat:@"%.2f %%",((auditAwarded / (auditPointsPossible - auditNAPoints)) *100)];
     
     [self.graphView setElementNames:eleNames];
     [self.graphView setElementPercent:percents];

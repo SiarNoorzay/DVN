@@ -16,6 +16,6 @@
 @property (nonatomic) int rank;
 @property (nonatomic) NSString * otherUserInfo;
 
--(id)initWithUserID:(NSString *)userID andPassword:(NSString *)password andInfo:(NSString *)otherInfo;
+-(id)initWithUserID:(NSString *)userID andPassword:(NSString *)password andInfo:(NSString *)otherInfo andRank:(int)rank andName: (NSString *)fullName;
 
 @end

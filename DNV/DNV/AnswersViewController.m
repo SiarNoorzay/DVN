@@ -96,13 +96,13 @@ BOOL isSublayeredQuestion = false;
         if (isOn) {
             rightAns.isSelected = true;
             leftAns.isSelected = false;
-            pointTotal = rightAns.pointsPossibleOrMultiplier;
+            pointTotal = rightAns.pointsPossible;
             self.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
         }
         else{
             leftAns.isSelected = true;
             rightAns.isSelected = true;
-            pointTotal = leftAns.pointsPossibleOrMultiplier;
+            pointTotal = leftAns.pointsPossible;
             self.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
 
         }
@@ -379,7 +379,7 @@ BOOL isSublayeredQuestion = false;
             pointTotal = 0;
         }
         
-        pointTotal += ans.pointsPossibleOrMultiplier;
+        pointTotal += ans.pointsPossible;
         
         self.pointsLabel.text =[NSString stringWithFormat:@"%.2f",pointTotal];
         
@@ -404,7 +404,7 @@ BOOL isSublayeredQuestion = false;
     if (tableView == self.answersTableView) {
         Answers *ans = [self.ansArray objectAtIndex:indexPath.row];
         
-        pointTotal -= ans.pointsPossibleOrMultiplier;
+        pointTotal -= ans.pointsPossible;
         
         self.pointsLabel.text =[NSString stringWithFormat:@"%.2f",pointTotal];
         [ans setIsSelected:false];

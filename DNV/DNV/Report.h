@@ -17,6 +17,12 @@
 @property (nonatomic) NSString * projectNum;
 @property (nonatomic) NSString * conclusion;
 @property (nonatomic) NSString * methodologyDiagramLocation;
+@property (nonatomic) NSString * clientRef;
+@property (nonatomic) NSString * executiveSummary;
+@property (nonatomic) NSString * scoringAssumptions;
+
+
+
 
 -(id)initWithReport:(NSDictionary *)dictionary;
 

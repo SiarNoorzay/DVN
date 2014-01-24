@@ -1355,8 +1355,8 @@
                         <outlet property="completedAuditTable" destination="mYt-om-ZhN" id="PaI-9M-oT8"/>
                         <outlet property="spinner" destination="SYi-gh-IIV" id="tE5-YO-nSe"/>
                         <segue destination="1LI-tS-8fd" kind="push" identifier="EditClient" id="Cip-mv-hdZ"/>
-                        <segue destination="4Hf-nJ-YNg" kind="push" identifier="ViewReport" id="vVN-cZ-BnU"/>
                         <segue destination="0p3-Xt-jp1" kind="push" identifier="EditQuestions" id="Kjd-jP-nx9"/>
+                        <segue destination="4Hf-nJ-YNg" kind="push" identifier="ViewReport" id="mdm-Om-J66"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9u9-ck-Zna" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1559,7 +1559,7 @@
         <!--Title View Controller - Title Page-->
         <scene sceneID="3RO-Ae-jEJ">
             <objects>
-                <viewController id="4Hf-nJ-YNg" customClass="TitleViewController" sceneMemberID="viewController">
+                <viewController restorationIdentifier="TitleViewController" storyboardIdentifier="TitleViewController" id="4Hf-nJ-YNg" customClass="TitleViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rqg-cg-doE">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1613,6 +1613,10 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" currentPage="1" id="uXy-j0-6xw">
+                                        <rect key="frame" x="257" y="735" width="81" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </pageControl>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -1620,10 +1624,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title Page" id="P0y-cS-cnH"/>
+                    <connections>
+                        <outlet property="clientName" destination="mJU-bu-XMI" id="FAQ-Vj-nPa"/>
+                        <outlet property="date" destination="2Q6-KK-Nab" id="oi4-XH-0HW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ea-iy-nq6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5189" y="6538"/>
+            <point key="canvasLocation" x="5229" y="6554"/>
         </scene>
         <!--Tableof Contents View Controller - Table of Contents-->
         <scene sceneID="GbN-y6-RuD">
@@ -1666,6 +1674,9 @@
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="VYh-GZ-xJh" kind="push" id="ZGD-NJ-UDo"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="e0z-G3-gf2">
                                         <rect key="frame" x="99" y="189" width="251" height="40"/>
@@ -1675,6 +1686,9 @@
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="pEJ-PY-m4U" kind="push" id="6xO-iG-lc4"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="int-Ym-GsG">
                                         <rect key="frame" x="99" y="237" width="365" height="40"/>
@@ -1684,6 +1698,9 @@
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="Fvf-hk-yMy" kind="push" id="KZU-dL-uID"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="H47-cK-akF">
                                         <rect key="frame" x="99" y="285" width="260" height="40"/>
@@ -1693,6 +1710,9 @@
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="O2G-jm-U7j" kind="push" id="HzQ-P5-Ioi"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sm2-CO-cOI">
                                         <rect key="frame" x="99" y="333" width="251" height="40"/>
@@ -1702,6 +1722,9 @@
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="255-jQ-baX" kind="push" id="wSe-g4-8zX"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="VKP-cV-Aou">
                                         <rect key="frame" x="99" y="381" width="251" height="40"/>
@@ -1711,6 +1734,9 @@
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="FNo-LI-pNt" kind="push" id="fed-8T-lCt"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -1722,7 +1748,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wk3-Ph-YJQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8041" y="6554"/>
+            <point key="canvasLocation" x="8049" y="8154"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6cQ-aJ-J0n">
@@ -1962,13 +1988,18 @@
             </objects>
             <point key="canvasLocation" x="10066" y="4994"/>
         </scene>
-        <!--Page View Controller-->
+        <!--Report Pages View Controller-->
         <scene sceneID="NMp-gx-ohQ">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="J6W-BL-3O9" sceneMemberID="viewController"/>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="J6W-BL-3O9" customClass="ReportPagesViewController" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Pxz-4T-uCC"/>
+                    <connections>
+                        <segue destination="4Hf-nJ-YNg" kind="push" id="cnZ-cn-LI0"/>
+                    </connections>
+                </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VOF-fB-2XE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4323" y="6538"/>
+            <point key="canvasLocation" x="4131" y="6546"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="J7X-4U-IFt">
@@ -1987,7 +2018,7 @@
         <!--Report Details View Controller - Details-->
         <scene sceneID="fQ4-QT-bkK">
             <objects>
-                <viewController id="V4d-to-CHO" customClass="ReportDetailsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ReportDetailsViewController" id="V4d-to-CHO" customClass="ReportDetailsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Q5Y-rg-iOR">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2011,7 +2042,7 @@
                                 <rect key="frame" x="78" y="148" width="612" height="792"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Client Name" minimumFontSize="17" id="rDR-9H-ySW">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Reference ID" minimumFontSize="17" id="rDR-9H-ySW">
                                         <rect key="frame" x="214" y="103" width="334" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -2035,7 +2066,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Client Name" minimumFontSize="17" id="nuT-Ow-LhQ">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" id="nuT-Ow-LhQ">
                                         <rect key="frame" x="214" y="346" width="334" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -2047,50 +2078,38 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Date" minimumFontSize="17" id="vWp-hs-EBK">
-                                        <rect key="frame" x="214" y="412" width="334" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verified By:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0Us-mF-47f">
-                                        <rect key="frame" x="64" y="401" width="142" height="52"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Client Name" minimumFontSize="17" id="5lw-sf-fBm">
-                                        <rect key="frame" x="214" y="465" width="334" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" id="5lw-sf-fBm">
+                                        <rect key="frame" x="214" y="406" width="334" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Approved By:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0Sd-ZL-VOe">
-                                        <rect key="frame" x="64" y="454" width="144" height="52"/>
+                                        <rect key="frame" x="64" y="395" width="144" height="52"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Date" minimumFontSize="17" id="Fpe-Ec-i81">
-                                        <rect key="frame" x="214" y="531" width="334" height="30"/>
+                                        <rect key="frame" x="214" y="461" width="334" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date of issue:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Vks-ff-Lhk">
-                                        <rect key="frame" x="64" y="520" width="144" height="52"/>
+                                        <rect key="frame" x="64" y="450" width="144" height="52"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Client Name" minimumFontSize="17" id="auT-tt-v0T">
-                                        <rect key="frame" x="214" y="580" width="334" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="####" minimumFontSize="17" id="auT-tt-v0T">
+                                        <rect key="frame" x="214" y="521" width="334" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Project No:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="moi-Uy-K3V">
-                                        <rect key="frame" x="64" y="569" width="142" height="52"/>
+                                        <rect key="frame" x="64" y="510" width="142" height="52"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <nil key="highlightedColor"/>
@@ -2104,7 +2123,7 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UJP-kh-OGy">
-                                        <rect key="frame" x="64" y="653" width="484" height="119"/>
+                                        <rect key="frame" x="64" y="594" width="484" height="119"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <string key="text">All copyrights reserved by DNV∙GL. This publication or parts thereof may not be reproduced or transmitted in any form or by any means, including photocopying or recording, without the prior written consent of DNV∙GL</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -2117,15 +2136,23 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Details" id="0b0-b9-xcw"/>
+                    <connections>
+                        <outlet property="approvedBy" destination="5lw-sf-fBm" id="SoK-CT-hZF"/>
+                        <outlet property="clientRef" destination="rDR-9H-ySW" id="LQu-rO-Mco"/>
+                        <outlet property="dateOfIssue" destination="Fpe-Ec-i81" id="Ryf-Ns-bK3"/>
+                        <outlet property="preparedBy" destination="nuT-Ow-LhQ" id="EcZ-PS-kTz"/>
+                        <outlet property="projectNum" destination="auT-tt-v0T" id="p5D-cf-1Ee"/>
+                        <outlet property="summary" destination="fbk-jO-wCs" id="awf-ad-NJV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eGd-Xo-vkz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6101" y="6538"/>
+            <point key="canvasLocation" x="6145" y="6546"/>
         </scene>
         <!--Executive Summary View Controller - Executive Summary-->
         <scene sceneID="JpW-Gt-Fq0">
             <objects>
-                <viewController id="4Cm-Wc-9zS" customClass="ExecutiveSummaryViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ExecutiveSummaryViewController" id="4Cm-Wc-9zS" customClass="ExecutiveSummaryViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WKr-Ql-4lc">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2159,7 +2186,7 @@
                                         <rect key="frame" x="64" y="98" width="534" height="350"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <mutableString key="text">DNV∙GL was invited by {Client name} to conduct an ######### assessment of the {Clients site/location}, XX. The assessment was conducted from xx-xx-xxxx to xx-xx-xxxx, by DNV∙GL auditors xxxxxxxxx and Jxxxxxxxxx. . The audit was observed by xxxxxxxx. The ######## assessment process is a system audit. The ####### is defined as “an established way of carrying out an activity or series of activities. This includes the identification, training and involvement of individuals responsible for the activity; a clear definition of the activity, how to do it and a mechanism to ensure that the activity is performed as expected.”
+                                        <string key="text">DNV∙GL was invited by {Client name} to conduct an ######### assessment of the {Clients site/location}, XX. The assessment was conducted from xx-xx-xxxx to xx-xx-xxxx, by DNV∙GL auditors xxxxxxxxx and Jxxxxxxxxx. . The audit was observed by xxxxxxxx. The ######## assessment process is a system audit. The ####### is defined as “an established way of carrying out an activity or series of activities. This includes the identification, training and involvement of individuals responsible for the activity; a clear definition of the activity, how to do it and a mechanism to ensure that the activity is performed as expected.”
 
 1.0 The objectives of the audit process were to:
 
@@ -2177,7 +2204,7 @@
 
  
 
-</mutableString>
+</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
@@ -2189,7 +2216,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The audit consisted of XX required elements:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="w7y-F8-F6E">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The audit consisted of XX:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="w7y-F8-F6E">
                                         <rect key="frame" x="64" y="476" width="400" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -2202,6 +2229,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Executive Summary" id="OQo-hf-HJw"/>
+                    <connections>
+                        <outlet property="auditCountLabel" destination="w7y-F8-F6E" id="3kM-gT-HI4"/>
+                        <outlet property="elementList" destination="OBs-lr-3Dg" id="DWs-JA-Zks"/>
+                        <outlet property="executiveSummary" destination="bEi-ez-TWL" id="ejC-4A-foq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vFd-WG-b5E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2308,16 +2340,22 @@
                                         <rect key="frame" x="30" y="88" width="552" height="163"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <mutableString key="text">The over-all view of the XXXXXX process at the site is positive. The Management team and employees are working together to provide safe operation for XXXXXXX. As the auditors, we appreciated the obvious commitment from management to the XXXXXXX process and the open dialog throughout the audit. The XXXXXXX evaluates the achievement of the implementation of the system. In conclusion, two elements (Behavioral Observation and System Evaluation) did not have enough implementation to receive credit on the audit. Therefore the site received the following overall score on the assessment.</mutableString>
+                                        <string key="text">The over-all view of the XXXXXX process at the site is positive. The Management team and employees are working together to provide safe operation for XXXXXXX. As the auditors, we appreciated the obvious commitment from management to the XXXXXXX process and the open dialog throughout the audit. The XXXXXXX evaluates the achievement of the implementation of the system. In conclusion, two elements (Behavioral Observation and System Evaluation) did not have enough implementation to receive credit on the audit. Therefore the site received the following overall score on the assessment.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Overall Percentage Score: 53%" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" id="7Zz-pZ-UQ1">
-                                        <rect key="frame" x="20" y="307" width="552" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="100 %" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" id="7Zz-pZ-UQ1">
+                                        <rect key="frame" x="361" y="318" width="97" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overall Percentage Score:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dxR-2K-qbf">
+                                        <rect key="frame" x="105" y="318" width="234" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -2325,15 +2363,19 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Conclusion" id="7ws-Q5-S7m"/>
+                    <connections>
+                        <outlet property="conclusionTextView" destination="10x-c2-NYT" id="uCe-z6-oeM"/>
+                        <outlet property="percent" destination="7Zz-pZ-UQ1" id="DYX-i2-6v9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pxN-TS-nYY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="10189" y="6554"/>
         </scene>
-        <!--Conclusion View Controller - Key Suggesstions-->
+        <!--Key Suggestions View Controller - Key Suggesstions-->
         <scene sceneID="n1A-yw-Oyf">
             <objects>
-                <viewController title="Key Suggesstions" id="Fvf-hk-yMy" customClass="ConclusionViewController" sceneMemberID="viewController">
+                <viewController title="Key Suggesstions" id="Fvf-hk-yMy" customClass="KeySuggestionsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QWT-Ye-Z9H">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2368,15 +2410,37 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Tl3-0I-wd7">
+                                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="KeySuggesstionCell" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Tl3-0I-wd7" customClass="KeySuggesstionCell">
                                                 <rect key="frame" x="0.0" y="22" width="572" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Tl3-0I-wd7" id="Nxl-lg-nUS">
                                                     <rect key="frame" x="0.0" y="0.0" width="572" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.2.1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XPY-zA-1Ok">
+                                                            <rect key="frame" x="20" y="11" width="86" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes of thumbs down question goes here" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" id="TzJ-ab-NT2">
+                                                            <rect key="frame" x="156" y="11" width="396" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="numberLabel" destination="XPY-zA-1Ok" id="tl6-mu-5nq"/>
+                                                    <outletCollection property="notesTextLabel" destination="TzJ-ab-NT2" id="07Y-4a-h1E"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
+                                        <connections>
+                                            <outlet property="dataSource" destination="Fvf-hk-yMy" id="IbM-Vl-cXj"/>
+                                            <outlet property="delegate" destination="Fvf-hk-yMy" id="9qw-dx-cza"/>
+                                        </connections>
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -2385,10 +2449,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Key Suggesstions for Improvement" id="hl2-6a-vJS"/>
+                    <connections>
+                        <outlet property="KeySugsTableView" destination="b6k-QW-lGt" id="j3d-NX-kcO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4vf-mG-5ZX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11142" y="6538"/>
+            <point key="canvasLocation" x="11158" y="6554"/>
         </scene>
         <!--Conclusion View Controller - Scoring Assumptions-->
         <scene sceneID="1QR-6Z-Wlk">
@@ -2427,13 +2494,13 @@
                                         <rect key="frame" x="30" y="88" width="552" height="528"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <mutableString key="text">The audit followed defined XXXXXXX procedures and was conducted as a base line audit. The audit interviews were conducted with individuals identified as having "in depth" knowledge of specific controls and systems. This information was then verified by follow-up interviews with line management and employees, and supporting documentation was reviewed. A "Physical Condition Tour" evaluation was also conducted to establish that controls were in place and working.
+                                        <string key="text">The audit followed defined XXXXXXX procedures and was conducted as a base line audit. The audit interviews were conducted with individuals identified as having "in depth" knowledge of specific controls and systems. This information was then verified by follow-up interviews with line management and employees, and supporting documentation was reviewed. A "Physical Condition Tour" evaluation was also conducted to establish that controls were in place and working.
 
 A total of XXXXXXX employee interviews were carried out XXXXXXX, representing all departments of the organization. The sample was conducted in order to verify the implementation of the XXXXXXX system activities. Additional questions were asked about the employee perception of the Council Bluff safety system. The over-all impression is that employees feel safety is the number one priority at the site.
 
 The Physical Conditions Tour is not a comprehensive inspection, but rather a sampling of typical workplace conditions which reflect upon the XXXXXXX system implemented at the site. The overall physical conditions throughout the plant were found to be in good order. Specifics of substandard conditions can be viewed on the Physical Condition sheet attached with the audit. The concerns the auditors found on the PCT was shared in the closing meeting with the management team.
 
-In general, the XXXXXXX protocol requires that the practical application of program activities across the plant be reflected in policies and/or, procedures at a 75% compliance level. This “objective” requirement will not, therefore, recognise a number of plant activities due to there being insufficient documented procedures in place to reflect these practices. The practical application of some of the Company’s written procedures may also not have been able to be demonstrated sufficiently for credit to be awarded at this time. Generally, systems have to be in place and working for a minimum of 3 months in order to score in the audit. Therefore, activities carried on at the present level of implementation would likely result in a lower audit score.</mutableString>
+In general, the XXXXXXX protocol requires that the practical application of program activities across the plant be reflected in policies and/or, procedures at a 75% compliance level. This “objective” requirement will not, therefore, recognise a number of plant activities due to there being insufficient documented procedures in place to reflect these practices. The practical application of some of the Company’s written procedures may also not have been able to be demonstrated sufficiently for credit to be awarded at this time. Generally, systems have to be in place and working for a minimum of 3 months in order to score in the audit. Therefore, activities carried on at the present level of implementation would likely result in a lower audit score.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
@@ -2530,6 +2597,13 @@ In general, the XXXXXXX protocol requires that the practical application of prog
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="cnZ-cn-LI0"/>
+        <segue reference="wSe-g4-8zX"/>
+        <segue reference="ZGD-NJ-UDo"/>
+        <segue reference="fed-8T-lCt"/>
+        <segue reference="JhJ-6V-9g8"/>
+        <segue reference="qKN-QJ-s0B"/>
+        <segue reference="sOY-bc-kKG"/>
         <segue reference="Kjd-jP-nx9"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -19,8 +19,8 @@
     if(self){
         self.auditType = [[auditDictionary objectForKey:@"auditType"] integerValue];
         self.name = [auditDictionary objectForKey:@"name"];
-        self.physicalConditionScore = [[auditDictionary objectForKey:@"physicalConditionScore"]floatValue];
-        self.lastModefied = [auditDictionary objectForKey:@"lastModefied"];
+       // self.physicalConditionScore = [[auditDictionary objectForKey:@"physicalConditionScore"]floatValue];
+        self.lastModefied = [auditDictionary objectForKey:@"lastModified"];
         self.report = [[Report alloc ]initWithReport:[auditDictionary objectForKey:@"Report"]];
         self.client = [[Client alloc] initWithClient:[auditDictionary objectForKey:@"Client"]];
     
@@ -54,7 +54,7 @@
     mergedAudits.auditType = (NSInteger)[dataMerger mergeInt:(int)primaryAudit.auditType with:(int)secondaryAudit.auditType];
     
     //float
-    mergedAudits.physicalConditionScore = [dataMerger mergeFloat:primaryAudit.physicalConditionScore with:secondaryAudit.physicalConditionScore];
+  //  mergedAudits.physicalConditionScore = [dataMerger mergeFloat:primaryAudit.physicalConditionScore with:secondaryAudit.physicalConditionScore];
     
     //string
     mergedAudits.name = [dataMerger mergeString:primaryAudit.name with:secondaryAudit.name];
