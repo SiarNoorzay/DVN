@@ -141,6 +141,7 @@ int subEleNumber;
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     
     self.listOfSubElements = self.ele.Subelements;
+    self.subElementIDs = [self.dnvDBManager getIDSFrom:@"SUBELEMENT" where:@"ELEMENTID" equals:(int)row];
     
     [self.subElementTable reloadData];
     elementNumber = row;
@@ -283,17 +284,18 @@ loadMetadataFailedWithError:(NSError *)error {
         self.auditSelectLbl.text = aud.name;
         
         //Just a DB test
+        //Using the user defaults to create the audit ID
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        NSString * auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
+        auditID = [auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
         [self.dnvDBManager saveAudit:aud];
         
-//        NSArray * auditIDS = [self.dnvDBManager retrieveDistinctAuditNamesForClientOfType:1];
-//        
-//        NSLog(@"Audit ID: %@", auditIDS[0]);
+        Audit * dbTestAudit = [self.dnvDBManager retrieveAudit:auditID];
         
-        Audit * dbTestAudit = [self.dnvDBManager retrieveAudit:@"USI.KitchenAudit.cliff"];
+        self.elementIDs = [self.dnvDBManager getElementIDS:auditID];
         
         NSLog(@"Audit Name: %@", dbTestAudit.name);
-        
-        [self.dnvDBManager deleteAudit:@"USI.KitchenAudit.cliff"];
         //end of DB test
         
         

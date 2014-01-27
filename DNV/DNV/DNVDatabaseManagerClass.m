@@ -68,7 +68,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             
             const char * sql_stmt3 = "CREATE TABLE IF NOT EXISTS SUBELEMENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, ELEMENTID INTEGER, SUBELEMENTNAME TEXT, ISCOMPLETED INTEGER, POINTSPOSSIBLE REAL, POINTSAWARDED REAL, MODIFIEDNAPOINTS REAL)";
             
-            const char * sql_stmt4 = "CREATE TABLE IF NOT EXISTS QUESTION (ID INTEGER PRIMARY KEY AUTOINCREMENT, SUBELEMENTID INTEGER, QUESTIONTEXT TEXT, QUESTIONTYPE INTEGER, ISCOMPLETED INTEGER, POINTSPOSSIBLE REAL, POINTSAWARDED REAL, HELPTEXT TEXT, NOTES TEXT, ISTHUMBSUP INTEGER, ISTHUMBSDOWN INTEGER, ISAPPLICABLE INTEGER, NEEDSVERIFYING INTEGER, ISVERIFYDONE INTEGER, PARENTQUESTIONID INTEGER, POINTSNEEDEFORLAYER REAL)";
+            const char * sql_stmt4 = "CREATE TABLE IF NOT EXISTS QUESTION (ID INTEGER PRIMARY KEY AUTOINCREMENT, SUBELEMENTID INTEGER, QUESTIONTEXT TEXT, QUESTIONTYPE INTEGER, ISCOMPLETED INTEGER, POINTSPOSSIBLE REAL, POINTSAWARDED REAL, HELPTEXT TEXT, NOTES TEXT, ISTHUMBSUP INTEGER, ISTHUMBSDOWN INTEGER, ISAPPLICABLE INTEGER, NEEDSVERIFYING INTEGER, ISVERIFYDONE INTEGER, PARENTQUESTIONID INTEGER, NUMBEROFLAYERED INTEGER, POINTSNEEDEFORLAYER REAL)";
             
             const char * sql_stmt5 = "CREATE TABLE IF NOT EXISTS ANSWER (ID INTEGER PRIMARY KEY AUTOINCREMENT, QUESTIONID INTEGER, ANSWERTEXT TEXT, POINTSPOSSIBLE REAL, ISSELECTED INTEGER)";
             
@@ -204,7 +204,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                     for (Questions * question in questions){
                 
                         //Query to insert into the question table
-                        NSString * insertQuestionSQL = [NSString stringWithFormat:@"INSERT INTO QUESTION (SUBELEMENTID, QUESTIONTEXT, QUESTIONTYPE, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, HELPTEXT, NOTES, ISTHUMBSUP, ISTHUMBSDOWN, ISAPPLICABLE, NEEDSVERIFYING, ISVERIFYDONE, PARENTQUESTIONID, POINTSNEEDEFORLAYER) VALUES (%d, \"%@\", %d, %d, %f, %f, \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %f)", subElementID, question.questionText, question.questionType, question.isCompleted, question.pointsPossible, question.pointsAwarded, question.helpText, question.notes, question.isThumbsUp, question.isThumbsDown, question.isApplicable, question.needsVerifying, question.isVerifyDone, nil, question.pointsNeededForLayered];
+                        NSString * insertQuestionSQL = [NSString stringWithFormat:@"INSERT INTO QUESTION (SUBELEMENTID, QUESTIONTEXT, QUESTIONTYPE, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, HELPTEXT, NOTES, ISTHUMBSUP, ISTHUMBSDOWN, ISAPPLICABLE, NEEDSVERIFYING, ISVERIFYDONE, PARENTQUESTIONID, NUMBEROFLAYERED, POINTSNEEDEFORLAYER) VALUES (%d, \"%@\", %d, %d, %f, %f, \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %d, %f)", subElementID, question.questionText, question.questionType, question.isCompleted, question.pointsPossible, question.pointsAwarded, question.helpText, question.notes, question.isThumbsUp, question.isThumbsDown, question.isApplicable, question.needsVerifying, question.isVerifyDone, nil, question.layeredQuesions.count, question.pointsNeededForLayered];
                 
                         //Preparing
                         sqlite3_prepare_v2(dnvAuditDB, [insertQuestionSQL UTF8String], -1, &statement, NULL);
@@ -262,7 +262,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                                 for (Questions * lQ in layeredQuest){
                             
                                     //Query to insert layered questions into the questions table
-                                    NSString * insertLQSQL = [NSString stringWithFormat:@"INSERT INTO QUESTION (SUBELEMENTID, QUESTIONTEXT, QUESTIONTYPE, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, HELPTEXT, NOTES, ISTHUMBSUP, ISTHUMBSDOWN, ISAPPLICABLE, NEEDSVERIFYING, ISVERIFYDONE, PARENTQUESTIONID, POINTSNEEDEFORLAYER) VALUES (%d, \"%@\", %d, %d, %f, %f, \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %f)", subElementID, lQ.questionText, lQ.questionType, lQ.isCompleted, lQ.pointsPossible, lQ.pointsAwarded, lQ.helpText, lQ.notes, lQ.isThumbsUp, lQ.isThumbsDown, lQ.isApplicable, lQ.needsVerifying, lQ.isVerifyDone, questionID, lQ.pointsNeededForLayered];
+                                    NSString * insertLQSQL = [NSString stringWithFormat:@"INSERT INTO QUESTION (SUBELEMENTID, QUESTIONTEXT, QUESTIONTYPE, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, HELPTEXT, NOTES, ISTHUMBSUP, ISTHUMBSDOWN, ISAPPLICABLE, NEEDSVERIFYING, ISVERIFYDONE, PARENTQUESTIONID, NUMBEROFLAYERED, POINTSNEEDEFORLAYER) VALUES (%d, \"%@\", %d, %d, %f, %f, \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %d, %f)", subElementID, lQ.questionText, lQ.questionType, lQ.isCompleted, lQ.pointsPossible, lQ.pointsAwarded, lQ.helpText, lQ.notes, lQ.isThumbsUp, lQ.isThumbsDown, lQ.isApplicable, lQ.needsVerifying, lQ.isVerifyDone, questionID, lQ.layeredQuesions.count, lQ.pointsNeededForLayered];
                             
                                     //Call to insert a row into a table
                                     [self insertRowInTable:insertLQSQL forTable:@"layered question"];
@@ -625,8 +625,11 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                 //Gets the parent question ID data from DB and adding it to the temp Question Object
                 NSString *  parentQuestID = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 14)];
                 
+                //Gets the parent question ID data from DB and adding it to the temp Question Object
+                NSString *  numOfLayered = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 15)];
+                
                 //Gets the pointsPossibleForLayered data from DB and adding it to the temp Question Object
-                NSString * ptsPossForLay = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 15)];
+                NSString * ptsPossForLay = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 16)];
                 
                 questionID = [identify integerValue];
                 parentQID = [parentQuestID integerValue];
@@ -646,7 +649,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                 tempQuestion.pointsNeededForLayered = [ptsPossForLay floatValue];
                 tempQuestion.Answers = [self retrieveAnswersOfQuestion:questionID];
                 
-                if( parentQID == 0 )
+                if( [numOfLayered integerValue] > 0 )
                     tempQuestion.layeredQuesions = [self retrieveQuestionsOfSubElement:subElementID gettingLayeredQuestions:true theParentQuestionID:questionID];
                 
 //                if( !bLayeredQuestion)
@@ -706,32 +709,148 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     
 }
 
--(void)updateAudit:(NSInteger *)auditID auditType:(NSInteger *)auditType{
+-(void)updateAudit:(NSString *)auditID auditType:(int)auditType{
     
+    //Opening the SQLite DB
+    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
+        
+        NSString * updateAuditSQL = [NSString stringWithFormat:@"UPDATE AUDIT SET AUDITTYPE = %d WHERE ID = \"%@\"", auditType, auditID];
     
+        sqlite3_stmt * statement;
+    
+        //Prepare the Query
+        sqlite3_prepare_v2(dnvAuditDB, [updateAuditSQL UTF8String], -1, &statement, NULL);
+    
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            NSLog(@"Row updated from Audit table.");
+        }
+        else {
+            NSLog(@"Failed to update row from Audit table.");
+        }
+    
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
+    }
 }
 
 
--(void)updateElement:(NSInteger *)elementID isCompleted:(BOOL)isCompleted ofAudit:(NSString *)auditID{
+-(void)updateElement:(int)elementID forElement:(Elements *)element{
     
+    //Opening the SQLite DB
+    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
     
+        NSString * updateElementSQL = [NSString stringWithFormat:@"UPDATE ELEMENT SET ISCOMPLETED = %d, POINTSPOSSIBLE = %f, POINTSAWARDED = %f, MODIFIEDNAPOINTS = %f, WHERE ID = %d", element.isCompleted, element.pointsPossible, element.pointsAwarded, element.modefiedNAPoints, elementID];
+    
+        sqlite3_stmt * statement;
+    
+        //Prepare the Query
+        sqlite3_prepare_v2(dnvAuditDB, [updateElementSQL UTF8String], -1, &statement, NULL);
+    
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            NSLog(@"Row updated from Element table.");
+        }
+        else {
+            NSLog(@"Failed to update row from Element table.");
+        }
+    
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
+    }
 }
 
 
--(void)updateSubElment:(NSInteger *)subElementID isCompleted:(BOOL)isCompleted ofAudit:(NSString *)auditID{
+-(void)updateSubElment:(int)subElementID forSubElement:(SubElements *) subElement{
     
+    //Opening the SQLite DB
+    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
     
+        NSString * updateSubElementSQL = [NSString stringWithFormat:@"UPDATE SUBELEMENT SET ISCOMPLETED = %d, POINTSPOSSIBLE = %f, POINTSAWARDED = %f, MODIFIEDNAPOINTS = %f WHERE ID = %d", subElement.isCompleted, subElement.pointsPossible, subElement.pointsAwarded, subElement.modefiedNAPoints, subElementID];
+    
+        sqlite3_stmt * statement;
+    
+        //Prepare the Query
+        sqlite3_prepare_v2(dnvAuditDB, [updateSubElementSQL UTF8String], -1, &statement, NULL);
+    
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            NSLog(@"Row updated from Sub Element table.");
+        }
+        else {
+            NSLog(@"Failed to update row from Sub Element table.");
+        }
+    
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+    
+        NSLog(@"Failed to open/create DB.");
+    }
 }
 
 
--(void)updateQuestion:(NSInteger *)questionID isCompleted:(BOOL)isCompleted ofAudit:(NSString *)auditID{
+-(void)updateQuestion:(int)questionID forQuestion:(Questions *)question {
     
+    //Opening the SQLite DB
+    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
     
+        NSString * updateQuestionSQL = [NSString stringWithFormat:@"UPDATE QUESTION SET ISCOMPLETED = %d, POINTSAWARDED = %f, NOTES = \"%@\", ISTHUMBSUP = %d, ISTHUMBSDOWN = %d, ISAPPLICABLE = %d, NEEDSVERIFYING = %d, ISVERIFYDONE = %d, WHERE ID = %d", question.isCompleted, question.pointsAwarded, question.notes, question.isThumbsUp, question.isThumbsDown, question.isApplicable, question.needsVerifying, question.isVerifyDone, questionID];
+    
+        sqlite3_stmt * statement;
+    
+        //Prepare the Query
+        sqlite3_prepare_v2(dnvAuditDB, [updateQuestionSQL UTF8String], -1, &statement, NULL);
+    
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            NSLog(@"Row updated from Question table.");
+            NSArray * answerIDs = [self getIDSFrom:@"ANSWER" where:@"QUESTIONID" equals:questionID];
+            
+            for (int index = 0; index < question.Answers.count; index++)
+                [self updateAnswer:[answerIDs[index] integerValue] forAnswer:question.Answers[index]];
+        }
+        else {
+            NSLog(@"Failed to update row from Question table.");
+        }
+    
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
+    }
 }
 
 
--(void)updateAnswer:(NSInteger *)answerID isCompleted:(BOOL)isSelected ofAudit:(NSString *)auditID{
+-(void)updateAnswer:(int)answerID forAnswer:(Answers *)answer{
     
+    NSString * updateAnswerSQL = [NSString stringWithFormat:@"UPDATE ANSWER SET ANSWERTEXT = \"%@\", ISSELECTED = %d, WHERE ID = %d", answer.answerText, answer.isSelected, answerID];
+    
+    sqlite3_stmt * statement;
+    
+    //Prepare the Query
+    sqlite3_prepare_v2(dnvAuditDB, [updateAnswerSQL UTF8String], -1, &statement, NULL);
+    
+    if(sqlite3_step(statement)==SQLITE_DONE)
+    {
+        NSLog(@"Row updated from Answer table.");
+    }
+    else {
+        NSLog(@"Failed to update row from Answer table.");
+    }
+    
+    sqlite3_finalize(statement);
     
 }
 
@@ -761,6 +880,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             NSLog(@"Failed to delete row from Audit table.");
         }
         
+        sqlite3_finalize(statement);
         sqlite3_close(dnvAuditDB);
     }
     else{
@@ -812,7 +932,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
 
 -(void)deleleElements:(NSString *)auditID{
     
-    NSArray * elementIDS = [self getElementIDSFrom:@"ELEMENT" where:@"AUDITID" equals:auditID];
+    NSArray * elementIDS = [self getElementIDS:auditID];
         
     NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM ELEMENT WHERE AUDITID = \"%@\"", auditID];
     
@@ -1111,13 +1231,13 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     return ID;
 }
 
--(NSArray *)getElementIDSFrom:(NSString *) table where:(NSString *) fKeyName equals:(NSString *) fKeyValue{
+-(NSArray *)getElementIDS:(NSString *) fKeyValue{
     
     NSMutableArray * tableIDS = [NSMutableArray new];
     
     sqlite3_stmt * statement;
     
-    NSString * getIdsArraySQL = [NSString stringWithFormat:@"SELECT ID FROM \"%@\" WHERE \"%@\" = \"%@\"", table, fKeyName, fKeyValue];
+    NSString * getIdsArraySQL = [NSString stringWithFormat:@"SELECT ID FROM ELEMENT WHERE AUDITID = \"%@\"", fKeyValue];
     
     //Prepare the Query
     if(sqlite3_prepare_v2(dnvAuditDB, [getIdsArraySQL UTF8String], -1, &statement, NULL)==SQLITE_OK){

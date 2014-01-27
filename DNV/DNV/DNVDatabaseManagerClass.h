@@ -44,20 +44,15 @@
 -(NSArray *)retrieveDistinctAuditNamesForClientOfType:(int) auditType;
 -(NSArray *)retrieveAllAuditIDsOfType:(int) auditType forAuditName:(NSString *) auditName;
 -(void)saveAudit:(Audit *) audit;
--(void)saveClient:(Client *) client;
--(void)saveReport:(Report *) report;
--(void)saveElement:(Elements *) element;
--(void)saveSubElement:(SubElements *) subElement;
--(void)saveQuestion:(Questions *) question;
--(void)saveAnswer:(Answers *) answer;
--(void)saveAttachment:(NSArray *) attach images:(int) numOfImages;
--(void)updateAudit:(NSInteger *) auditID auditType:(NSInteger *) auditType;
--(void)updateElement:(NSInteger *) elementID isCompleted:(BOOL) isCompleted ofAudit:(NSString *) auditID;
--(void)updateSubElment:(NSInteger *) subElementID isCompleted:(BOOL) isCompleted ofAudit:(NSString *) auditID;
--(void)updateQuestion:(NSInteger *) questionID isCompleted:(BOOL) isCompleted ofAudit:(NSString *) auditID;
--(void)updateAnswer:(NSInteger *) answerID isCompleted:(BOOL) isSelected ofAudit:(NSString *) auditID;
+-(void)updateAudit:(NSString *) auditID auditType:(int) auditType;
+-(void)updateElement:(int) elementID forElement:(Elements *)element;
+-(void)updateSubElment:(int) subElementID forSubElement:(SubElements *)subElement;
+-(void)updateQuestion:(int) questionID forQuestion:(Questions *)question withAnswer:(int)answerID isSelected:(BOOL)selected;
 -(void)deleteAudit:(NSString *) auditID;
 
+//Helper methods
+-(NSArray *)getElementIDS:(NSString *) fKeyValue;
+-(NSArray *)getIDSFrom:(NSString *) table where:(NSString *) fKeyName equals:(int) fKeyValue;
 
 
 //-(void)createAuditTable

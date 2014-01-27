@@ -35,6 +35,8 @@
 @property (strong, nonatomic) NSMutableArray * JSONList;
 
 @property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
+@property (strong, nonatomic) NSArray * elementIDs;
+@property (strong, nonatomic) NSArray * subElementIDs;
 
 @property (strong, nonatomic) IBOutlet UILabel *auditSelectLbl;
 
