@@ -47,6 +47,9 @@
 		768D56801891ABD400175EB4 /* ReportPagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D567F1891ABD400175EB4 /* ReportPagesViewController.m */; };
 		768D56CD1892CE2600175EB4 /* KeySuggestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D56CC1892CE2600175EB4 /* KeySuggestionsViewController.m */; };
 		768D56D01892CFBD00175EB4 /* KeySuggesstionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D56CF1892CFBD00175EB4 /* KeySuggesstionCell.m */; };
+		768D56D4189314A900175EB4 /* ScoringAssumptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D56D3189314A900175EB4 /* ScoringAssumptionsViewController.m */; };
+		768D56D8189317C300175EB4 /* ElementSubelementProfilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D56D7189317C300175EB4 /* ElementSubelementProfilesViewController.m */; };
+		768D56DB18932BD100175EB4 /* ProfileLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D56DA18932BD100175EB4 /* ProfileLabelCell.m */; };
 		769D3CE6188580C5002DF3B8 /* VerifyQuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 769D3CE5188580C5002DF3B8 /* VerifyQuestionsViewController.m */; };
 		769D3CEA1885A763002DF3B8 /* ImportMergeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 769D3CE91885A763002DF3B8 /* ImportMergeViewController.m */; };
 		769D3CEE1885F9FC002DF3B8 /* completed_checklist_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 769D3CEB1885F9FC002DF3B8 /* completed_checklist_icon.png */; };
@@ -215,6 +218,12 @@
 		768D56CC1892CE2600175EB4 /* KeySuggestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeySuggestionsViewController.m; sourceTree = "<group>"; };
 		768D56CE1892CFBD00175EB4 /* KeySuggesstionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeySuggesstionCell.h; sourceTree = "<group>"; };
 		768D56CF1892CFBD00175EB4 /* KeySuggesstionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeySuggesstionCell.m; sourceTree = "<group>"; };
+		768D56D2189314A900175EB4 /* ScoringAssumptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoringAssumptionsViewController.h; sourceTree = "<group>"; };
+		768D56D3189314A900175EB4 /* ScoringAssumptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoringAssumptionsViewController.m; sourceTree = "<group>"; };
+		768D56D6189317C300175EB4 /* ElementSubelementProfilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementSubelementProfilesViewController.h; sourceTree = "<group>"; };
+		768D56D7189317C300175EB4 /* ElementSubelementProfilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementSubelementProfilesViewController.m; sourceTree = "<group>"; };
+		768D56D918932BD100175EB4 /* ProfileLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileLabelCell.h; sourceTree = "<group>"; };
+		768D56DA18932BD100175EB4 /* ProfileLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileLabelCell.m; sourceTree = "<group>"; };
 		769D3CE4188580C5002DF3B8 /* VerifyQuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyQuestionsViewController.h; sourceTree = "<group>"; };
 		769D3CE5188580C5002DF3B8 /* VerifyQuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyQuestionsViewController.m; sourceTree = "<group>"; };
 		769D3CE81885A763002DF3B8 /* ImportMergeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportMergeViewController.h; sourceTree = "<group>"; };
@@ -499,6 +508,12 @@
 				768D56CC1892CE2600175EB4 /* KeySuggestionsViewController.m */,
 				768D56CE1892CFBD00175EB4 /* KeySuggesstionCell.h */,
 				768D56CF1892CFBD00175EB4 /* KeySuggesstionCell.m */,
+				768D56D2189314A900175EB4 /* ScoringAssumptionsViewController.h */,
+				768D56D3189314A900175EB4 /* ScoringAssumptionsViewController.m */,
+				768D56D6189317C300175EB4 /* ElementSubelementProfilesViewController.h */,
+				768D56D7189317C300175EB4 /* ElementSubelementProfilesViewController.m */,
+				768D56D918932BD100175EB4 /* ProfileLabelCell.h */,
+				768D56DA18932BD100175EB4 /* ProfileLabelCell.m */,
 				768D56541890145500175EB4 /* ReportDocViewController.h */,
 				768D56551890145500175EB4 /* ReportDocViewController.m */,
 			);
@@ -973,6 +988,7 @@
 				768D5651188F0FF500175EB4 /* ElementRatingsCell.m in Sources */,
 				76AB3CC3187B22300019603F /* Answers.m in Sources */,
 				76D4A339187CE5F6007AB1A9 /* AuditSelectionViewController.m in Sources */,
+				768D56D4189314A900175EB4 /* ScoringAssumptionsViewController.m in Sources */,
 				76E81F1B187EE78C00441F62 /* QuestionsViewController.m in Sources */,
 				768D5676189165C600175EB4 /* ExecutiveSummaryViewController.m in Sources */,
 				769D3CE6188580C5002DF3B8 /* VerifyQuestionsViewController.m in Sources */,
@@ -992,6 +1008,7 @@
 				76007DBD18872BFC00FA7A39 /* SubElementCell.m in Sources */,
 				76A8B001187F28AA007531A9 /* WIPChoicePopOver.m in Sources */,
 				768D564E188F0FD300175EB4 /* SummaryOfRatingsViewController.m in Sources */,
+				768D56DB18932BD100175EB4 /* ProfileLabelCell.m in Sources */,
 				76AB3CBD187B212C0019603F /* SubElements.m in Sources */,
 				769D3CEA1885A763002DF3B8 /* ImportMergeViewController.m in Sources */,
 				768D56561890145500175EB4 /* ReportDocViewController.m in Sources */,
@@ -1004,6 +1021,7 @@
 				76E81F1E187F071C00441F62 /* AnswersViewController.m in Sources */,
 				768D5679189167C900175EB4 /* TableofContentsViewController.m in Sources */,
 				768D56661890634600175EB4 /* ECGraph.m in Sources */,
+				768D56D8189317C300175EB4 /* ElementSubelementProfilesViewController.m in Sources */,
 				76AB3CB7187B20520019603F /* Report.m in Sources */,
 				7627431318898D3900873E9F /* DrawingViewController.m in Sources */,
 				768D56651890634600175EB4 /* ECCommon.m in Sources */,

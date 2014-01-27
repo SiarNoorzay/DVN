@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Audit.h"
+#import "KeySuggesstionCell.h"
 
 @interface KeySuggestionsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 

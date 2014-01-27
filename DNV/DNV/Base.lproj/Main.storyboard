@@ -1617,6 +1617,37 @@
                                         <rect key="frame" x="257" y="735" width="81" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </pageControl>
+                                    <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" id="mti-SD-9G3">
+                                        <rect key="frame" x="-9" y="233" width="612" height="216"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <date key="date" timeIntervalSinceReferenceDate="412291217.20241398">
+                                            <!--2014-01-24 21:20:17 +0000-->
+                                        </date>
+                                        <timeZone key="timeZone" name="America/Los_Angeles">
+                                            <mutableData key="data">
+VFppZgAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAC5AAAABAAAABCepkign7sVkKCGKqChmveQ
+y4kaoNIj9HDSYSYQ1v50INiArZDa/tGg28CQENzes6DdqayQ3r6VoN+JjpDgnneg4WlwkOJ+WaDjSVKQ
+5F47oOUpNJDmR1gg5xJREOgnOiDo8jMQ6gccIOrSFRDr5v4g7LH3EO3G4CDukdkQ76/8oPBxuxDxj96g
+8n/BkPNvwKD0X6OQ9U+ioPY/hZD3L4Sg+CiiEPkPZqD6CIQQ+viDIPvoZhD82GUg/chIEP64RyD/qCoQ
+AJgpIAGIDBACeAsgA3EokARhJ6AFUQqQBkEJoAcw7JAHjUOgCRDOkAmtvyAK8LCQC+CvoAzZzRANwJGg
+DrmvEA+priAQmZEQEYmQIBJ5cxATaXIgFFlVEBVJVCAWOTcQFyk2IBgiU5AZCRggGgI1kBryNKAb4heQ
+HNIWoB3B+ZAesfigH6HbkCB2KyAhgb2QIlYNICNq2hAkNe8gJUq8ECYV0SAnKp4QJ/7toCkKgBAp3s+g
+KupiECu+saAs036QLZ6ToC6zYJAvfnWgMJNCkDFnkiAycySQM0d0IDRTBpA1J1YgNjLokDcHOCA4HAUQ
+OOcaIDn75xA6xvwgO9vJEDywGKA9u6sQPo/6oD+bjRBAb9ygQYSpkEJPvqBDZIuQRC+goEVEbZBF89Mg
+Ry2KEEfTtSBJDWwQSbOXIErtThBLnLOgTNZqkE18laBOtkyQT1x3oFCWLpBRPFmgUnYQkFMcO6BUVfKQ
+VPwdoFY11JBW5TogWB7xEFjFHCBZ/tMQWqT+IFvetRBchOAgXb6XEF5kwiBfnnkQYE3eoGGHlZBiLcCg
+Y2d3kGQNoqBlR1mQZe2EoGcnO5BnzWagaQcdkGmtSKBq5v+Qa5ZlIGzQHBBtdkcgbq/+EG9WKSBwj+AQ
+cTYLIHJvwhBzFe0gdE+kEHT/CaB2OMCQdt7roHgYopB4vs2gefiEkHqer6B72GaQfH6RoH24SJB+XnOg
+f5gqkAABAAECAwEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
+AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
+AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
+AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
+</mutableData>
+                                        </timeZone>
+                                        <connections>
+                                            <action selector="datePickerValueChanged:" destination="4Hf-nJ-YNg" eventType="valueChanged" id="WVy-Qj-hAE"/>
+                                        </connections>
+                                    </datePicker>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -1627,6 +1658,7 @@
                     <connections>
                         <outlet property="clientName" destination="mJU-bu-XMI" id="FAQ-Vj-nPa"/>
                         <outlet property="date" destination="2Q6-KK-Nab" id="oi4-XH-0HW"/>
+                        <outlet property="datePicker" destination="mti-SD-9G3" id="Jpi-xh-Jq0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ea-iy-nq6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2405,35 +2437,43 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="33"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="b6k-QW-lGt">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" id="b6k-QW-lGt">
                                         <rect key="frame" x="20" y="82" width="572" height="666"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="KeySuggesstionCell" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Tl3-0I-wd7" customClass="KeySuggesstionCell">
-                                                <rect key="frame" x="0.0" y="22" width="572" height="44"/>
+                                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="KeySuggesstionCell" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="KeySuggesstionCell" rowHeight="90" id="Tl3-0I-wd7" customClass="KeySuggesstionCell">
+                                                <rect key="frame" x="0.0" y="22" width="572" height="90"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Tl3-0I-wd7" id="Nxl-lg-nUS">
-                                                    <rect key="frame" x="0.0" y="0.0" width="572" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="572" height="89"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.2.1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XPY-zA-1Ok">
-                                                            <rect key="frame" x="20" y="11" width="86" height="21"/>
+                                                            <rect key="frame" x="20" y="11" width="65" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes of thumbs down question goes here" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" id="TzJ-ab-NT2">
-                                                            <rect key="frame" x="156" y="11" width="396" height="21"/>
+                                                            <rect key="frame" x="93" y="11" width="372" height="68"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="PBw-7T-Lf1">
+                                                            <rect key="frame" x="496" y="27" width="57" height="35"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <state key="normal" title="Remove">
+                                                                <color key="titleColor" red="1" green="0.1167338032" blue="0.18353263480000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
+                                                        </button>
                                                     </subviews>
                                                 </tableViewCellContentView>
                                                 <connections>
+                                                    <outlet property="notesTextLabel" destination="TzJ-ab-NT2" id="bE0-aq-mux"/>
                                                     <outlet property="numberLabel" destination="XPY-zA-1Ok" id="tl6-mu-5nq"/>
-                                                    <outletCollection property="notesTextLabel" destination="TzJ-ab-NT2" id="07Y-4a-h1E"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -2457,10 +2497,10 @@
             </objects>
             <point key="canvasLocation" x="11158" y="6554"/>
         </scene>
-        <!--Conclusion View Controller - Scoring Assumptions-->
+        <!--Scoring Assumptions View Controller - Scoring Assumptions-->
         <scene sceneID="1QR-6Z-Wlk">
             <objects>
-                <viewController id="255-jQ-baX" customClass="ConclusionViewController" sceneMemberID="viewController">
+                <viewController id="255-jQ-baX" customClass="ScoringAssumptionsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Ge-gy-Pma">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2511,15 +2551,18 @@ In general, the XXXXXXX protocol requires that the practical application of prog
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Scoring Assumptions" id="UfF-vu-h1Q"/>
+                    <connections>
+                        <outlet property="scoreAssumpTextView" destination="1HF-2x-wer" id="VYY-ZC-Ib6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="En6-GI-YiF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="13113" y="6554"/>
         </scene>
-        <!--Conclusion View Controller - Key Suggesstions-->
+        <!--Element Subelement Profiles View Controller - Key Suggesstions-->
         <scene sceneID="phY-y3-edl">
             <objects>
-                <viewController title="Key Suggesstions" id="FNo-LI-pNt" customClass="ConclusionViewController" sceneMemberID="viewController">
+                <viewController title="Key Suggesstions" id="FNo-LI-pNt" customClass="ElementSubelementProfilesViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cB4-Fk-9a8">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2532,26 +2575,44 @@ In general, the XXXXXXX protocol requires that the practical application of prog
                                 <rect key="frame" x="78" y="148" width="612" height="792"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Process Profiles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hA0-38-b3t">
-                                        <rect key="frame" x="20" y="20" width="494" height="46"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Element and Sub-Element Profiles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hA0-38-b3t">
+                                        <rect key="frame" x="20" y="20" width="497" height="46"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="33"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="4Di-QG-BMJ">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="100" sectionHeaderHeight="10" sectionFooterHeight="10" id="4Di-QG-BMJ">
                                         <rect key="frame" x="20" y="82" width="572" height="666"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="0Ma-bX-G1t">
-                                                <rect key="frame" x="0.0" y="22" width="572" height="44"/>
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProfileLabelCell" rowHeight="100" id="0Ma-bX-G1t" customClass="ProfileLabelCell">
+                                                <rect key="frame" x="0.0" y="55" width="572" height="100"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0Ma-bX-G1t" id="Ges-VO-wld">
-                                                    <rect key="frame" x="0.0" y="0.0" width="572" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="572" height="99"/>
                                                     <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" id="SPH-x3-N9o">
+                                                            <rect key="frame" x="20" y="8" width="552" height="83"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <string key="text">This label will be used for everything This label will be used for everything This label will be used for everything This label will be used for everything This label will be used for everything This label will be used for everything This label will be used for everything This label will be used for everything This label will be used for everything This label will be used for everything This label will be used for everything This label will be used for everything </string>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="cellLabel" destination="SPH-x3-N9o" id="82Q-gb-qsX"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
+                                        <sections/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="FNo-LI-pNt" id="Gck-Ms-M31"/>
+                                            <outlet property="delegate" destination="FNo-LI-pNt" id="TRU-6q-dmb"/>
+                                        </connections>
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -2560,6 +2621,9 @@ In general, the XXXXXXX protocol requires that the practical application of prog
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Process Profiles" id="HKa-lD-fhg"/>
+                    <connections>
+                        <outlet property="resultsTableView" destination="4Di-QG-BMJ" id="JZa-BF-eSq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Js5-qo-HiK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2597,13 +2661,13 @@ In general, the XXXXXXX protocol requires that the practical application of prog
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="Kjd-jP-nx9"/>
         <segue reference="cnZ-cn-LI0"/>
-        <segue reference="wSe-g4-8zX"/>
         <segue reference="ZGD-NJ-UDo"/>
-        <segue reference="fed-8T-lCt"/>
         <segue reference="JhJ-6V-9g8"/>
         <segue reference="qKN-QJ-s0B"/>
         <segue reference="sOY-bc-kKG"/>
-        <segue reference="Kjd-jP-nx9"/>
+        <segue reference="z9l-uk-5Nw"/>
+        <segue reference="xXC-Ay-Dh8"/>
     </inferredMetricsTieBreakers>
 </document>

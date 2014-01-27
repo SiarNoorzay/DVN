@@ -46,7 +46,17 @@
     self.clientName.text = self.audit.client.companyName;
     
     self.date.text = self.audit.client.auditDate;
-
+    
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+//    [formatter setDateFormat:@"MM/dd/yyyy"];
+//    
+//    NSDate *date = [formatter dateFromString:self.audit.client.auditDate];
+//    
+//    NSLog(@"%@",date);
+//    
+//    [self.datePicker setDate:date];
+//    
+//TODO: wire up the date picker so it changes based on the text field and the other way around
 
 }
 
@@ -80,5 +90,7 @@
      self.audit.client.auditDate = self.date.text;
     
     //TODO: save audit
+}
+- (IBAction)datePickerValueChanged:(id)sender {
 }
 @end

@@ -15,5 +15,7 @@
 
 @property (strong, nonatomic) IBOutlet UITextField *clientName;
 @property (strong, nonatomic) IBOutlet UITextField *date;
+@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
+- (IBAction)datePickerValueChanged:(id)sender;
 
 @end
