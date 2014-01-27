@@ -22,7 +22,7 @@
             "cityStateProvince": "Georgia",
             "country": "USA",
             "postalCode": "83912",
-            "auditDate": "01042014",
+            "auditDate": "01/04/2014",
             "auditor": "Bob Loblaw",
             "numEmployees": "250",
             "baselineAudit": false,
@@ -69,9 +69,9 @@
                                                                "isSelected": false
                                                                }
                                                                ],
-                                                   "questionType": "0",
+                                                   "questionType": 0,
                                                    "isThumbsUp": 0,
-                                                   "isThumbsDown": 0
+                                                   "isThumbsDown": true
                                                    },
                                                    {
                                                    "isCompleted": true,
@@ -80,7 +80,7 @@
                                                    "questionText": "How full is the freezer?",
                                                    "helpText": "See how much room is left for products.",
                                                    "isApplicable": true,
-                                                   "notes": "",
+                                                   "notes": "The freezer was exactly half full but everything was placed only on the left side of the freezer. ",
                                                    "needsVerifying": false,
                                                    "verifyDoneBy": "That one guy",
                                                    "attachmentsLocationArray": [],
@@ -94,7 +94,7 @@
                                                                ],
                                                    "questionType": "2",
                                                    "isThumbsUp": false,
-                                                   "isThumbsDown": false
+                                                   "isThumbsDown": true
                                                    }
                                                    ]
                                      },
@@ -140,7 +140,7 @@
                                                    "questionText": "How full is the freezer?",
                                                    "helpText": "See how much room is left for products.",
                                                    "isApplicable": true,
-                                                   "notes": "",
+                                                   "notes": "The freezer had almost no light. It was so dark that I needed a flashlight. ",
                                                    "needsVerifying": false,
                                                    "verifyDoneBy": "That one guy",
                                                    "attachmentsLocationArray": [],
@@ -182,7 +182,7 @@
                                                    "questionText": "What type of knives are they using?",
                                                    "helpText": "See knife recognition chart.",
                                                    "isApplicable": true,
-                                                   "notes": "",
+                                                   "notes": "They had the normal types of knives but there was also a red lightsaber that they were using to slice and cook meat at the same time. ",
                                                    "needsVerifying": false,
                                                    "verifyDoneBy": "Jack ",
                                                    "attachmentsLocationArray": [],
@@ -215,7 +215,7 @@
                                                                }
                                                                ],
                                                    "questionType": "3",
-                                                   "isThumbsUp": false,
+                                                   "isThumbsUp": true,
                                                    "isThumbsDown": false
                                                    },
                                                    {
@@ -225,7 +225,7 @@
                                                    "questionText": "How many knives per person?",
                                                    "helpText": "Knives/people",
                                                    "isApplicable": true,
-                                                   "notes": "",
+                                                   "notes": "They had so a whole closet full of knives. There was probably more than a thousand knives in this closet. I heard rumors that there was multiple closets as well. They had so a whole closet full of knives. There was probably more than a thousand knives in this closet. I heard rumors that there was multiple closets as well. ",
                                                    "needsVerifying": false,
                                                    "verifyDoneBy": "In the box",
                                                    "attachmentsLocationArray": [],
@@ -272,7 +272,7 @@
                                                    "questionText": "Is there enough spoons?",
                                                    "helpText": "Use your professional judgement",
                                                    "isApplicable": true,
-                                                   "notes": "",
+                                                   "notes": "They only have 1 spoon for everyone",
                                                    "needsVerifying": false,
                                                    "verifyDoneBy": "SpoonMan",
                                                    "attachmentsLocationArray": [],

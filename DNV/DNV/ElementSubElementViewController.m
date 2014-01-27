@@ -9,11 +9,11 @@
 #import "ElementSubElementViewController.h"
 #import "QuestionsViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
+
 #import "SubElementCell.h"
-
-
 #import "Questions.h"
 #import "Folder.h"
+#import "AuditIDObject.h"
 
 @interface ElementSubElementViewController ()<DBRestClientDelegate>
 
@@ -89,6 +89,8 @@ int subEleNumber;
     }
 
     [self.spinner startAnimating];
+    
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
     
     
 }
@@ -280,12 +282,27 @@ loadMetadataFailedWithError:(NSError *)error {
         Audit *aud = [[Audit alloc]initWithAudit:theAudit];
         self.auditSelectLbl.text = aud.name;
         
+        //Just a DB test
+        [self.dnvDBManager saveAudit:aud];
+        
+//        NSArray * auditIDS = [self.dnvDBManager retrieveDistinctAuditNamesForClientOfType:1];
+//        
+//        NSLog(@"Audit ID: %@", auditIDS[0]);
+        
+        Audit * dbTestAudit = [self.dnvDBManager retrieveAudit:@"USI.KitchenAudit.cliff"];
+        
+        NSLog(@"Audit Name: %@", dbTestAudit.name);
+        
+        [self.dnvDBManager deleteAudit:@"USI.KitchenAudit.cliff"];
+        //end of DB test
+        
+        
         self.listOfElements = aud.Elements;
         
         Audit *second = [[Audit alloc] initWithAudit:theAudit];
         
         //just to test
-         Audit *aha = [aud mergeAudit:aud with:second];
+//         Audit *aha = [aud mergeAudit:aud with:second];
         
         //[self.elementPicker reloadAllComponents];
         

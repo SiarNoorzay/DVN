@@ -10,6 +10,6 @@
 
 @interface KeySuggesstionCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *numberLabel;
-@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *notesTextLabel;
+@property (strong, nonatomic) IBOutlet UILabel *notesTextLabel;
 
 @end

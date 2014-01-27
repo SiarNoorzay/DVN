@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "User.h"
 #import "DNVDatabaseManagerClass.h"
+
+#import "User.h"
 
 @class DBRestClient;
 

@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "Audit.h"
+#import "KeySuggesstionCell.h"
 
 @interface KeySuggestionsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
 @property (strong,nonatomic) Audit *audit;
 
 @property (strong, nonatomic) IBOutlet UITableView *KeySugsTableView;
+
+@property (strong,nonatomic) NSMutableArray *thumbsDowndQuestions;
+@property (strong,nonatomic) NSMutableArray *positions;
 
 @end
