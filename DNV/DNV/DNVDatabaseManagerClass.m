@@ -206,108 +206,8 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                         //Query to insert into the question table
                         NSString * insertQuestionSQL = [NSString stringWithFormat:@"INSERT INTO QUESTION (SUBELEMENTID, QUESTIONTEXT, QUESTIONTYPE, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, HELPTEXT, NOTES, ISTHUMBSUP, ISTHUMBSDOWN, ISAPPLICABLE, NEEDSVERIFYING, ISVERIFYDONE, PARENTQUESTIONID, NUMBEROFLAYERED, POINTSNEEDEFORLAYER) VALUES (%d, \"%@\", %d, %d, %f, %f, \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %d, %f)", subElementID, question.questionText, question.questionType, question.isCompleted, question.pointsPossible, question.pointsAwarded, question.helpText, question.notes, question.isThumbsUp, question.isThumbsDown, question.isApplicable, question.needsVerifying, question.isVerifyDone, nil, question.layeredQuesions.count, question.pointsNeededForLayered];
                 
-                        //Preparing
-                        sqlite3_prepare_v2(dnvAuditDB, [insertQuestionSQL UTF8String], -1, &statement, NULL);
-                
-                        if(sqlite3_step(statement)==SQLITE_DONE){
-                            NSLog(@"question added to DB.");
+                        [self saveQuestion:insertQuestionSQL forQuestion:question inSubElement:subElementID];
                         
-                            sqlite3_reset(statement);
-                        
-                            int questionID = [self getID:@"QUESTION"];
-                        
-                            NSArray * answers = question.Answers;
-                        
-                            //Loop for answers
-                            for (Answers * answer in answers){
-                            
-                                //Query to insert into the answer table
-                                NSString * insertAnswerSQL = [NSString stringWithFormat:@"INSERT INTO ANSWER (QUESTIONID, ANSWERTEXT, POINTSPOSSIBLE, ISSELECTED) VALUES (%d, \"%@\", %f, %d)", questionID, answer.answerText, answer.pointsPossible, answer.isSelected];
-                            
-                                //Call to insert a row into a table
-                                [self insertRowInTable:insertAnswerSQL forTable:@"answer"];
-                            }
-                        
-                            //
-                            NSMutableArray * attachments = [NSMutableArray arrayWithArray:question.imageLocationArray];
-                            for (NSString * attach in question.attachmentsLocationArray)
-                                [attachments addObject:attach];
-                        
-                            //Loop for attachments
-                            for (int i = 0; i < attachments.count; i++){
-                            
-                                BOOL isImage;
-                                if (i < question.imageLocationArray.count)
-                                    isImage = true;
-                                else
-                                    isImage = false;
-                            
-                                //Query to insert into the attachment table
-                                NSString * insertAttachSQL = [NSString stringWithFormat:@"INSERT INTO ATTACHMENT (QUESTIONID, ATTACHMENTNAME, ISIMAGE) VALUES (%d, \"%@\", %d)", questionID, attachments[i], isImage];
-                            
-                                //Call to insert a row into a table
-                                [self insertRowInTable:insertAttachSQL forTable:@"attachment"];
-                            }
-                    
-                            //Condition for layered questions
-                            if (question.layeredQuesions.count > 0){
-                        
-                                sqlite3_reset(statement);
-                        
-                                int questionID = [self getID:@"QUESTION"];
-                        
-                                NSArray * layeredQuest = question.layeredQuesions;
-                        
-                                //Loop for layered questions
-                                for (Questions * lQ in layeredQuest){
-                            
-                                    //Query to insert layered questions into the questions table
-                                    NSString * insertLQSQL = [NSString stringWithFormat:@"INSERT INTO QUESTION (SUBELEMENTID, QUESTIONTEXT, QUESTIONTYPE, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, HELPTEXT, NOTES, ISTHUMBSUP, ISTHUMBSDOWN, ISAPPLICABLE, NEEDSVERIFYING, ISVERIFYDONE, PARENTQUESTIONID, NUMBEROFLAYERED, POINTSNEEDEFORLAYER) VALUES (%d, \"%@\", %d, %d, %f, %f, \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %d, %f)", subElementID, lQ.questionText, lQ.questionType, lQ.isCompleted, lQ.pointsPossible, lQ.pointsAwarded, lQ.helpText, lQ.notes, lQ.isThumbsUp, lQ.isThumbsDown, lQ.isApplicable, lQ.needsVerifying, lQ.isVerifyDone, questionID, lQ.layeredQuesions.count, lQ.pointsNeededForLayered];
-                            
-                                    //Call to insert a row into a table
-                                    [self insertRowInTable:insertLQSQL forTable:@"layered question"];
-                            
-                                    int LQID = [self getID:@"QUESTION"];
-                            
-                                    NSArray * LQanswers = lQ.Answers;
-                            
-                                    //Loop for layered question answers
-                                    for (Answers * answer in LQanswers){
-                                
-                                        //Query to insert LQ answers into the answers table
-                                        NSString * insertLQAnswerSQL = [NSString stringWithFormat:@"INSERT INTO ANSWER (QUESTIONID, ANSWERTEXT, POINTSPOSSIBLE, ISSELECTED) VALUES (%d, \"%@\", %f, %d)", LQID, answer.answerText, answer.pointsPossible, answer.isSelected];
-                                
-                                        //Call to insert a row into a table
-                                        [self insertRowInTable:insertLQAnswerSQL forTable:@"layered answer"];
-                                    }
-                            
-                                    //
-                                    NSMutableArray * attachments = [NSMutableArray arrayWithArray:lQ.imageLocationArray];
-                                    for (NSString * attach in lQ.attachmentsLocationArray)
-                                        [attachments addObject:attach];
-                            
-                                    //Loop for Attachments
-                                    for (int i = 0; i < attachments.count; i++){
-                                
-                                        BOOL isImage;
-                                    
-                                        if (i < lQ.imageLocationArray.count)
-                                            isImage = true;
-                                        else
-                                            isImage = false;
-                                
-                                        //Query to insert LQ attachments into the attachments table
-                                        NSString * insertAttachSQL = [NSString stringWithFormat:@"INSERT INTO ATTACHMENT (QUESTIONID, ATTACHMENTNAME, ISIMAGE) VALUES (%d, \"%@\", %d)", LQID, attachments[i], isImage];
-                                
-                                        //Call to insert a row into a table
-                                        [self insertRowInTable:insertAttachSQL forTable:@"layered attachment"];
-                                    }
-                                }
-                            }
-                        }
-                        else{
-                            NSLog(@"Failed to add question.");
-                        }
                     }
                 }
             }
@@ -324,6 +224,89 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         NSLog(@"Failed to open/create DB.");
     }
     
+}
+
+
+-(void)saveQuestion:(NSString *)insertQSQL forQuestion:(Questions *)question inSubElement:(int)subElementID{
+    
+    
+    sqlite3_stmt * statement;
+    sqlite3_prepare_v2(dnvAuditDB, [insertQSQL UTF8String], -1, &statement, NULL);
+    
+    if (sqlite3_step(statement)==SQLITE_DONE){
+        NSLog(@"question added to DB.");
+        
+        sqlite3_reset(statement);
+        
+        int questionID = [self getID:@"QUESTION"];
+        
+        NSArray * answers = question.Answers;
+        
+        //Loop for answers
+        for (Answers * answer in answers){
+            
+            //Query to insert into the answer table
+            NSString * insertAnswerSQL = [NSString stringWithFormat:@"INSERT INTO ANSWER (QUESTIONID, ANSWERTEXT, POINTSPOSSIBLE, ISSELECTED) VALUES (%d, \"%@\", %f, %d)", questionID, answer.answerText, answer.pointsPossible, answer.isSelected];
+            
+            //Call to insert a row into a table
+            [self insertRowInTable:insertAnswerSQL forTable:@"answer"];
+        }
+        
+        //
+        NSMutableArray * attachments = [NSMutableArray arrayWithArray:question.imageLocationArray];
+        for (NSString * attach in question.attachmentsLocationArray)
+            [attachments addObject:attach];
+        
+        //Loop for attachments
+        for (int i = 0; i < attachments.count; i++){
+            
+            BOOL isImage;
+            if (i < question.imageLocationArray.count)
+                isImage = true;
+            else
+                isImage = false;
+            
+            //Query to insert into the attachment table
+            NSString * insertAttachSQL = [NSString stringWithFormat:@"INSERT INTO ATTACHMENT (QUESTIONID, ATTACHMENTNAME, ISIMAGE) VALUES (%d, \"%@\", %d)", questionID, attachments[i], isImage];
+            
+            //Call to insert a row into a table
+            [self insertRowInTable:insertAttachSQL forTable:@"attachment"];
+        }
+        
+        //Condition for layered questions
+        if (question.layeredQuesions.count > 0){
+            
+            NSArray * layeredQuest = question.layeredQuesions;
+            
+            //Loop for layered questions
+            for (Questions * lQ in layeredQuest){
+                
+                //Query to insert layered questions into the questions table
+                NSString * insertLQSQL = [NSString stringWithFormat:@"INSERT INTO QUESTION (SUBELEMENTID, QUESTIONTEXT, QUESTIONTYPE, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, HELPTEXT, NOTES, ISTHUMBSUP, ISTHUMBSDOWN, ISAPPLICABLE, NEEDSVERIFYING, ISVERIFYDONE, PARENTQUESTIONID, NUMBEROFLAYERED, POINTSNEEDEFORLAYER) VALUES (%d, \"%@\", %d, %d, %f, %f, \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %d, %f)", subElementID, lQ.questionText, lQ.questionType, lQ.isCompleted, lQ.pointsPossible, lQ.pointsAwarded, lQ.helpText, lQ.notes, lQ.isThumbsUp, lQ.isThumbsDown, lQ.isApplicable, lQ.needsVerifying, lQ.isVerifyDone, questionID, lQ.layeredQuesions.count, lQ.pointsNeededForLayered];
+                
+                [self saveQuestion:insertLQSQL forQuestion:lQ inSubElement:subElementID];
+            }
+        }
+    }
+    else{
+        NSLog(@"Failed to add question.");
+    }
+}
+
+-(void)insertRowInTable:(NSString *)insertSQL forTable:(NSString *) table{
+    
+    sqlite3_stmt * statement;
+    
+    //Preparing
+    sqlite3_prepare_v2(dnvAuditDB, [insertSQL UTF8String], -1, &statement, NULL);
+    
+    if(sqlite3_step(statement)==SQLITE_DONE){
+        NSLog(@"%@ added to DB.", table);
+    }
+    else{
+        NSLog(@"Failed to add %@.", table);
+    }
+    sqlite3_finalize(statement);
 }
 
 
@@ -1284,23 +1267,5 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     
     return tableIDS;
 }
-
-
--(void)insertRowInTable:(NSString *)insertSQL forTable:(NSString *) table{
-    
-    sqlite3_stmt * statement;
-    
-    //Preparing
-    sqlite3_prepare_v2(dnvAuditDB, [insertSQL UTF8String], -1, &statement, NULL);
-    
-    if(sqlite3_step(statement)==SQLITE_DONE){
-        NSLog(@"%@ added to DB.", table);
-    }
-    else{
-        NSLog(@"Failed to add %@.", table);
-    }
-    sqlite3_finalize(statement);
-}
-
 
 @end

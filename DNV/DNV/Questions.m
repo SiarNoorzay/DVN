@@ -50,7 +50,7 @@
         self.Answers = objectArray;
         
         
-        NSMutableArray *tempArray1 = [questionDictionary objectForKey:@"LayeredQuestions"];
+        NSMutableArray *tempArray1 = [questionDictionary objectForKey:@"layeredQuestions"];
         NSMutableArray *objectArray1 = [NSMutableArray arrayWithCapacity:[tempArray1 count]];
         
         for (int i = 0; i < [tempArray1 count]; i++) {
