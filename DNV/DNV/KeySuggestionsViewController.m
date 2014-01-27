@@ -78,7 +78,6 @@
         
     }
 
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -92,8 +91,37 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return nil;
+    static NSString * cellIdentifier = @"KeySuggesstionCell";
     
+    KeySuggesstionCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if(cell == nil){
+        cell = [[KeySuggesstionCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    
+    cell.numberLabel.text = [self.positions objectAtIndex:indexPath.row];
+    cell.notesTextLabel.text = [self.thumbsDowndQuestions objectAtIndex:indexPath.row];
+    
+    return cell;
+    
+}
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+    
+}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Perform the real delete action here. Note: you may need to check editing style
+    //   if you do not perform delete only.
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        [self.positions removeObjectAtIndex:indexPath.row];
+        [self.thumbsDowndQuestions removeObjectAtIndex:indexPath.row];
+        
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+    NSLog(@"Deleted row.");
 }
 
     
