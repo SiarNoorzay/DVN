@@ -17,7 +17,7 @@
 @property (nonatomic) NSString * questionText;
 @property (nonatomic) NSString * helpText;
 @property (nonatomic) BOOL isApplicable;
-@property (nonatomic) BOOL isVerifiedDone;
+@property (nonatomic) BOOL isVerifyDone;
 @property (nonatomic) NSString * notes;
 @property (nonatomic) int needsVerifying;
 @property (nonatomic) NSArray * attachmentsLocationArray;

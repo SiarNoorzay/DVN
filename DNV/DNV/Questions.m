@@ -28,7 +28,8 @@
         else self.isApplicable = [[questionDictionary objectForKey:@"isApplicable"]boolValue];
         
         self.notes = [questionDictionary objectForKey:@"notes"];
-        self.needsVerifying = [[questionDictionary objectForKey:@"needsVerifying"] boolValue];
+        self.needsVerifying = [[questionDictionary objectForKey:@"needsVerifying"] integerValue];
+        self.isVerifyDone = [[questionDictionary objectForKey:@"isVerifyDone"] boolValue];
         self.attachmentsLocationArray = [questionDictionary objectForKey:@"attachmentsLocationArray"];
         self.imageLocationArray = [questionDictionary objectForKey:@"imageLocationArray"];
         self.questionType = [[questionDictionary objectForKey:@"questionType"] intValue];

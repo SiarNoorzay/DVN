@@ -31,22 +31,32 @@
 
 -(id)init;
 
+//User methods
 -(void)createUserTable;
 -(User *)retrieveUser:(NSString *) userID;
 -(NSArray *)retrieveAllUsers;
 -(void)saveUser:(User *) user;
 -(void)deleteUserTable;
 
+//Audit methods
 -(void)createAuditTables;
--(Audit *)retrieveAudit:(NSInteger *) auditID;
--(NSArray *)retrieveAllAudits;
+-(Audit *)retrieveAudit:(NSString *) auditID;
+-(NSArray *)retrieveDistinctAuditNamesForClientOfType:(int) auditType;
+-(NSArray *)retrieveAllAuditIDsOfType:(int) auditType forAuditName:(NSString *) auditName;
 -(void)saveAudit:(Audit *) audit;
+-(void)saveClient:(Client *) client;
+-(void)saveReport:(Report *) report;
+-(void)saveElement:(Elements *) element;
+-(void)saveSubElement:(SubElements *) subElement;
+-(void)saveQuestion:(Questions *) question;
+-(void)saveAnswer:(Answers *) answer;
+-(void)saveAttachment:(NSArray *) attach images:(int) numOfImages;
 -(void)updateAudit:(NSInteger *) auditID auditType:(NSInteger *) auditType;
--(void)updateElement:(NSInteger *) elementID isCompleted:(BOOL) isCompleted;
--(void)updateSubElment:(NSInteger *) subElementID isCompleted:(BOOL) isCompleted;
--(void)updateQuestion:(NSInteger *) questionID isCompleted:(BOOL) isCompleted;
--(void)updateAnswer:(NSInteger *) answerID isCompleted:(BOOL) isSelected;
--(void)deleteAudit:(NSInteger *) auditID;
+-(void)updateElement:(NSInteger *) elementID isCompleted:(BOOL) isCompleted ofAudit:(NSString *) auditID;
+-(void)updateSubElment:(NSInteger *) subElementID isCompleted:(BOOL) isCompleted ofAudit:(NSString *) auditID;
+-(void)updateQuestion:(NSInteger *) questionID isCompleted:(BOOL) isCompleted ofAudit:(NSString *) auditID;
+-(void)updateAnswer:(NSInteger *) answerID isCompleted:(BOOL) isSelected ofAudit:(NSString *) auditID;
+-(void)deleteAudit:(NSString *) auditID;
 
 
 
