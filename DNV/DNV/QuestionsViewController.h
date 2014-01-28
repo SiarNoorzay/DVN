@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DNVDatabaseManagerClass.h"
+
 #import "Questions.h"
 #import "QuestionCell.h"
 
@@ -19,5 +21,7 @@
 @property(nonatomic) int elementNumber;
 @property(nonatomic) int subEleNumber;
 
+@property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
+@property (nonatomic) NSArray * questionIDs;
 
 @end

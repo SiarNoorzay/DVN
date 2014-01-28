@@ -14,7 +14,7 @@
 
 @interface Audit : NSDictionary
 
-
+@property (nonatomic) NSString * auditID;
 @property (nonatomic) NSInteger auditType;
 @property (nonatomic) NSString * name;
 @property (nonatomic) NSArray * Elements;
