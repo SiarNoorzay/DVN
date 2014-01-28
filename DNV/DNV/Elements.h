@@ -11,6 +11,7 @@
 
 @interface Elements : NSDictionary
 
+@property (nonatomic) int elementID;
 @property (nonatomic) BOOL isCompleted;
 @property (nonatomic) NSString * name;
 @property (nonatomic) BOOL isRequired;

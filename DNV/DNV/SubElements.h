@@ -11,6 +11,7 @@
 
 @interface SubElements : NSDictionary
 
+@property (nonatomic) int subElementID;
 @property (nonatomic) BOOL isCompleted;
 @property (nonatomic) NSString * name;
 @property (nonatomic) float  pointsPossible;

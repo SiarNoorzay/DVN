@@ -13,7 +13,6 @@
 #import "SubElementCell.h"
 #import "Questions.h"
 #import "Folder.h"
-#import "AuditIDObject.h"
 
 @interface ElementSubElementViewController ()<DBRestClientDelegate>
 
@@ -141,7 +140,10 @@ int subEleNumber;
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     
     self.listOfSubElements = self.ele.Subelements;
-    self.subElementIDs = [self.dnvDBManager getIDSFrom:@"SUBELEMENT" where:@"ELEMENTID" equals:(int)row];
+    
+    int selectedRow = (int)row + 1;
+    self.subElementIDs = [self.dnvDBManager getIDSFrom:@"SUBELEMENT" where:@"ELEMENTID" equals:selectedRow];
+    NSLog(@"First Sub Element ID: %d", [self.subElementIDs[0] integerValue]);
     
     [self.subElementTable reloadData];
     elementNumber = row;
@@ -286,16 +288,16 @@ loadMetadataFailedWithError:(NSError *)error {
         //Just a DB test
         //Using the user defaults to create the audit ID
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        NSString * auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
-        auditID = [auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
+        aud.auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
+        aud.auditID = [aud.auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
         
         [self.dnvDBManager saveAudit:aud];
         
-        Audit * dbTestAudit = [self.dnvDBManager retrieveAudit:auditID];
+        aud = [self.dnvDBManager retrieveAudit:aud.auditID];
         
-        self.elementIDs = [self.dnvDBManager getElementIDS:auditID];
+        self.elementIDs = [self.dnvDBManager getElementIDS:aud.auditID];
         
-        NSLog(@"Audit Name: %@", dbTestAudit.name);
+        NSLog(@"Audit Name: %@", aud.name);
         //end of DB test
         
         
@@ -314,7 +316,7 @@ loadMetadataFailedWithError:(NSError *)error {
         [self.elementPicker selectRow:0 inComponent:0 animated:false];
         Elements *tempEle = [self.listOfElements objectAtIndex:0];
         self.listOfSubElements = tempEle.Subelements;
-        
+        self.subElementIDs = [self.dnvDBManager getIDSFrom:@"SUBELEMENT" where:@"ELEMENTID" equals:[[self.elementIDs objectAtIndex:0] integerValue]];
         [self.subElementTable reloadData];
 
     }

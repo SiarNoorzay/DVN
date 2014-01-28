@@ -11,6 +11,7 @@
 
 @interface Questions : NSDictionary
 
+@property (nonatomic) int questionID;
 @property (nonatomic) BOOL isCompleted;
 @property (nonatomic) float  pointsPossible;
 @property (nonatomic) float  pointsAwarded;

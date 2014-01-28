@@ -486,8 +486,6 @@ BOOL isSublayeredQuestion = false;
         self.currentPosition++;
         [self refreshAnswerView];
     }
-    
-    
 }
 
 - (IBAction)sliderChanged:(id)sender {
@@ -503,7 +501,6 @@ BOOL isSublayeredQuestion = false;
     }
     
     answered = true;
-    
 }
 
 - (IBAction)lastButtonPushed:(id)sender {

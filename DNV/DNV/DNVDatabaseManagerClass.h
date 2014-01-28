@@ -44,10 +44,10 @@
 -(NSArray *)retrieveDistinctAuditNamesForClientOfType:(int) auditType;
 -(NSArray *)retrieveAllAuditIDsOfType:(int) auditType forAuditName:(NSString *) auditName;
 -(void)saveAudit:(Audit *) audit;
--(void)updateAudit:(NSString *) auditID auditType:(int) auditType;
--(void)updateElement:(int) elementID forElement:(Elements *)element;
--(void)updateSubElment:(int) subElementID forSubElement:(SubElements *)subElement;
--(void)updateQuestion:(int) questionID forQuestion:(Questions *)question withAnswer:(int)answerID isSelected:(BOOL)selected;
+-(void)updateAudit:(Audit *)audit;
+-(void)updateElement:(Elements *)element;
+-(void)updateSubElment:(SubElements *)subElement;
+-(void)updateQuestion:(Questions *)question;
 -(void)deleteAudit:(NSString *) auditID;
 
 //Helper methods

@@ -11,6 +11,7 @@
 
 @interface Report : NSDictionary
 
+@property (nonatomic) int reportID;
 @property (nonatomic) NSString * summary;
 @property (nonatomic) NSString * preparedBy;
 @property (nonatomic) NSString * approvedBy;
