@@ -18,6 +18,8 @@
 @property (nonatomic) NSArray * Questions;
 @property (nonatomic) float modefiedNAPoints;
 
+@property (nonatomic) NSArray * zeroIfNoPointsFor;
+
 -(id)initWithSubElement:(NSDictionary *)subElementDictionary;
 
 -(SubElements *)mergeSubElements:(SubElements *)primarySubElements with:(SubElements *)secondarySubElements;

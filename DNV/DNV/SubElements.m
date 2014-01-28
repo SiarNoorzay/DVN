@@ -49,9 +49,7 @@
         }
         self.Questions = objectArray;
         
-        
-        
-        
+        self.zeroIfNoPointsFor = [subElementDictionary objectForKey:@"zeroIfNoPointsFor"];
     }
     return self;
 }
@@ -74,6 +72,9 @@
     
     //string
     mergedSubElements.name = [dataMerger mergeString:primarySubElements.name with:secondarySubElements.name];
+    
+    //array
+    mergedSubElements.zeroIfNoPointsFor = [dataMerger mergeArray:primarySubElements.zeroIfNoPointsFor with:secondarySubElements.zeroIfNoPointsFor];
     
     //questions array
     NSMutableArray *mergedQuestions = [NSMutableArray new];
