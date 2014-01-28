@@ -12,14 +12,12 @@
 #import "NotesViewController.h"
 #import "CalculatorViewController.h"
 
-
 @interface AnswersViewController ()
 
 @end
 
 //Change this to go from big swith to table view for bool questions
 BOOL const useSlider = true;
-
 
 float pointTotal = 0.0;
 BOOL answered = false; //used for submit button logic
@@ -68,7 +66,6 @@ BOOL isSublayeredQuestion = false;
     [self.view addGestureRecognizer:swipeLeftGestureRecognizer];
     [self.view addGestureRecognizer:swipeRightGestureRecognizer];
 
-    
     [self.thumbsDownButton setImage:[UIImage imageNamed:@"thumbs_down.png"] forState:UIControlStateSelected];
     [self.thumbsDownButton setImage:[UIImage imageNamed:@"thumbs_down_gray.png"] forState:UIControlStateNormal];
     
@@ -119,9 +116,7 @@ BOOL isSublayeredQuestion = false;
                 [self.subQuesionsTableView deselectRowAtIndexPath:[self.subQuesionsTableView indexPathForSelectedRow] animated:YES];
                 
             }
-            
         }
-        
     }];
     }
     if ([self.question.layeredQuesions count] >=1)
@@ -135,10 +130,9 @@ BOOL isSublayeredQuestion = false;
     }
     else islayeredQuestion = false;
     
-    
     [self refreshAnswerView];
-
 }
+
 - (void)keyboardDidShow:(NSNotification *)notification
 {
     if (keyboardShouldMove){
@@ -163,6 +157,7 @@ BOOL isSublayeredQuestion = false;
     
     [self.view setFrame:frame];
 }
+
 #pragma mark View Changes
 
 -(void)hideAnswerViews
@@ -190,10 +185,8 @@ BOOL isSublayeredQuestion = false;
         self.rightSliderLabel.hidden = true;
         self.switchy.hidden = true;
     }
-    
-    
-    
 }
+
 -(void) refreshAnswerView
 {
     isSublayeredQuestion = (islayeredQuestion && self.currentPosition <0);
@@ -236,7 +229,6 @@ BOOL isSublayeredQuestion = false;
                 self.answersTableView.allowsMultipleSelection = false;
                 self.tableCell.hidden = false;
             }
-           
             break;
         case 1: //multiple choice
             self.answersTableView.hidden = false;
@@ -288,9 +280,7 @@ BOOL isSublayeredQuestion = false;
             [self.firstButton setEnabled:false];
             [self.previousButton setEnabled:false];
         }
-        
     }
-    
     
     [self.thumbsUpButton setSelected:self.question.isThumbsUp];
     [self.thumbsDownButton setSelected:self.question.isThumbsDown];
@@ -303,12 +293,10 @@ BOOL isSublayeredQuestion = false;
             [self.subQuesionsTableView setAllowsSelection:YES];
         }
         else {[self.subQuesionsTableView setAllowsSelection:NO];}
-        
-        
+    
     }
-    
-    
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -334,25 +322,23 @@ BOOL isSublayeredQuestion = false;
         
         return cell;
     }
-    
 
-
-        static NSString *simpleTableIdentifier = @"subQuestionCell";
+    static NSString *simpleTableIdentifier = @"subQuestionCell";
         
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
         
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
-        }
-        Questions *subQuest = [self.question.layeredQuesions objectAtIndex:indexPath.row];
-        cell.textLabel.font = [UIFont systemFontOfSize:24];
-        cell.textLabel.text =[NSString stringWithFormat: @"\t\t%i.%i.%i.%i\t%@",self.elementNumber +1,self.subElementNum +1 , self.currentPosition+1,indexPath.row +1, subQuest.questionText];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+    }
     
-        return cell;
-        
+    Questions *subQuest = [self.question.layeredQuesions objectAtIndex:indexPath.row];
+    cell.textLabel.font = [UIFont systemFontOfSize:24];
+    cell.textLabel.text =[NSString stringWithFormat: @"\t\t%i.%i.%i.%i\t%@",self.elementNumber +1,self.subElementNum +1 , self.currentPosition+1,indexPath.row +1, subQuest.questionText];
     
+    return cell;
     
 }
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == self.answersTableView) {
@@ -366,7 +352,6 @@ BOOL isSublayeredQuestion = false;
         
     }
     return 0;
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -395,10 +380,8 @@ BOOL isSublayeredQuestion = false;
         [self refreshAnswerView];
         
     }
-
-    
-    
 }
+
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.answersTableView) {
@@ -409,12 +392,7 @@ BOOL isSublayeredQuestion = false;
         self.pointsLabel.text =[NSString stringWithFormat:@"%.2f",pointTotal];
         [ans setIsSelected:false];
     }
-    
-    
 }
-
-
-
 
 #pragma mark IBactions
 
@@ -473,8 +451,6 @@ BOOL isSublayeredQuestion = false;
             [self refreshAnswerView];
             return;
         }
-        
-        
     }
     
     if (self.currentPosition == ([self.questionArray count]-1))
@@ -529,17 +505,22 @@ BOOL isSublayeredQuestion = false;
         [self refreshAnswerView];
     }
 }
+
+
 #pragma mark UITextField Delegate
+
 -(IBAction)textFieldDidBeginEditing:(UITextField *)textField
 {
     keyboardShouldMove = true;
     textField.text = @"";
     
 }
+
 - (IBAction)textFieldEndedEditing:(id)sender {
     
     
 }
+
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if(textField == self.questionNumberTextField){
@@ -569,7 +550,6 @@ BOOL isSublayeredQuestion = false;
 
 #pragma mark - Dashboard Buttons
 
-
 - (IBAction)thumbsUpPushed:(id)sender {
     self.question.isThumbsUp = !self.question.isThumbsUp;
     [self.thumbsUpButton setSelected: !self.thumbsUpButton.selected];
@@ -588,8 +568,8 @@ BOOL isSublayeredQuestion = false;
     if (self.question.isApplicable) {
         
     }
-    
 }
+
 - (IBAction)verifyButtonPushed:(id)sender {
     self.question.needsVerifying = !self.question.needsVerifying;
     [self.verifyButton setSelected: !self.verifyButton.selected];
@@ -620,6 +600,7 @@ BOOL isSublayeredQuestion = false;
     if ([self.percentSliderTextField canResignFirstResponder]) [self.percentSliderTextField resignFirstResponder];
     
 }
+
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     if(textField == self.questionNumberTextField)
@@ -637,9 +618,8 @@ BOOL isSublayeredQuestion = false;
         self.currentPosition = tempInt.intValue - 1;
         
     }
-    
-    
 }
+
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if( textField == self.percentSliderTextField)
@@ -686,6 +666,7 @@ BOOL isSublayeredQuestion = false;
     //[self performSegueWithIdentifier:@"notesPopover" sender:sender];
 
 }
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"helpTextPopover"]) {
@@ -746,7 +727,6 @@ BOOL isSublayeredQuestion = false;
 }
 
 
-
 - (IBAction)mainLayeredPushed:(id)sender {
     isSublayeredQuestion = false;
     self.question = mainSubQuestion;
@@ -755,4 +735,5 @@ BOOL isSublayeredQuestion = false;
     [self refreshAnswerView];
     
 }
+
 @end
