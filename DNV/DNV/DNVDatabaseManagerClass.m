@@ -165,7 +165,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             Report * report = audit.report;
         
             //Query to insert into the report table
-            NSString * insertReportSQL = [NSString stringWithFormat:@"INSERT INTO REPORT (AUDITID, SUMMARY, EXECSUMMARY, PREPAREDBY, APPROVEDBY, PROJECTNUMBER, SCORINGASSUMPTIONS, CONCLUSION, DIAGRAMFILENAME) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\",\"%@\", \"%@\", \"%@\", \"%@\")", auditID, report.summary, report.executiveSummary, report.preparedBy, report.approvedBy, report.projectNum, report.scoringAssumptions, report.conclusion, report.methodologyDiagramLocation];
+            NSString * insertReportSQL = [NSString stringWithFormat:@"INSERT INTO REPORT (AUDITID, CLIENTREF, SUMMARY, EXECSUMMARY, PREPAREDBY, APPROVEDBY, PROJECTNUMBER, SCORINGASSUMPTIONS, CONCLUSION, DIAGRAMFILENAME) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\",\"%@\", \"%@\", \"%@\", \"%@\")", auditID, report.clientRef, report.summary, report.executiveSummary, report.preparedBy, report.approvedBy, report.projectNum, report.scoringAssumptions, report.conclusion, report.methodologyDiagramLocation];
         
             //Call to insert a row into a table
             [self insertRowInTable:insertReportSQL forTable:@"report"];
@@ -264,11 +264,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             else
                 isImage = false;
             
-            //Query to insert into the attachment table
-            NSString * insertAttachSQL = [NSString stringWithFormat:@"INSERT INTO ATTACHMENT (QUESTIONID, ATTACHMENTNAME, ISIMAGE) VALUES (%d, \"%@\", %d)", questionID, attachments[i], isImage];
-            
-            //Call to insert a row into a table
-            [self insertRowInTable:insertAttachSQL forTable:@"attachment"];
+            [self saveAttachment:attachments[i] ofType:isImage forQuestion:questionID];
         }
         
         //Condition for layered questions
@@ -291,6 +287,15 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     }
 }
 
+-(void)saveAttachment:(NSString *)attachName ofType:(BOOL)isImage forQuestion:(int)questionID{
+    
+    //Query to insert into the attachment table
+    NSString * insertAttachSQL = [NSString stringWithFormat:@"INSERT INTO ATTACHMENT (QUESTIONID, ATTACHMENTNAME, ISIMAGE) VALUES (%d, \"%@\", %d)", questionID, attachName, isImage];
+    
+    //Call to insert a row into a table
+    [self insertRowInTable:insertAttachSQL forTable:@"attachment"];
+    
+}
 
 -(NSArray *)retrieveAllAuditIDsOfType:(int)auditType forAuditName:(NSString *)auditName{
     
@@ -500,10 +505,10 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //Temperary audit to hold the audit information from DB
     Report * tempReport = [Report new];
     
-    NSString * queryClientSQL = [NSString stringWithFormat:@"SELECT * FROM CLIENT WHERE AUDITID = \"%@\"", auditID];
+    NSString * queryReportSQL = [NSString stringWithFormat:@"SELECT * FROM REPORT WHERE AUDITID = \"%@\"", auditID];
     
     //Prepare the Query
-    if(sqlite3_prepare_v2(dnvAuditDB, [queryClientSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
+    if(sqlite3_prepare_v2(dnvAuditDB, [queryReportSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
         
         //If this work, there must be a row if the data was there
         while (sqlite3_step(statement) == SQLITE_ROW){
@@ -753,6 +758,8 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             tempQuestion.isVerifyDone = [verifyDone boolValue];
             tempQuestion.pointsNeededForLayered = [ptsPossForLay floatValue];
             tempQuestion.Answers = [self retrieveAnswersOfQuestion:tempQuestion.questionID];
+            tempQuestion.attachmentsLocationArray = [self retrieveAttachmentsOfQuestion:tempQuestion.questionID ofType:false];
+            tempQuestion.imageLocationArray = [self retrieveAttachmentsOfQuestion:tempQuestion.questionID ofType:true];
                 
             if( [numOfLayered integerValue] > 0 )
                 tempQuestion.layeredQuesions = [self retrieveQuestionsOfSubElement:subElementID theParentQuestionID:tempQuestion.questionID];
@@ -808,6 +815,33 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     
 }
 
+-(NSArray *)retrieveAttachmentsOfQuestion:(int)questionID ofType:(BOOL)isImage{
+    
+    //Create the statement Object
+    sqlite3_stmt * statement;
+    
+    NSMutableArray * attachArray = [[NSMutableArray alloc]init];
+    
+    //Creating the SQL statment to retrieve the data from the database
+    NSString * queryAttachSQL = [NSString stringWithFormat:@"SELECT ATTACHMENTNAME FROM ATTACHMENT WHERE QUESTIONID= %d AND ISIMAGE = %d", questionID, isImage];
+    
+    //Prepare the Query
+    if(sqlite3_prepare_v2(dnvAuditDB, [queryAttachSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
+        
+        //If this work, there must be a row if the data was there
+        while (sqlite3_step(statement) == SQLITE_ROW){
+            
+            //Gets the attachment name data from DB and adding it to the temp Answer Object
+            NSString * attachName = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+            
+            [attachArray addObject:attachName];
+        }
+    }
+    
+    return attachArray;
+    
+}
+
 -(void)updateAudit:(Audit *)audit{
     
     //Opening the SQLite DB
@@ -820,12 +854,13 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         //Prepare the Query
         sqlite3_prepare_v2(dnvAuditDB, [updateAuditSQL UTF8String], -1, &statement, NULL);
     
+        
         if(sqlite3_step(statement)==SQLITE_DONE)
         {
             NSLog(@"Row updated from Audit table.");
         }
         else {
-            NSLog(@"Failed to update row from Audit table.");
+            NSLog(@"Failed to update row from Audit table. Error: %s", sqlite3_errmsg(dnvAuditDB));
         }
     
         sqlite3_finalize(statement);
@@ -842,7 +877,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //Opening the SQLite DB
     if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
         
-        NSString * updateClientSQL = [NSString stringWithFormat:@"UPDATE CLIENT SET CLIENTNAME = \"%@\", DIVISION = \"%@\", SIC = \"%@\", NUMBEREMPLOYEES = %d, AUDITOR = \"%@\", AUDITSITE = \"%@\", AUDITDATE = \"%@\", BASELINEAUDIT = %d, STREETADDRESS = \"%@\", CITYSTATEPROVINCE = \"%@\", POSTALCODE = \"%@\", COUNTRY = \"%@\", WHERE ID = %d", client.companyName, client.division, client.SICNumber, client.numEmployees, client.auditor, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.postalCode, client.country, client.clientID];
+        NSString * updateClientSQL = [NSString stringWithFormat:@"UPDATE CLIENT SET CLIENTNAME = \"%@\", DIVISION = \"%@\", SIC = \"%@\", NUMBEREMPLOYEES = %d, AUDITOR = \"%@\", AUDITSITE = \"%@\", AUDITDATE = \"%@\", BASELINEAUDIT = %d, STREETADDRESS = \"%@\", CITYSTATEPROVINCE = \"%@\", POSTALCODE = \"%@\", COUNTRY = \"%@\" WHERE ID = %d", client.companyName, client.division, client.SICNumber, client.numEmployees, client.auditor, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.postalCode, client.country, client.clientID];
         
         sqlite3_stmt * statement;
         
@@ -871,7 +906,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //Opening the SQLite DB
     if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
         
-        NSString * updateReportSQL = [NSString stringWithFormat:@"UPDATE REPORT SET SUMMARY = \"%@\", EXECSUMMARY = \"%@\", PREPAREDBY = \"%@\", APPROVEDBY = \"%@\", PROJECTNUMBER = \"%@\", SCORINGASSUMPTIONS = \"%@\", CONCLUSION = \"%@\", DIAGRAMFILENAME = \"%@\", WHERE ID = %d",report.summary, report.executiveSummary, report.preparedBy, report.approvedBy, report.projectNum, report.scoringAssumptions, report.conclusion, report.methodologyDiagramLocation, report.reportID];
+        NSString * updateReportSQL = [NSString stringWithFormat:@"UPDATE REPORT SET SUMMARY = \"%@\", EXECSUMMARY = \"%@\", PREPAREDBY = \"%@\", APPROVEDBY = \"%@\", PROJECTNUMBER = \"%@\", SCORINGASSUMPTIONS = \"%@\", CONCLUSION = \"%@\", DIAGRAMFILENAME = \"%@\" WHERE ID = %d",report.summary, report.executiveSummary, report.preparedBy, report.approvedBy, report.projectNum, report.scoringAssumptions, report.conclusion, report.methodologyDiagramLocation, report.reportID];
         
         sqlite3_stmt * statement;
         
@@ -900,7 +935,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //Opening the SQLite DB
     if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
     
-        NSString * updateElementSQL = [NSString stringWithFormat:@"UPDATE ELEMENT SET ISCOMPLETED = %d, POINTSPOSSIBLE = %f, POINTSAWARDED = %f, MODIFIEDNAPOINTS = %f, WHERE ID = %d", element.isCompleted, element.pointsPossible, element.pointsAwarded, element.modefiedNAPoints, element.elementID];
+        NSString * updateElementSQL = [NSString stringWithFormat:@"UPDATE ELEMENT SET ISCOMPLETED = %d, POINTSPOSSIBLE = %f, POINTSAWARDED = %f, MODIFIEDNAPOINTS = %f WHERE ID = %d", element.isCompleted, element.pointsPossible, element.pointsAwarded, element.modefiedNAPoints, element.elementID];
     
         sqlite3_stmt * statement;
     
@@ -960,7 +995,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //Opening the SQLite DB
     if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
     
-        NSString * updateQuestionSQL = [NSString stringWithFormat:@"UPDATE QUESTION SET ISCOMPLETED = %d, POINTSAWARDED = %f, NOTES = \"%@\", ISTHUMBSUP = %d, ISTHUMBSDOWN = %d, ISAPPLICABLE = %d, NEEDSVERIFYING = %d, ISVERIFYDONE = %d, WHERE ID = %d", question.isCompleted, question.pointsAwarded, question.notes, question.isThumbsUp, question.isThumbsDown, question.isApplicable, question.needsVerifying, question.isVerifyDone, question.questionID];
+        NSString * updateQuestionSQL = [NSString stringWithFormat:@"UPDATE QUESTION SET ISCOMPLETED = %d, POINTSAWARDED = %f, NOTES = \"%@\", ISTHUMBSUP = %d, ISTHUMBSDOWN = %d, ISAPPLICABLE = %d, NEEDSVERIFYING = %d, ISVERIFYDONE = %d WHERE ID = %d", question.isCompleted, question.pointsAwarded, question.notes, question.isThumbsUp, question.isThumbsDown, question.isApplicable, question.needsVerifying, question.isVerifyDone, question.questionID];
     
         sqlite3_stmt * statement;
     
@@ -973,9 +1008,15 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             
             for (Answers * answer in question.Answers)
                 [self updateAnswer:answer];
+            
+            for (NSString * imageAttach in question.imageLocationArray)
+                [self saveAttachment:imageAttach ofType:true forQuestion:question.questionID];
+            
+            for (NSString * fileAttach in question.attachmentsLocationArray)
+                [self saveAttachment:fileAttach ofType:false forQuestion:question.questionID];
         }
         else {
-            NSLog(@"Failed to update row from Question table.");
+            NSLog(@"Failed to update row from Question table. Error: %s", sqlite3_errmsg(dnvAuditDB));
         }
     
         sqlite3_finalize(statement);
@@ -990,7 +1031,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
 
 -(void)updateAnswer:(Answers *)answer{
     
-    NSString * updateAnswerSQL = [NSString stringWithFormat:@"UPDATE ANSWER SET ANSWERTEXT = \"%@\", ISSELECTED = %d, WHERE ID = %d", answer.answerText, answer.isSelected, answer.answerID];
+    NSString * updateAnswerSQL = [NSString stringWithFormat:@"UPDATE ANSWER SET ANSWERTEXT = \"%@\", ISSELECTED = %d WHERE ID = %d", answer.answerText, answer.isSelected, answer.answerID];
     
     sqlite3_stmt * statement;
     
@@ -1277,6 +1318,13 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                 tempUser.otherUserInfo = otherInfo;
             }
         }
+    
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
     }
     
     return tempUser;
@@ -1328,6 +1376,13 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                 [userArray addObject:tempUser];
             }
         }
+    
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
     }
     
     return userArray;

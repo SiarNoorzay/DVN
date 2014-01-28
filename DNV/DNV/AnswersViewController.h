@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <KLSwitch/KLSwitch.h>
+#import "DNVDatabaseManagerClass.h"
+
 #import "Questions.h"
 #import "Answers.h"
-#import <KLSwitch/KLSwitch.h>
+
 
 
 @interface AnswersViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIPopoverControllerDelegate>
@@ -22,6 +25,8 @@
 @property (nonatomic) int subElementNum;
 @property (strong,nonatomic) UIPopoverController * helpPopOver;
 @property (strong,nonatomic) UIImage *cameraImage;
+
+@property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
 
 @property (strong, nonatomic) IBOutlet UIButton *calculatorButton;
 @property (strong, nonatomic) IBOutlet KLSwitch *switchy;

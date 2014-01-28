@@ -47,6 +47,8 @@ BOOL isSublayeredQuestion = false;
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+    
     if (self.question == nil || self.questionArray == nil)
     {
         NSLog(@"***SHOULD NOT GET HERE***, (recieved a nil question from previous VC)");
@@ -408,6 +410,8 @@ BOOL isSublayeredQuestion = false;
     self.question.pointsAwarded = pointTotal;
     //TODO: actually save stuff
 
+    //Update DNV Database
+    [self.dnvDBManager updateQuestion:self.question];
     
     if (islayeredQuestion && (pointTotal >= self.question.pointsNeededForLayered )&& !(isSublayeredQuestion)) {
         //main question answered to show subs so go to first subquestion
