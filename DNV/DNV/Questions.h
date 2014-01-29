@@ -11,6 +11,7 @@
 
 @interface Questions : NSDictionary
 
+@property (nonatomic) int questionID;
 @property (nonatomic) BOOL isCompleted;
 @property (nonatomic) float  pointsPossible;
 @property (nonatomic) float  pointsAwarded;
@@ -28,6 +29,9 @@
 @property (nonatomic) BOOL isThumbsDown;
 @property (nonatomic) float pointsNeededForLayered;
 @property (nonatomic) NSArray * layeredQuesions;
+
+@property (nonatomic) NSArray * zeroIfNoPointsFor;
+@property (nonatomic) NSArray * lessOrEqualToSmallestAnswer;
 
 -(id)initWithQuestion:(NSDictionary *)questionDictionary;
 

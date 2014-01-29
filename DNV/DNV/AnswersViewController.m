@@ -13,7 +13,6 @@
 #import "CalculatorViewController.h"
 #import "LayeredQuestion.h"
 
-
 @interface AnswersViewController ()
 
 @end
@@ -22,7 +21,6 @@
 
 //Change this to go from big swith to table view for bool questions
 BOOL const useSlider = true;
-
 
 float pointTotal = 0.0;
 BOOL answered = false; //used for submit button logic
@@ -56,6 +54,8 @@ int numOfSubs;
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+    
     if (self.question == nil || self.questionArray == nil)
     {
         NSLog(@"***SHOULD NOT GET HERE***, (recieved a nil question from previous VC)");
@@ -75,7 +75,6 @@ int numOfSubs;
     [self.view addGestureRecognizer:swipeLeftGestureRecognizer];
     [self.view addGestureRecognizer:swipeRightGestureRecognizer];
 
-    
     [self.thumbsDownButton setImage:[UIImage imageNamed:@"thumbs_down.png"] forState:UIControlStateSelected];
     [self.thumbsDownButton setImage:[UIImage imageNamed:@"thumbs_down_gray.png"] forState:UIControlStateNormal];
     
@@ -164,10 +163,9 @@ int numOfSubs;
         
     }
     
-    
     [self refreshAnswerView];
-
 }
+
 - (void)keyboardDidShow:(NSNotification *)notification
 {
     if (keyboardShouldMove){
@@ -192,6 +190,7 @@ int numOfSubs;
     
     [self.view setFrame:frame];
 }
+
 #pragma mark View Changes
 
 -(void)hideAnswerViews
@@ -221,10 +220,8 @@ int numOfSubs;
         self.rightSliderLabel.hidden = true;
         self.switchy.hidden = true;
     }
-    
-    
-    
 }
+
 -(void) refreshAnswerView
 {
     isSublayeredQuestion = (self.currentPosition <0);
@@ -282,7 +279,6 @@ int numOfSubs;
                 self.questionText.hidden = NO;
 
             }
-           
             break;
         case 1: //multiple choice
             self.answersTableView.hidden = false;
@@ -344,7 +340,6 @@ int numOfSubs;
             [self.firstButton setEnabled:false];
             [self.previousButton setEnabled:false];
         }
-        
     }
     
     [self.thumbsUpButton setSelected:self.question.isThumbsUp];
@@ -386,7 +381,9 @@ int numOfSubs;
     }
     
     
+    }
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -463,6 +460,7 @@ int numOfSubs;
     
 
 }
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == self.answersTableView) {
@@ -476,7 +474,6 @@ int numOfSubs;
         
     }
     return 0;
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -509,10 +506,8 @@ int numOfSubs;
         [self refreshAnswerView];
         
     }
-
-    
-    
 }
+
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.answersTableView) {
@@ -526,12 +521,7 @@ int numOfSubs;
         [self setEnabledFlagsAndReloadQuestions];
         
     }
-    
-    
 }
-
-
-
 
 #pragma mark IBactions
 
@@ -548,6 +538,8 @@ int numOfSubs;
     self.question.pointsAwarded = pointTotal;
     //TODO: actually save stuff
 
+    //Update DNV Database
+    [self.dnvDBManager updateQuestion:self.question];
     
     if (islayeredQuestion && (pointTotal >= self.question.pointsNeededForLayered )&& !(isSublayeredQuestion) &&(self.question ==mainSubQuestion)) {
         //main question answered to show subs so go to first subquestion
@@ -608,8 +600,6 @@ int numOfSubs;
             [self refreshAnswerView];
             return;
         }
-        
-        
     }
     
     if (self.currentPosition == ([self.questionArray count]-1))
@@ -622,8 +612,6 @@ int numOfSubs;
         [self refreshAnswerView];
         return;
     }
-    
-    
 }
 
 - (IBAction)sliderChanged:(id)sender {
@@ -642,7 +630,6 @@ int numOfSubs;
     [self setEnabledFlagsAndReloadQuestions];
     
     answered = true;
-    
 }
 
 - (IBAction)lastButtonPushed:(id)sender {
@@ -671,17 +658,22 @@ int numOfSubs;
         [self refreshAnswerView];
     }
 }
+
+
 #pragma mark UITextField Delegate
+
 -(IBAction)textFieldDidBeginEditing:(UITextField *)textField
 {
     keyboardShouldMove = true;
     textField.text = @"";
     
 }
+
 - (IBAction)textFieldEndedEditing:(id)sender {
     
     
 }
+
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if(textField == self.questionNumberTextField){
@@ -711,7 +703,6 @@ int numOfSubs;
 
 #pragma mark - Dashboard Buttons
 
-
 - (IBAction)thumbsUpPushed:(id)sender {
     self.question.isThumbsUp = !self.question.isThumbsUp;
     [self.thumbsUpButton setSelected: !self.thumbsUpButton.selected];
@@ -730,8 +721,8 @@ int numOfSubs;
     if (self.question.isApplicable) {
         
     }
-    
 }
+
 - (IBAction)verifyButtonPushed:(id)sender {
     self.question.needsVerifying = !self.question.needsVerifying;
     [self.verifyButton setSelected: !self.verifyButton.selected];
@@ -763,6 +754,7 @@ int numOfSubs;
     if ([self.percentSliderTextField canResignFirstResponder]) [self.percentSliderTextField resignFirstResponder];
     
 }
+
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     if(textField == self.questionNumberTextField)
@@ -780,9 +772,8 @@ int numOfSubs;
         self.currentPosition = tempInt.intValue - 1;
         
     }
-    
-    
 }
+
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if( textField == self.percentSliderTextField)
@@ -829,6 +820,7 @@ int numOfSubs;
     //[self performSegueWithIdentifier:@"notesPopover" sender:sender];
 
 }
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"helpTextPopover"]) {
@@ -887,7 +879,6 @@ int numOfSubs;
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissModalViewControllerAnimated:NO];
 }
-
 
 
 - (IBAction)mainLayeredPushed:(id)sender {

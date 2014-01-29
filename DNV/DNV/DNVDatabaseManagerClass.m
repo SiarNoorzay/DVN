@@ -8,8 +8,6 @@
 
 #import "DNVDatabaseManagerClass.h"
 
-#import "AuditIDObject.h"
-
 @implementation DNVDatabaseManagerClass
 
 static DNVDatabaseManagerClass *sharedInstance = nil;
@@ -68,7 +66,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             
             const char * sql_stmt3 = "CREATE TABLE IF NOT EXISTS SUBELEMENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, ELEMENTID INTEGER, SUBELEMENTNAME TEXT, ISCOMPLETED INTEGER, POINTSPOSSIBLE REAL, POINTSAWARDED REAL, MODIFIEDNAPOINTS REAL)";
             
-            const char * sql_stmt4 = "CREATE TABLE IF NOT EXISTS QUESTION (ID INTEGER PRIMARY KEY AUTOINCREMENT, SUBELEMENTID INTEGER, QUESTIONTEXT TEXT, QUESTIONTYPE INTEGER, ISCOMPLETED INTEGER, POINTSPOSSIBLE REAL, POINTSAWARDED REAL, HELPTEXT TEXT, NOTES TEXT, ISTHUMBSUP INTEGER, ISTHUMBSDOWN INTEGER, ISAPPLICABLE INTEGER, NEEDSVERIFYING INTEGER, ISVERIFYDONE INTEGER, PARENTQUESTIONID INTEGER, POINTSNEEDEFORLAYER REAL)";
+            const char * sql_stmt4 = "CREATE TABLE IF NOT EXISTS QUESTION (ID INTEGER PRIMARY KEY AUTOINCREMENT, SUBELEMENTID INTEGER, QUESTIONTEXT TEXT, QUESTIONTYPE INTEGER, ISCOMPLETED INTEGER, POINTSPOSSIBLE REAL, POINTSAWARDED REAL, HELPTEXT TEXT, NOTES TEXT, ISTHUMBSUP INTEGER, ISTHUMBSDOWN INTEGER, ISAPPLICABLE INTEGER, NEEDSVERIFYING INTEGER, ISVERIFYDONE INTEGER, PARENTQUESTIONID INTEGER, NUMBEROFLAYERED INTEGER, POINTSNEEDEFORLAYER REAL)";
             
             const char * sql_stmt5 = "CREATE TABLE IF NOT EXISTS ANSWER (ID INTEGER PRIMARY KEY AUTOINCREMENT, QUESTIONID INTEGER, ANSWERTEXT TEXT, POINTSPOSSIBLE REAL, ISSELECTED INTEGER)";
             
@@ -167,7 +165,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             Report * report = audit.report;
         
             //Query to insert into the report table
-            NSString * insertReportSQL = [NSString stringWithFormat:@"INSERT INTO REPORT (AUDITID, SUMMARY, EXECSUMMARY, PREPAREDBY, APPROVEDBY, PROJECTNUMBER, SCORINGASSUMPTIONS, CONCLUSION, DIAGRAMFILENAME) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\",\"%@\", \"%@\", \"%@\", \"%@\")", auditID, report.summary, report.executiveSummary, report.preparedBy, report.approvedBy, report.projectNum, report.scoringAssumptions, report.conclusion, report.methodologyDiagramLocation];
+            NSString * insertReportSQL = [NSString stringWithFormat:@"INSERT INTO REPORT (AUDITID, CLIENTREF, SUMMARY, EXECSUMMARY, PREPAREDBY, APPROVEDBY, PROJECTNUMBER, SCORINGASSUMPTIONS, CONCLUSION, DIAGRAMFILENAME) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\",\"%@\", \"%@\", \"%@\", \"%@\")", auditID, report.clientRef, report.summary, report.executiveSummary, report.preparedBy, report.approvedBy, report.projectNum, report.scoringAssumptions, report.conclusion, report.methodologyDiagramLocation];
         
             //Call to insert a row into a table
             [self insertRowInTable:insertReportSQL forTable:@"report"];
@@ -204,110 +202,10 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                     for (Questions * question in questions){
                 
                         //Query to insert into the question table
-                        NSString * insertQuestionSQL = [NSString stringWithFormat:@"INSERT INTO QUESTION (SUBELEMENTID, QUESTIONTEXT, QUESTIONTYPE, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, HELPTEXT, NOTES, ISTHUMBSUP, ISTHUMBSDOWN, ISAPPLICABLE, NEEDSVERIFYING, ISVERIFYDONE, PARENTQUESTIONID, POINTSNEEDEFORLAYER) VALUES (%d, \"%@\", %d, %d, %f, %f, \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %f)", subElementID, question.questionText, question.questionType, question.isCompleted, question.pointsPossible, question.pointsAwarded, question.helpText, question.notes, question.isThumbsUp, question.isThumbsDown, question.isApplicable, question.needsVerifying, question.isVerifyDone, nil, question.pointsNeededForLayered];
+                        NSString * insertQuestionSQL = [NSString stringWithFormat:@"INSERT INTO QUESTION (SUBELEMENTID, QUESTIONTEXT, QUESTIONTYPE, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, HELPTEXT, NOTES, ISTHUMBSUP, ISTHUMBSDOWN, ISAPPLICABLE, NEEDSVERIFYING, ISVERIFYDONE, PARENTQUESTIONID, NUMBEROFLAYERED, POINTSNEEDEFORLAYER) VALUES (%d, \"%@\", %d, %d, %f, %f, \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %d, %f)", subElementID, question.questionText, question.questionType, question.isCompleted, question.pointsPossible, question.pointsAwarded, question.helpText, question.notes, question.isThumbsUp, question.isThumbsDown, question.isApplicable, question.needsVerifying, question.isVerifyDone, nil, question.layeredQuesions.count, question.pointsNeededForLayered];
                 
-                        //Preparing
-                        sqlite3_prepare_v2(dnvAuditDB, [insertQuestionSQL UTF8String], -1, &statement, NULL);
-                
-                        if(sqlite3_step(statement)==SQLITE_DONE){
-                            NSLog(@"question added to DB.");
+                        [self saveQuestion:insertQuestionSQL forQuestion:question inSubElement:subElementID];
                         
-                            sqlite3_reset(statement);
-                        
-                            int questionID = [self getID:@"QUESTION"];
-                        
-                            NSArray * answers = question.Answers;
-                        
-                            //Loop for answers
-                            for (Answers * answer in answers){
-                            
-                                //Query to insert into the answer table
-                                NSString * insertAnswerSQL = [NSString stringWithFormat:@"INSERT INTO ANSWER (QUESTIONID, ANSWERTEXT, POINTSPOSSIBLE, ISSELECTED) VALUES (%d, \"%@\", %f, %d)", questionID, answer.answerText, answer.pointsPossible, answer.isSelected];
-                            
-                                //Call to insert a row into a table
-                                [self insertRowInTable:insertAnswerSQL forTable:@"answer"];
-                            }
-                        
-                            //
-                            NSMutableArray * attachments = [NSMutableArray arrayWithArray:question.imageLocationArray];
-                            for (NSString * attach in question.attachmentsLocationArray)
-                                [attachments addObject:attach];
-                        
-                            //Loop for attachments
-                            for (int i = 0; i < attachments.count; i++){
-                            
-                                BOOL isImage;
-                                if (i < question.imageLocationArray.count)
-                                    isImage = true;
-                                else
-                                    isImage = false;
-                            
-                                //Query to insert into the attachment table
-                                NSString * insertAttachSQL = [NSString stringWithFormat:@"INSERT INTO ATTACHMENT (QUESTIONID, ATTACHMENTNAME, ISIMAGE) VALUES (%d, \"%@\", %d)", questionID, attachments[i], isImage];
-                            
-                                //Call to insert a row into a table
-                                [self insertRowInTable:insertAttachSQL forTable:@"attachment"];
-                            }
-                    
-                            //Condition for layered questions
-                            if (question.layeredQuesions.count > 0){
-                        
-                                sqlite3_reset(statement);
-                        
-                                int questionID = [self getID:@"QUESTION"];
-                        
-                                NSArray * layeredQuest = question.layeredQuesions;
-                        
-                                //Loop for layered questions
-                                for (Questions * lQ in layeredQuest){
-                            
-                                    //Query to insert layered questions into the questions table
-                                    NSString * insertLQSQL = [NSString stringWithFormat:@"INSERT INTO QUESTION (SUBELEMENTID, QUESTIONTEXT, QUESTIONTYPE, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, HELPTEXT, NOTES, ISTHUMBSUP, ISTHUMBSDOWN, ISAPPLICABLE, NEEDSVERIFYING, ISVERIFYDONE, PARENTQUESTIONID, POINTSNEEDEFORLAYER) VALUES (%d, \"%@\", %d, %d, %f, %f, \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %f)", subElementID, lQ.questionText, lQ.questionType, lQ.isCompleted, lQ.pointsPossible, lQ.pointsAwarded, lQ.helpText, lQ.notes, lQ.isThumbsUp, lQ.isThumbsDown, lQ.isApplicable, lQ.needsVerifying, lQ.isVerifyDone, questionID, lQ.pointsNeededForLayered];
-                            
-                                    //Call to insert a row into a table
-                                    [self insertRowInTable:insertLQSQL forTable:@"layered question"];
-                            
-                                    int LQID = [self getID:@"QUESTION"];
-                            
-                                    NSArray * LQanswers = lQ.Answers;
-                            
-                                    //Loop for layered question answers
-                                    for (Answers * answer in LQanswers){
-                                
-                                        //Query to insert LQ answers into the answers table
-                                        NSString * insertLQAnswerSQL = [NSString stringWithFormat:@"INSERT INTO ANSWER (QUESTIONID, ANSWERTEXT, POINTSPOSSIBLE, ISSELECTED) VALUES (%d, \"%@\", %f, %d)", LQID, answer.answerText, answer.pointsPossible, answer.isSelected];
-                                
-                                        //Call to insert a row into a table
-                                        [self insertRowInTable:insertLQAnswerSQL forTable:@"layered answer"];
-                                    }
-                            
-                                    //
-                                    NSMutableArray * attachments = [NSMutableArray arrayWithArray:lQ.imageLocationArray];
-                                    for (NSString * attach in lQ.attachmentsLocationArray)
-                                        [attachments addObject:attach];
-                            
-                                    //Loop for Attachments
-                                    for (int i = 0; i < attachments.count; i++){
-                                
-                                        BOOL isImage;
-                                    
-                                        if (i < lQ.imageLocationArray.count)
-                                            isImage = true;
-                                        else
-                                            isImage = false;
-                                
-                                        //Query to insert LQ attachments into the attachments table
-                                        NSString * insertAttachSQL = [NSString stringWithFormat:@"INSERT INTO ATTACHMENT (QUESTIONID, ATTACHMENTNAME, ISIMAGE) VALUES (%d, \"%@\", %d)", LQID, attachments[i], isImage];
-                                
-                                        //Call to insert a row into a table
-                                        [self insertRowInTable:insertAttachSQL forTable:@"layered attachment"];
-                                    }
-                                }
-                            }
-                        }
-                        else{
-                            NSLog(@"Failed to add question.");
-                        }
                     }
                 }
             }
@@ -326,6 +224,78 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     
 }
 
+
+-(void)saveQuestion:(NSString *)insertQSQL forQuestion:(Questions *)question inSubElement:(int)subElementID{
+    
+    
+    sqlite3_stmt * statement;
+    sqlite3_prepare_v2(dnvAuditDB, [insertQSQL UTF8String], -1, &statement, NULL);
+    
+    if (sqlite3_step(statement)==SQLITE_DONE){
+        NSLog(@"question added to DB.");
+        
+        sqlite3_reset(statement);
+        
+        int questionID = [self getID:@"QUESTION"];
+        
+        NSArray * answers = question.Answers;
+        
+        //Loop for answers
+        for (Answers * answer in answers){
+            
+            //Query to insert into the answer table
+            NSString * insertAnswerSQL = [NSString stringWithFormat:@"INSERT INTO ANSWER (QUESTIONID, ANSWERTEXT, POINTSPOSSIBLE, ISSELECTED) VALUES (%d, \"%@\", %f, %d)", questionID, answer.answerText, answer.pointsPossible, answer.isSelected];
+            
+            //Call to insert a row into a table
+            [self insertRowInTable:insertAnswerSQL forTable:@"answer"];
+        }
+        
+        //
+        NSMutableArray * attachments = [NSMutableArray arrayWithArray:question.imageLocationArray];
+        for (NSString * attach in question.attachmentsLocationArray)
+            [attachments addObject:attach];
+        
+        //Loop for attachments
+        for (int i = 0; i < attachments.count; i++){
+            
+            BOOL isImage;
+            if (i < question.imageLocationArray.count)
+                isImage = true;
+            else
+                isImage = false;
+            
+            [self saveAttachment:attachments[i] ofType:isImage forQuestion:questionID];
+        }
+        
+        //Condition for layered questions
+        if (question.layeredQuesions.count > 0){
+            
+            NSArray * layeredQuest = question.layeredQuesions;
+            
+            //Loop for layered questions
+            for (Questions * lQ in layeredQuest){
+                
+                //Query to insert layered questions into the questions table
+                NSString * insertLQSQL = [NSString stringWithFormat:@"INSERT INTO QUESTION (SUBELEMENTID, QUESTIONTEXT, QUESTIONTYPE, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, HELPTEXT, NOTES, ISTHUMBSUP, ISTHUMBSDOWN, ISAPPLICABLE, NEEDSVERIFYING, ISVERIFYDONE, PARENTQUESTIONID, NUMBEROFLAYERED, POINTSNEEDEFORLAYER) VALUES (%d, \"%@\", %d, %d, %f, %f, \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %d, %f)", subElementID, lQ.questionText, lQ.questionType, lQ.isCompleted, lQ.pointsPossible, lQ.pointsAwarded, lQ.helpText, lQ.notes, lQ.isThumbsUp, lQ.isThumbsDown, lQ.isApplicable, lQ.needsVerifying, lQ.isVerifyDone, questionID, lQ.layeredQuesions.count, lQ.pointsNeededForLayered];
+                
+                [self saveQuestion:insertLQSQL forQuestion:lQ inSubElement:subElementID];
+            }
+        }
+    }
+    else{
+        NSLog(@"Failed to add question.");
+    }
+}
+
+-(void)saveAttachment:(NSString *)attachName ofType:(BOOL)isImage forQuestion:(int)questionID{
+    
+    //Query to insert into the attachment table
+    NSString * insertAttachSQL = [NSString stringWithFormat:@"INSERT INTO ATTACHMENT (QUESTIONID, ATTACHMENTNAME, ISIMAGE) VALUES (%d, \"%@\", %d)", questionID, attachName, isImage];
+    
+    //Call to insert a row into a table
+    [self insertRowInTable:insertAttachSQL forTable:@"attachment"];
+    
+}
 
 -(NSArray *)retrieveAllAuditIDsOfType:(int)auditType forAuditName:(NSString *)auditName{
     
@@ -353,6 +323,12 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                 
             }
         }
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+    
+        NSLog(@"Failed to open/create DB.");
     }
     
     return auditIDArray;
@@ -386,6 +362,12 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                 
             }
         }
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
     }
     
     return auditArray;
@@ -421,17 +403,161 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                 //Gets the last modified data from DB and adding it to the temp Audit Object
                 NSString * lastmodified = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
                 
+                tempAudit.auditID = auditID;
                 tempAudit.name = name;
                 tempAudit.auditType = [type intValue];
                 tempAudit.lastModefied = lastmodified;
-                tempAudit.Elements = [self retrieveElementsOfAudit:auditID];
+                tempAudit.client = [self retrieveClientOfAudit:tempAudit.auditID];
+                tempAudit.report = [self retrieveReportOfAudit:tempAudit.auditID];
+                tempAudit.Elements = [self retrieveElementsOfAudit:tempAudit.auditID];
             }
         }
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
     }
     
     return tempAudit;
 }
 
+-(Client *)retrieveClientOfAudit:(NSString *)auditID{
+    
+    //Create the statement Object
+    sqlite3_stmt * statement;
+    
+    //Temperary audit to hold the audit information from DB
+    Client * tempClient = [Client new];
+    
+    NSString * queryClientSQL = [NSString stringWithFormat:@"SELECT * FROM CLIENT WHERE AUDITID = \"%@\"", auditID];
+    
+    //Prepare the Query
+    if(sqlite3_prepare_v2(dnvAuditDB, [queryClientSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
+        
+        //If this work, there must be a row if the data was there
+        while (sqlite3_step(statement) == SQLITE_ROW){
+            
+            //Gets the client id data from DB and adding it to the temp Client Object
+            NSString * identify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+            
+            //Gets the client name data from DB and adding it to the temp Client Object
+            NSString * name = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
+            
+            //Gets the division data from DB and adding it to the temp Client Object
+            NSString * division = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
+            
+            //Gets the SIC number data from DB and adding it to the temp Client Object
+            NSString * sicNum = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
+            
+            //Gets the number of employees data from DB and adding it to the temp Client Object
+            NSString * numOfEmp = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
+            
+            //Gets the auditor data from DB and adding it to the temp Client Object
+            NSString * auditor = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
+            
+            //Gets the audit site data from DB and adding it to the temp Client Object
+            NSString * audSite = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
+            
+            //Gets the audit date data from DB and adding it to the temp Client Object
+            NSString * audDate = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 8)];
+            
+            //Gets the baseline audit data from DB and adding it to the temp Client Object
+            NSString * baselineAud = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 9)];
+            
+            //Gets the street address data from DB and adding it to the temp Client Object
+            NSString * sAddress = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 10)];
+            
+            //Gets the city state province data from DB and adding it to the temp Client Object
+            NSString * cityStateProv = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 11)];
+            
+            //Gets the postal code data from DB and adding it to the temp Client Object
+            NSString * pCode = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 12)];
+            
+            //Gets the country data from DB and adding it to the temp Client Object
+            NSString * country = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 13)];
+            
+            tempClient.clientID = [identify integerValue];
+            tempClient.companyName = name;
+            tempClient.division = division;
+            tempClient.SICNumber = sicNum;
+            tempClient.numEmployees = [numOfEmp integerValue];
+            tempClient.auditor = auditor;
+            tempClient.auditedSite = audSite;
+            tempClient.auditDate = audDate;
+            tempClient.baselineAudit = [baselineAud boolValue];
+            tempClient.address = sAddress;
+            tempClient.cityStateProvince = cityStateProv;
+            tempClient.postalCode = pCode;
+            tempClient.country = country;
+        }
+    }
+    
+    return tempClient;
+}
+
+-(Report *)retrieveReportOfAudit:(NSString *)auditID{
+    
+    //Create the statement Object
+    sqlite3_stmt * statement;
+    
+    //Temperary audit to hold the audit information from DB
+    Report * tempReport = [Report new];
+    
+    NSString * queryReportSQL = [NSString stringWithFormat:@"SELECT * FROM REPORT WHERE AUDITID = \"%@\"", auditID];
+    
+    //Prepare the Query
+    if(sqlite3_prepare_v2(dnvAuditDB, [queryReportSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
+        
+        //If this work, there must be a row if the data was there
+        while (sqlite3_step(statement) == SQLITE_ROW){
+            
+            //Gets the client id data from DB and adding it to the temp Report Object
+            NSString * identify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+            
+            //Gets the client reference # data from DB and adding it to the temp Report Object
+            NSString * clientRef = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
+            
+            //Gets the summary data from DB and adding it to the temp Report Object
+            NSString * summary = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
+            
+            //Gets the executive summary data from DB and adding it to the temp Report Object
+            NSString * execSum = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
+            
+            //Gets the prepared by data from DB and adding it to the temp Report Object
+            NSString * prepared = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
+            
+            //Gets the approved by data from DB and adding it to the temp Report Object
+            NSString * approved = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
+            
+            //Gets the project number data from DB and adding it to the temp Report Object
+            NSString * projNum = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
+            
+            //Gets the scoring assumption data from DB and adding it to the temp Report Object
+            NSString * scorAssump = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 8)];
+            
+            //Gets the conclusion data from DB and adding it to the temp Report Object
+            NSString * conclusion = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 9)];
+            
+            //Gets the diagram filename data from DB and adding it to the temp Report Object
+            NSString * diagFile = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 10)];
+            
+            tempReport.reportID = [identify integerValue];
+            tempReport.clientRef = clientRef;
+            tempReport.summary = summary;
+            tempReport.executiveSummary = execSum;
+            tempReport.preparedBy = prepared;
+            tempReport.approvedBy = approved;
+            tempReport.projectNum = projNum;
+            tempReport.scoringAssumptions = scorAssump;
+            tempReport.conclusion = conclusion;
+            tempReport.methodologyDiagramLocation = diagFile;
+        }
+    }
+    
+    return tempReport;
+}
 
 -(NSArray *)retrieveElementsOfAudit:(NSString *)auditID{
     
@@ -440,56 +566,50 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     
     NSMutableArray * elementArray = [[NSMutableArray alloc]init];
     
-    //Open the DB
-    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
+    //Creating the SQL statment to retrieve the data from the database
+    NSString * queryElementSQL = [NSString stringWithFormat:@"SELECT * FROM ELEMENT WHERE AUDITID=\"%@\"", auditID];
         
-        //Creating the SQL statment to retrieve the data from the database
-        NSString * queryElementSQL = [NSString stringWithFormat:@"SELECT * FROM ELEMENT WHERE AUDITID=\"%@\"", auditID];
-        
-        //Prepare the Query
-        if(sqlite3_prepare_v2(dnvAuditDB, [queryElementSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
+    //Prepare the Query
+    if(sqlite3_prepare_v2(dnvAuditDB, [queryElementSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
             
-            //If this work, there must be a row if the data was there
-            while (sqlite3_step(statement) == SQLITE_ROW){
+        //If this work, there must be a row if the data was there
+        while (sqlite3_step(statement) == SQLITE_ROW){
                 
-                //Temperary element to hold the element information from DB
-                Elements * tempElement = [Elements new];
-                int elementID;
+            //Temperary element to hold the element information from DB
+            Elements * tempElement = [Elements new];
+//          int elementID;
 
+            //Gets the element id data from DB and adding it to the temp Element Object
+            NSString * identify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
                 
-                //Gets the element id data from DB and adding it to the temp Element Object
-                NSString * identify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+            //Gets the element name data from DB and adding it to the temp Element Object
+            NSString * name = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
                 
-                //Gets the element name data from DB and adding it to the temp Element Object
-                NSString * name = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
+            //Gets the isCompleted data from DB and adding it to the temp Element Object
+            NSString * completed = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
                 
-                //Gets the isCompleted data from DB and adding it to the temp Element Object
-                NSString * completed = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
+            //Gets the isRequired data from DB and adding it to the temp Element Object
+            NSString * required = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
                 
-                //Gets the isRequired data from DB and adding it to the temp Element Object
-                NSString * required = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
+            //Gets the pointsPossible data from DB and adding it to the temp Element Object
+            NSString * ptsPoss = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
                 
-                //Gets the pointsPossible data from DB and adding it to the temp Element Object
-                NSString * ptsPoss = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
+            //Gets the pointsAwarded data from DB and adding it to the temp Element Object
+            NSString * ptsAward = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
                 
-                //Gets the pointsAwarded data from DB and adding it to the temp Element Object
-                NSString * ptsAward = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
+            //Gets the modifiedNAPoints data from DB and adding it to the temp Element Object
+            NSString * modNAPts = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
                 
-                //Gets the modifiedNAPoints data from DB and adding it to the temp Element Object
-                NSString * modNAPts = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
+            tempElement.elementID = [identify integerValue];
+            tempElement.name = name;
+            tempElement.isCompleted = [completed integerValue];
+            tempElement.isRequired = [required integerValue];
+            tempElement.pointsPossible = [ptsPoss floatValue];
+            tempElement.pointsAwarded = [ptsAward floatValue];
+            tempElement.modefiedNAPoints = [modNAPts floatValue];
+            tempElement.Subelements = [self retrieveSubElementsOfElement:tempElement.elementID];
                 
-                elementID = [identify integerValue];
-                
-                tempElement.name = name;
-                tempElement.isCompleted = [completed integerValue];
-                tempElement.isRequired = [required integerValue];
-                tempElement.pointsPossible = [ptsPoss floatValue];
-                tempElement.pointsAwarded = [ptsAward floatValue];
-                tempElement.modefiedNAPoints = [modNAPts floatValue];
-                tempElement.Subelements = [self retrieveSubElementsOfElement:elementID];
-                
-                [elementArray addObject:tempElement];
-            }
+            [elementArray addObject:tempElement];
         }
     }
     
@@ -502,59 +622,54 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     sqlite3_stmt * statement;
     
     NSMutableArray * subElementArray = [[NSMutableArray alloc]init];
-    
-    //Open the DB
-    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
         
-        //Creating the SQL statment to retrieve the data from the database
-        NSString * querySubElementSQL = [NSString stringWithFormat:@"SELECT * FROM SUBELEMENT WHERE ELEMENTID= %d", elementID];
+    //Creating the SQL statment to retrieve the data from the database
+    NSString * querySubElementSQL = [NSString stringWithFormat:@"SELECT * FROM SUBELEMENT WHERE ELEMENTID= %d", elementID];
         
-        //Prepare the Query
-        if(sqlite3_prepare_v2(dnvAuditDB, [querySubElementSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
+    //Prepare the Query
+    if(sqlite3_prepare_v2(dnvAuditDB, [querySubElementSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
             
-            //If this work, there must be a row if the data was there
-            while (sqlite3_step(statement) == SQLITE_ROW){
+        //If this work, there must be a row if the data was there
+        while (sqlite3_step(statement) == SQLITE_ROW){
                 
-                //Temperary sub element to hold the sub element information from DB
-                SubElements * tempSubElement = [SubElements new];
-                int subElementID;
+            //Temperary sub element to hold the sub element information from DB
+            SubElements * tempSubElement = [SubElements new];
+//          int subElementID;
                 
-                //Gets the sub element id data from DB and adding it to the temp Sub Element Object
-                NSString * identify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+            //Gets the sub element id data from DB and adding it to the temp Sub Element Object
+            NSString * identify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
                 
-                //Gets the sub element name data from DB and adding it to the temp Sub Element Object
-                NSString * name = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
+            //Gets the sub element name data from DB and adding it to the temp Sub Element Object
+            NSString * name = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
                 
-                //Gets the isCompleted data from DB and adding it to the temp Sub Element Object
-                NSString * completed = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
+            //Gets the isCompleted data from DB and adding it to the temp Sub Element Object
+            NSString * completed = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
                 
-                //Gets the pointsPossible data from DB and adding it to the temp Sub Element Object
-                NSString * ptsPoss = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
+            //Gets the pointsPossible data from DB and adding it to the temp Sub Element Object
+            NSString * ptsPoss = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
                 
-                //Gets the pointsAwarded data from DB and adding it to the temp Sub Element Object
-                NSString * ptsAward = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
+            //Gets the pointsAwarded data from DB and adding it to the temp Sub Element Object
+            NSString * ptsAward = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
                 
-                //Gets the modifiedNAPoints data from DB and adding it to the temp Sub Element Object
-                NSString * modNAPts = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
+            //Gets the modifiedNAPoints data from DB and adding it to the temp Sub Element Object
+            NSString * modNAPts = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
                 
-                subElementID = [identify integerValue];
+            tempSubElement.subElementID = [identify integerValue];
+            tempSubElement.name = name;
+            tempSubElement.isCompleted = [completed integerValue];
+            tempSubElement.pointsPossible = [ptsPoss floatValue];
+            tempSubElement.pointsAwarded = [ptsAward floatValue];
+            tempSubElement.modefiedNAPoints = [modNAPts floatValue];
+            tempSubElement.Questions = [self retrieveQuestionsOfSubElement:tempSubElement.subElementID theParentQuestionID:0];
                 
-                tempSubElement.name = name;
-                tempSubElement.isCompleted = [completed integerValue];
-                tempSubElement.pointsPossible = [ptsPoss floatValue];
-                tempSubElement.pointsAwarded = [ptsAward floatValue];
-                tempSubElement.modefiedNAPoints = [modNAPts floatValue];
-                tempSubElement.Questions = [self retrieveQuestionsOfSubElement:subElementID gettingLayeredQuestions:false theParentQuestionID:0];
-                
-                [subElementArray addObject:tempSubElement];
-            }
+            [subElementArray addObject:tempSubElement];
         }
     }
     
     return subElementArray;
 }
 
--(NSArray *)retrieveQuestionsOfSubElement:(int) subElementID gettingLayeredQuestions:(BOOL)bLayeredQuestion theParentQuestionID:(int)pQID{
+-(NSArray *)retrieveQuestionsOfSubElement:(int) subElementID theParentQuestionID:(int)pQID{
     
     //Create the statement Object
     sqlite3_stmt * statement;
@@ -562,98 +677,94 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     NSMutableArray * questionArray = [[NSMutableArray alloc]init];
 //    NSMutableArray * layeredQuestionArray = [[NSMutableArray alloc]init];
     
-    //Open the DB
-    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
+    
+    //Creating the SQL statment to retrieve the data from the database
+     NSString * queryQuestionSQL = [NSString stringWithFormat:@"SELECT * FROM QUESTION WHERE SUBELEMENTID= %d AND PARENTQUESTIONID = %d", subElementID, pQID];
         
-        NSString * queryQuestionSQL;
-        //Creating the SQL statment to retrieve the data from the database
-//        if( !bLayeredQuestion)
-//            queryQuestionSQL = [NSString stringWithFormat:@"SELECT * FROM QUESTION WHERE SUBELEMENTID= %d ", subElementID];
-//        else
-            queryQuestionSQL = [NSString stringWithFormat:@"SELECT * FROM QUESTION WHERE SUBELEMENTID= %d AND PARENTQUESTIONID = %d", subElementID, pQID];
-        
-        //Prepare the Query
-        if(sqlite3_prepare_v2(dnvAuditDB, [queryQuestionSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
+    //Prepare the Query
+    if(sqlite3_prepare_v2(dnvAuditDB, [queryQuestionSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
             
-            //If this work, there must be a row if the data was there
-            while (sqlite3_step(statement) == SQLITE_ROW){
+        //If this work, there must be a row if the data was there
+        while (sqlite3_step(statement) == SQLITE_ROW){
                 
-                //Temperary question to hold the question information from DB
-                Questions * tempQuestion = [Questions new];
-                int questionID;
-                int parentQID;
+            //Temperary question to hold the question information from DB
+            Questions * tempQuestion = [Questions new];
+//          int questionID;
+//          int parentQID;
                 
-                //Gets the question id data from DB and adding it to the temp Question Object
-                NSString * identify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+            //Gets the question id data from DB and adding it to the temp Question Object
+            NSString * identify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
                 
-                //Gets the auditText data from DB and adding it to the temp Question Object
-                NSString * text = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
+            //Gets the auditText data from DB and adding it to the temp Question Object
+            NSString * text = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
                 
-                //Gets the auditType data from DB and adding it to the temp Question Object
-                NSString * type = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
+            //Gets the auditType data from DB and adding it to the temp Question Object
+            NSString * type = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
                 
-                //Gets the isCompleted data from DB and adding it to the temp Question Object
-                NSString * completed = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
+            //Gets the isCompleted data from DB and adding it to the temp Question Object
+            NSString * completed = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
                 
-                //Gets the pointsPossible data from DB and adding it to the temp Question Object
-                NSString * ptsPoss = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
+            //Gets the pointsPossible data from DB and adding it to the temp Question Object
+            NSString * ptsPoss = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
                 
-                //Gets the pointsAwarded data from DB and adding it to the temp Question Object
-                NSString * ptsAward = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
+            //Gets the pointsAwarded data from DB and adding it to the temp Question Object
+            NSString * ptsAward = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
                 
-                //Gets the help text data from DB and adding it to the temp Question Object
-                NSString * help = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
+            //Gets the help text data from DB and adding it to the temp Question Object
+            NSString * help = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
                 
-                //Gets the notes data from DB and adding it to the temp Question Object
-                NSString * notes = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 8)];
+            //Gets the notes data from DB and adding it to the temp Question Object
+            NSString * notes = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 8)];
                 
-                //Gets the isThumbsUp data from DB and adding it to the temp Question Object
-                NSString * thumbsUp = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 9)];
+            //Gets the isThumbsUp data from DB and adding it to the temp Question Object
+            NSString * thumbsUp = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 9)];
                 
-                //Gets the isThumbsDown data from DB and adding it to the temp Question Object
-                NSString * thumbsDown = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 10)];
+            //Gets the isThumbsDown data from DB and adding it to the temp Question Object
+            NSString * thumbsDown = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 10)];
                 
-                //Gets the isApplicable data from DB and adding it to the temp Question Object
-                NSString * isNA = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 11)];
+            //Gets the isApplicable data from DB and adding it to the temp Question Object
+            NSString * isNA = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 11)];
                 
-                //Gets the needVerifying data from DB and adding it to the temp Question Object
-                NSString * isVerify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 12)];
+            //Gets the needVerifying data from DB and adding it to the temp Question Object
+            NSString * isVerify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 12)];
                 
-                //Gets the isVerifyDone data from DB and adding it to the temp Question Object
-                NSString * verifyDone = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 13)];
+            //Gets the isVerifyDone data from DB and adding it to the temp Question Object
+            NSString * verifyDone = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 13)];
                 
-                //Gets the parent question ID data from DB and adding it to the temp Question Object
-                NSString *  parentQuestID = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 14)];
+//          //Gets the parent question ID data from DB and adding it to the temp Question Object
+//          NSString *  parentQuestID = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 14)];
                 
-                //Gets the pointsPossibleForLayered data from DB and adding it to the temp Question Object
-                NSString * ptsPossForLay = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 15)];
+            //Gets the parent question ID data from DB and adding it to the temp Question Object
+            NSString *  numOfLayered = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 15)];
                 
-                questionID = [identify integerValue];
-                parentQID = [parentQuestID integerValue];
+            //Gets the pointsPossibleForLayered data from DB and adding it to the temp Question Object
+            NSString * ptsPossForLay = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 16)];
                 
-                tempQuestion.questionText = text;
-                tempQuestion.questionType = [type integerValue];
-                tempQuestion.isCompleted = [completed integerValue];
-                tempQuestion.pointsPossible = [ptsPoss floatValue];
-                tempQuestion.pointsAwarded = [ptsAward floatValue];
-                tempQuestion.helpText = help;
-                tempQuestion.notes = notes;
-                tempQuestion.isThumbsUp = [thumbsUp boolValue];
-                tempQuestion.isThumbsDown = [thumbsDown boolValue];
-                tempQuestion.isApplicable = [isNA boolValue];
-                tempQuestion.needsVerifying = [isVerify integerValue];
-                tempQuestion.isVerifyDone = [verifyDone boolValue];
-                tempQuestion.pointsNeededForLayered = [ptsPossForLay floatValue];
-                tempQuestion.Answers = [self retrieveAnswersOfQuestion:questionID];
+//          questionID = [identify integerValue];
+//          parentQID = [parentQuestID integerValue];
                 
-                if( parentQID == 0 )
-                    tempQuestion.layeredQuesions = [self retrieveQuestionsOfSubElement:subElementID gettingLayeredQuestions:true theParentQuestionID:questionID];
+            tempQuestion.questionID = [identify integerValue];
+            tempQuestion.questionText = text;
+            tempQuestion.questionType = [type integerValue];
+            tempQuestion.isCompleted = [completed integerValue];
+            tempQuestion.pointsPossible = [ptsPoss floatValue];
+            tempQuestion.pointsAwarded = [ptsAward floatValue];
+            tempQuestion.helpText = help;
+            tempQuestion.notes = notes;
+            tempQuestion.isThumbsUp = [thumbsUp boolValue];
+            tempQuestion.isThumbsDown = [thumbsDown boolValue];
+            tempQuestion.isApplicable = [isNA boolValue];
+            tempQuestion.needsVerifying = [isVerify integerValue];
+            tempQuestion.isVerifyDone = [verifyDone boolValue];
+            tempQuestion.pointsNeededForLayered = [ptsPossForLay floatValue];
+            tempQuestion.Answers = [self retrieveAnswersOfQuestion:tempQuestion.questionID];
+            tempQuestion.attachmentsLocationArray = [self retrieveAttachmentsOfQuestion:tempQuestion.questionID ofType:false];
+            tempQuestion.imageLocationArray = [self retrieveAttachmentsOfQuestion:tempQuestion.questionID ofType:true];
                 
-//                if( !bLayeredQuestion)
-                    [questionArray addObject:tempQuestion];
-//                else
-//                    [layeredQuestionArray addObject:tempQuestion];
-            }
+            if( [numOfLayered integerValue] > 0 )
+                tempQuestion.layeredQuesions = [self retrieveQuestionsOfSubElement:subElementID theParentQuestionID:tempQuestion.questionID];
+                
+            [questionArray addObject:tempQuestion];
         }
     }
     
@@ -666,39 +777,37 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     sqlite3_stmt * statement;
     
     NSMutableArray * answerArray = [[NSMutableArray alloc]init];
-    
-    //Open the DB
-    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
         
-        //Creating the SQL statment to retrieve the data from the database
-        NSString * queryAnswerSQL = [NSString stringWithFormat:@"SELECT * FROM ANSWER WHERE QUESTIONID= %d", questionID];
+    //Creating the SQL statment to retrieve the data from the database
+    NSString * queryAnswerSQL = [NSString stringWithFormat:@"SELECT * FROM ANSWER WHERE QUESTIONID= %d", questionID];
         
-        //Prepare the Query
-        if(sqlite3_prepare_v2(dnvAuditDB, [queryAnswerSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
+    //Prepare the Query
+    if(sqlite3_prepare_v2(dnvAuditDB, [queryAnswerSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
             
-            //If this work, there must be a row if the data was there
-            while (sqlite3_step(statement) == SQLITE_ROW){
+        //If this work, there must be a row if the data was there
+        while (sqlite3_step(statement) == SQLITE_ROW){
                 
-                //Temperary answer to hold the answer information from DB
-                Answers * tempAnswer = [Answers new];
+            //Temperary answer to hold the answer information from DB
+            Answers * tempAnswer = [Answers new];
                 
-                //Gets the answer text data from DB and adding it to the temp Answer Object
-                NSString * text = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
+            //Gets the answer ID data from DB and adding it to the temp Answer Object
+            NSString * identify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
                 
-                //Gets the pointsPossible data from DB and adding it to the temp Answer Object
-                NSString * ptsPoss = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
+            //Gets the answer text data from DB and adding it to the temp Answer Object
+            NSString * text = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
                 
-                //Gets the pointsPossible data from DB and adding it to the temp Answer Object
-                NSString * selected = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
+            //Gets the pointsPossible data from DB and adding it to the temp Answer Object
+            NSString * ptsPoss = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
                 
-            
-                tempAnswer.answerText = text;
-                tempAnswer.pointsPossible = [ptsPoss floatValue];
-                tempAnswer.isSelected = [selected boolValue];
+            //Gets the pointsPossible data from DB and adding it to the temp Answer Object
+            NSString * selected = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
                 
-                [answerArray addObject:tempAnswer];
+            tempAnswer.answerID = [identify integerValue];
+            tempAnswer.answerText = text;
+            tempAnswer.pointsPossible = [ptsPoss floatValue];
+            tempAnswer.isSelected = [selected boolValue];
                 
-            }
+            [answerArray addObject:tempAnswer];
         }
     }
     
@@ -706,33 +815,238 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     
 }
 
--(void)updateAudit:(NSInteger *)auditID auditType:(NSInteger *)auditType{
+-(NSArray *)retrieveAttachmentsOfQuestion:(int)questionID ofType:(BOOL)isImage{
     
+    //Create the statement Object
+    sqlite3_stmt * statement;
+    
+    NSMutableArray * attachArray = [[NSMutableArray alloc]init];
+    
+    //Creating the SQL statment to retrieve the data from the database
+    NSString * queryAttachSQL = [NSString stringWithFormat:@"SELECT ATTACHMENTNAME FROM ATTACHMENT WHERE QUESTIONID= %d AND ISIMAGE = %d", questionID, isImage];
+    
+    //Prepare the Query
+    if(sqlite3_prepare_v2(dnvAuditDB, [queryAttachSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
+        
+        //If this work, there must be a row if the data was there
+        while (sqlite3_step(statement) == SQLITE_ROW){
+            
+            //Gets the attachment name data from DB and adding it to the temp Answer Object
+            NSString * attachName = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+            
+            [attachArray addObject:attachName];
+        }
+    }
+    
+    return attachArray;
     
 }
 
+-(void)updateAudit:(Audit *)audit{
+    
+    //Opening the SQLite DB
+    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
+        
+        NSString * updateAuditSQL = [NSString stringWithFormat:@"UPDATE AUDIT SET AUDITTYPE = %d WHERE ID = \"%@\"", audit.auditType, audit.auditID];
+    
+        sqlite3_stmt * statement;
+    
+        //Prepare the Query
+        sqlite3_prepare_v2(dnvAuditDB, [updateAuditSQL UTF8String], -1, &statement, NULL);
+    
+        
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            NSLog(@"Row updated from Audit table.");
+        }
+        else {
+            NSLog(@"Failed to update row from Audit table. Error: %s", sqlite3_errmsg(dnvAuditDB));
+        }
+    
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
+    }
+}
 
--(void)updateElement:(NSInteger *)elementID isCompleted:(BOOL)isCompleted ofAudit:(NSString *)auditID{
+-(void)updateClient:(Client *)client{
     
+    //Opening the SQLite DB
+    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
+        
+        NSString * updateClientSQL = [NSString stringWithFormat:@"UPDATE CLIENT SET CLIENTNAME = \"%@\", DIVISION = \"%@\", SIC = \"%@\", NUMBEREMPLOYEES = %d, AUDITOR = \"%@\", AUDITSITE = \"%@\", AUDITDATE = \"%@\", BASELINEAUDIT = %d, STREETADDRESS = \"%@\", CITYSTATEPROVINCE = \"%@\", POSTALCODE = \"%@\", COUNTRY = \"%@\" WHERE ID = %d", client.companyName, client.division, client.SICNumber, client.numEmployees, client.auditor, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.postalCode, client.country, client.clientID];
+        
+        sqlite3_stmt * statement;
+        
+        //Prepare the Query
+        sqlite3_prepare_v2(dnvAuditDB, [updateClientSQL UTF8String], -1, &statement, NULL);
+        
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            NSLog(@"Row updated from Client table.");
+        }
+        else {
+            NSLog(@"Failed to update row from Client table.");
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
+    }
+}
+
+-(void)updateReport:(Report *)report{
     
+    //Opening the SQLite DB
+    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
+        
+        NSString * updateReportSQL = [NSString stringWithFormat:@"UPDATE REPORT SET SUMMARY = \"%@\", EXECSUMMARY = \"%@\", PREPAREDBY = \"%@\", APPROVEDBY = \"%@\", PROJECTNUMBER = \"%@\", SCORINGASSUMPTIONS = \"%@\", CONCLUSION = \"%@\", DIAGRAMFILENAME = \"%@\" WHERE ID = %d",report.summary, report.executiveSummary, report.preparedBy, report.approvedBy, report.projectNum, report.scoringAssumptions, report.conclusion, report.methodologyDiagramLocation, report.reportID];
+        
+        sqlite3_stmt * statement;
+        
+        //Prepare the Query
+        sqlite3_prepare_v2(dnvAuditDB, [updateReportSQL UTF8String], -1, &statement, NULL);
+        
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            NSLog(@"Row updated from Report table.");
+        }
+        else {
+            NSLog(@"Failed to update row from Report table.");
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
+    }
+}
+
+-(void)updateElement:(Elements *)element{
+    
+    //Opening the SQLite DB
+    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
+    
+        NSString * updateElementSQL = [NSString stringWithFormat:@"UPDATE ELEMENT SET ISCOMPLETED = %d, POINTSPOSSIBLE = %f, POINTSAWARDED = %f, MODIFIEDNAPOINTS = %f WHERE ID = %d", element.isCompleted, element.pointsPossible, element.pointsAwarded, element.modefiedNAPoints, element.elementID];
+    
+        sqlite3_stmt * statement;
+    
+        //Prepare the Query
+        sqlite3_prepare_v2(dnvAuditDB, [updateElementSQL UTF8String], -1, &statement, NULL);
+    
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            NSLog(@"Row updated from Element table.");
+        }
+        else {
+            NSLog(@"Failed to update row from Element table.");
+        }
+    
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
+    }
 }
 
 
--(void)updateSubElment:(NSInteger *)subElementID isCompleted:(BOOL)isCompleted ofAudit:(NSString *)auditID{
+-(void)updateSubElment:(SubElements *) subElement{
     
+    //Opening the SQLite DB
+    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
     
+        NSString * updateSubElementSQL = [NSString stringWithFormat:@"UPDATE SUBELEMENT SET ISCOMPLETED = %d, POINTSPOSSIBLE = %f, POINTSAWARDED = %f, MODIFIEDNAPOINTS = %f WHERE ID = %d", subElement.isCompleted, subElement.pointsPossible, subElement.pointsAwarded, subElement.modefiedNAPoints, subElement.subElementID];
+    
+        sqlite3_stmt * statement;
+    
+        //Prepare the Query
+        sqlite3_prepare_v2(dnvAuditDB, [updateSubElementSQL UTF8String], -1, &statement, NULL);
+    
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            NSLog(@"Row updated from Sub Element table.");
+        }
+        else {
+            NSLog(@"Failed to update row from Sub Element table.");
+        }
+    
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+    
+        NSLog(@"Failed to open/create DB.");
+    }
 }
 
 
--(void)updateQuestion:(NSInteger *)questionID isCompleted:(BOOL)isCompleted ofAudit:(NSString *)auditID{
+-(void)updateQuestion:(Questions *)question{
     
+    //Opening the SQLite DB
+    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
     
+        NSString * updateQuestionSQL = [NSString stringWithFormat:@"UPDATE QUESTION SET ISCOMPLETED = %d, POINTSAWARDED = %f, NOTES = \"%@\", ISTHUMBSUP = %d, ISTHUMBSDOWN = %d, ISAPPLICABLE = %d, NEEDSVERIFYING = %d, ISVERIFYDONE = %d WHERE ID = %d", question.isCompleted, question.pointsAwarded, question.notes, question.isThumbsUp, question.isThumbsDown, question.isApplicable, question.needsVerifying, question.isVerifyDone, question.questionID];
+    
+        sqlite3_stmt * statement;
+    
+        //Prepare the Query
+        sqlite3_prepare_v2(dnvAuditDB, [updateQuestionSQL UTF8String], -1, &statement, NULL);
+    
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            NSLog(@"Row updated from Question table.");
+            
+            for (Answers * answer in question.Answers)
+                [self updateAnswer:answer];
+            
+            for (NSString * imageAttach in question.imageLocationArray)
+                [self saveAttachment:imageAttach ofType:true forQuestion:question.questionID];
+            
+            for (NSString * fileAttach in question.attachmentsLocationArray)
+                [self saveAttachment:fileAttach ofType:false forQuestion:question.questionID];
+        }
+        else {
+            NSLog(@"Failed to update row from Question table. Error: %s", sqlite3_errmsg(dnvAuditDB));
+        }
+    
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
+    }
 }
 
 
--(void)updateAnswer:(NSInteger *)answerID isCompleted:(BOOL)isSelected ofAudit:(NSString *)auditID{
+-(void)updateAnswer:(Answers *)answer{
     
+    NSString * updateAnswerSQL = [NSString stringWithFormat:@"UPDATE ANSWER SET ANSWERTEXT = \"%@\", ISSELECTED = %d WHERE ID = %d", answer.answerText, answer.isSelected, answer.answerID];
     
+    sqlite3_stmt * statement;
+    
+    //Prepare the Query
+    sqlite3_prepare_v2(dnvAuditDB, [updateAnswerSQL UTF8String], -1, &statement, NULL);
+    
+    if(sqlite3_step(statement)==SQLITE_DONE)
+    {
+        NSLog(@"Row updated from Answer table.");
+    }
+    else {
+        NSLog(@"Failed to update row from Answer table.");
+    }
+    
+    sqlite3_finalize(statement);
 }
 
 
@@ -761,6 +1075,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             NSLog(@"Failed to delete row from Audit table.");
         }
         
+        sqlite3_finalize(statement);
         sqlite3_close(dnvAuditDB);
     }
     else{
@@ -812,7 +1127,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
 
 -(void)deleleElements:(NSString *)auditID{
     
-    NSArray * elementIDS = [self getElementIDSFrom:@"ELEMENT" where:@"AUDITID" equals:auditID];
+    NSArray * elementIDS = [self getElementIDS:auditID];
         
     NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM ELEMENT WHERE AUDITID = \"%@\"", auditID];
     
@@ -1003,6 +1318,13 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                 tempUser.otherUserInfo = otherInfo;
             }
         }
+    
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
     }
     
     return tempUser;
@@ -1054,6 +1376,13 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                 [userArray addObject:tempUser];
             }
         }
+    
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
     }
     
     return userArray;
@@ -1081,7 +1410,6 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         
         NSLog(@"Failed to open/create DB.");
     }
-    
 }
 
 #pragma mark helper functions
@@ -1111,13 +1439,14 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     return ID;
 }
 
--(NSArray *)getElementIDSFrom:(NSString *) table where:(NSString *) fKeyName equals:(NSString *) fKeyValue{
+
+-(NSArray *)getElementIDS:(NSString *) fKeyValue{
     
     NSMutableArray * tableIDS = [NSMutableArray new];
     
     sqlite3_stmt * statement;
     
-    NSString * getIdsArraySQL = [NSString stringWithFormat:@"SELECT ID FROM \"%@\" WHERE \"%@\" = \"%@\"", table, fKeyName, fKeyValue];
+    NSString * getIdsArraySQL = [NSString stringWithFormat:@"SELECT ID FROM ELEMENT WHERE AUDITID = \"%@\"", fKeyValue];
     
     //Prepare the Query
     if(sqlite3_prepare_v2(dnvAuditDB, [getIdsArraySQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
@@ -1137,6 +1466,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     
     return tableIDS;
 }
+
 
 -(NSArray *)getIDSFrom:(NSString *) table where:(NSString *) fKeyName equals:(int) fKeyValue{
     
@@ -1181,6 +1511,5 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     }
     sqlite3_finalize(statement);
 }
-
 
 @end

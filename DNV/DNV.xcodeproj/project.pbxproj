@@ -95,7 +95,6 @@
 		76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C74187222EF00ACF6DB /* QuartzCore.framework */; };
 		76BF9C771872237200ACF6DB /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C761872237200ACF6DB /* DropboxSDK.framework */; };
 		76D4A339187CE5F6007AB1A9 /* AuditSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D4A338187CE5F6007AB1A9 /* AuditSelectionViewController.m */; };
-		76D734861890AA44000884D8 /* AuditIDObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D734851890AA44000884D8 /* AuditIDObject.m */; };
 		76D96A3B187B001300961260 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3A187B001300961260 /* LogInViewController.m */; };
 		76D96A3E187B07EA00961260 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3D187B07EA00961260 /* User.m */; };
 		76D96A45187B585900961260 /* ClientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A44187B585900961260 /* ClientViewController.m */; };
@@ -289,8 +288,6 @@
 		76BF9C761872237200ACF6DB /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 		76D4A337187CE5F6007AB1A9 /* AuditSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuditSelectionViewController.h; sourceTree = "<group>"; };
 		76D4A338187CE5F6007AB1A9 /* AuditSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuditSelectionViewController.m; sourceTree = "<group>"; };
-		76D734841890AA44000884D8 /* AuditIDObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuditIDObject.h; sourceTree = "<group>"; };
-		76D734851890AA44000884D8 /* AuditIDObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuditIDObject.m; sourceTree = "<group>"; };
 		76D96A39187B001300961260 /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
 		76D96A3A187B001300961260 /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
 		76D96A3C187B07EA00961260 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };

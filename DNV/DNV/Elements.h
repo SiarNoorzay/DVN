@@ -11,6 +11,7 @@
 
 @interface Elements : NSDictionary
 
+@property (nonatomic) int elementID;
 @property (nonatomic) BOOL isCompleted;
 @property (nonatomic) NSString * name;
 @property (nonatomic) BOOL isRequired;
@@ -19,6 +20,8 @@
 @property (nonatomic) NSArray * Subelements;
 
 @property (nonatomic) float modefiedNAPoints;
+
+@property (nonatomic) NSArray * zeroIfNoPointsFor;
 
 
 -(id)initWithElement:(NSDictionary *)elementDictionary;

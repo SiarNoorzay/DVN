@@ -11,6 +11,7 @@
 
 @interface Answers : NSDictionary
 
+@property (nonatomic) int answerID;
 @property (nonatomic) NSString * answerText;
 @property (nonatomic) float pointsPossible;
 @property (nonatomic) BOOL isSelected;

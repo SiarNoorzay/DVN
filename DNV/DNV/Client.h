@@ -11,6 +11,7 @@
 
 @interface Client : NSDictionary
 
+@property (nonatomic) int clientID;
 @property (nonatomic) NSString * companyName;
 @property (nonatomic) NSString * division;
 @property (nonatomic) NSString * SICNumber;

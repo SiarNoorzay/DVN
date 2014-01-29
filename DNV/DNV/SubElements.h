@@ -11,12 +11,15 @@
 
 @interface SubElements : NSDictionary
 
+@property (nonatomic) int subElementID;
 @property (nonatomic) BOOL isCompleted;
 @property (nonatomic) NSString * name;
 @property (nonatomic) float  pointsPossible;
 @property (nonatomic) float  pointsAwarded;
 @property (nonatomic) NSArray * Questions;
 @property (nonatomic) float modefiedNAPoints;
+
+@property (nonatomic) NSArray * zeroIfNoPointsFor;
 
 -(id)initWithSubElement:(NSDictionary *)subElementDictionary;
 
