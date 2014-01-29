@@ -36,11 +36,16 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    
     self.sectionHeaders = [[NSArray alloc]initWithObjects:@"On Device",@"From Dropbox", nil];
     
     NSLog(@"\n\nFolder Path recieved: %@", self.dbWIPFolderPath);
     
     self.wipAuditTable.delegate = self;
+    
+    //local WIP
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+    self.localWips = [self.dnvDBManager retrieveDistinctAuditNamesForClientOfType:1];
     
     [[self restClient] loadMetadata:self.dbWIPFolderPath];
     
@@ -71,7 +76,7 @@
     int numberOfRows;
     
     if (section == 0){
-        numberOfRows = 1;
+        numberOfRows = (int)[self.localWips count];
     }
     else {
         numberOfRows = (int)[self.wips count];
@@ -91,7 +96,7 @@
     }
     
     if(indexPath.section == 0)
-        cell.textLabel.text = @"I'm Local";
+        cell.textLabel.text = [self.localWips objectAtIndex:indexPath.row];
     else if(indexPath.section == 1){
         Folder * wip = [self.wips objectAtIndex:indexPath.row];
         
@@ -102,7 +107,6 @@
     //    cell.imageView.image = [UIImage imageNamed:@"check-mark-button.png"];
     
     return cell;
-    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -129,6 +133,11 @@
         
         // Pass the information to your destination view
     WIPAuditFilesViewController * wipAuditFileVC = [segue destinationViewController];
+    
+    if ([self.WIPType isEqualToString:@"localWIP"]){
+        
+        wipAuditFileVC.localWIPName = [self.localWips objectAtIndex:self.chosenWIP];
+    }
     
     if ([self.WIPType isEqualToString:@"importWIP"]){
     

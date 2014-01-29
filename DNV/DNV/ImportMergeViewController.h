@@ -13,6 +13,8 @@
 @property (strong, nonatomic) NSArray * jsonFiles;
 @property (strong, nonatomic) NSString * currentFile;
 
+@property (strong, nonatomic) NSArray * sectionHeaders;
+
 @property (strong, nonatomic) IBOutlet UICollectionView *jsonFileCollection;
 
 @end

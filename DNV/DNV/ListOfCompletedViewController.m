@@ -42,6 +42,10 @@
     
     self.completedAuditTable.delegate = self;
     
+    //local WIP
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+    self.localCompleted = [self.dnvDBManager retrieveDistinctAuditNamesForClientOfType:2];
+    
     [[self restClient] loadMetadata:self.dbCompletedFolderPath];
     
     [self.spinner startAnimating];
@@ -71,7 +75,7 @@
     int numberOfRows;
     
     if (section == 0){
-        numberOfRows = 1;
+        numberOfRows = (int)[self.localCompleted count];
     }
     else {
         numberOfRows = (int)[self.completed count];

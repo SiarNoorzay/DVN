@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DNVDatabaseManagerClass.h"
 
 @class DBRestClient;
 
@@ -14,6 +15,9 @@
 {
     DBRestClient *restClient;
 }
+
+@property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
+@property (strong, nonatomic) NSArray * localCompleted;
 
 @property (strong, nonatomic) NSArray * sectionHeaders;
 

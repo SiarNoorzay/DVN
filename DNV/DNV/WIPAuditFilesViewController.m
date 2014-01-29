@@ -35,15 +35,19 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    if ([self.wipAuditType isEqualToString:@"importWIP"]){
-        [[self restClient] loadMetadata:self.wipAuditPath];
-    }
-    else{
-        NSLog(@"%@", self.wipAuditType);
-    }
     
     [self.spinner startAnimating];
     
+    if ([self.wipAuditType isEqualToString:@"importWIP"]){
+        [[self restClient] loadMetadata:self.wipAuditPath];
+    }
+    else if ([self.wipAuditType isEqualToString:@"localWIP"]){
+        self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+        self.localWIPList = [self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.localWIPName];
+        
+        [self.wipJSONFileTable reloadData];
+        [self.spinner stopAnimating];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,7 +60,15 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return [self.JSONList count];
+    int rowCount;
+    
+    if ([self.wipAuditType isEqualToString:@"localWIP"])
+         rowCount = [self.localWIPList count];
+    
+    if ([self.wipAuditType isEqualToString:@"importWIP"])
+        rowCount = [self.JSONList count];
+    
+    return rowCount;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -68,7 +80,12 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    cell.textLabel.text = self.JSONList[indexPath.row];
+    if ([self.wipAuditType isEqualToString:@"localWIP"])
+        cell.textLabel.text = self.localWIPList[indexPath.row];
+    
+    if ([self.wipAuditType isEqualToString:@"importWIP"])
+        cell.textLabel.text = self.JSONList[indexPath.row];
+    
     cell.textLabel.font = [UIFont systemFontOfSize:25.0];
     
     return cell;
@@ -86,10 +103,7 @@
     
     UITableViewCell * cell = [self.wipJSONFileTable cellForRowAtIndexPath:indexPath];
     
-    
     [self.wipPopOver setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.35]];
-//    [self.wipPopOver setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:.3]];
-//    [[[self.wipPopOver contentViewController] view] setAlpha:0];
     
     [self.wipPopOver presentPopoverFromRect:cell.frame inView:self.wipJSONFileTable permittedArrowDirections:UIPopoverArrowDirectionAny animated:true];
     

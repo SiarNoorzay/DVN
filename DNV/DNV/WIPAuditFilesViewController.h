@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DNVDatabaseManagerClass.h"
 
 @class DBRestClient;
 
@@ -14,6 +15,10 @@
 {
     DBRestClient * restClient;
 }
+
+@property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
+@property (strong, nonatomic) NSString * localWIPName;
+@property (strong, nonatomic) NSArray * localWIPList;
 
 @property (strong, nonatomic) NSString * wipAuditType;
 @property (strong, nonatomic) NSString * wipAuditPath;

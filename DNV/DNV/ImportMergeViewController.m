@@ -33,7 +33,9 @@
     NSLog(@"Current WIP: %@", self.currentFile);
     
 //    [self.jsonFileCollection reloadData];
-    iSpotOfCurrFile = (int)[self.jsonFiles indexOfObject:self.currentFile ];
+    iSpotOfCurrFile = (int)[self.jsonFiles indexOfObject:self.currentFile];
+    
+    self.sectionHeaders = [[NSArray alloc]initWithObjects:@"On Device", @"On Dropbox", nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,6 +45,11 @@
 }
 
 #pragma mark Collectionview methods
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    
+    return self.sectionHeaders.count;
+}
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     

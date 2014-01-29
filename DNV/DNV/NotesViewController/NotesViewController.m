@@ -85,8 +85,7 @@ bool start = true;
     
     self.notesTextView.text = temp;
     self.text = temp;
-    
-    
+
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
