@@ -95,8 +95,13 @@ int numOfSubs;
     [self.switchy setDidChangeHandler:^(BOOL isOn) {
         NSLog(@"Switchy changed to %d", isOn);
         answered = true;
-        Answers *leftAns = self.ansArray[1];
-        Answers *rightAns = self.ansArray[0];
+        Answers *leftAns;
+        Answers *rightAns;
+        if (self.ansArray.count >=2){
+            leftAns = self.ansArray[1];
+            rightAns = self.ansArray[0];
+        }
+        
         
         
         if (isOn) {
@@ -219,6 +224,7 @@ int numOfSubs;
         self.leftSliderLabel.hidden = true;
         self.rightSliderLabel.hidden = true;
         self.switchy.hidden = true;
+        [self.switchy setOn:false];
     }
 }
 
@@ -381,7 +387,7 @@ int numOfSubs;
     }
     
     
-    }
+    
 }
 
 - (void)didReceiveMemoryWarning

@@ -293,7 +293,7 @@ loadMetadataFailedWithError:(NSError *)error {
         
         [self.dnvDBManager saveAudit:aud];
         
-        aud = [self.dnvDBManager retrieveAudit:aud.auditID];
+       // aud = [self.dnvDBManager retrieveAudit:aud.auditID];
         
         self.elementIDs = [self.dnvDBManager getElementIDS:aud.auditID];
         
@@ -316,7 +316,7 @@ loadMetadataFailedWithError:(NSError *)error {
         [self.elementPicker selectRow:0 inComponent:0 animated:false];
         Elements *tempEle = [self.listOfElements objectAtIndex:0];
         self.listOfSubElements = tempEle.Subelements;
-        self.subElementIDs = [self.dnvDBManager getIDSFrom:@"SUBELEMENT" where:@"ELEMENTID" equals:[[self.elementIDs objectAtIndex:0] integerValue]];
+ //       self.subElementIDs = [self.dnvDBManager getIDSFrom:@"SUBELEMENT" where:@"ELEMENTID" equals:[[self.elementIDs objectAtIndex:0] integerValue]];
         [self.subElementTable reloadData];
 
     }
