@@ -780,8 +780,6 @@
 				76E81F17187DB92600441F62 /* Folder.m */,
 				4AC04092188F71C4006A2F3C /* MergeClass.h */,
 				4AC04093188F71C4006A2F3C /* MergeClass.m */,
-				76D734841890AA44000884D8 /* AuditIDObject.h */,
-				76D734851890AA44000884D8 /* AuditIDObject.m */,
 				768D56EC1898136600175EB4 /* LayeredQuestion.h */,
 				768D56ED1898136600175EB4 /* LayeredQuestion.m */,
 			);
@@ -1058,7 +1056,6 @@
 				769D3CEA1885A763002DF3B8 /* ImportMergeViewController.m in Sources */,
 				768D56561890145500175EB4 /* ReportDocViewController.m in Sources */,
 				768D567C18916A6300175EB4 /* ConclusionViewController.m in Sources */,
-				76D734861890AA44000884D8 /* AuditIDObject.m in Sources */,
 				768D56EE1898136600175EB4 /* LayeredQuestion.m in Sources */,
 				76D96A3E187B07EA00961260 /* User.m in Sources */,
 				762797191871D53A00F22E73 /* main.m in Sources */,

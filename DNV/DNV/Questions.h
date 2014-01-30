@@ -37,4 +37,7 @@
 
 -(Questions *)mergeQuestion:(Questions *)primaryQuestion with:(Questions *)secondaryQuestion;
 
+-(NSDictionary*)toDictionary;
+
+
 @end

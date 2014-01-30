@@ -310,6 +310,12 @@ loadMetadataFailedWithError:(NSError *)error {
         
         //[self.elementPicker reloadAllComponents];
         
+        //testing todictionary
+        
+        NSDictionary *dict = [aud toDictionary];
+        
+        Audit *todictAud = [[Audit alloc]initWithAudit:dict];
+        
         
         [self.elementPicker reloadAllComponents];
         

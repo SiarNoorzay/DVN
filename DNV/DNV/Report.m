@@ -49,5 +49,34 @@
     return  mergedReports;
 }
 
+-(NSDictionary*)toDictionary
+{
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]initWithCapacity:10];
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%d", self.reportID] forKey:@"reportID"];
+    
+    [dictionary setValue:self.summary forKey:@"summary"];
+
+    [dictionary setValue:self.preparedBy forKey:@"preparedBy"];
+    
+    [dictionary setValue:self.approvedBy forKey:@"approvedBy"];
+    
+    [dictionary setValue:self.projectNum forKey:@"projectNum"];
+    
+    [dictionary setValue:self.conclusion forKey:@"conclusion"];
+    
+    [dictionary setValue:self.methodologyDiagramLocation forKey:@"methodologyDiagramLocation"];
+    
+    [dictionary setValue:self.clientRef forKey:@"clientRef"];
+    
+    [dictionary setValue:self.executiveSummary forKey:@"executiveSummary"];
+    
+    [dictionary setValue:self.summary forKey:@"scoringAssumptions"];
+
+   
+    return dictionary;
+    
+    
+}
 
 @end

@@ -17,9 +17,10 @@
     
     if(self){
         
+        self.elementID = [[elementDictionary objectForKey:@"elementID"]integerValue];
         self.isCompleted = [[elementDictionary objectForKey:@"isCompleted"] boolValue];
         self.name = [elementDictionary objectForKey:@"name"];
-        self.isRequired = [[elementDictionary objectForKey:@"elementDictionary"]boolValue];
+        self.isRequired = [[elementDictionary objectForKey:@"isRequired"]boolValue];
         self.pointsPossible = [[elementDictionary objectForKey:@"pointsPossible"]floatValue];
         self.pointsAwarded = [[elementDictionary objectForKey:@"pointsAwarded"]floatValue];
         
@@ -76,6 +77,37 @@
     mergedElements.Subelements = [NSArray arrayWithArray:mergedSubElements];
     
     return  mergedElements;
+}
+-(NSDictionary*)toDictionary
+{
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]initWithCapacity:9];
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%d", self.elementID] forKey:@"elementID"];
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%d", self.isCompleted] forKey:@"isCompleted"];
+    
+    [dictionary setValue:self.name forKey:@"name"];
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%d", self.isRequired] forKey:@"isRequired"];
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%f", self.pointsPossible] forKey:@"pointsPossible"];
+
+    [dictionary setValue:[NSString stringWithFormat:@"%f", self.pointsAwarded] forKey:@"pointsAwarded"];
+    
+    
+    NSMutableArray *subEleArray = [NSMutableArray new];
+    for (SubElements *subEle in self.Subelements) {
+        [subEleArray addObject: [subEle toDictionary]];
+    }
+    [dictionary setValue:subEleArray forKey:@"SubElements"];
+    
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%f", self.modefiedNAPoints] forKey:@"modefiedNAPoints"];
+
+    [dictionary setValue:self.zeroIfNoPointsFor forKey:@"zeroIfNoPointsFor"];
+    
+    
+    return dictionary;
 }
 
 @end

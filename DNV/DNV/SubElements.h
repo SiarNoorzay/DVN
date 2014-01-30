@@ -25,4 +25,7 @@
 
 -(SubElements *)mergeSubElements:(SubElements *)primarySubElements with:(SubElements *)secondarySubElements;
 
+-(NSDictionary*)toDictionary;
+
+
 @end

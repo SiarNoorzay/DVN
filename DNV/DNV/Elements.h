@@ -28,4 +28,6 @@
 
 -(Elements *)mergeElements:(Elements *)primaryElements with:(Elements *)secondaryElements;
 
+-(NSDictionary*)toDictionary;
+
 @end

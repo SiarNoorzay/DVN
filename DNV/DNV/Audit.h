@@ -27,4 +27,6 @@
 
 -(Audit*)mergeAudit:(Audit*)primaryAudit with:(Audit*)secondaryAudit;
 
+-(NSDictionary*)toDictionary;
+
 @end
