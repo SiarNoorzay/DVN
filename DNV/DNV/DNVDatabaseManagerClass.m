@@ -133,6 +133,17 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
 }
 
 
+-(void)saveClient:(Client *)client forAudit:(NSString *)auditID{
+    
+    
+    //Query to insert into the client table
+    NSString * insertClientSQL = [NSString stringWithFormat:@"INSERT INTO CLIENT (AUDITID, CLIENTNAME, DIVISION, SIC, NUMBEREMPLOYEES, AUDITOR, AUDITSITE, AUDITDATE, BASELINEAUDIT, STREETADDRESS, CITYSTATEPROVINCE, POSTALCODE, COUNTRY) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", \"%@\")", auditID, client.companyName, client.division, client.SICNumber, client.numEmployees, client.auditor, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.postalCode, client.country];
+    
+    //Call to insert a row into a table
+    [self insertRowInTable:insertClientSQL forTable:@"client"];
+    
+}
+
 -(void)saveAudit:(Audit *)audit{
     
     //Open the DB
@@ -140,13 +151,13 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         
         sqlite3_stmt * statement;
         
-        //Using the user defaults to create the audit ID
-        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        NSString * auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
-        auditID = [auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
+//        //Using the user defaults to create the audit ID
+//        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+//        NSString * auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
+//        auditID = [auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
         
         //Query to insert into the audit table
-        NSString * insertAuditSQL = [NSString stringWithFormat:@"INSERT INTO AUDIT (ID, AUDITNAME, AUDITTYPE, LASTMODIFIED) VALUES (\"%@\", \"%@\", %d, \"%@\")", auditID, audit.name, 1, audit.lastModefied];
+        NSString * insertAuditSQL = [NSString stringWithFormat:@"INSERT INTO AUDIT (ID, AUDITNAME, AUDITTYPE, LASTMODIFIED) VALUES (\"%@\", \"%@\", %d, \"%@\")", audit.auditID, audit.name, 1, audit.lastModefied];
         
         //Preparing
         sqlite3_prepare_v2(dnvAuditDB, [insertAuditSQL UTF8String], -1, &statement, NULL);
@@ -155,17 +166,19 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             NSLog(@"audit added to DB.");
         
             Client * client = audit.client;
+            
+            [self saveClient:client forAudit:audit.auditID];
         
-            //Query to insert into the client table
-            NSString * insertClientSQL = [NSString stringWithFormat:@"INSERT INTO CLIENT (AUDITID, CLIENTNAME, DIVISION, SIC, NUMBEREMPLOYEES, AUDITOR, AUDITSITE, AUDITDATE, BASELINEAUDIT, STREETADDRESS, CITYSTATEPROVINCE, POSTALCODE, COUNTRY) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", \"%@\")", auditID, client.companyName, client.division, client.SICNumber, client.numEmployees, client.auditor, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.postalCode, client.country];
-        
-            //Call to insert a row into a table
-            [self insertRowInTable:insertClientSQL forTable:@"client"];
+//            //Query to insert into the client table
+//            NSString * insertClientSQL = [NSString stringWithFormat:@"INSERT INTO CLIENT (AUDITID, CLIENTNAME, DIVISION, SIC, NUMBEREMPLOYEES, AUDITOR, AUDITSITE, AUDITDATE, BASELINEAUDIT, STREETADDRESS, CITYSTATEPROVINCE, POSTALCODE, COUNTRY) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", \"%@\")", auditID, client.companyName, client.division, client.SICNumber, client.numEmployees, client.auditor, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.postalCode, client.country];
+//        
+//            //Call to insert a row into a table
+//            [self insertRowInTable:insertClientSQL forTable:@"client"];
         
             Report * report = audit.report;
         
             //Query to insert into the report table
-            NSString * insertReportSQL = [NSString stringWithFormat:@"INSERT INTO REPORT (AUDITID, CLIENTREF, SUMMARY, EXECSUMMARY, PREPAREDBY, APPROVEDBY, PROJECTNUMBER, SCORINGASSUMPTIONS, CONCLUSION, DIAGRAMFILENAME) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\",\"%@\", \"%@\", \"%@\", \"%@\")", auditID, report.clientRef, report.summary, report.executiveSummary, report.preparedBy, report.approvedBy, report.projectNum, report.scoringAssumptions, report.conclusion, report.methodologyDiagramLocation];
+            NSString * insertReportSQL = [NSString stringWithFormat:@"INSERT INTO REPORT (AUDITID, CLIENTREF, SUMMARY, EXECSUMMARY, PREPAREDBY, APPROVEDBY, PROJECTNUMBER, SCORINGASSUMPTIONS, CONCLUSION, DIAGRAMFILENAME) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\",\"%@\", \"%@\", \"%@\", \"%@\")", audit.auditID, report.clientRef, report.summary, report.executiveSummary, report.preparedBy, report.approvedBy, report.projectNum, report.scoringAssumptions, report.conclusion, report.methodologyDiagramLocation];
         
             //Call to insert a row into a table
             [self insertRowInTable:insertReportSQL forTable:@"report"];
@@ -176,7 +189,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             for (Elements * ele in elements){
         
                 //Query to insert into the element table
-                NSString * insertElementSQL = [NSString stringWithFormat:@"INSERT INTO ELEMENT (AUDITID, ELEMENTNAME, ISCOMPLETED, ISREQUIRED, POINTSPOSSIBLE, POINTSAWARDED, MODIFIEDNAPOINTS) VALUES (\"%@\", \"%@\", %d, %d, %f, %f, %f)", auditID, ele.name, ele.isCompleted, ele.isRequired, ele.pointsPossible, ele.pointsAwarded, ele.modefiedNAPoints];
+                NSString * insertElementSQL = [NSString stringWithFormat:@"INSERT INTO ELEMENT (AUDITID, ELEMENTNAME, ISCOMPLETED, ISREQUIRED, POINTSPOSSIBLE, POINTSAWARDED, MODIFIEDNAPOINTS) VALUES (\"%@\", \"%@\", %d, %d, %f, %f, %f)", audit.auditID, ele.name, ele.isCompleted, ele.isRequired, ele.pointsPossible, ele.pointsAwarded, ele.modefiedNAPoints];
             
                 //Call to insert a row into a table
                 [self insertRowInTable:insertElementSQL forTable:@"element"];
@@ -906,7 +919,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //Opening the SQLite DB
     if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
         
-        NSString * updateReportSQL = [NSString stringWithFormat:@"UPDATE REPORT SET SUMMARY = \"%@\", EXECSUMMARY = \"%@\", PREPAREDBY = \"%@\", APPROVEDBY = \"%@\", PROJECTNUMBER = \"%@\", SCORINGASSUMPTIONS = \"%@\", CONCLUSION = \"%@\", DIAGRAMFILENAME = \"%@\" WHERE ID = %d",report.summary, report.executiveSummary, report.preparedBy, report.approvedBy, report.projectNum, report.scoringAssumptions, report.conclusion, report.methodologyDiagramLocation, report.reportID];
+        NSString * updateReportSQL = [NSString stringWithFormat:@"UPDATE REPORT SET CLIENTREF = \"%@\", SUMMARY = \"%@\", EXECSUMMARY = \"%@\", PREPAREDBY = \"%@\", APPROVEDBY = \"%@\", PROJECTNUMBER = \"%@\", SCORINGASSUMPTIONS = \"%@\", CONCLUSION = \"%@\", DIAGRAMFILENAME = \"%@\" WHERE ID = %d", report.clientRef, report.summary, report.executiveSummary, report.preparedBy, report.approvedBy, report.projectNum, report.scoringAssumptions, report.conclusion, report.methodologyDiagramLocation, report.reportID];
         
         sqlite3_stmt * statement;
         

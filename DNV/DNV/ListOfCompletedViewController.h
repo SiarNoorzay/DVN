@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "DNVDatabaseManagerClass.h"
 
+#import "Audit.h"
+
 @class DBRestClient;
 
 @interface ListOfCompletedViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
@@ -18,6 +20,8 @@
 
 @property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
 @property (strong, nonatomic) NSArray * localCompleted;
+
+@property (strong, nonatomic) Audit * audit;
 
 @property (strong, nonatomic) NSArray * sectionHeaders;
 

@@ -58,6 +58,11 @@
 		769D3CF518860C2B002DF3B8 /* flatFolderIcon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 769D3CF418860C2B002DF3B8 /* flatFolderIcon2.png */; };
 		769D3D0418863436002DF3B8 /* import_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 769D3D0318863436002DF3B8 /* import_icon.png */; };
 		76A0DFBD18847B880038FD61 /* WIPAuditFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A0DFBC18847B880038FD61 /* WIPAuditFilesViewController.m */; };
+		76A1039D1899A08300283F67 /* EditClientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A1039C1899A08300283F67 /* EditClientViewController.m */; };
+		76A103A01899A7D300283F67 /* empty_checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A1039F1899A7D300283F67 /* empty_checkbox.png */; };
+		76A103A21899A7DD00283F67 /* checkbox_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A103A11899A7DD00283F67 /* checkbox_checked.png */; };
+		76A103A41899ABDE00283F67 /* empty_checkbox_gray_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A103A31899ABDE00283F67 /* empty_checkbox_gray_border.png */; };
+		76A103A61899ABE500283F67 /* checkbox_checked_gray_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A103A51899ABE500283F67 /* checkbox_checked_gray_border.png */; };
 		76A2BE3C187DBF7A0056CC22 /* ElementSubElementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A2BE3B187DBF7A0056CC22 /* ElementSubElementViewController.m */; };
 		76A567FF1886DF70000E32D3 /* verify_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A567FE1886DF70000E32D3 /* verify_icon.png */; };
 		76A568011886E0CC000E32D3 /* export_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A568001886E0CC000E32D3 /* export_icon.png */; };
@@ -235,6 +240,12 @@
 		769D3D0318863436002DF3B8 /* import_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = import_icon.png; sourceTree = "<group>"; };
 		76A0DFBB18847B880038FD61 /* WIPAuditFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIPAuditFilesViewController.h; sourceTree = "<group>"; };
 		76A0DFBC18847B880038FD61 /* WIPAuditFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIPAuditFilesViewController.m; sourceTree = "<group>"; };
+		76A1039B1899A08300283F67 /* EditClientViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditClientViewController.h; sourceTree = "<group>"; };
+		76A1039C1899A08300283F67 /* EditClientViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditClientViewController.m; sourceTree = "<group>"; };
+		76A1039F1899A7D300283F67 /* empty_checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = empty_checkbox.png; sourceTree = "<group>"; };
+		76A103A11899A7DD00283F67 /* checkbox_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_checked.png; sourceTree = "<group>"; };
+		76A103A31899ABDE00283F67 /* empty_checkbox_gray_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = empty_checkbox_gray_border.png; sourceTree = "<group>"; };
+		76A103A51899ABE500283F67 /* checkbox_checked_gray_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_checked_gray_border.png; sourceTree = "<group>"; };
 		76A2BE3A187DBF7A0056CC22 /* ElementSubElementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementSubElementViewController.h; sourceTree = "<group>"; };
 		76A2BE3B187DBF7A0056CC22 /* ElementSubElementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ElementSubElementViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		76A567FE1886DF70000E32D3 /* verify_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = verify_icon.png; sourceTree = "<group>"; };
@@ -447,6 +458,7 @@
 				769D3CE31885808D002DF3B8 /* VerifyQuestionsViewController */,
 				769D3CE7188599A6002DF3B8 /* ImportMergeViewController */,
 				76A56827188733BE000E32D3 /* ListOfCompletedViewController */,
+				76A1039918999D7D00283F67 /* EditClientViewController */,
 				768D564B188F0FA300175EB4 /* Reporting */,
 				762797241871D53A00F22E73 /* Images.xcassets */,
 				762797131871D53A00F22E73 /* Supporting Files */,
@@ -635,6 +647,26 @@
 			name = "Audit Icons";
 			sourceTree = "<group>";
 		};
+		76A1039918999D7D00283F67 /* EditClientViewController */ = {
+			isa = PBXGroup;
+			children = (
+				76A1039B1899A08300283F67 /* EditClientViewController.h */,
+				76A1039C1899A08300283F67 /* EditClientViewController.m */,
+			);
+			name = EditClientViewController;
+			sourceTree = "<group>";
+		};
+		76A1039E1899A7A700283F67 /* Edit Client Button */ = {
+			isa = PBXGroup;
+			children = (
+				76A103A51899ABE500283F67 /* checkbox_checked_gray_border.png */,
+				76A103A31899ABDE00283F67 /* empty_checkbox_gray_border.png */,
+				76A103A11899A7DD00283F67 /* checkbox_checked.png */,
+				76A1039F1899A7D300283F67 /* empty_checkbox.png */,
+			);
+			name = "Edit Client Button";
+			sourceTree = "<group>";
+		};
 		76A2BE39187DBC5A0056CC22 /* ElementSubElementViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -769,6 +801,7 @@
 				76A5683018873F12000E32D3 /* Completed Option Buttons */,
 				76A568261887240B000E32D3 /* Tableview Icons */,
 				76A0DFC4188504640038FD61 /* Dashboard Icons */,
+				76A1039E1899A7A700283F67 /* Edit Client Button */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -925,12 +958,15 @@
 				76A568201886FA24000E32D3 /* not_applicable_icon_gray.png in Resources */,
 				76007DB11886FDE800FA7A39 /* dnvlogo76.png in Resources */,
 				76F1015C18888F88003555F2 /* calculator_icon.png in Resources */,
+				76A103A41899ABDE00283F67 /* empty_checkbox_gray_border.png in Resources */,
 				76E81F4618859E3B00441F62 /* AcousticModelEnglish.bundle in Resources */,
 				769D3D0418863436002DF3B8 /* import_icon.png in Resources */,
 				76E81F13187C908100441F62 /* usersNOTDB.json in Resources */,
+				76A103A01899A7D300283F67 /* empty_checkbox.png in Resources */,
 				76A568071886ED22000E32D3 /* mic_icon.png in Resources */,
 				76E81F581886D5ED00441F62 /* Help-100.png in Resources */,
 				76A568031886E979000E32D3 /* notes_icon.png in Resources */,
+				76A103A21899A7DD00283F67 /* checkbox_checked.png in Resources */,
 				768D5653188F18CC00175EB4 /* sampleCompletedAudit.json in Resources */,
 				76A56824188723F6000E32D3 /* check_gray.png in Resources */,
 				76A568211886FA24000E32D3 /* not_applicable_icon.png in Resources */,
@@ -939,6 +975,7 @@
 				769D3CEF1885F9FC002DF3B8 /* wip_checklist_icon.png in Resources */,
 				762797171871D53A00F22E73 /* InfoPlist.strings in Resources */,
 				76A568151886F33B000E32D3 /* thumbs_down.png in Resources */,
+				76A103A61899ABE500283F67 /* checkbox_checked_gray_border.png in Resources */,
 				76A721A7188061E200E34CFA /* DNV_GL_logo.png in Resources */,
 				76A568051886EA76000E32D3 /* verify_icon_gray.png in Resources */,
 				76A568141886F33B000E32D3 /* thumbs_down_gray.png in Resources */,
@@ -994,6 +1031,7 @@
 				769D3CE6188580C5002DF3B8 /* VerifyQuestionsViewController.m in Sources */,
 				768D56671890634600175EB4 /* ECGraphItem.m in Sources */,
 				768D56D01892CFBD00175EB4 /* KeySuggesstionCell.m in Sources */,
+				76A1039D1899A08300283F67 /* EditClientViewController.m in Sources */,
 				768D56691890634600175EB4 /* ECGraphPoint.m in Sources */,
 				76A5682B18873419000E32D3 /* ListOfCompletedViewController.m in Sources */,
 				76A5683C18875A08000E32D3 /* CompletedChoicePopOver.m in Sources */,

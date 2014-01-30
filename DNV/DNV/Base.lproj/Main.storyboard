@@ -1285,6 +1285,9 @@
                                         </view>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="x08-DU-m4P">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="kGq-Rt-Of0" id="Qjk-VO-Lh7"/>
                                     <outlet property="delegate" destination="kGq-Rt-Of0" id="ZNT-xG-LbK"/>
@@ -1446,10 +1449,10 @@
             </objects>
             <point key="canvasLocation" x="5467" y="4290"/>
         </scene>
-        <!--View Controller - Client Information-->
+        <!--Edit Client View Controller - Client Information-->
         <scene sceneID="l57-cJ-IDU">
             <objects>
-                <viewController id="1LI-tS-8fd" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="editClient" id="1LI-tS-8fd" customClass="EditClientViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5VX-SY-yK4">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1458,99 +1461,138 @@
                                 <rect key="frame" x="648" y="85" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Client ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Opj-sN-aOl">
-                                <rect key="frame" x="20" y="200" width="150" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="Znx-sg-Ecc">
-                                <rect key="frame" x="20" y="250" width="250" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Client Reference #" minimumFontSize="17" id="Znx-sg-Ecc">
+                                <rect key="frame" x="15" y="190" width="250" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Client Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ESa-Vw-yUB">
-                                <rect key="frame" x="20" y="355" width="150" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Client Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="snx-XV-xAF">
-                                <rect key="frame" x="20" y="455" width="150" height="40"/>
+                                <rect key="frame" x="14" y="450" width="150" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="3z8-2K-PC6">
-                                <rect key="frame" x="20" y="405" width="300" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Company Name" minimumFontSize="17" id="3z8-2K-PC6">
+                                <rect key="frame" x="15" y="290" width="300" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Street Address" minimumFontSize="17" id="Zef-WR-oDE">
-                                <rect key="frame" x="20" y="505" width="400" height="30"/>
+                                <rect key="frame" x="14" y="500" width="416" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="City" minimumFontSize="17" id="2bv-Xm-tAA">
-                                <rect key="frame" x="20" y="560" width="200" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="City, State, Province" minimumFontSize="17" id="2bv-Xm-tAA">
+                                <rect key="frame" x="14" y="540" width="300" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="State" minimumFontSize="17" id="EW0-J1-577">
-                                <rect key="frame" x="245" y="560" width="57" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Postal Code" minimumFontSize="17" id="rRT-A0-rai">
+                                <rect key="frame" x="329" y="540" width="101" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Zip Code" minimumFontSize="17" id="rRT-A0-rai">
-                                <rect key="frame" x="334" y="560" width="85" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="5mn-tl-xKL">
-                                <rect key="frame" x="20" y="755" width="200" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="trW-dX-tU4">
-                                <rect key="frame" x="15" y="875" width="200" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Started" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FNK-Bm-div">
-                                <rect key="frame" x="15" y="705" width="150" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Ended" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="J0T-wt-KCz">
-                                <rect key="frame" x="20" y="825" width="150" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="a7a-DS-GXh">
-                                <rect key="frame" x="371" y="940" width="55" height="40"/>
+                                <rect key="frame" x="333" y="946" width="108" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Submit">
+                                <state key="normal" title="Save Client Info">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="saveClientInfoBtn:" destination="1LI-tS-8fd" eventType="touchUpInside" id="7cN-vz-m5T"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Client Information" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EMM-Nt-qRT">
+                                <rect key="frame" x="15" y="243" width="150" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Division" minimumFontSize="17" id="p7s-j4-no1">
+                                <rect key="frame" x="14" y="330" width="300" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="SIC Number" minimumFontSize="17" id="QuC-Uq-hWN">
+                                <rect key="frame" x="329" y="290" width="117" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="# of Employees" minimumFontSize="17" id="09B-Qj-L4g">
+                                <rect key="frame" x="329" y="330" width="117" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audit Information" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZTz-rT-JYr">
+                                <rect key="frame" x="14" y="665" width="150" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Audit Site" minimumFontSize="17" id="OAg-dY-kfR">
+                                <rect key="frame" x="14" y="755" width="411" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Auditor" minimumFontSize="17" id="S3m-qr-aoY">
+                                <rect key="frame" x="15" y="715" width="250" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Audit Date" minimumFontSize="17" id="iN6-js-YFK">
+                                <rect key="frame" x="15" y="795" width="120" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="LUH-im-517">
+                                <rect key="frame" x="339" y="795" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="empty_checkbox_gray_border.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="checkbox_checked_gray_border.png"/>
+                                <connections>
+                                    <action selector="baselineAuditPushed:" destination="1LI-tS-8fd" eventType="touchUpInside" id="yfZ-U8-MdK"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Baseline Audit:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="V9J-py-aqc">
+                                <rect key="frame" x="216" y="799" width="115" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Client Information" id="Dk0-Hq-fis"/>
+                    <connections>
+                        <outlet property="SICnumberTxt" destination="QuC-Uq-hWN" id="hhI-Dc-OWO"/>
+                        <outlet property="addressTxt" destination="Zef-WR-oDE" id="ByF-nc-YtF"/>
+                        <outlet property="auditDateTxt" destination="iN6-js-YFK" id="NPA-pL-oPx"/>
+                        <outlet property="auditSiteTxt" destination="OAg-dY-kfR" id="KOO-2z-GjB"/>
+                        <outlet property="auditorTxt" destination="S3m-qr-aoY" id="PMv-gS-993"/>
+                        <outlet property="baselineAuditBtn" destination="LUH-im-517" id="CFI-cc-uRF"/>
+                        <outlet property="cityStateProvTxt" destination="2bv-Xm-tAA" id="rgA-bW-gn3"/>
+                        <outlet property="clientRefTxt" destination="Znx-sg-Ecc" id="LtO-fD-Vg4"/>
+                        <outlet property="companyNameTxt" destination="3z8-2K-PC6" id="oKr-gG-fsf"/>
+                        <outlet property="divisionTxt" destination="p7s-j4-no1" id="u9I-gp-hNm"/>
+                        <outlet property="numOfEmpTxt" destination="09B-Qj-L4g" id="ij7-xY-Dqx"/>
+                        <outlet property="postalCodeTxt" destination="rRT-A0-rai" id="g43-Dv-Ccz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9gN-17-4H7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2636,10 +2678,12 @@ In general, the XXXXXXX protocol requires that the practical application of prog
         <image name="attachment_icon.png" width="256" height="256"/>
         <image name="calculator_icon.png" width="256" height="256"/>
         <image name="camera_icon.png" width="256" height="256"/>
+        <image name="checkbox_checked_gray_border.png" width="300" height="302"/>
         <image name="checkmark.png" width="76" height="60"/>
         <image name="client_icon.png" width="256" height="256"/>
         <image name="completed_checklist_icon.png" width="300" height="350"/>
         <image name="delete_icon.png" width="256" height="256"/>
+        <image name="empty_checkbox_gray_border.png" width="300" height="300"/>
         <image name="export_icon.png" width="300" height="294"/>
         <image name="flatFolderIcon2.png" width="252" height="170"/>
         <image name="import_icon.png" width="299" height="297"/>
@@ -2661,12 +2705,12 @@ In general, the XXXXXXX protocol requires that the practical application of prog
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Kjd-jP-nx9"/>
-        <segue reference="cnZ-cn-LI0"/>
-        <segue reference="ZGD-NJ-UDo"/>
-        <segue reference="JhJ-6V-9g8"/>
-        <segue reference="qKN-QJ-s0B"/>
         <segue reference="sOY-bc-kKG"/>
+        <segue reference="qKN-QJ-s0B"/>
+        <segue reference="JhJ-6V-9g8"/>
+        <segue reference="ZGD-NJ-UDo"/>
+        <segue reference="mdm-Om-J66"/>
+        <segue reference="Kjd-jP-nx9"/>
         <segue reference="z9l-uk-5Nw"/>
         <segue reference="xXC-Ay-Dh8"/>
     </inferredMetricsTieBreakers>

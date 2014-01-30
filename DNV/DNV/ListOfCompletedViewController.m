@@ -9,6 +9,7 @@
 #import "ListOfCompletedViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
 
+#import "EditClientViewController.h"
 #import "ElementSubElementViewController.h"
 #import "CompletedChoicePopOver.h"
 #import "Folder.h"
@@ -95,7 +96,7 @@
     }
     
     if(indexPath.section == 0)
-        cell.textLabel.text = @"I'm Local";
+        cell.textLabel.text = self.localCompleted[indexPath.row];
     else if(indexPath.section == 1){
         Folder * comp = [self.completed objectAtIndex:indexPath.row];
         
@@ -207,18 +208,48 @@ loadMetadataFailedWithError:(NSError *)error {
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
+    NSIndexPath *indexPath = self.completedAuditTable.indexPathForSelectedRow;
+    
+    self.audit = [Audit new];
+    
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[self.localCompleted objectAtIndex:indexPath.row] forKey:@"currentAudit"];
+    [defaults synchronize];
+    
+    self.audit.auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
+    self.audit.auditID = [self.audit.auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    if ([segue.identifier isEqualToString:@"EditClient"]) {
+        
+        EditClientViewController * editClientVC = [segue destinationViewController];
+        
+        if ([self.completedType isEqualToString:@"localCompleted"]) {
+            
+            
+            
+            self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
+            
+            editClientVC.client = self.audit.client;
+            editClientVC.report = self.audit.report;
+            editClientVC.auditID = self.audit.auditID;
+        }
+    }
+    
     if ([segue.identifier isEqualToString:@"EditQuestions"]){
         
-        NSIndexPath *indexPath = self.completedAuditTable.indexPathForSelectedRow;
-    
-        NSLog(@"Selected %@,",[self.completed objectAtIndex:indexPath.row]);
-    
-        Folder *temp =[self.completed objectAtIndex:indexPath.row];
-    
-        //    NSLog(@"Path of Audit: %@", temp.folderPath);
-    
         ElementSubElementViewController * eleSubEleVC = [segue destinationViewController];
-        [eleSubEleVC setAuditPath: temp.folderPath];
+        
+        if ([self.completedType isEqualToString:@"importCompleted"]){
+        
+            NSLog(@"Selected %@,",[self.completed objectAtIndex:indexPath.row]);
+    
+            Folder *temp =[self.completed objectAtIndex:indexPath.row];
+    
+            //    NSLog(@"Path of Audit: %@", temp.folderPath);
+            
+            [eleSubEleVC setAuditPath: temp.folderPath];
+        }
+    
         eleSubEleVC.audType = @"Completed";
     }
 }
