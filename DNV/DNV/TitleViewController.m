@@ -58,6 +58,8 @@
 //    
 //TODO: wire up the date picker so it changes based on the text field and the other way around
 
+    NSString *jsonFromAudit;
+    
 }
 
 - (void)didReceiveMemoryWarning

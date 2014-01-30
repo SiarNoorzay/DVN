@@ -11,10 +11,13 @@
 #import "helpTextViewController.h"
 #import "NotesViewController.h"
 #import "CalculatorViewController.h"
+#import "LayeredQuestion.h"
 
 @interface AnswersViewController ()
 
 @end
+
+
 
 //Change this to go from big swith to table view for bool questions
 BOOL const useSlider = true;
@@ -29,6 +32,8 @@ Questions *mainSubQuestion;
 int mainQuestionPosition;
 BOOL isSublayeredQuestion = false;
 
+int numOfSubs;
+
 @implementation AnswersViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -42,6 +47,8 @@ BOOL isSublayeredQuestion = false;
 
 - (void)viewDidLoad
 {
+    self.allSublayeredQuestions = [NSMutableArray new];
+    
     NSLog(@"Questions: %@",self.question.questionText);
     
     [super viewDidLoad];
@@ -83,13 +90,18 @@ BOOL isSublayeredQuestion = false;
     [self.view addSubview:self.switchy];
  //   [self.switchy setOnTintColor: [UIColor colorWithWhite:.85 alpha:.5]];
     
-    [self.switchy setOn: YES animated: YES];
+    [self.switchy setOn: NO animated: YES];
     
     [self.switchy setDidChangeHandler:^(BOOL isOn) {
         NSLog(@"Switchy changed to %d", isOn);
         answered = true;
-        Answers *leftAns = self.ansArray[1];
-        Answers *rightAns = self.ansArray[0];
+        Answers *leftAns;
+        Answers *rightAns;
+        if (self.ansArray.count >=2){
+            leftAns = self.ansArray[1];
+            rightAns = self.ansArray[0];
+        }
+        
         
         
         if (isOn) {
@@ -97,40 +109,64 @@ BOOL isSublayeredQuestion = false;
             leftAns.isSelected = false;
             pointTotal = rightAns.pointsPossible;
             self.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
+            [self setEnabledFlagsAndReloadQuestions];
         }
         else{
             leftAns.isSelected = true;
             rightAns.isSelected = true;
             pointTotal = leftAns.pointsPossible;
             self.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
-
+            [self setEnabledFlagsAndReloadQuestions];
         }
 
-        if (islayeredQuestion)
-        {
-            if (pointTotal >= self.question.pointsNeededForLayered)
-            {
-                [self.subQuesionsTableView setAllowsSelection:true];
-            }
-            else
-            {
-                [self.subQuesionsTableView setAllowsSelection:false];
-                [self.subQuesionsTableView deselectRowAtIndexPath:[self.subQuesionsTableView indexPathForSelectedRow] animated:YES];
-                
-            }
-        }
+//        if (islayeredQuestion)
+//        {
+//            if (pointTotal >= self.question.pointsNeededForLayered)
+//            {
+//                [self.subQuesionsTableView setAllowsSelection:true];
+//            }
+//            else
+//            {
+//                [self.subQuesionsTableView setAllowsSelection:false];
+//                [self.subQuesionsTableView deselectRowAtIndexPath:[self.subQuesionsTableView indexPathForSelectedRow] animated:YES];
+//                
+//            }
+//         
+//        }
+        
     }];
     }
-    if ([self.question.layeredQuesions count] >=1)
+    if ([self.question.layeredQuesions count] > 0)
     {
         islayeredQuestion = true;
         mainSubQuestion = self.question;
         mainQuestionPosition = self.currentPosition;
         NSLog(@"%i.%i.%i   %@", self.elementNumber +1,self.subElementNum +1 , self.currentPosition+1, mainSubQuestion.questionText);
         
-        [self.mainLayeredQuesionButton setTitle:[NSString stringWithFormat:@"%i.%i.%i   %@", self.elementNumber +1,self.subElementNum +1 , self.currentPosition+1, mainSubQuestion.questionText] forState:UIControlStateNormal]  ;
+        
+        self.mainLayeredQuesionButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        self.mainLayeredQuesionButton.titleLabel.textAlignment = NSTextAlignmentLeft;
+        self.mainLayeredQuesionButton.titleLabel.minimumScaleFactor = 0.5;
+        self.mainLayeredQuesionButton.titleLabel.numberOfLines = 5;
+       
+        
+        [self.mainLayeredQuesionButton setTitle:[NSString stringWithFormat:@"%@",mainSubQuestion.questionText] forState:UIControlStateNormal];
+        //[allSublayeredQuestions addObject:self.question];
+        
+        numOfSubs = [self getNumOfSubQuestionsAndSetAllSubsArray:self.question layerDepth:0];
+        
+        NSLog(@"%d",numOfSubs);
+        
+        self.subQuesionsTableView.hidden = false;
     }
-    else islayeredQuestion = false;
+    
+    
+    else
+    {
+        islayeredQuestion = false;
+        self.layeredQuestionsView.hidden = true;
+        
+    }
     
     [self refreshAnswerView];
 }
@@ -169,7 +205,9 @@ BOOL isSublayeredQuestion = false;
     self.percentSliderTextField.hidden = true;
     self.percentSlider.hidden = true;
     self.layeredQuestionsView.hidden = true;
-    
+    //self.subQuesionsTableView.hidden = true;
+    self.questionText.hidden = true;
+
     
     [self.firstButton setEnabled:true];
     [self.lastButton setEnabled:true];
@@ -179,26 +217,31 @@ BOOL isSublayeredQuestion = false;
     pointTotal = 0;
     self.pointsLabel.text = @"0";
     answered = false;
-    self.percentSlider.value = 50;
+    self.percentSlider.value = 0;
     self.percentSliderTextField.text = @"";
     
     if (useSlider){
         self.leftSliderLabel.hidden = true;
         self.rightSliderLabel.hidden = true;
         self.switchy.hidden = true;
+        [self.switchy setOn:false];
     }
 }
 
 -(void) refreshAnswerView
 {
-    isSublayeredQuestion = (islayeredQuestion && self.currentPosition <0);
+    isSublayeredQuestion = (self.currentPosition <0);
     
+    //seting the current question
     if (isSublayeredQuestion) {
         //we get here when a subquestion was selected
 
         self.currentPosition++;
         self.currentPosition *= -1;
-        self.question = [mainSubQuestion.layeredQuesions objectAtIndex:self.currentPosition];
+        LayeredQuestion *tempLayered = [self.allSublayeredQuestions objectAtIndex:self.currentPosition];
+        self.question = tempLayered.question;
+
+        
         self.questionNumberTextField.text = [NSString stringWithFormat:@"%i",(self.currentPosition +1)];
         
     }
@@ -208,11 +251,18 @@ BOOL isSublayeredQuestion = false;
     }
     
     
+    if ([mainSubQuestion.layeredQuesions count] > 0) {
+        islayeredQuestion = true;
+    }
+    else islayeredQuestion = false;
+    
+    
     self.ansArray =  self.question.Answers;
 
     [self hideAnswerViews];
     NSLog(@"Question Type: %i",self.question.questionType);
     
+    //shows the certain answer parts based on question type
     switch (self.question.questionType) {
         case 0: //bool
             if (useSlider)
@@ -224,42 +274,56 @@ BOOL isSublayeredQuestion = false;
                 Answers *rightAns =self.ansArray[0];
                 self.leftSliderLabel.text = leftAns.answerText;
                 self.rightSliderLabel.text = rightAns.answerText;
+                self.questionText.hidden = NO;
+
             }
             else
             {
                 self.answersTableView.hidden = false;
                 self.answersTableView.allowsMultipleSelection = false;
                 self.tableCell.hidden = false;
+                self.questionText.hidden = NO;
+
             }
             break;
         case 1: //multiple choice
             self.answersTableView.hidden = false;
             self.answersTableView.allowsMultipleSelection = false;
             self.tableCell.hidden = false;
+            self.questionText.hidden = NO;
+
             break;
         case 2: //percentage
             self.percentSlider.hidden = false;
             self.percentSliderTextField.hidden = false;
             self.percentSlider.maximumValue = 100.0;
             self.percentSlider.minimumValue = 0;
+            self.questionText.hidden = NO;
+            self.percentSliderTextField.text = @"0%";
+
+
             break;
         case 3: //partial
             self.answersTableView.hidden = false;
             self.answersTableView.allowsMultipleSelection = true;
             self.tableCell.hidden = false;
+            self.questionText.hidden = NO;
+
             break;
         case 4: //professional Judgement
             self.percentSlider.hidden = false;
             self.percentSliderTextField.hidden = false;
             self.percentSlider.maximumValue = self.question.pointsPossible;
-            self.percentSlider.value = self.percentSlider.maximumValue /2;
+            self.percentSlider.value = 0;
+            self.questionText.hidden = NO;
+            self.percentSliderTextField.text = @"0";
+
             
             break;
         default:
             NSLog(@"Should never get here!! Questions type incorrect");
             break;
     }//switch
-    
     self.questionText.text = self.question.questionText;
     [self.answersTableView reloadData];
     
@@ -289,14 +353,41 @@ BOOL isSublayeredQuestion = false;
     [self.naButton setSelected:!self.question.isApplicable];
     [self.verifyButton setSelected:self.question.needsVerifying];
     
-    if (islayeredQuestion){// && [self.question.layeredQuesions count] >0) {
+    if ((isSublayeredQuestion) || self.question.layeredQuesions.count >0){
+        
         self.layeredQuestionsView.hidden = false;
-        if (pointTotal >= self.question.pointsNeededForLayered) {
-            [self.subQuesionsTableView setAllowsSelection:YES];
-        }
-        else {[self.subQuesionsTableView setAllowsSelection:NO];}
-    
+        
+            NSArray *indexesToTurnOn = [NSArray new];
+            
+            for (int i = 0; i < [self.allSublayeredQuestions count]; i++)
+            {
+                LayeredQuestion *tempLayQ = [self.allSublayeredQuestions objectAtIndex:i];
+                
+                if ( [self.question.questionText isEqualToString:tempLayQ.question.questionText]) {
+                    indexesToTurnOn = tempLayQ.subIndexes;
+                }
+            }
+            
+            for (int i=0; i<[indexesToTurnOn count];i++)
+            {
+                NSNumber *currInd = [indexesToTurnOn objectAtIndex:i];
+                LayeredQuestion *tempLayQ = [self.allSublayeredQuestions objectAtIndex:[currInd intValue]];
+                
+                //int currentIndex = (int)[indexesToTurnOn objectAtIndex:i];
+                
+                //LayeredQuestion *tempLayQ = [allSublayeredQuestions objectAtIndex:currentIndex];
+                
+                tempLayQ.shouldBeEnabled = (pointTotal >= self.question.pointsNeededForLayered) || (self.question.pointsAwarded >= self.question.pointsNeededForLayered);
+                
+                [self.allSublayeredQuestions replaceObjectAtIndex:[currInd intValue] withObject:tempLayQ];
+                
+                
+                [self.subQuesionsTableView reloadData];
+            }
     }
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -324,21 +415,56 @@ BOOL isSublayeredQuestion = false;
         
         return cell;
     }
+    else if (tableView == self.subQuesionsTableView)
+    {
+        if ( islayeredQuestion || isSublayeredQuestion)
+        {
+            
+            static NSString *simpleTableIdentifier = @"subQuestionCell";
+            
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+            
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+            }
+            LayeredQuestion *tempLayered = [self.allSublayeredQuestions objectAtIndex:indexPath.row];
+            
+            Questions * subQuest = tempLayered.question;
+            
+            cell.textLabel.font = [UIFont systemFontOfSize:24];
+            cell.textLabel.numberOfLines = 5;
+            cell.textLabel.minimumScaleFactor = 0.75;
+            
+            cell.textLabel.text =[NSString stringWithFormat: @"%@", subQuest.questionText];
+            
+            if (tempLayered.shouldBeEnabled) {
+                cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                [cell setUserInteractionEnabled:YES];
+                cell.textLabel.enabled = YES;
+            }
+            else{
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.textLabel.enabled = NO;
+                [cell setUserInteractionEnabled:NO];
 
-    static NSString *simpleTableIdentifier = @"subQuestionCell";
+            }
+
+            
+            return cell;
+            
+        }
         
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
-        
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
-    
-    Questions *subQuest = [self.question.layeredQuesions objectAtIndex:indexPath.row];
-    cell.textLabel.font = [UIFont systemFontOfSize:24];
-    cell.textLabel.text =[NSString stringWithFormat: @"\t\t%i.%i.%i.%i\t%@",self.elementNumber +1,self.subElementNum +1 , self.currentPosition+1,indexPath.row +1, subQuest.questionText];
-    
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"subQuestionCell"];
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"subQuestionCell"];
+    }
+    cell.textLabel.text = @" Should never see this";
     return cell;
     
+
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -350,7 +476,7 @@ BOOL isSublayeredQuestion = false;
     
     if (tableView == self.subQuesionsTableView) {
 
-        return [self.question.layeredQuesions count];
+        return [self.allSublayeredQuestions count];
         
     }
     return 0;
@@ -371,12 +497,16 @@ BOOL isSublayeredQuestion = false;
         self.pointsLabel.text =[NSString stringWithFormat:@"%.2f",pointTotal];
         
         [ans setIsSelected:true];
+        
         answered = true;//used for submit button logic
+        [self setEnabledFlagsAndReloadQuestions];
     }
     
     else if ( tableView == self.subQuesionsTableView)
     {
-        self.question = [mainSubQuestion.layeredQuesions objectAtIndex:indexPath.row];
+        LayeredQuestion *tempQ = [self.allSublayeredQuestions objectAtIndex:indexPath.row];
+        self.question = tempQ.question;
+        
         self.currentPosition = (indexPath.row +1) * -1;
 
         [self refreshAnswerView];
@@ -393,6 +523,9 @@ BOOL isSublayeredQuestion = false;
         
         self.pointsLabel.text =[NSString stringWithFormat:@"%.2f",pointTotal];
         [ans setIsSelected:false];
+        
+        [self setEnabledFlagsAndReloadQuestions];
+        
     }
 }
 
@@ -400,7 +533,8 @@ BOOL isSublayeredQuestion = false;
 
 - (IBAction)submitButton:(id)sender {
 
-    if (!answered) {
+    if (!answered && self.question.questionType == 1) {
+       
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"No answer" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         return;
@@ -413,17 +547,21 @@ BOOL isSublayeredQuestion = false;
     //Update DNV Database
     [self.dnvDBManager updateQuestion:self.question];
     
-    if (islayeredQuestion && (pointTotal >= self.question.pointsNeededForLayered )&& !(isSublayeredQuestion)) {
+    if (islayeredQuestion && (pointTotal >= self.question.pointsNeededForLayered )&& !(isSublayeredQuestion) &&(self.question ==mainSubQuestion)) {
         //main question answered to show subs so go to first subquestion
        
         [self.subQuesionsTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
-        self.question = [mainSubQuestion.layeredQuesions objectAtIndex:0];
+        LayeredQuestion *tempQ = [self.allSublayeredQuestions objectAtIndex:0];
+        tempQ.shouldBeEnabled = YES;
+        [self.allSublayeredQuestions replaceObjectAtIndex:0 withObject:tempQ];
+        
+        self.question = tempQ.question;
         self.currentPosition = -1;
         [self refreshAnswerView];
         return;
     }
-    if (islayeredQuestion && !(isSublayeredQuestion)) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"Skipped %d questions", [mainSubQuestion.layeredQuesions count]] message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    if (islayeredQuestion && !(isSublayeredQuestion) && self.question.layeredQuesions.count >0) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"Skipped %d questions", [self.allSublayeredQuestions count] + self.currentPosition] message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];
         
     }
@@ -439,10 +577,22 @@ BOOL isSublayeredQuestion = false;
         //submit pushed with a sublayer question
         
         //check if last sublayered question
-        if (layeredPosition == (-1* [mainSubQuestion.layeredQuesions count])) {
-            //were at the last subquestion so pop 2 VCs
-             [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-3] animated:YES];
-            return;
+        if (layeredPosition == (-1* [self.allSublayeredQuestions count])) {
+            
+            self.currentPosition = mainQuestionPosition;
+            if (self.currentPosition == ([self.questionArray count]-1))
+            {
+                //pop 2 view controllers
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-3] animated:NO];
+            }
+            else{
+//TODO: This else or the one after needs to be fixed.
+                self.currentPosition++;
+                //mainSubQuestion = [self.questionArray objectAtIndex:self.currentPosition];
+                [self refreshAnswerView];
+                return;
+            }
+            
         }
         else //not last subquestion so go to next one
         {
@@ -450,7 +600,8 @@ BOOL isSublayeredQuestion = false;
             layeredPosition--;
             
             [self.subQuesionsTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:(layeredPosition +1)*-1 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
-            self.question = [mainSubQuestion.layeredQuesions objectAtIndex:(layeredPosition +1 ) *-1];
+            LayeredQuestion *tempQ = [self.allSublayeredQuestions objectAtIndex:(layeredPosition +1 ) *-1];
+            //self.question = tempQ.question;
             self.currentPosition = layeredPosition;
             [self refreshAnswerView];
             return;
@@ -460,11 +611,12 @@ BOOL isSublayeredQuestion = false;
     if (self.currentPosition == ([self.questionArray count]-1))
     {
         //pop 2 view controllers
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-3] animated:YES];
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-3] animated:NO];
     }
     else{
         self.currentPosition++;
         [self refreshAnswerView];
+        return;
     }
 }
 
@@ -479,6 +631,9 @@ BOOL isSublayeredQuestion = false;
         self.percentSliderTextField.text = [NSString stringWithFormat:@"%i", (int) self.percentSlider.value];
         
     }
+    self.question.pointsAwarded = [self.pointsLabel.text floatValue];
+    pointTotal = self.question.pointsAwarded;
+    [self setEnabledFlagsAndReloadQuestions];
     
     answered = true;
 }
@@ -597,9 +752,10 @@ BOOL isSublayeredQuestion = false;
         self.percentSlider.value = value;
         self.percentSliderTextField.text = [NSString stringWithFormat:@"%i", value];
         self.pointsLabel.text = [NSString stringWithFormat:@"%i", value];
-
         
     }
+    self.question.pointsAwarded = [self.pointsLabel.text floatValue];
+
     answered = true;
     if ([self.percentSliderTextField canResignFirstResponder]) [self.percentSliderTextField resignFirstResponder];
     
@@ -739,5 +895,68 @@ BOOL isSublayeredQuestion = false;
     [self refreshAnswerView];
     
 }
+-(int) getNumOfSubQuestionsAndSetAllSubsArray:(Questions *)question layerDepth:(int)depth
+{
+    int n = 1;
+    for (int i = 0; i < [question.layeredQuesions count]; i++)
+    {
+        LayeredQuestion *tempObject = [LayeredQuestion new];
+        
+        tempObject.question = [question.layeredQuesions objectAtIndex:i];
+        [self.allSublayeredQuestions addObject:tempObject];
+        
+        if( tempObject.question.layeredQuesions.count > 0)
+            depth++;
+        
+        n += [self getNumOfSubQuestionsAndSetAllSubsArray:tempObject.question layerDepth:depth];
+        
+        tempObject.subIndexes = [NSMutableArray new];
+        for( int j = 1; j <= tempObject.question.layeredQuesions.count; j++ )
+        {
+            
+                [tempObject.subIndexes addObject:[NSNumber numberWithInt: j + [self.allSublayeredQuestions indexOfObject:tempObject] ] ];
+        }
+        
+    }
+    return n;
+}
+-(void)setEnabledFlagsAndReloadQuestions{
+//pointTotal should be updated before calling this method
+    
+    if (mainSubQuestion == self.question) {
+        for (Questions *subQuestion in self.question.layeredQuesions) {
+            for (int i = 0; i < [self.allSublayeredQuestions count]; i++)
+            {
+                LayeredQuestion *layQuest = [self.allSublayeredQuestions objectAtIndex:i];
+                if ([subQuestion.questionText isEqualToString:layQuest.question.questionText]) {
+                    [layQuest setShouldBeEnabled:(pointTotal >= self.question.pointsNeededForLayered)];
+                    [self.allSublayeredQuestions replaceObjectAtIndex:i withObject:layQuest];
+                }
+                
+            }
+        }
+        [self.subQuesionsTableView reloadData];
+    }
+    else
+    {
+        NSArray *indexesToTurnOn = [NSArray new];
+        
+        //set shouldBeEnabled=true for all sub questions
+        for (LayeredQuestion *layQuest in self.allSublayeredQuestions) {
+            if ([layQuest.question.questionText isEqualToString:self.question.questionText]) {
+                indexesToTurnOn = layQuest.subIndexes;
+            }
+        }
+        for (int i=0; i<[indexesToTurnOn count];i++)
+        {
+            NSNumber *currInd = [indexesToTurnOn objectAtIndex:i];
+            LayeredQuestion *tempLayQ = [self.allSublayeredQuestions objectAtIndex:[currInd intValue]];
+            [tempLayQ setShouldBeEnabled:(pointTotal >= self.question.pointsNeededForLayered)];
+            [self.allSublayeredQuestions replaceObjectAtIndex:[currInd intValue] withObject:tempLayQ];
+            
+        }
+        [self.subQuesionsTableView reloadData];
+    }
 
+}
 @end

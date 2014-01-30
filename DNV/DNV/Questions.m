@@ -61,6 +61,8 @@
         }
         self.layeredQuesions = objectArray1;
         
+        self.zeroIfNoPointsFor = [questionDictionary objectForKey:@"zeroIfNoPointsFor"];
+        self.lessOrEqualToSmallestAnswer = [questionDictionary objectForKey:@"lessOrEqualToSmallestAnswer"];
     }
     return self;
 }
@@ -96,6 +98,8 @@
     //arrays
     mergedQuestion.attachmentsLocationArray = [dataMerger mergeArray:primaryQuestion.attachmentsLocationArray with:secondaryQuestion.attachmentsLocationArray];
     mergedQuestion.imageLocationArray = [dataMerger mergeArray:primaryQuestion.imageLocationArray with:secondaryQuestion.imageLocationArray];
+    mergedQuestion.zeroIfNoPointsFor = [dataMerger mergeArray:primaryQuestion.zeroIfNoPointsFor with:secondaryQuestion.zeroIfNoPointsFor];
+    mergedQuestion.lessOrEqualToSmallestAnswer = [dataMerger mergeArray:primaryQuestion.lessOrEqualToSmallestAnswer with:secondaryQuestion.lessOrEqualToSmallestAnswer];
     
     //answer array
     NSMutableArray *mergedAnswers = [NSMutableArray new];

@@ -21,6 +21,8 @@
 
 @property (nonatomic) float modefiedNAPoints;
 
+@property (nonatomic) NSArray * zeroIfNoPointsFor;
+
 
 -(id)initWithElement:(NSDictionary *)elementDictionary;
 

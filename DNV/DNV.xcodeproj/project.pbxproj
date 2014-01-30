@@ -50,6 +50,7 @@
 		768D56D4189314A900175EB4 /* ScoringAssumptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D56D3189314A900175EB4 /* ScoringAssumptionsViewController.m */; };
 		768D56D8189317C300175EB4 /* ElementSubelementProfilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D56D7189317C300175EB4 /* ElementSubelementProfilesViewController.m */; };
 		768D56DB18932BD100175EB4 /* ProfileLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D56DA18932BD100175EB4 /* ProfileLabelCell.m */; };
+		768D56EE1898136600175EB4 /* LayeredQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D56ED1898136600175EB4 /* LayeredQuestion.m */; };
 		769D3CE6188580C5002DF3B8 /* VerifyQuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 769D3CE5188580C5002DF3B8 /* VerifyQuestionsViewController.m */; };
 		769D3CEA1885A763002DF3B8 /* ImportMergeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 769D3CE91885A763002DF3B8 /* ImportMergeViewController.m */; };
 		769D3CEE1885F9FC002DF3B8 /* completed_checklist_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 769D3CEB1885F9FC002DF3B8 /* completed_checklist_icon.png */; };
@@ -229,6 +230,8 @@
 		768D56D7189317C300175EB4 /* ElementSubelementProfilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElementSubelementProfilesViewController.m; sourceTree = "<group>"; };
 		768D56D918932BD100175EB4 /* ProfileLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileLabelCell.h; sourceTree = "<group>"; };
 		768D56DA18932BD100175EB4 /* ProfileLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileLabelCell.m; sourceTree = "<group>"; };
+		768D56EC1898136600175EB4 /* LayeredQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayeredQuestion.h; sourceTree = "<group>"; };
+		768D56ED1898136600175EB4 /* LayeredQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayeredQuestion.m; sourceTree = "<group>"; };
 		769D3CE4188580C5002DF3B8 /* VerifyQuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyQuestionsViewController.h; sourceTree = "<group>"; };
 		769D3CE5188580C5002DF3B8 /* VerifyQuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyQuestionsViewController.m; sourceTree = "<group>"; };
 		769D3CE81885A763002DF3B8 /* ImportMergeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportMergeViewController.h; sourceTree = "<group>"; };
@@ -777,6 +780,10 @@
 				76E81F17187DB92600441F62 /* Folder.m */,
 				4AC04092188F71C4006A2F3C /* MergeClass.h */,
 				4AC04093188F71C4006A2F3C /* MergeClass.m */,
+				76D734841890AA44000884D8 /* AuditIDObject.h */,
+				76D734851890AA44000884D8 /* AuditIDObject.m */,
+				768D56EC1898136600175EB4 /* LayeredQuestion.h */,
+				768D56ED1898136600175EB4 /* LayeredQuestion.m */,
 			);
 			name = ClassObjects;
 			sourceTree = "<group>";
@@ -1051,6 +1058,8 @@
 				769D3CEA1885A763002DF3B8 /* ImportMergeViewController.m in Sources */,
 				768D56561890145500175EB4 /* ReportDocViewController.m in Sources */,
 				768D567C18916A6300175EB4 /* ConclusionViewController.m in Sources */,
+				76D734861890AA44000884D8 /* AuditIDObject.m in Sources */,
+				768D56EE1898136600175EB4 /* LayeredQuestion.m in Sources */,
 				76D96A3E187B07EA00961260 /* User.m in Sources */,
 				762797191871D53A00F22E73 /* main.m in Sources */,
 				768D56681890634600175EB4 /* ECGraphLine.m in Sources */,

@@ -57,11 +57,16 @@
 
 @property (strong, nonatomic) IBOutlet UIView *layeredQuestionsView;
 
-//layered question outlets
+//layered question
 @property (strong, nonatomic) IBOutlet UITableView *subQuesionsTableView;
 @property (strong, nonatomic) IBOutlet UITableViewCell *subQuestionsCell;
 @property (strong, nonatomic) IBOutlet UIButton *mainLayeredQuesionButton;
 - (IBAction)mainLayeredPushed:(id)sender;
+@property (strong,atomic) NSMutableArray *allSublayeredQuestions;
+
+-(void)setEnabledFlagsAndReloadQuestions;
+
+
 
 @property (strong, nonatomic) IBOutlet UIButton *firstButton;
 @property (strong, nonatomic) IBOutlet UIButton *lastButton;
