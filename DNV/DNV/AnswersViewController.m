@@ -56,6 +56,15 @@ int numOfSubs;
     
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
     
+//TODO: remove this
+//temporary creating an audit to test with
+ //   NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+
+   // NSString *auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
+    
+    self.audit = [self.dnvDBManager retrieveAudit:@"USI.KitchenAudit.1234"];
+    
+    
     if (self.question == nil || self.questionArray == nil)
     {
         NSLog(@"***SHOULD NOT GET HERE***, (recieved a nil question from previous VC)");
@@ -540,6 +549,15 @@ int numOfSubs;
         return;
         
     }
+    
+    if (![self checkZeroDependencies])//returns true if dependencies are met, false if they conflict
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Dependencies" message: @"not met, please check help notes" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    
     self.question.isCompleted = true;
     self.question.pointsAwarded = pointTotal;
     //TODO: actually save stuff
@@ -958,5 +976,178 @@ int numOfSubs;
         [self.subQuesionsTableView reloadData];
     }
 
+}
+-(BOOL)checkZeroDependencies{ //returns true if dependencies are met, false if they conflict
+    BOOL allGood = false;
+
+    //temp test
+    NSArray *tempArr = @[@[@"0.0.0",@"2.3.4"],@"1.3.4",@"12.3",@"1.2.1"];
+    NSMutableArray *tempMutArray = [NSMutableArray arrayWithArray:tempArr];
+    
+    
+    self.question.zeroIfNoPointsFor = tempMutArray;
+    
+    if( self.question.zeroIfNoPointsFor.count >0)
+    {
+        BOOL outterOR = false;
+        
+        NSNumber *eleNum;
+        NSNumber *subEleNum;
+        NSNumber *questNum;
+        
+        NSArray *array = self.question.zeroIfNoPointsFor;
+        
+        for(int i=0; i<[array count]; i++){
+            
+            if ([[array objectAtIndex:i] isKindOfClass: [NSArray class]])
+            {//object at i is an array so use AND logic
+                
+                BOOL innerAnd = true; //true until it get sets to false
+                NSArray *innerArray = [array objectAtIndex:i];
+                for(int j=0; j<[innerArray count]; j++)
+                {
+                    NSString *str = [innerArray objectAtIndex:j];
+                    
+                    NSArray *chunks = [str componentsSeparatedByString: @"."];
+                    //[zeroIF:xxx] returns true if xxx is 0, false otherwise
+                    switch (chunks.count) {
+                        case 1:
+                            //element dependency
+                            eleNum = chunks[0];
+                            innerAnd = (innerAnd && [self zeroIf:eleNum]);
+                            break;
+                        case 2:
+                            //subElement dependency
+                            eleNum = chunks[0];
+                            subEleNum = chunks[1];
+                            innerAnd =  (innerAnd && [self zeroIf:eleNum subEle:subEleNum]);
+                            break;
+                        case 3:
+                            //question dependency
+                            eleNum = chunks[0];
+                            subEleNum = chunks[1];
+                            questNum = chunks[2];
+                            innerAnd = (innerAnd && [self zeroIf:eleNum subEle:subEleNum question:questNum]);
+                            break;
+                            
+                        default:
+                            NSLog(@"Dependency messed up");
+                            break;
+                    }//inner and switch
+                }
+
+            }
+            else{//object at i is a string so use OR logic
+                NSString *str = [array objectAtIndex:i];
+                NSArray *chunks = [str componentsSeparatedByString: @"."];
+                switch (chunks.count) {
+                    case 1:
+                        //element dependency
+                        eleNum = chunks[0];
+                        //[zeroIF:xxx] returns true if xxx is 0, false otherwise
+                        outterOR = (outterOR || [self zeroIf:eleNum]);
+                        break;
+                    case 2:
+                        //subElement dependency
+                        eleNum = chunks[0];
+                        subEleNum = chunks[1];
+                        outterOR = (outterOR || [self zeroIf:eleNum subEle:subEleNum]);
+                        break;
+                    case 3:
+                        //question dependency
+                        eleNum = chunks[0];
+                        subEleNum = chunks[1];
+                        questNum = chunks[2];
+                        outterOR = (outterOR || [self zeroIf:eleNum subEle:subEleNum question:questNum]);
+                        break;
+                        
+                    default:
+                        NSLog(@"Dependency messed up");
+                        break;
+                }//switch
+                
+            }//else
+            
+            
+        }//outer for
+        allGood =  outterOR ;
+        
+        
+    }//if zeroIfnoPoints
+    
+    
+    
+    return allGood;
+}
+
+-(BOOL)zeroIf:(NSNumber*)eleNum{
+    Elements *ele = [self.audit.Elements objectAtIndex:([eleNum intValue]-1)];
+    
+    if (ele.pointsAwarded == 0) {
+        return true;
+    }
+    return false;
+}
+-(BOOL)zeroIf:(NSNumber*)eleNum subEle:(NSNumber*)subEleNum{
+    Elements *ele = [self.audit.Elements objectAtIndex:([eleNum intValue]-1)];
+    SubElements *subEle = [ele.Subelements objectAtIndex:([subEleNum intValue]-1)];
+    if (subEle.pointsAwarded == 0) {
+        return true;
+    }
+    return false;
+}
+-(BOOL)zeroIf:(NSNumber*)eleNum subEle:(NSNumber*)subEleNum question:(NSNumber*)questNum{
+    //Elements *ele = [self.audit.Elements objectAtIndex:([eleNum intValue]-1)];
+    //SubElements *subEle = [ele.Subelements objectAtIndex:([subEleNum intValue]-1)];
+    //Questions *question = [subEle.Questions objectAtIndex:([questNum intValue] -1)];
+    // ^ this would have worked if not for sublayer questions (dam those sublayers)
+    
+    NSArray *allQuestionsFromSubelement = [self getAllQuestionsFromEle:[eleNum intValue] andSubEle:[subEleNum intValue]];
+    
+    NSString *eleSubQuestNum = [NSString stringWithFormat:@"%@.%@.%@",eleNum,subEleNum,questNum];
+    
+    for (Questions *question in allQuestionsFromSubelement) {
+        
+        NSString *string = question.questionText;
+        if ([string rangeOfString:eleSubQuestNum].location == NSNotFound) {
+            //NSLog(@"string does not contain bla");
+        } else {
+            NSLog(@"Found question");
+            
+            if (question.pointsAwarded == 0) {
+                return true;
+            }
+            else return false;
+        }
+        
+    }
+    NSLog(@"ERROR: was not able to find question.");
+    
+    return false;
+    
+}
+-(NSArray*)getAllQuestionsFromEle:(int)eleNum andSubEle:(int)subEleNum
+{
+    Elements *ele = [self.audit.Elements objectAtIndex:(eleNum - 1)];
+    SubElements *subEle = [ele.Subelements objectAtIndex:(subEleNum - 1)];
+    
+    NSMutableArray *allQuestionsAndLayeredQs = [NSMutableArray new];
+    
+    for (Questions *question in subEle.Questions) {
+        [allQuestionsAndLayeredQs addObjectsFromArray:[self getAllQuestionsFromQuestion:question]];
+    }
+    
+    return allQuestionsAndLayeredQs;
+
+}
+-(NSArray*)getAllQuestionsFromQuestion:(Questions*)question
+{
+    NSMutableArray *questionAndSubQuestions = [NSMutableArray new];
+    
+    [questionAndSubQuestions addObject:question];
+    for (Questions *layerdQuestion in question.layeredQuesions) {
+        [questionAndSubQuestions addObjectsFromArray:[self getAllQuestionsFromQuestion:layerdQuestion]];
+    }
+    return questionAndSubQuestions;
 }
 @end

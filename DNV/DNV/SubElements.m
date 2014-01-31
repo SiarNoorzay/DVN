@@ -51,6 +51,14 @@
         
         self.zeroIfNoPointsFor = [subElementDictionary objectForKey:@"zeroIfNoPointsFor"];
     }
+    
+    if ([self.zeroIfNoPointsFor count] >0)
+    {
+        for (Questions *quests in self.Questions) {
+            [quests.zeroIfNoPointsFor addObjectsFromArray:self.zeroIfNoPointsFor];
+            //Need to add to sublayers???
+        }
+    }
     return self;
 }
 
