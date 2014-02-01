@@ -20,5 +20,7 @@
 
 -(Answers *)mergeAnswer:(Answers *)primaryAnswer with:(Answers *)secondaryAnswer;
 
+-(NSDictionary*)toDictionary;
 
 @end
+

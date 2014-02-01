@@ -29,4 +29,6 @@
 
 -(Client *)mergeClients:(Client *)primaryClient with:(Client *)secondaryClient;
 
+-(NSDictionary*)toDictionary;
+
 @end

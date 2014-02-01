@@ -72,4 +72,23 @@
     return  mergedAnswer;
 }
 
+-(NSDictionary*)toDictionary
+{
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]initWithCapacity:4];
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%d", self.answerID] forKey:@"answerID"];
+    
+    [dictionary setValue:self.answerText forKey:@"answerText"];
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%f", self.pointsPossible] forKey:@"pointsPossible"];
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%d", self.isSelected] forKey:@"isSelected"];
+    
+    return dictionary;
+    
+}
+
+
+
+
 @end

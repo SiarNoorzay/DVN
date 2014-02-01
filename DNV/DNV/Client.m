@@ -66,4 +66,41 @@
     return  mergedClient;
 }
 
+-(NSDictionary*)toDictionary{
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]initWithCapacity:14];
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%d", self.clientID] forKey:@"clientID"];
+    
+    [dictionary setValue:self.companyName forKey:@"companyName"];
+    
+    [dictionary setValue:self.division forKey:@"division"];
+    
+    [dictionary setValue:self.SICNumber forKey:@"SICNumber"];
+    
+    [dictionary setValue:self.auditedSite forKey:@"auditedSite"];
+    
+    [dictionary setValue:self.address forKey:@"address"];
+    
+    [dictionary setValue:self.cityStateProvince forKey:@"cityStateProvince"];
+    
+    [dictionary setValue:self.country forKey:@"country"];
+    
+    [dictionary setValue:self.postalCode forKey:@"postalCode"];
+    
+    [dictionary setValue:self.auditDate forKey:@"auditDate"];
+    
+    [dictionary setValue:self.auditor forKey:@"auditor"];
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%d",self.numEmployees] forKey:@"numEmployees"];
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%d",self.baselineAudit] forKey:@"baselineAudit"];
+    
+    [dictionary setValue:self.auditDate forKey:@"auditDate"];
+    
+    
+    return dictionary;
+    
+}
+
+
 @end

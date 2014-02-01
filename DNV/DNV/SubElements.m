@@ -89,5 +89,37 @@
     return  mergedSubElements;
 }
 
+-(NSDictionary*)toDictionary{
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]initWithCapacity:8];
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%d", self.subElementID] forKey:@"subElementID"];
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%d", self.isCompleted] forKey:@"isCompleted"];
+    
+    [dictionary setValue:self.name forKey:@"name"];
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%f", self.pointsPossible] forKey:@"pointsPossible"];
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%f", self.pointsAwarded] forKey:@"pointsAwarded"];
+    
+    
+    NSMutableArray *questionsArray = [NSMutableArray new];
+    for (Questions *quest in self.Questions) {
+        [questionsArray addObject: [quest toDictionary]];
+    }
+    
+    [dictionary setValue:questionsArray forKey:@"Questions"];
+    
+    [dictionary setValue:[NSString stringWithFormat:@"%f", self.modefiedNAPoints] forKey:@"modefiedNAPoints"];
+    
+    [dictionary setValue:self.zeroIfNoPointsFor forKey:@"zeroIfNoPointsFor"];
+    
+    
+    return dictionary;
+
+    
+    
+}
+
 
 @end

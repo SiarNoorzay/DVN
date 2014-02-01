@@ -213,7 +213,7 @@ loadMetadataFailedWithError:(NSError *)error {
     self.audit = [Audit new];
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[self.localCompleted objectAtIndex:indexPath.row] forKey:@"currentAudit"];
+ //   [defaults setObject:[self.localCompleted objectAtIndex:indexPath.row] forKey:@"currentAudit"];
     [defaults synchronize];
     
     self.audit.auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
