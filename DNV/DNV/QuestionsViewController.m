@@ -119,6 +119,8 @@
     [vc setQuestionArray:self.questionArray];
     [vc setCurrentPosition:indexPath.row];
     
+    vc.audit = self.audit;
+    
     NSLog(@"Sending question: %@ to answers VC", question.questionText);
     
     

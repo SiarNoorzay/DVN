@@ -76,14 +76,7 @@
     return cell;
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    NSIndexPath *indexPath = self.auditListTable.indexPathForSelectedRow;
-    
-    //store current user in NSUSERDEFAULTS
-    NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
-    [nsDefaults setObject:[[self.audits objectAtIndex:indexPath.row] name] forKey:@"currentAudit"];
-    [nsDefaults synchronize];
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     NSLog(@"Selected %@,",[self.audits objectAtIndex:indexPath.row]);
     
@@ -91,11 +84,18 @@
     
     self.chosenAuditPath = temp.folderPath;
     
-    ElementSubElementViewController * eleSubEleVC = [segue destinationViewController];
-    [eleSubEleVC setAuditPath: self.chosenAuditPath];
-    eleSubEleVC.audType = @"New";
-    
     NSLog(@"path to audit: %@", self.chosenAuditPath);
+    
+    [[self restClient2] loadMetadata:self.chosenAuditPath];
+    [self.spinner startAnimating];
+    
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
+    ElementSubElementViewController * eleSubEleVC = [segue destinationViewController];
+    eleSubEleVC.aud = self.audit;
     
 }
 
@@ -109,35 +109,127 @@
     return restClient;
 }
 
+- (DBRestClient*)restClient2 {
+    if (restClient2 == nil) {
+        restClient2 = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        restClient2.delegate = self;
+    }
+    return restClient2;
+}
 
 - (void)restClient:(DBRestClient *)client loadedMetadata:(DBMetadata *)metadata {
-    if (metadata.isDirectory) {
-        NSLog(@"Folder '%@' contains:", metadata.path);
-        NSMutableArray *auditList = [[NSMutableArray alloc]init];
-        for (DBMetadata *file in metadata.contents) {
-            if (file.isDirectory) {
-                Folder *folder = [[Folder alloc]init];
-                folder.folderPath = file.path;
-                folder.contents = file.contents;
-                folder.name = file.filename;
-                NSLog(@"	%@", file.filename);
-                [auditList addObject:folder];
+    if (client == self->restClient){
+        if (metadata.isDirectory) {
+            NSLog(@"Folder '%@' contains:", metadata.path);
+            NSMutableArray *auditList = [[NSMutableArray alloc]init];
+            for (DBMetadata *file in metadata.contents) {
+                if (file.isDirectory) {
+                    Folder *folder = [[Folder alloc]init];
+                    folder.folderPath = file.path;
+                    folder.contents = file.contents;
+                    folder.name = file.filename;
+                    NSLog(@"	%@", file.filename);
+                    [auditList addObject:folder];
+                }
             }
-        }
-        self.audits = auditList;
+            self.audits = auditList;
         
-     //   [self.auditListTable reloadData];
-        [self.auditListTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+            [self.auditListTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+        }
+        [self.spinner stopAnimating];
     }
-    [self.spinner stopAnimating];
+    else if (client == self->restClient2){
+        
+        DBMetadata * JSONFile = metadata.contents[0];
+        
+        NSLog(@"metadata content: %@", metadata.contents[0]);
+        NSLog(@"JSONFile: %@", JSONFile.filename);
+
+        [self loadDropboxFile:JSONFile.filename];
+    }
 
 }
 
-- (void)restClient:(DBRestClient *)client
-loadMetadataFailedWithError:(NSError *)error {
+- (void)restClient:(DBRestClient *)client loadMetadataFailedWithError:(NSError *)error {
     
     NSLog(@"Error loading metadata: %@", error);
 }
 
+- (void)restClient:(DBRestClient*)client loadedFile:(NSString*)localPath
+       contentType:(NSString*)contentType metadata:(DBMetadata*)metadata {
+    
+    NSLog(@"File loaded into path: %@", localPath);
+    [self getAudit];
+    [self.spinner stopAnimating];
+    [self performSegueWithIdentifier:@"goToNewElement" sender:self];
+    
+}
+
+- (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
+    NSLog(@"There was an error loading the file - %@", error);
+}
+
+#pragma mark file selection methods
+
+-(void)loadDropboxFile:(NSString *)file{
+    
+    NSString *filename = [self.chosenAuditPath stringByAppendingPathComponent:file];
+    
+    NSLog(@"Filename: %@", filename);
+    
+    _directoryPath = [self setFilePath];
+    
+    [restClient loadFile:filename intoPath:_directoryPath];
+}
+
+-(NSString *)setFilePath{
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents directory
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"sampleAuditFromDB.json"];
+    
+    return filePath;
+    
+}
+
+-(void)getAudit{
+    if (_directoryPath) { // check if file exists - if so load it:
+        NSError *error;
+        
+        NSString *stringData = [NSString stringWithContentsOfFile:_directoryPath encoding:NSUTF8StringEncoding error:&error];
+        NSData *data = [stringData dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+        
+        //        NSLog(@"JSON contains:\n%@", [dictionary description]);
+        
+        NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
+        
+        //use this to access the audit and its components dictionary style
+        self.audit = [[Audit alloc]initWithAudit:theAudit];
+        
+        //store current user in NSUSERDEFAULTS
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:self.audit.name forKey:@"currentAudit"];
+        [defaults synchronize];
+        
+        //Just a DB test
+        //Using the user defaults to create the audit ID
+        self.audit.auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
+        self.audit.auditID = [self.audit.auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+        self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+        [self.dnvDBManager saveAudit:self.audit];
+        
+        self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
+        
+        NSLog(@"Audit Name: %@", self.audit.name);
+        
+      //  ElementSubElementViewController * eleSubEleVC = [segue destinationViewController];
+        //eleSubEleVC.aud = self.audit;
+        //end of DB test
+        
+    }
+    
+}
 
 @end
