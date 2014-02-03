@@ -265,9 +265,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="735" height="89"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="0p3-Xt-jp1" kind="push" identifier="goToNewElement" id="qAv-AD-QyX"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -295,6 +292,7 @@
                         <outlet property="auditListTable" destination="nBJ-Hs-oGc" id="HVL-Wg-tmm"/>
                         <outlet property="companyNameLbl" destination="YVZ-Ux-OhU" id="cBT-cl-o3I"/>
                         <outlet property="spinner" destination="KtN-qb-K6c" id="nyy-fV-2KH"/>
+                        <segue destination="0p3-Xt-jp1" kind="push" identifier="goToNewElement" id="3x7-gx-5df"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jgb-gR-Aq3" userLabel="First Responder" sceneMemberID="firstResponder"/>
