@@ -62,7 +62,7 @@ int numOfSubs;
 
    // NSString *auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
     
-    self.audit = [self.dnvDBManager retrieveAudit:@"USI.KitchenAudit.1234"];
+    self.audit = [self.dnvDBManager retrieveAudit:@"GeneralElectricIncorporated.BBS-DRAFT.1234"];
     
     
     if (self.question == nil || self.questionArray == nil)
@@ -550,13 +550,17 @@ int numOfSubs;
         
     }
     
-    if (![self checkZeroDependencies])//returns true if dependencies are met, false if they conflict
+    if (![self checkZeroDependencies] && pointTotal>0)//returns true if dependencies are met, false if they conflict
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Dependencies" message: @"not met, please check help notes" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Dependencies not met" message: @"Please check help notes" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         return;
     }
-    
+    if (![self checkLessOrEqualToDependency:pointTotal]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Dependencies not met" message: @"Please check help notes" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     
     self.question.isCompleted = true;
     self.question.pointsAwarded = pointTotal;
@@ -978,15 +982,15 @@ int numOfSubs;
 
 }
 -(BOOL)checkZeroDependencies{ //returns true if dependencies are met, false if they conflict
-    BOOL allGood = false;
+    BOOL allGood = true;
 
     //temp test
-    NSArray *tempArr = @[@[@"0.0.0",@"2.3.4"],@"1.3.4",@"12.3",@"1.2.1"];
-    NSMutableArray *tempMutArray = [NSMutableArray arrayWithArray:tempArr];
+   // NSArray *tempArr = @[@[@"1.1.1",@"2.3.4"],@"1.3.4",@"12.3",@"1.2.1"];
+    //NSMutableArray *tempMutArray = [NSMutableArray arrayWithArray:tempArr];
     
     
-    self.question.zeroIfNoPointsFor = tempMutArray;
-    
+  //  self.question.zeroIfNoPointsFor = tempMutArray;
+
     if( self.question.zeroIfNoPointsFor.count >0)
     {
         BOOL outterOR = false;
@@ -1104,7 +1108,12 @@ int numOfSubs;
     
     NSArray *allQuestionsFromSubelement = [self getAllQuestionsFromEle:[eleNum intValue] andSubEle:[subEleNum intValue]];
     
-    NSString *eleSubQuestNum = [NSString stringWithFormat:@"%@.%@.%@",eleNum,subEleNum,questNum];
+    //NSString *eleSubQuestNum = [NSString stringWithFormat:@"%@.%@.%@",eleNum,subEleNum,questNum];
+    
+    //not using element since the example JSON does not use the element number anywhere
+    
+    //TODO: change this if going to be using element number in question text 1.8.1 vs 8.1
+    NSString *eleSubQuestNum = [NSString stringWithFormat:@"%@.%@",subEleNum,questNum];
     
     for (Questions *question in allQuestionsFromSubelement) {
         
@@ -1126,6 +1135,159 @@ int numOfSubs;
     return false;
     
 }
+
+-(BOOL) checkLessOrEqualToDependency:(float)points
+{
+    
+    if( self.question.lessOrEqualToSmallestAnswer.count >0)
+    {
+        BOOL outterOR = false;
+        
+        NSNumber *eleNum;
+        NSNumber *subEleNum;
+        NSNumber *questNum;
+        
+        NSArray *array = self.question.lessOrEqualToSmallestAnswer;
+        
+        NSMutableArray *pointsArray = [NSMutableArray new];
+        
+        for(int i=0; i<[array count]; i++){
+            
+            if ([[array objectAtIndex:i] isKindOfClass: [NSArray class]])
+            {//object at i is an array so use AND logic
+                
+                NSArray *innerArray = [array objectAtIndex:i];
+                for(int j=0; j<[innerArray count]; j++)
+                {
+                    NSString *str = [innerArray objectAtIndex:j];
+                    
+                    NSArray *chunks = [str componentsSeparatedByString: @"."];
+                    //[getPoints] returns points from position
+                    //and means what? points must be greater than all of the end ones???
+                    switch (chunks.count) {
+                        case 1:
+                            //element dependency
+                            eleNum = chunks[0];
+                            [pointsArray addObject:[self getPoints:eleNum]];
+                            break;
+                        case 2:
+                            //subElement dependency
+                            eleNum = chunks[0];
+                            subEleNum = chunks[1];
+                            [pointsArray addObject:[self getPoints:eleNum subEle:subEleNum]];
+                            break;
+                        case 3:
+                            //question dependency
+                            eleNum = chunks[0];
+                            subEleNum = chunks[1];
+                            questNum = chunks[2];
+                            [pointsArray addObject:[self getPoints:eleNum subEle:subEleNum question:questNum]];
+                            break;
+                            
+                        default:
+                            NSLog(@"Dependency messed up");
+                            break;
+                    }//inner and switch
+                }
+                
+            }
+            else{//object at i is a string so use OR logic
+                NSString *str = [array objectAtIndex:i];
+                NSArray *chunks = [str componentsSeparatedByString: @"."];
+                switch (chunks.count) {
+                    case 1:
+                        //element dependency
+                        eleNum = chunks[0];
+                        [pointsArray addObject:[self getPoints:eleNum]];
+                        break;
+                    case 2:
+                        //subElement dependency
+                        eleNum = chunks[0];
+                        subEleNum = chunks[1];
+                        [pointsArray addObject:[self getPoints:eleNum subEle:subEleNum]];
+                        break;
+                    case 3:
+                        //question dependency
+                        eleNum = chunks[0];
+                        subEleNum = chunks[1];
+                        questNum = chunks[2];
+                        [pointsArray addObject:[self getPoints:eleNum subEle:subEleNum question:questNum]];
+                        break;
+                        
+                    default:
+                        NSLog(@"Dependency messed up");
+                        break;
+                }//switch
+                
+            }//else
+            
+            
+        }//outer for
+        
+        //get min from pointsArray
+        float minValue = MAX_POS_FLOAT32;
+        for (NSNumber *num in pointsArray) {
+            if ( [num floatValue]<= minValue)
+                minValue = [num floatValue];
+        }
+        
+        if (points <= minValue) {
+            return true;
+        }
+        else return false;
+        
+        
+    }//if lessOrEqualToSmallestAnswer.count
+    
+    return true;
+    
+    
+}
+-(NSNumber*) getPoints:(NSNumber*)eleNum {
+    Elements *ele = [self.audit.Elements objectAtIndex:([eleNum intValue]- 1)];
+    NSNumber* point = [NSNumber numberWithFloat: ele.pointsAwarded];
+    return point;
+    
+}
+
+-(NSNumber*) getPoints:(NSNumber*)eleNum subEle:(NSNumber*)subEleNum
+{
+    Elements *ele = [self.audit.Elements objectAtIndex:([eleNum intValue]-1)];
+    SubElements *subEle = [ele.Subelements objectAtIndex:([subEleNum intValue]-1)];
+    NSNumber* point = [NSNumber numberWithFloat: subEle.pointsAwarded];
+    return point;
+}
+-(NSNumber*) getPoints:(NSNumber*)eleNum subEle:(NSNumber*)subEleNum question:(NSNumber*)questNum{
+    
+    NSArray *allQuestionsFromSubelement = [self getAllQuestionsFromEle:[eleNum intValue] andSubEle:[subEleNum intValue]];
+    
+    //NSString *eleSubQuestNum = [NSString stringWithFormat:@"%@.%@.%@",eleNum,subEleNum,questNum];
+    
+    //not using element since the example JSON does not use the element number anywhere
+    
+    //TODO: change this if going to be using element number in question text 1.8.1 vs 8.1
+    NSString *eleSubQuestNum = [NSString stringWithFormat:@"%@.%@",subEleNum,questNum];
+    
+    for (Questions *question in allQuestionsFromSubelement) {
+        
+        NSString *string = question.questionText;
+        if ([string rangeOfString:eleSubQuestNum].location == NSNotFound) {
+            //NSLog(@"string does not contain bla");
+        } else {
+            NSLog(@"Found question");
+            
+            NSNumber* point = [NSNumber numberWithFloat: question.pointsAwarded];
+            return point;
+        }
+        
+    }
+    NSLog(@"ERROR: was not able to find question.");
+    
+    return [NSNumber numberWithFloat:MAX_POS_FLOAT32];
+    
+}
+
+
 -(NSArray*)getAllQuestionsFromEle:(int)eleNum andSubEle:(int)subEleNum
 {
     Elements *ele = [self.audit.Elements objectAtIndex:(eleNum - 1)];

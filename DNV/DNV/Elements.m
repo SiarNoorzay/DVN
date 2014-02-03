@@ -43,6 +43,9 @@
     if ([self.zeroIfNoPointsFor count] >0)
     {
         for (SubElements *sub in self.Subelements) {
+            if (sub.zeroIfNoPointsFor == nil) {
+                sub.zeroIfNoPointsFor = [[NSMutableArray alloc]initWithCapacity:1];
+            }
             [sub.zeroIfNoPointsFor addObjectsFromArray:self.zeroIfNoPointsFor];
             
         }
