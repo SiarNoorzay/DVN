@@ -12,6 +12,7 @@
 #import "Questions.h"
 #import "QuestionCell.h"
 
+#import "Audit.h"
 
 @interface QuestionsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
@@ -21,7 +22,6 @@
 @property(nonatomic) int elementNumber;
 @property(nonatomic) int subEleNumber;
 
-@property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
-@property (nonatomic) NSArray * questionIDs;
+@property (strong, nonatomic) Audit * audit;
 
 @end

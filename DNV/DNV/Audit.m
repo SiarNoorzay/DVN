@@ -17,7 +17,7 @@
     self = [super init];
     
     if(self){
-        self.auditID = [NSString new];
+        self.auditID = [auditDictionary objectForKey:@"auditID"];
         self.auditType = [[auditDictionary objectForKey:@"auditType"] integerValue];
         self.name = [auditDictionary objectForKey:@"name"];
        // self.physicalConditionScore = [[auditDictionary objectForKey:@"physicalConditionScore"]floatValue];

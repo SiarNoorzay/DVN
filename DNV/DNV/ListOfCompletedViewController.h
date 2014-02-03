@@ -16,9 +16,11 @@
 @interface ListOfCompletedViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 {
     DBRestClient *restClient;
+    DBRestClient *restClient2;
 }
 
 @property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
+@property NSString * directoryPath;
 @property (strong, nonatomic) NSArray * localCompleted;
 
 @property (strong, nonatomic) Audit * audit;

@@ -37,7 +37,7 @@
     
     [self setTextfieldDelegates];
     
-    if ([self.report.clientRef isEqualToString:@"(null)"]) {
+    if ([self.report.clientRef isEqualToString:@"(null)"] || [self.report.clientRef isEqualToString:@""]) {
         self.clientRefTxt.enabled = true;
     }
     else{
@@ -54,7 +54,10 @@
     self.cityStateProvTxt.text = self.client.cityStateProvince;
     self.postalCodeTxt.text = self.client.postalCode;
     
-    self.client.auditor = [defaults objectForKey:@"currentUserName"];
+    if ([self.client.auditor isEqualToString:@""] || [self.client.auditor isEqualToString:@"(null)"]){
+        self.client.auditor = [defaults objectForKey:@"currentUserName"];
+    }
+    
     self.auditorTxt.text = self.client.auditor;
     self.auditSiteTxt.text = self.client.auditedSite;
     self.auditDateTxt.text = self.client.auditDate;

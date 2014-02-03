@@ -13,7 +13,7 @@
 #import "Questions.h"
 #import "Answers.h"
 
-
+#import "Audit.h"
 
 @interface AnswersViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIPopoverControllerDelegate>
 
@@ -25,6 +25,7 @@
 @property (nonatomic) int subElementNum;
 @property (strong,nonatomic) UIPopoverController * helpPopOver;
 @property (strong,nonatomic) UIImage *cameraImage;
+@property (strong, nonatomic) Audit * audit;
 
 @property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
 
