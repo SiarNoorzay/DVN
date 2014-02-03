@@ -34,32 +34,44 @@ int subEleNumber;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    //updating Elements and subelements
     if (self.listOfElements != nil){
         
         for (int i = 0; i< [self.listOfElements count]; i++) {
             Elements *ele = [self.listOfElements objectAtIndex:i];
-            float tempElePoints = 0;
+            float tempEleNAPoints = 0;
+            float elePointsAwarded = 0;
+            BOOL eleComplete = true;
             
             for (int j = 0; j<[ele.Subelements count];j++) {
                 SubElements *subEle = [ele.Subelements objectAtIndex:j];
-                float tempSubPoints = 0;
+                float tempSubNAPoints = 0;
+                float subElePointsAwarded = 0;
+                BOOL subEleComplete = true;
                 
                 for (int k = 0; k < [subEle.Questions count]; k++) {
                     Questions *question =[subEle.Questions objectAtIndex:k];
                     
                     if (!question.isApplicable) {
-                        tempSubPoints += question.pointsPossible;
-                        tempElePoints += question.pointsPossible;
+                        tempSubNAPoints += question.pointsPossible;
+                        tempEleNAPoints += question.pointsPossible;
                     }
-                    subEle.modefiedNAPoints = tempSubPoints;
+                    if (! (question.isCompleted || question.pointsAwarded > 0)) {
+                        subEleComplete = false;
+                    }
+                    subElePointsAwarded += question.pointsAwarded;
                 }
-                ele.modefiedNAPoints = tempElePoints;
-                
+                subEle.modefiedNAPoints = tempSubNAPoints;
+                subEle.pointsAwarded = subElePointsAwarded;
+                elePointsAwarded += subElePointsAwarded;
                 //TODO: save ele back to DB
             }
+            ele.modefiedNAPoints = tempEleNAPoints;
+            ele.pointsAwarded = elePointsAwarded;
+
         }
     }
-    
+    [self.subElementTable reloadData];
 }
 - (void)viewDidLoad
 {

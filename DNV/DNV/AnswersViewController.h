@@ -27,8 +27,6 @@
 @property (strong,nonatomic) UIImage *cameraImage;
 @property (strong, nonatomic) Audit * audit;
 
-@property (strong, nonatomic) Audit *audit;
-
 @property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
 
 @property (strong, nonatomic) IBOutlet UIButton *calculatorButton;

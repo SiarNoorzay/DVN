@@ -223,17 +223,25 @@ int numOfSubs;
     [self.nextButton setEnabled:true];
     [self.previousButton setEnabled:true];
     
+    
+    
     pointTotal = 0;
-    self.pointsLabel.text = @"0";
+    self.pointsLabel.text =[NSString stringWithFormat:@"%.2f", self.question.pointsAwarded]; // @"0";
     answered = false;
-    self.percentSlider.value = 0;
-    self.percentSliderTextField.text = @"";
+    if (self.question.questionType == 2) {
+        self.percentSlider.value = self.question.pointsAwarded / (self.question.pointsPossible/100);
+    }
+    else self.percentSlider.value = self.question.pointsAwarded;
+
+    self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f", self.question.pointsAwarded];
     
     if (useSlider){
         self.leftSliderLabel.hidden = true;
         self.rightSliderLabel.hidden = true;
         self.switchy.hidden = true;
-        [self.switchy setOn:false];
+        float temp = self.question.pointsAwarded;
+        
+        [self.switchy setOn:temp>0];
     }
 }
 
@@ -308,7 +316,7 @@ int numOfSubs;
             self.percentSlider.maximumValue = 100.0;
             self.percentSlider.minimumValue = 0;
             self.questionText.hidden = NO;
-            self.percentSliderTextField.text = @"0%";
+            self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f %%", self.percentSlider.value];
 
 
             break;
@@ -323,9 +331,9 @@ int numOfSubs;
             self.percentSlider.hidden = false;
             self.percentSliderTextField.hidden = false;
             self.percentSlider.maximumValue = self.question.pointsPossible;
-            self.percentSlider.value = 0;
+            self.percentSlider.value = self.question.pointsAwarded;
             self.questionText.hidden = NO;
-            self.percentSliderTextField.text = @"0";
+            self.percentSliderTextField.text = [NSString stringWithFormat:@"%i", (int) self.percentSlider.value];
 
             
             break;
@@ -598,17 +606,30 @@ int numOfSubs;
         }
         //submit pushed with a sublayer question
         
+        mainSubQuestion.pointsAwarded += self.question.pointsAwarded;
+        
         //check if last sublayered question
         if (layeredPosition == (-1* [self.allSublayeredQuestions count])) {
             
             self.currentPosition = mainQuestionPosition;
             if (self.currentPosition == ([self.questionArray count]-1))
             {
+                //at the last sublayerd question which is also the last question in subelement
                 //pop 2 view controllers
                 [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-3] animated:NO];
             }
             else{
 //TODO: This else or the one after needs to be fixed.
+                
+                //at the last sublayered question so move to next question in subelement
+                //            float mainQpointsAwarded = 0;
+                //            for (LayeredQuestion *layQ in self.allSublayeredQuestions) {
+                //                mainQpointsAwarded += layQ.question.pointsAwarded;
+                //            }
+                //            mainSubQuestion.pointsAwarded = mainQpointsAwarded;
+                
+//                mainSubQuestion.pointsAwarded += self.question.pointsAwarded;
+                
                 self.currentPosition++;
                 //mainSubQuestion = [self.questionArray objectAtIndex:self.currentPosition];
                 [self refreshAnswerView];
@@ -622,8 +643,17 @@ int numOfSubs;
             layeredPosition--;
             
             [self.subQuesionsTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:(layeredPosition +1)*-1 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
-            LayeredQuestion *tempQ = [self.allSublayeredQuestions objectAtIndex:(layeredPosition +1 ) *-1];
+           // LayeredQuestion *tempQ = [self.allSublayeredQuestions objectAtIndex:(layeredPosition +1 ) *-1];
             //self.question = tempQ.question;
+            
+//            float mainQpointsAwarded = 0;
+//            for (LayeredQuestion *layQ in self.allSublayeredQuestions) {
+//                mainQpointsAwarded += layQ.question.pointsAwarded;
+//            }
+//            mainSubQuestion.pointsAwarded = mainQpointsAwarded;
+            //mainSubQuestion.pointsAwarded += self.question.pointsAwarded;
+
+            
             self.currentPosition = layeredPosition;
             [self refreshAnswerView];
             return;
