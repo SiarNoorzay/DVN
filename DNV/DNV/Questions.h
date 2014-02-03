@@ -30,8 +30,8 @@
 @property (nonatomic) float pointsNeededForLayered;
 @property (nonatomic) NSArray * layeredQuesions;
 
-@property (nonatomic) NSArray * zeroIfNoPointsFor;
-@property (nonatomic) NSArray * lessOrEqualToSmallestAnswer;
+@property (nonatomic) NSMutableArray * zeroIfNoPointsFor;
+@property (nonatomic) NSMutableArray * lessOrEqualToSmallestAnswer;
 
 -(id)initWithQuestion:(NSDictionary *)questionDictionary;
 
