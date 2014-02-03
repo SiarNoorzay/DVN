@@ -35,10 +35,12 @@ int subEleNumber;
 -(void)viewWillAppear:(BOOL)animated
 {
     //updating Elements and subelements
-    if (self.listOfElements != nil){
+    //self.listOfElements = self.aud.Elements;
+    
+    if (self.aud.Elements != nil){
         
-        for (int i = 0; i< [self.listOfElements count]; i++) {
-            Elements *ele = [self.listOfElements objectAtIndex:i];
+        for (int i = 0; i< [self.aud.Elements count]; i++) {
+            Elements *ele = [self.aud.Elements objectAtIndex:i];
             float tempEleNAPoints = 0;
             float elePointsAwarded = 0;
             BOOL eleComplete = true;
@@ -56,7 +58,7 @@ int subEleNumber;
                         tempSubNAPoints += question.pointsPossible;
                         tempEleNAPoints += question.pointsPossible;
                     }
-                    if (! (question.isCompleted || question.pointsAwarded > 0)) {
+                    if ( (!question.isCompleted) || (!(question.pointsAwarded > 0))) {
                         subEleComplete = false;
                     }
                     subElePointsAwarded += question.pointsAwarded;
@@ -64,12 +66,19 @@ int subEleNumber;
                 subEle.modefiedNAPoints = tempSubNAPoints;
                 subEle.pointsAwarded = subElePointsAwarded;
                 elePointsAwarded += subElePointsAwarded;
-                //TODO: save ele back to DB
+                subEle.isCompleted = subEleComplete;
+                eleComplete = eleComplete && subEleComplete;
+                
             }
             ele.modefiedNAPoints = tempEleNAPoints;
             ele.pointsAwarded = elePointsAwarded;
+            //TODO: update ele back to Database
 
         }
+    }
+    if (self.dnvDBManager)
+    {
+        [self.dnvDBManager updateAudit:self.aud];
     }
     [self.subElementTable reloadData];
 }
