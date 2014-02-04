@@ -33,7 +33,12 @@
     NSLog(@"Current WIP: %@", self.currentFile);
     
 //    [self.jsonFileCollection reloadData];
-    iSpotOfCurrFile = (int)[self.jsonFiles indexOfObject:self.currentFile];
+    if ([self.currentFileType isEqualToString:@"importWIP"]) {
+        iSpotOfCurrFile = (int)[self.jsonFiles indexOfObject:self.currentFile];
+    }
+    else if ([self.currentFileType isEqualToString:@"localWIP"]){
+        iSpotOfCurrFile = (int)[self.localFiles indexOfObject:self.currentFile];
+    }
     
     self.sectionHeaders = [[NSArray alloc]initWithObjects:@"On Device", @"On Dropbox", nil];
 }
@@ -46,14 +51,23 @@
 
 #pragma mark Collectionview methods
 
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    
-    return self.sectionHeaders.count;
-}
+//-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+//    
+//    return self.sectionHeaders.count;
+//}
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-    return [self.jsonFiles count]-1;
+//    int numOfItems;
+//    
+//    if ([self.currentFileType isEqualToString:@"localWIP"]){
+//        numOfItems = self.localFiles.count;
+//    }
+//    else{
+//        numOfItems = self.jsonFiles.count;
+//    }
+    
+    return self.jsonFiles.count - 1;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -77,7 +91,6 @@
     
     UIAlertView * mergeAlert = [[UIAlertView alloc] initWithTitle: @"Merge Files" message: @"Are you sure you want to merge the selected file with the current WIP audit?" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes",nil];
     [mergeAlert show];
-    
     
 }
 

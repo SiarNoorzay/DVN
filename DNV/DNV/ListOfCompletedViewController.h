@@ -21,7 +21,7 @@
 
 @property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
 @property NSString * directoryPath;
-@property (strong, nonatomic) NSArray * localCompleted;
+@property (strong, nonatomic) NSMutableArray * localCompleted;
 
 @property (strong, nonatomic) Audit * audit;
 

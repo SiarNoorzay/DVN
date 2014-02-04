@@ -13,6 +13,7 @@
 @property (strong, nonatomic) NSArray * jsonFiles;
 @property (strong, nonatomic) NSArray * localFiles;
 @property (strong, nonatomic) NSString * currentFile;
+@property (strong, nonatomic) NSString * currentFileType;
 
 @property (strong, nonatomic) NSArray * sectionHeaders;
 

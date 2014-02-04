@@ -209,7 +209,13 @@ loadMetadataFailedWithError:(NSError *)error {
         
         importVC.jsonFiles = self.JSONList;
         importVC.localFiles = self.localWIPList;
-        importVC.currentFile = self.JSONList[self.chosenJSONfile];
+        importVC.currentFileType = self.wipAuditType;
+        if ([self.wipAuditType isEqualToString:@"importWIP"]) {
+            importVC.currentFile = self.JSONList[self.chosenJSONfile];
+        }
+        else if ([self.wipAuditType isEqualToString:@"localWIP"]){
+            importVC.currentFile = self.localWIPList[self.chosenJSONfile];
+        }
     }
     
 //    NSIndexPath *indexPath = self.subElementTable.indexPathForSelectedRow;

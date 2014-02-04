@@ -258,6 +258,27 @@ loadMetadataFailedWithError:(NSError *)error {
     }
 }
 
+#pragma mark Alertview method
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        //Code for OK button
+    }
+    if (buttonIndex == 1)
+    {
+        [self.dnvDBManager deleteAudit:self.audit.auditID];
+        UIAlertView * deleteAuditNotice = [[UIAlertView alloc] initWithTitle:@"Audit Deleted" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        
+        [deleteAuditNotice show];
+        
+        [self.dnvDBManager deleteAudit:self.localCompleted[self.chosenCompleted]];
+        [self.localCompleted removeObjectAtIndex:self.chosenCompleted];
+        [self.completedAuditTable reloadData];
+    }
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
 //    NSIndexPath *indexPath = self.completedAuditTable.indexPathForSelectedRow;
@@ -300,23 +321,6 @@ loadMetadataFailedWithError:(NSError *)error {
 //        }
 //    
 //        eleSubEleVC.audType = @"Completed";
-    }
-}
-
-#pragma mark Alertview method
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0)
-    {
-        //Code for OK button
-    }
-    if (buttonIndex == 1)
-    {
-        [self.dnvDBManager deleteAudit:self.audit.auditID];
-        UIAlertView * deleteAuditNotice = [[UIAlertView alloc] initWithTitle:@"Audit Deleted" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        
-        [deleteAuditNotice show];
     }
 }
 

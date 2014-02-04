@@ -138,10 +138,6 @@ int subEleNumber;
     
     self.listOfSubElements = self.ele.Subelements;
     
-    int selectedRow = (int)row + 1;
-    self.subElementIDs = [self.dnvDBManager getIDSFrom:@"SUBELEMENT" where:@"ELEMENTID" equals:selectedRow];
-    NSLog(@"First Sub Element ID: %d", [self.subElementIDs[0] integerValue]);
-    
     [self.subElementTable reloadData];
     elementNumber = row;
 }
