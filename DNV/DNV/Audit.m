@@ -82,5 +82,30 @@
     
     return  mergedAudits;
 }
+-(NSDictionary*)toDictionary{
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]initWithCapacity:7];
+    
+    [dictionary setValue:self.auditID forKey:@"auditID"];
+    
+    NSString *tempAuditType = [NSString stringWithFormat:@"%d",self.auditType];
+    [dictionary setValue:tempAuditType forKey:@"auditType"];
+    
+    [dictionary setValue:self.name forKey:@"name"];
+
+    NSMutableArray *eleArray = [NSMutableArray new];
+    for (Elements *ele in self.Elements) {
+        [eleArray addObject: [ele toDictionary]];
+    }
+    [dictionary setValue:eleArray forKey:@"Elements"];
+    
+    [dictionary setValue:self.lastModefied forKey:@"lastModified"];
+
+    [dictionary setValue:[self.report toDictionary] forKey:@"Report"];
+
+    [dictionary setValue:[self.client toDictionary] forKey:@"Client"];
+
+    return dictionary;
+
+}
 
 @end

@@ -46,4 +46,6 @@
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
+@property (strong,atomic) NSMutableArray *allSublayeredQuestions;
+
 @end

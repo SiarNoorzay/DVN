@@ -29,4 +29,6 @@
 
 -(Report *)mergeReports:(Report *)primaryReport with:(Report *)secondaryReport;
 
+-(NSDictionary*)toDictionary;
+
 @end

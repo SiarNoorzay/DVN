@@ -175,6 +175,8 @@ loadMetadataFailedWithError:(NSError *)error {
             break;
         case 2:
         {
+            //TODO: convert selected audit back from audit->dictionary->json and export to dropbox
+            
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Dropbox Export Complete" message: @"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             
             [alert show];

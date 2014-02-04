@@ -19,6 +19,13 @@
 
 @implementation QuestionsViewController
 
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.questionsTableView reloadData];
+}
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
