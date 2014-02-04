@@ -74,6 +74,7 @@
 
     }
     
+    return self.jsonFiles.count - 1;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
