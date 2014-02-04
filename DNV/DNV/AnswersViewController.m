@@ -62,7 +62,7 @@ int numOfSubs;
 
    // NSString *auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
     
-    self.audit = [self.dnvDBManager retrieveAudit:@"GeneralElectricIncorporated.BBS-DRAFT.1234"];
+   // self.audit = [self.dnvDBManager retrieveAudit:@"GeneralElectricIncorporated.BBS-DRAFT.1234"];
     
     
     if (self.question == nil || self.questionArray == nil)
@@ -226,6 +226,9 @@ int numOfSubs;
     
     
     pointTotal = 0;
+    if (self.question.questionType == 3) {
+        pointTotal = self.question.pointsAwarded;
+    }
     self.pointsLabel.text =[NSString stringWithFormat:@"%.2f", self.question.pointsAwarded]; // @"0";
     answered = false;
     if (self.question.questionType == 2) {
@@ -239,9 +242,14 @@ int numOfSubs;
         self.leftSliderLabel.hidden = true;
         self.rightSliderLabel.hidden = true;
         self.switchy.hidden = true;
-        float temp = self.question.pointsAwarded;
+        if (self.question.questionType == 0) {
+            float temp = self.question.pointsAwarded;
+            [self.switchy setOn:temp>0];
+        }
         
-        [self.switchy setOn:temp>0];
+    }
+    if (self.question.layeredQuesions.count >0) {
+  //      pointTotal = self.question.pointsAwarded;
     }
 }
 
@@ -428,7 +436,11 @@ int numOfSubs;
         
         cell.textLabel.text = ans.answerText;
         
-        [cell setSelected:ans.isSelected];
+//        [cell setSelected:ans.isSelected];
+        if (ans.isSelected) {
+            [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        }
+        
         
         return cell;
     }
@@ -570,8 +582,33 @@ int numOfSubs;
         return;
     }
     
+    if (self.question.isApplicable) {self.question.pointsAwarded = pointTotal;}
+    
+    else {
+        self.question.isThumbsDown = false;
+        self.question.isThumbsUp = false;
+        self.question.needsVerifying =false;
+        self.question.pointsAwarded = 0;
+        pointTotal = 0;
+        //set fields for all sub questions for this question to NA
+        NSMutableArray *tempSubs = self.allSublayeredQuestions;
+        //temporary changing allSubLays
+        self.allSublayeredQuestions = [NSMutableArray new];
+        int throwAway = [self getNumOfSubQuestionsAndSetAllSubsArray:self.question layerDepth:0];
+        for (int i = 0 ; i < self.allSublayeredQuestions.count; i++) {
+            LayeredQuestion *layQ = [self.allSublayeredQuestions objectAtIndex:i];
+            layQ.question.isApplicable = false;
+            self.question.isThumbsDown = false;
+            self.question.isThumbsUp = false;
+            self.question.needsVerifying =false;
+            self.question.pointsAwarded = 0;
+            [self.dnvDBManager updateQuestion:layQ.question];
+        }
+        //set allSubLays back to what it was
+        self.allSublayeredQuestions = tempSubs;
+    }
+    
     self.question.isCompleted = true;
-    self.question.pointsAwarded = pointTotal;
     //TODO: actually save stuff
 
     //Update DNV Database
@@ -593,6 +630,14 @@ int numOfSubs;
     if (islayeredQuestion && !(isSublayeredQuestion) && self.question.layeredQuesions.count >0) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"Skipped %d questions", [self.allSublayeredQuestions count] + self.currentPosition] message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];
+        for (LayeredQuestion *layQ in self.allSublayeredQuestions) {
+            layQ.question.pointsAwarded = 0;
+            layQ.question.isCompleted = NO;
+            for (Answers *ans in layQ.question.Answers) {
+                ans.isSelected = NO;
+            }
+            [self.dnvDBManager updateQuestion:layQ.question];
+        }
         
     }
     if (islayeredQuestion && isSublayeredQuestion) {
@@ -606,8 +651,9 @@ int numOfSubs;
         }
         //submit pushed with a sublayer question
         
-        mainSubQuestion.pointsAwarded += self.question.pointsAwarded;
-        
+        //mainSubQuestion.pointsAwarded += self.question.pointsAwarded;
+        [self.dnvDBManager updateQuestion:mainSubQuestion];
+
         //check if last sublayered question
         if (layeredPosition == (-1* [self.allSublayeredQuestions count])) {
             
@@ -619,44 +665,74 @@ int numOfSubs;
                 [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-3] animated:NO];
             }
             else{
-//TODO: This else or the one after needs to be fixed.
-                
-                //at the last sublayered question so move to next question in subelement
-                //            float mainQpointsAwarded = 0;
-                //            for (LayeredQuestion *layQ in self.allSublayeredQuestions) {
-                //                mainQpointsAwarded += layQ.question.pointsAwarded;
-                //            }
-                //            mainSubQuestion.pointsAwarded = mainQpointsAwarded;
-                
-//                mainSubQuestion.pointsAwarded += self.question.pointsAwarded;
-                
                 self.currentPosition++;
-                //mainSubQuestion = [self.questionArray objectAtIndex:self.currentPosition];
                 [self refreshAnswerView];
                 return;
             }
             
         }
-        else //not last subquestion so go to next one
+        else //not last subquestion so go to next one if points are correct
         {
             NSLog(@"%d",layeredPosition);
             layeredPosition--;
-            
-            [self.subQuesionsTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:(layeredPosition +1)*-1 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
-           // LayeredQuestion *tempQ = [self.allSublayeredQuestions objectAtIndex:(layeredPosition +1 ) *-1];
-            //self.question = tempQ.question;
-            
-//            float mainQpointsAwarded = 0;
-//            for (LayeredQuestion *layQ in self.allSublayeredQuestions) {
-//                mainQpointsAwarded += layQ.question.pointsAwarded;
-//            }
-//            mainSubQuestion.pointsAwarded = mainQpointsAwarded;
-            //mainSubQuestion.pointsAwarded += self.question.pointsAwarded;
+            //check points awarded >= points needed for layered
+            if (self.question.pointsAwarded >= self.question.pointsNeededForLayered) {
+                
+                [self.subQuesionsTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:(layeredPosition +1)*-1 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+                self.currentPosition = layeredPosition;
+                [self refreshAnswerView];
+                return;
+                
+            }
+            else //point awarded < pointsNeededForLayered so go to next question in subLayereds
+            {
+                int posOfNextQuestion = layeredPosition;
+                posOfNextQuestion = ((posOfNextQuestion +1)*-1);
+                int i = posOfNextQuestion;
+                for (; i<self.allSublayeredQuestions.count; i++) {
+                    LayeredQuestion *layQ = [self.allSublayeredQuestions objectAtIndex:i];
+                    
+                    if (layQ.shouldBeEnabled) {
+                        
+                        [self.subQuesionsTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+                        self.currentPosition = (i+1)*-1;
+                        [self refreshAnswerView];
+                        return;
+                        
+                    }
 
+                }
+                //looped through allSubs but did not find an enabled question so go to next main question and show alert view saying how many questions skipped
+                
+                //get correct Layered Question were on to show number of skipped questions
+                /*
+                int layQPos;
+                if (layeredPosition == -1) {
+                    layQPos = 0;
+                }else layQPos = ((layeredPosition +2) *-1);
+                
+                LayeredQuestion *layQ = [self.allSublayeredQuestions objectAtIndex:layQPos];
+                //this only shows first layer number of skipped
+                //need to loop thru the question
+                
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"Skipped %d questions", layQ.subIndexes.count] message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                [alert show];
+                */
+                
+                self.currentPosition = mainQuestionPosition;
+                if (self.currentPosition == ([self.questionArray count]-1))
+                {
+                    //at the last sublayerd question which is also the last question in subelement
+                    //pop 2 view controllers
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-3] animated:NO];
+                }
+                else{
+                    self.currentPosition++;
+                    [self refreshAnswerView];
+                    return;
+                }
+            }
             
-            self.currentPosition = layeredPosition;
-            [self refreshAnswerView];
-            return;
         }
     }
     
@@ -773,12 +849,22 @@ int numOfSubs;
 }
 
 - (IBAction)naButtonPushed:(id)sender {
+    
+    //This is off for now to test NA flows since isRequired is true for all questions in the bbsDraft audit
+    /*
+    Elements *tempEle = [self.audit.Elements objectAtIndex:self.elementNumber];
+    if (tempEle.isRequired) {
+        self.question.isApplicable = true;
+        [self.naButton setSelected:false];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Question must be applicable" message: @"Element is required" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+     */
     self.question.isApplicable = !self.question.isApplicable;
     [self.naButton setSelected: !self.naButton.selected];
     
-    if (self.question.isApplicable) {
-        
-    }
+   
 }
 
 - (IBAction)verifyButtonPushed:(id)sender {

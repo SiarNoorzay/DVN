@@ -34,7 +34,6 @@
     
 //    [self.jsonFileCollection reloadData];
     iSpotOfCurrFile = (int)[self.jsonFiles indexOfObject:self.currentFile];
-    
     self.sectionHeaders = [[NSArray alloc]initWithObjects:@"On Device", @"On Dropbox", nil];
 }
 

@@ -13,6 +13,7 @@
 #import "SubElementCell.h"
 #import "Questions.h"
 #import "Folder.h"
+#import "LayeredQuestion.h"
 
 @interface ElementSubElementViewController ()<DBRestClientDelegate>
 
@@ -58,8 +59,22 @@ int subEleNumber;
                         tempSubNAPoints += question.pointsPossible;
                         tempEleNAPoints += question.pointsPossible;
                     }
-                    if ( (!question.isCompleted) || (!(question.pointsAwarded > 0))) {
+                    if (!question.isCompleted){
                         subEleComplete = false;
+                    }
+                    if (question.layeredQuesions.count >0) {
+                        //reset all sublayerd questions and loop thru them adding points to subelePoints
+                        self.allSublayeredQuestions = [NSMutableArray new];
+                       int numOfSubs = [self getNumOfSubQuestionsAndSetAllSubsArray:question layerDepth:0];
+                        for (LayeredQuestion *layQ in self.allSublayeredQuestions) {
+                            subElePointsAwarded += layQ.question.pointsAwarded;
+                            if (!layQ.question.isApplicable) {
+                                tempSubNAPoints += layQ.question.pointsPossible;
+                                tempEleNAPoints += layQ.question.pointsPossible;
+                            }
+
+                        }
+                        NSLog(@"Subele: %d naPoints: %f",j,tempSubNAPoints);
                     }
                     subElePointsAwarded += question.pointsAwarded;
                 }
@@ -159,9 +174,10 @@ int subEleNumber;
     
     self.listOfSubElements = self.ele.Subelements;
     
-    int selectedRow = (int)row + 1;
-    self.subElementIDs = [self.dnvDBManager getIDSFrom:@"SUBELEMENT" where:@"ELEMENTID" equals:selectedRow];
-    NSLog(@"First Sub Element ID: %d", [self.subElementIDs[0] integerValue]);
+//    int selectedRow = (int)row + 1;
+//    self.subElementIDs = [self.dnvDBManager getIDSFrom:@"SUBELEMENT" where:@"ELEMENTID" equals:selectedRow];
+//
+//    NSLog(@"First Sub Element ID: %d", [self.subElementIDs[0] integerValue]);
     
     [self.subElementTable reloadData];
     elementNumber = row;
@@ -219,6 +235,32 @@ int subEleNumber;
     questionsVC.subEleNumber = subEleNumber;
     questionsVC.audit = self.aud;
     
+}
+
+-(int) getNumOfSubQuestionsAndSetAllSubsArray:(Questions *)question layerDepth:(int)depth
+{
+    int n = 1;
+    for (int i = 0; i < [question.layeredQuesions count]; i++)
+    {
+        LayeredQuestion *tempObject = [LayeredQuestion new];
+        
+        tempObject.question = [question.layeredQuesions objectAtIndex:i];
+        [self.allSublayeredQuestions addObject:tempObject];
+        
+        if( tempObject.question.layeredQuesions.count > 0)
+            depth++;
+        
+        n += [self getNumOfSubQuestionsAndSetAllSubsArray:tempObject.question layerDepth:depth];
+        
+        tempObject.subIndexes = [NSMutableArray new];
+        for( int j = 1; j <= tempObject.question.layeredQuesions.count; j++ )
+        {
+            
+            [tempObject.subIndexes addObject:[NSNumber numberWithInt: j + [self.allSublayeredQuestions indexOfObject:tempObject] ] ];
+        }
+        
+    }
+    return n;
 }
 
 //#pragma mark file selection methods
