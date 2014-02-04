@@ -35,7 +35,13 @@
     NSLog(@"Current WIP: %@", self.currentFile);
     
 //    [self.jsonFileCollection reloadData];
-    iSpotOfCurrFile = (int)[self.jsonFiles indexOfObject:self.currentFile];
+    if ([self.currentFileType isEqualToString:@"importWIP"]) {
+        iSpotOfCurrFile = (int)[self.jsonFiles indexOfObject:self.currentFile];
+    }
+    else if ([self.currentFileType isEqualToString:@"localWIP"]){
+        iSpotOfCurrFile = (int)[self.localFiles indexOfObject:self.currentFile];
+    }
+    
     self.sectionHeaders = [[NSArray alloc]initWithObjects:@"On Device", @"On Dropbox", nil];
     
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];

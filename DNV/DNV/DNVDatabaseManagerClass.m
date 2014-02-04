@@ -155,12 +155,12 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         sqlite3_stmt * statement;
         
         //Using the user defaults to create the audit ID
-        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+//        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 //        NSString * auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
 //        auditID = [auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
         
         //Query to insert into the audit table
-        NSString * insertAuditSQL = [NSString stringWithFormat:@"INSERT INTO AUDIT (ID, AUDITNAME, AUDITTYPE, LASTMODIFIED) VALUES (\"%@\", \"%@\", %d, \"%@\")", audit.auditID, audit.name, 1, audit.lastModefied];
+        NSString * insertAuditSQL = [NSString stringWithFormat:@"INSERT INTO AUDIT (ID, AUDITNAME, AUDITTYPE, LASTMODIFIED) VALUES (\"%@\", \"%@\", %d, \"%@\")", audit.auditID, audit.name, audit.auditType, audit.lastModefied];
         
         //Preparing
         sqlite3_prepare_v2(dnvAuditDB, [insertAuditSQL UTF8String], -1, &statement, NULL);

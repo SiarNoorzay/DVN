@@ -111,8 +111,13 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
+    [nsDefaults setObject:self.localWips[indexPath.row] forKey:@"currentAudit"];
+    [nsDefaults synchronize];
+    
     if (indexPath.section == 0) {
         self.WIPType = @"localWIP";
+        
     }
     else{
         self.WIPType = @"importWIP";

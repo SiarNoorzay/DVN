@@ -216,6 +216,7 @@
         //Using the user defaults to create the audit ID
         self.audit.auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
         self.audit.auditID = [self.audit.auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
+        self.audit.auditType = 1;
         
         self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
         [self.dnvDBManager saveAudit:self.audit];

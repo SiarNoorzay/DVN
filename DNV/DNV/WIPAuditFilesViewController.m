@@ -210,7 +210,14 @@ loadMetadataFailedWithError:(NSError *)error {
         ImportMergeViewController * importVC = [segue destinationViewController];
         
         importVC.jsonFiles = self.JSONList;
-        importVC.currentFile = self.JSONList[self.chosenJSONfile];
+        importVC.localFiles = self.localWIPList;
+        importVC.currentFileType = self.wipAuditType;
+        if ([self.wipAuditType isEqualToString:@"importWIP"]) {
+            importVC.currentFile = self.JSONList[self.chosenJSONfile];
+        }
+        else if ([self.wipAuditType isEqualToString:@"localWIP"]){
+            importVC.currentFile = self.localWIPList[self.chosenJSONfile];
+        }
     }
     
 //    NSIndexPath *indexPath = self.subElementTable.indexPathForSelectedRow;
@@ -257,6 +264,8 @@ loadMetadataFailedWithError:(NSError *)error {
         
         //use this to access the audit and its components dictionary style
         self.audit = [[Audit alloc]initWithAudit:theAudit];
+        
+        
         
         [self.dnvDBManager saveAudit:self.audit];
         
