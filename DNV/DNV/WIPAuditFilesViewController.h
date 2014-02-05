@@ -22,6 +22,9 @@
 @property (strong, nonatomic) Audit * audit;
 @property NSString * directoryPath;
 
+@property (strong,atomic) NSMutableArray *allSublayeredQuestions;
+
+
 @property (strong, nonatomic) NSString * localWIPName;
 @property (strong, nonatomic) NSArray * localWIPList;
 

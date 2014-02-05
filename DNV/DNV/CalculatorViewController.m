@@ -221,9 +221,6 @@
 
 - (IBAction)calcSubmitPushed:(id)sender {
     
-    //TODO: save information from resultLabel to answerViewController percentSliderTextField.text
-    //and call percentTextChanged
-
     [self.ansVC.calcPopOver dismissPopoverAnimated:YES];
     
     if (self.ansVC.question.questionType == 2 || self.ansVC.question.questionType == 4) {

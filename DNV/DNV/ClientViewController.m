@@ -187,6 +187,9 @@ loadMetadataFailedWithError:(NSError *)error {
         Folder *folder = [self.clients objectAtIndex:self.chosenClient];
         
         [wipAuditVC setDbWIPFolderPath: [folder.folderPath stringByAppendingString:@"/WIP/"]];
+        [wipAuditVC setOgdbWIPFolderPath: [folder.folderPath stringByAppendingString:@"/WIP/"]];
+        
+
         
     }
     

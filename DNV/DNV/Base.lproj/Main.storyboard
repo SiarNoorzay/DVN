@@ -1194,6 +1194,9 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="exportToDBoxButton" destination="RpU-Pf-JDH" id="Vth-aT-6jH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bt9-Y1-1yC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2816,7 +2819,7 @@ In general, the XXXXXXX protocol requires that the practical application of prog
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="3x7-gx-5df"/>
+        <segue reference="0gA-F9-yeZ"/>
         <segue reference="mdm-Om-J66"/>
         <segue reference="ZGD-NJ-UDo"/>
         <segue reference="JhJ-6V-9g8"/>

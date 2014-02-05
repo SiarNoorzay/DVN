@@ -88,7 +88,6 @@ int subEleNumber;
             }
             ele.modefiedNAPoints = tempEleNAPoints;
             ele.pointsAwarded = elePointsAwarded;
-            //TODO: update ele back to Database
 
         }
     }

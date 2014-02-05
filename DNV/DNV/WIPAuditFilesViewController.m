@@ -13,6 +13,8 @@
 #import "ElementSubElementViewController.h"
 #import "VerifyQuestionsViewController.h"
 #import "ImportMergeViewController.h"
+#import "LayeredQuestion.h"
+
 
 @interface WIPAuditFilesViewController ()<DBRestClientDelegate>
 
@@ -95,20 +97,21 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     self.chosenJSONfile = indexPath.row;
-    
+    BOOL dropBoxPicked;
     if ([self.wipAuditType isEqualToString:@"localWIP"]){
-        
+        dropBoxPicked = false;
         self.audit = [self.dnvDBManager retrieveAudit:self.localWIPList[self.chosenJSONfile]];
     }
     
     if ([self.wipAuditType isEqualToString:@"importWIP"]){
-        
+        dropBoxPicked = true;
         [self loadDropboxFile:self.JSONList[self.chosenJSONfile]];
     }
     
     WIPChoicePopOver * wipPopContent = [self.storyboard instantiateViewControllerWithIdentifier:@"wipChoices"];
     
     wipPopContent.WIPAuditFilesVC = self;
+    [wipPopContent setDropBoxSelected:dropBoxPicked];
     
     self.wipPopOver = [[UIPopoverController alloc] initWithContentViewController:wipPopContent];
     
@@ -175,11 +178,18 @@ loadMetadataFailedWithError:(NSError *)error {
             break;
         case 2:
         {
-            //TODO: convert selected audit back from audit->dictionary->json and export to dropbox
+            NSLog(@"%@",self.wipAuditPath);
+            if ([self.wipAuditPath rangeOfString:self.audit.name].location == NSNotFound) {
+               self.wipAuditPath = [self.wipAuditPath stringByAppendingString:[NSString stringWithFormat:@"%@/",self.audit.name]];
+            } else {
+                NSLog(@"string contains bla!");
+            }
+
+            //callback methods call the export method
+            [self.spinner startAnimating];
+            [[self restClient] createFolder:self.wipAuditPath];
+
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Dropbox Export Complete" message: @"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            
-            [alert show];
         }
             break;
         case 3:
@@ -277,4 +287,167 @@ loadMetadataFailedWithError:(NSError *)error {
     }
 }
 
+- (void)restClient:(DBRestClient*)client createdFolder:(DBMetadata*)folder{
+    NSLog(@"Created Folder Path %@",folder.path);
+    NSLog(@"Created Folder name %@",folder.filename);
+    
+    [self exportAudit];
+    
+}
+
+// [error userInfo] contains the root and path
+- (void)restClient:(DBRestClient*)client createFolderFailedWithError:(NSError*)error{
+    NSLog(@"%@",error);
+    //TODO: JSON LIST COUTN IS WRONG
+    [self exportAudit];
+}
+
+-(void) exportAudit
+{
+    self.audit = [self formatAndExportAttachmentsAndImages:self.audit to:self.wipAuditPath];
+    //all attachments and images are uploaded to Dbox now and locations in audit are reletive to Dbox
+    
+    NSDictionary *auditDictionary = [self.audit toDictionary];
+    
+    NSError *writeError = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:auditDictionary options:NSJSONWritingPrettyPrinted error:&writeError];
+    
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSLog(@"JSON Output: %@", jsonString);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *appFile = [documentsDirectory stringByAppendingPathComponent:@"MyFile.txt"];
+    [jsonData writeToFile:appFile atomically:YES];
+    
+    //Using the user defaults to create the audit ID
+    
+            NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+            NSString * auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
+            auditID = [auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    //dont need count since dropox will automatically append (x) to filename if it already exists
+    //NSString* filename = [NSString stringWithFormat:@"%d-%@.json", countOfExistingAudits,auditID];
+    
+    NSString* filename = [NSString stringWithFormat:@"%@.json",auditID];
+
+    
+    NSString *destDir = self.wipAuditPath;
+    [[self restClient] uploadFile:filename toPath:destDir
+                    withParentRev:nil fromPath:appFile];
+    
+    
+}
+
+- (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath
+              from:(NSString*)srcPath metadata:(DBMetadata*)metadata {
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Export to Dropbox Successful" message:[NSString stringWithFormat: @"File saved as %@",destPath] delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+    [self.spinner stopAnimating];
+    NSLog(@"File:%@ uploaded successfully to path: %@",destPath, metadata.path);
+
+    [self.navigationController popViewControllerAnimated:YES];
+
+    return;
+    
+}
+
+- (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Export to Dropbox Failed" message:[NSString stringWithFormat: @"File upload failed with error - %@", error ] delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+    [self.spinner stopAnimating];
+    NSLog(@"File upload failed with error - %@", error);
+
+    [self.navigationController popViewControllerAnimated:YES];
+
+    return;
+}
+-(Audit*)formatAndExportAttachmentsAndImages:(Audit*)aud to:(NSString*)path
+//exports all images and attachments to DBox and changes arrays in audit to hold Dbox locations
+{
+    for (int i=0; i<aud.Elements.count; i++) {
+        Elements *ele = [self.audit.Elements objectAtIndex:i];
+        
+        for (int j=0 ; j<ele.Subelements.count; j++) {
+            SubElements *subEle = [ele.Subelements objectAtIndex:j];
+            
+            for (int k = 0; k<subEle.Questions.count; k++) {
+                Questions *question = [subEle.Questions objectAtIndex:k];
+                
+                //loop through sublayers
+                self.allSublayeredQuestions = [NSMutableArray new];
+                int throwAway = [self getNumOfSubQuestionsAndSetAllSubsArray:question layerDepth:1];
+                for (int l = 0; l<self.allSublayeredQuestions.count; l++) {
+                    LayeredQuestion *layQ = [self.allSublayeredQuestions objectAtIndex:l];
+                    NSMutableArray *tempImageArr = [NSMutableArray arrayWithArray: layQ.question.imageLocationArray];
+                    
+                    for (int m = 0; m<tempImageArr.count ; m++)
+                    {
+                        NSString *pathFrom = [tempImageArr objectAtIndex:m];
+                        pathFrom = [self exportFile:pathFrom to:path];
+                        [tempImageArr setObject:pathFrom atIndexedSubscript:m];
+                    }
+                    NSMutableArray *tempAttachArr = [NSMutableArray arrayWithArray: layQ.question.attachmentsLocationArray];
+
+                    for (int m = 0; m<tempAttachArr.count ; m++)
+                    {
+                        NSString *pathFrom = [tempAttachArr objectAtIndex:m];
+                        pathFrom = [self exportFile:pathFrom to:path];
+                        [tempAttachArr setObject:pathFrom atIndexedSubscript:m];
+                    }
+                }//sublayer loop
+    
+                NSMutableArray *tempImageArr = [NSMutableArray arrayWithArray: question.imageLocationArray];
+                
+                for (int m = 0; m<tempImageArr.count ; m++)
+                {
+                    NSString *pathFrom = [tempImageArr objectAtIndex:m];
+                    pathFrom = [self exportFile:pathFrom to:path];
+                    [tempImageArr setObject:pathFrom atIndexedSubscript:m];
+                }
+                NSMutableArray *tempAttachArr = [NSMutableArray arrayWithArray:question.attachmentsLocationArray];
+                
+                for (int m = 0; m<tempAttachArr.count ; m++)
+                {
+                    NSString *pathFrom = [tempAttachArr objectAtIndex:m];
+                    pathFrom = [self exportFile:pathFrom to:path];
+                    [tempAttachArr setObject:pathFrom atIndexedSubscript:m];
+                }
+            }//question loop
+        }
+    }
+    return aud;
+}
+-(NSString*)exportFile:(NSString*)internalPath to:(NSString*)dropboxPath
+{
+    //TODO: export file at internalPath to Dbox
+    return @"THIS IS WHERE THE Dbox PATH GOES";
+    
+}
+-(int) getNumOfSubQuestionsAndSetAllSubsArray:(Questions *)question layerDepth:(int)depth
+{
+    int n = 1;
+    for (int i = 0; i < [question.layeredQuesions count]; i++)
+    {
+        LayeredQuestion *tempObject = [LayeredQuestion new];
+        
+        tempObject.question = [question.layeredQuesions objectAtIndex:i];
+        [self.allSublayeredQuestions addObject:tempObject];
+        
+        if( tempObject.question.layeredQuesions.count > 0)
+            depth++;
+        
+        n += [self getNumOfSubQuestionsAndSetAllSubsArray:tempObject.question layerDepth:depth];
+        
+        tempObject.subIndexes = [NSMutableArray new];
+        for( int j = 1; j <= tempObject.question.layeredQuesions.count; j++ )
+        {
+            
+            [tempObject.subIndexes addObject:[NSNumber numberWithInt: j + [self.allSublayeredQuestions indexOfObject:tempObject] ] ];
+        }
+        
+    }
+    return n;
+}
 @end

@@ -609,7 +609,6 @@ int numOfSubs;
     }
     
     self.question.isCompleted = true;
-    //TODO: actually save stuff
 
     //Update DNV Database
     [self.dnvDBManager updateQuestion:self.question];
