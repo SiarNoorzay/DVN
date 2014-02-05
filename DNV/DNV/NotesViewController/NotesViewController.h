@@ -8,11 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "VoiceRecognizer.h"
+#import "Questions.h"
+#import "DrawingViewController.h"
 
 
 @interface NotesViewController : UIViewController<UITextViewDelegate>
 
 @property (strong,nonatomic) NSString *text;
+
+@property (weak, nonatomic) Questions *question;
+
 
 @property (strong, nonatomic) IBOutlet UITextView *notesTextView;
 @property (strong, nonatomic) IBOutlet UIButton *startStopButton;

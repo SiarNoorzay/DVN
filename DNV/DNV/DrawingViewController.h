@@ -10,12 +10,14 @@
 
 
 #import <UIKit/UIKit.h>
+#import "Questions.h"
 
 @interface DrawingViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIImageView *mainImage;
 @property (weak, nonatomic) IBOutlet UIImageView *tempDrawImage;
 
+@property (weak, nonatomic) Questions * question;
 
 - (IBAction)saveButtonPushed:(id)sender;
 - (IBAction)resetButtonPushed:(id)sender;

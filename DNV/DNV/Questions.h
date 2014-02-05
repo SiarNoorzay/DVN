@@ -29,6 +29,8 @@
 @property (nonatomic) BOOL isThumbsDown;
 @property (nonatomic) float pointsNeededForLayered;
 @property (nonatomic) NSArray * layeredQuesions;
+@property (nonatomic) NSArray * drawnNotes;
+
 
 @property (nonatomic) NSMutableArray * zeroIfNoPointsFor;
 @property (nonatomic) NSMutableArray * lessOrEqualToSmallestAnswer;

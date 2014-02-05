@@ -7,6 +7,7 @@
 //
 
 #import "NotesViewController.h"
+#import "AnswersViewController.h"
 
 @interface NotesViewController ()
 
@@ -38,7 +39,24 @@ bool start = true;
 	}
     [self.vr addObserver:self forKeyPath:@"heardWord" options:0 context:nil];
     [self.vr addObserver:self forKeyPath:@"listening" options:0 context:nil];
+    
+    if ([self.notesTextView.text isEqualToString:@"(null)"]) {
+        self.notesTextView.text = @"";
+    }
 
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    self.question.notes = self.notesTextView.text;
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"startFreehandDrawing"]) {
+        DrawingViewController *destVC = [segue destinationViewController];
+        
+        // Pass the information to your destination view
+        [destVC setQuestion:self.question];
+    }
 }
 
 - (void)didReceiveMemoryWarning
