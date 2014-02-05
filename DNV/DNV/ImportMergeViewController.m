@@ -34,7 +34,8 @@
     
     NSLog(@"Current WIP: %@", self.currentFile);
     
-//    [self.jsonFileCollection reloadData];
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+    
     if ([self.currentFileType isEqualToString:@"importWIP"]) {
         iSpotOfCurrFile = (int)[self.jsonFiles indexOfObject:self.currentFile];
     }
@@ -42,9 +43,8 @@
         iSpotOfCurrFile = (int)[self.localFiles indexOfObject:self.currentFile];
     }
     
-    self.sectionHeaders = [[NSArray alloc]initWithObjects:@"On Device", @"On Dropbox", nil];
-    
-    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+    NSLog(@"Device Files: %d", self.localFiles.count);
+    NSLog(@"Dropbox Files: %d", self.jsonFiles.count);
 
 }
 
@@ -65,34 +65,44 @@
     
     if(collectionView == self.localFilesCollection)
     {
-        return [self.jsonFiles count]-1;
+        if ([self.currentFileType isEqualToString:@"localWIP"])
+            return [self.localFiles count] - 1;
+        else
+            return [self.localFiles count];
     }
         
     else
     {
-        return [self.jsonFiles count]-1;
+        if ([self.currentFileType isEqualToString:@"importWIP"])
+            return [self.jsonFiles count] -1;
+        else
+            return [self.jsonFiles count];
 
     }
-    
-    return self.jsonFiles.count - 1;
+
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     if(collectionView == self.localFilesCollection)
     {
-        static NSString *identifier = @"JSONFileCell";
+        static NSString *identifier = @"localFileCell";
         
         UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
         
         UILabel * fileLabel = (UILabel *)[cell viewWithTag:1];
         
-        if( indexPath.row < iSpotOfCurrFile)
-            fileLabel.text = self.jsonFiles[indexPath.row];
+        if ([self.currentFileType isEqualToString:@"localWIP"]){
+            iSpotOfCurrFile = (int)[self.localFiles indexOfObject:self.currentFile];
+            
+            if( indexPath.row < iSpotOfCurrFile)
+                fileLabel.text = self.localFiles[indexPath.row];
+            else
+                fileLabel.text = self.localFiles[indexPath.row+1];
+        }
         else
-            fileLabel.text = self.jsonFiles[indexPath.row+1];
+            fileLabel.text = self.localFiles[indexPath.row];
         
-        fileLabel.text = [fileLabel.text stringByAppendingString:@"THIS IS LOCAL"];
         return cell;
         
     }
@@ -104,10 +114,16 @@
     
     UILabel * fileLabel = (UILabel *)[cell viewWithTag:1];
     
-    if( indexPath.row < iSpotOfCurrFile)
-        fileLabel.text = self.jsonFiles[indexPath.row];
+    if ([self.currentFileType isEqualToString:@"importWIP"]){
+        iSpotOfCurrFile = (int)[self.jsonFiles indexOfObject:self.currentFile];
+        
+        if( indexPath.row < iSpotOfCurrFile)
+            fileLabel.text = self.jsonFiles[indexPath.row];
+        else
+            fileLabel.text = self.jsonFiles[indexPath.row+1];
+    }
     else
-        fileLabel.text = self.jsonFiles[indexPath.row+1];
+        fileLabel.text = self.jsonFiles[indexPath.row];
     
     return cell;
 }
@@ -117,7 +133,7 @@
     if(collectionView == self.localFilesCollection)
     {
         //TODO: add string from local files
-       // self.mergingAudit = self.dnvDBManager retrieveAudit:<#(NSString *)#>
+        self.mergingAudit = [self.dnvDBManager retrieveAudit:self.localFiles[indexPath.row]];
         
       
         UIAlertView * mergeAlert = [[UIAlertView alloc] initWithTitle: @"Merge Files" message: @"Are you sure you want to merge the selected file with the current WIP audit?" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes",nil];
@@ -126,7 +142,7 @@
         return;
     }
 
-    
+//    self.mergingAudit
   
     UIAlertView * mergeAlert = [[UIAlertView alloc] initWithTitle: @"Merge Files" message: @"Are you sure you want to merge the selected file with the current WIP audit?" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes",nil];
     [mergeAlert show];
