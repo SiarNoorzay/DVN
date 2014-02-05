@@ -57,9 +57,39 @@
 - (IBAction)saveButtonPushed:(id)sender {
     UIGraphicsBeginImageContextWithOptions(self.mainImage.bounds.size, NO, 0.0);
     [self.mainImage.image drawInRect:CGRectMake(0, 0, self.mainImage.frame.size.width, self.mainImage.frame.size.height)];
-    UIImage *SaveImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *saveImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-//TODO: Use SaveImage
+    
+    //save image to file
+    
+    // Create path.
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    // Save image.
+    
+    if (self.question.drawnNotes == nil) {
+        ///alloc string array and save image with number = 0
+        NSMutableArray *arr = [[NSMutableArray alloc]initWithCapacity:1];
+        
+        NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat: @"%d-freeHandNotes-%d.png",self.question.questionID,0]];
+        
+        [UIImagePNGRepresentation(saveImage) writeToFile:filePath atomically:YES];
+
+        [arr addObject:filePath];
+        self.question.drawnNotes = arr;
+        
+    }
+    else {
+        NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat: @"%d-freeHandNotes-%d.png",self.question.questionID,self.question.drawnNotes.count]];
+        
+        [UIImagePNGRepresentation(saveImage) writeToFile:filePath atomically:YES];
+        NSMutableArray *arr = [[NSMutableArray alloc]initWithArray:self.question.drawnNotes];
+
+        [arr addObject:filePath];
+        self.question.drawnNotes = arr;
+    }
+    
+    NSLog(@"%@",[self.question.drawnNotes objectAtIndex:0]);
     
     [self cancelButtonPushed:self];
     
@@ -79,7 +109,6 @@
     
 }
 
-//TODO: Cancel button and save button
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
     mouseSwiped = NO;

@@ -20,6 +20,8 @@
 
 @property int chosenJSONfile;
 
+@property int numberOfUploadsLeft;
+
 @end
 
 @implementation WIPAuditFilesViewController
@@ -35,6 +37,8 @@
 
 - (void)viewDidLoad
 {
+    self.numberOfUploadsLeft = 0;
+    
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
@@ -133,6 +137,13 @@
         restClient.delegate = self;
     }
     return restClient;
+}
+- (DBRestClient*)restClient2 {
+    if (restClient2 == nil) {
+        restClient2 = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        restClient2.delegate = self;
+    }
+    return restClient2;
 }
 
 - (void)restClient:(DBRestClient *)client loadedMetadata:(DBMetadata *)metadata {
@@ -313,7 +324,7 @@ loadMetadataFailedWithError:(NSError *)error {
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:auditDictionary options:NSJSONWritingPrettyPrinted error:&writeError];
     
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    NSLog(@"JSON Output: %@", jsonString);
+  //  NSLog(@"JSON Output: %@", jsonString);
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -333,6 +344,9 @@ loadMetadataFailedWithError:(NSError *)error {
 
     
     NSString *destDir = self.wipAuditPath;
+    
+    self.numberOfUploadsLeft++;
+    
     [[self restClient] uploadFile:filename toPath:destDir
                     withParentRev:nil fromPath:appFile];
     
@@ -342,32 +356,55 @@ loadMetadataFailedWithError:(NSError *)error {
 - (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath
               from:(NSString*)srcPath metadata:(DBMetadata*)metadata {
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Export to Dropbox Successful" message:[NSString stringWithFormat: @"File saved as %@",destPath] delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
-    [self.spinner stopAnimating];
-    NSLog(@"File:%@ uploaded successfully to path: %@",destPath, metadata.path);
-
-    [self.navigationController popViewControllerAnimated:YES];
-
-    return;
+    self.numberOfUploadsLeft--;
     
+    if (client == self->restClient){
+        
+        NSLog(@"File:%@ uploaded successfully to path: %@",destPath, metadata.path);
+
+        
+    }
+    else if (client == self->restClient2){
+        NSLog(@"File:%@ uploaded successfully to path: %@",destPath, metadata.path);
+
+    }
+    if (self.numberOfUploadsLeft == 0) {
+        [self.spinner stopAnimating];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Export to Dropbox Successful" message:@"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        return;
+    }
 }
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Export to Dropbox Failed" message:[NSString stringWithFormat: @"File upload failed with error - %@", error ] delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
-    [self.spinner stopAnimating];
-    NSLog(@"File upload failed with error - %@", error);
+    self.numberOfUploadsLeft--;
+  if (client == self->restClient){
+    
+      NSLog(@"File upload failed with error - %@", error);
 
-    [self.navigationController popViewControllerAnimated:YES];
-
-    return;
+  }
+    else if (client == self->restClient2){
+        NSLog(@"File upload failed with error - %@", error);
+        
+    }
+    
+    if (self.numberOfUploadsLeft == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Export to Dropbox Failed" message:[NSString stringWithFormat: @"File upload failed with error - %@", error ] delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        
+        [self.spinner stopAnimating];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 -(Audit*)formatAndExportAttachmentsAndImages:(Audit*)aud to:(NSString*)path
 //exports all images and attachments to DBox and changes arrays in audit to hold Dbox locations
 {
     for (int i=0; i<aud.Elements.count; i++) {
-        Elements *ele = [self.audit.Elements objectAtIndex:i];
+        Elements *ele = [aud.Elements objectAtIndex:i];
         
         for (int j=0 ; j<ele.Subelements.count; j++) {
             SubElements *subEle = [ele.Subelements objectAtIndex:j];
@@ -388,6 +425,8 @@ loadMetadataFailedWithError:(NSError *)error {
                         pathFrom = [self exportFile:pathFrom to:path];
                         [tempImageArr setObject:pathFrom atIndexedSubscript:m];
                     }
+                    layQ.question.imageLocationArray = tempImageArr;
+                    
                     NSMutableArray *tempAttachArr = [NSMutableArray arrayWithArray: layQ.question.attachmentsLocationArray];
 
                     for (int m = 0; m<tempAttachArr.count ; m++)
@@ -396,8 +435,21 @@ loadMetadataFailedWithError:(NSError *)error {
                         pathFrom = [self exportFile:pathFrom to:path];
                         [tempAttachArr setObject:pathFrom atIndexedSubscript:m];
                     }
+                    layQ.question.attachmentsLocationArray = tempAttachArr;
+                    
+                    NSMutableArray *tempDrawnLocs = [NSMutableArray arrayWithArray: layQ.question.drawnNotes];
+                    
+                    for (int m = 0; m<tempDrawnLocs.count ; m++)
+                    {
+                        NSString *pathFrom = [tempDrawnLocs objectAtIndex:m];
+                        pathFrom = [self exportFile:pathFrom to:path];
+                        [tempDrawnLocs setObject:pathFrom atIndexedSubscript:m];
+                    }
+                    layQ.question.drawnNotes = tempDrawnLocs;
+                    
                 }//sublayer loop
     
+                //need to go through main question as well
                 NSMutableArray *tempImageArr = [NSMutableArray arrayWithArray: question.imageLocationArray];
                 
                 for (int m = 0; m<tempImageArr.count ; m++)
@@ -406,6 +458,8 @@ loadMetadataFailedWithError:(NSError *)error {
                     pathFrom = [self exportFile:pathFrom to:path];
                     [tempImageArr setObject:pathFrom atIndexedSubscript:m];
                 }
+                question.imageLocationArray = tempImageArr;
+                
                 NSMutableArray *tempAttachArr = [NSMutableArray arrayWithArray:question.attachmentsLocationArray];
                 
                 for (int m = 0; m<tempAttachArr.count ; m++)
@@ -414,15 +468,35 @@ loadMetadataFailedWithError:(NSError *)error {
                     pathFrom = [self exportFile:pathFrom to:path];
                     [tempAttachArr setObject:pathFrom atIndexedSubscript:m];
                 }
+                question.attachmentsLocationArray = tempAttachArr;
+                
+                NSMutableArray *drawnLoc = [NSMutableArray arrayWithArray:question.drawnNotes];
+                
+                for (int m = 0; m<drawnLoc.count ; m++)
+                {
+                    NSString *pathFrom = [drawnLoc objectAtIndex:m];
+                    pathFrom = [self exportFile:pathFrom to:path];
+                    [drawnLoc setObject:pathFrom atIndexedSubscript:m];
+                }
+                question.attachmentsLocationArray = drawnLoc;
             }//question loop
         }
     }
     return aud;
 }
--(NSString*)exportFile:(NSString*)internalPath to:(NSString*)dropboxPath
+-(NSString*)exportFile:(NSString*)internalPath to:(NSString*)dropboxPath// withFile:(NSString*)fileName
 {
-    //TODO: export file at internalPath to Dbox
-    return @"THIS IS WHERE THE Dbox PATH GOES";
+    self.numberOfUploadsLeft ++;
+    //get file name from last string chunk
+    NSArray *chunks = [internalPath componentsSeparatedByString: @"/"];
+
+    NSString *fileName = [chunks objectAtIndex:[chunks count]-1];
+    
+    [[self restClient2] uploadFile:fileName toPath:dropboxPath withParentRev:nil fromPath:internalPath];
+   
+    fileName = [dropboxPath stringByAppendingString:fileName];
+    
+    return fileName;
     
 }
 -(int) getNumOfSubQuestionsAndSetAllSubsArray:(Questions *)question layerDepth:(int)depth

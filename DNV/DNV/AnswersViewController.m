@@ -561,7 +561,7 @@ int numOfSubs;
 #pragma mark IBactions
 
 - (IBAction)submitButton:(id)sender {
-
+    
     if (!answered && self.question.questionType == 1) {
        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"No answer" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -982,6 +982,8 @@ int numOfSubs;
         
         // Pass the information to your destination view
         [destVC setText:self.question.notes];
+        [destVC setQuestion:self.question];
+        
     }
 }
 
@@ -1013,8 +1015,44 @@ int numOfSubs;
 
     
    // self.view.backgroundColor = [UIColor colorWithPatternImage: image];
-    //TODO: save image to imagelocationArray / dropbox
+    
+    //TODO: save image to imagelocationArray
     self.cameraImage = image;
+    
+    //save image to file at self.cameraImage
+    if (image != nil) {
+        // Create path.
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        
+        // Save image.
+        
+        if (self.question.imageLocationArray == nil) {
+            ///alloc string array and save image with number = 0
+            NSMutableArray *arr = [[NSMutableArray alloc]initWithCapacity:1];
+            
+            NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat: @"%d-cameraImage-%d.png",self.question.questionID,0]];
+            
+            [UIImagePNGRepresentation(self.cameraImage) writeToFile:filePath atomically:YES];
+            
+            [arr addObject:filePath];
+            self.question.imageLocationArray = arr;
+            
+        }
+        else {
+            NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat: @"%d-cameraImage-%d.png",self.question.questionID,self.question.imageLocationArray.count]];
+            
+            [UIImagePNGRepresentation(self.cameraImage) writeToFile:filePath atomically:YES];
+            NSMutableArray *arr = [[NSMutableArray alloc]initWithArray:self.question.drawnNotes];
+            
+            [arr addObject:filePath];
+            self.question.imageLocationArray = arr;
+        }
+        for (NSString *str in self.question.imageLocationArray) {
+            NSLog(@"Images in this question: %@", str);
+        }
+        
+    }
+
     
     [picker dismissModalViewControllerAnimated:NO];
 }

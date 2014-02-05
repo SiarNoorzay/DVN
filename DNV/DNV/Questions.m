@@ -63,6 +63,8 @@
         
         self.zeroIfNoPointsFor = [questionDictionary objectForKey:@"zeroIfNoPointsFor"];
         self.lessOrEqualToSmallestAnswer = [questionDictionary objectForKey:@"lessOrEqualToSmallestAnswer"];
+        self.drawnNotes = [questionDictionary objectForKey:@"drawnNotes"];
+
     }
     return self;
 }
@@ -169,6 +171,8 @@
     [dictionary setValue:self.zeroIfNoPointsFor forKey:@"zeroIfNoPointsFor"];
     
     [dictionary setValue:self.lessOrEqualToSmallestAnswer forKey:@"lessOrEqualToSmallestAnswer"];
+
+    [dictionary setValue:self.drawnNotes forKey:@"drawnNotes"];
 
     
     return dictionary;

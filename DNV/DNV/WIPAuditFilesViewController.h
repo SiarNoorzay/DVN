@@ -16,6 +16,8 @@
 @interface WIPAuditFilesViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 {
     DBRestClient * restClient;
+    DBRestClient * restClient2;
+
 }
 
 @property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
