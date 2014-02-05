@@ -7,7 +7,6 @@
 //
 
 #import "VerifyQuestionsViewController.h"
-#import "VerifyTabController.h"
 
 @interface VerifyQuestionsViewController ()
 
@@ -63,19 +62,6 @@
     cell.textLabel.font = [UIFont systemFontOfSize:25.0];
     
     return cell;
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    [self performSegueWithIdentifier:@"VerifyQuestionsTabBar" sender:self];
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    //to set which of the 3 tabs are selectable
-    NSIndexPath *indexPath = self.VerifyQuestionsTable.indexPathForSelectedRow;
-    VerifyTabController * verifyTabCont = [segue destinationViewController];
 }
 
 
