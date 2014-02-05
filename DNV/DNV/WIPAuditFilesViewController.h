@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "DNVDatabaseManagerClass.h"
 
-#import "Audit.h"
-
 @class DBRestClient;
 
 @interface WIPAuditFilesViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
@@ -19,9 +17,6 @@
 }
 
 @property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
-@property (strong, nonatomic) Audit * audit;
-@property NSString * directoryPath;
-
 @property (strong, nonatomic) NSString * localWIPName;
 @property (strong, nonatomic) NSArray * localWIPList;
 

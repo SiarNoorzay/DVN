@@ -13,7 +13,7 @@
 #import "Questions.h"
 #import "Answers.h"
 
-#import "Audit.h"
+
 
 @interface AnswersViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIPopoverControllerDelegate>
 
@@ -25,7 +25,6 @@
 @property (nonatomic) int subElementNum;
 @property (strong,nonatomic) UIPopoverController * helpPopOver;
 @property (strong,nonatomic) UIImage *cameraImage;
-@property (strong, nonatomic) Audit * audit;
 
 @property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
 
@@ -87,6 +86,10 @@
 @property (strong, nonatomic) IBOutlet UITextField *percentSliderTextField;
 
 @property (strong,nonatomic) UIPopoverController * calcPopOver;
+@property (strong,nonatomic) UIPopoverController * verifyPopOver;
 
+-(void)setNeedsVerifying: (int)vSelected;
+
+@property (weak, nonatomic) IBOutlet UIView *viewDashboard;
 
 @end

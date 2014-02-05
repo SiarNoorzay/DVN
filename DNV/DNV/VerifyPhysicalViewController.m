@@ -64,6 +64,7 @@
     cell.lblConfirmed.text = [NSString stringWithFormat:@"%d", aRow.iConfirmed];
     cell.lblNotConfirmed.text = [NSString stringWithFormat:@"%d", aRow.iNotConfrimed];
     cell.lblPercent.text = [NSString stringWithFormat:@"%f", aRow.fPercentage];
+    cell.theObject = aRow;
     
     return cell;
 }
@@ -71,16 +72,24 @@
 {
     return 100;
 }
-//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return 0;
-//}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [arrPhysicalRows removeObjectAtIndex:indexPath.row];
+    [self.tblPhysical reloadData];
+}
+
 #pragma End TableView Methods
 
 - (IBAction)btnAddRowToTable:(id)sender
 {
     observationObject *oObj = [observationObject new];
-    oObj.strDescription = @"";
+    oObj.strDescription = @"Enter a description";
     oObj.iConfirmed = 0;
     oObj.iNotConfrimed = 0;
     oObj.fPercentage = 0.00;
@@ -88,4 +97,5 @@
     [arrPhysicalRows addObject:oObj];
     [self.tblPhysical reloadData];
 }
+
 @end

@@ -262,7 +262,6 @@ loadMetadataFailedWithError:(NSError *)error {
     }
     if (buttonIndex == 1)
     {
-        [self.dnvDBManager deleteAudit:self.audit.auditID];
         UIAlertView * deleteAuditNotice = [[UIAlertView alloc] initWithTitle:@"Audit Deleted" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         
         [deleteAuditNotice show];

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "observationObject.h"
 
-@interface verificationCell : UITableViewCell
+@interface verificationCell : UITableViewCell<UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *lblPercent;
 @property (weak, nonatomic) IBOutlet UILabel *lblNotConfirmed;
@@ -22,5 +23,7 @@
 
 @property (assign) int iConfirm;
 @property (assign) int iNotConfirm;
+
+@property (nonatomic, strong) observationObject *theObject;
 
 @end

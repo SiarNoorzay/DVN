@@ -135,9 +135,6 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
 
 -(void)saveClient:(Client *)client forAudit:(NSString *)auditID{
     
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    
-    client.companyName = [defaults objectForKey:@"currentClient"];
     
     //Query to insert into the client table
     NSString * insertClientSQL = [NSString stringWithFormat:@"INSERT INTO CLIENT (AUDITID, CLIENTNAME, DIVISION, SIC, NUMBEREMPLOYEES, AUDITOR, AUDITSITE, AUDITDATE, BASELINEAUDIT, STREETADDRESS, CITYSTATEPROVINCE, POSTALCODE, COUNTRY) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", \"%@\")", auditID, client.companyName, client.division, client.SICNumber, client.numEmployees, client.auditor, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.postalCode, client.country];
@@ -154,8 +151,8 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         
         sqlite3_stmt * statement;
         
-        //Using the user defaults to create the audit ID
-        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+//        //Using the user defaults to create the audit ID
+//        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 //        NSString * auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
 //        auditID = [auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
         

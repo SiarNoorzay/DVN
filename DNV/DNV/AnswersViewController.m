@@ -12,6 +12,7 @@
 #import "NotesViewController.h"
 #import "CalculatorViewController.h"
 #import "LayeredQuestion.h"
+#import "VerifyPopOverViewController.h"
 
 @interface AnswersViewController ()
 
@@ -55,15 +56,6 @@ int numOfSubs;
 	// Do any additional setup after loading the view.
     
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
-    
-//TODO: remove this
-//temporary creating an audit to test with
- //   NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-
-   // NSString *auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
-    
-    self.audit = [self.dnvDBManager retrieveAudit:@"GeneralElectricIncorporated.BBS-DRAFT.1234"];
-    
     
     if (self.question == nil || self.questionArray == nil)
     {
@@ -223,25 +215,17 @@ int numOfSubs;
     [self.nextButton setEnabled:true];
     [self.previousButton setEnabled:true];
     
-    
-    
     pointTotal = 0;
-    self.pointsLabel.text =[NSString stringWithFormat:@"%.2f", self.question.pointsAwarded]; // @"0";
+    self.pointsLabel.text = @"0";
     answered = false;
-    if (self.question.questionType == 2) {
-        self.percentSlider.value = self.question.pointsAwarded / (self.question.pointsPossible/100);
-    }
-    else self.percentSlider.value = self.question.pointsAwarded;
-
-    self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f", self.question.pointsAwarded];
+    self.percentSlider.value = 0;
+    self.percentSliderTextField.text = @"";
     
     if (useSlider){
         self.leftSliderLabel.hidden = true;
         self.rightSliderLabel.hidden = true;
         self.switchy.hidden = true;
-        float temp = self.question.pointsAwarded;
-        
-        [self.switchy setOn:temp>0];
+        [self.switchy setOn:false];
     }
 }
 
@@ -316,7 +300,7 @@ int numOfSubs;
             self.percentSlider.maximumValue = 100.0;
             self.percentSlider.minimumValue = 0;
             self.questionText.hidden = NO;
-            self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f %%", self.percentSlider.value];
+            self.percentSliderTextField.text = @"0%";
 
 
             break;
@@ -331,9 +315,9 @@ int numOfSubs;
             self.percentSlider.hidden = false;
             self.percentSliderTextField.hidden = false;
             self.percentSlider.maximumValue = self.question.pointsPossible;
-            self.percentSlider.value = self.question.pointsAwarded;
+            self.percentSlider.value = 0;
             self.questionText.hidden = NO;
-            self.percentSliderTextField.text = [NSString stringWithFormat:@"%i", (int) self.percentSlider.value];
+            self.percentSliderTextField.text = @"0";
 
             
             break;
@@ -557,19 +541,6 @@ int numOfSubs;
         return;
         
     }
-    
-    if (![self checkZeroDependencies] && pointTotal>0)//returns true if dependencies are met, false if they conflict
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Dependencies not met" message: @"Please check help notes" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        return;
-    }
-    if (![self checkLessOrEqualToDependency:pointTotal]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Dependencies not met" message: @"Please check help notes" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        return;
-    }
-    
     self.question.isCompleted = true;
     self.question.pointsAwarded = pointTotal;
     //TODO: actually save stuff
@@ -606,30 +577,17 @@ int numOfSubs;
         }
         //submit pushed with a sublayer question
         
-        mainSubQuestion.pointsAwarded += self.question.pointsAwarded;
-        
         //check if last sublayered question
         if (layeredPosition == (-1* [self.allSublayeredQuestions count])) {
             
             self.currentPosition = mainQuestionPosition;
             if (self.currentPosition == ([self.questionArray count]-1))
             {
-                //at the last sublayerd question which is also the last question in subelement
                 //pop 2 view controllers
                 [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-3] animated:NO];
             }
             else{
 //TODO: This else or the one after needs to be fixed.
-                
-                //at the last sublayered question so move to next question in subelement
-                //            float mainQpointsAwarded = 0;
-                //            for (LayeredQuestion *layQ in self.allSublayeredQuestions) {
-                //                mainQpointsAwarded += layQ.question.pointsAwarded;
-                //            }
-                //            mainSubQuestion.pointsAwarded = mainQpointsAwarded;
-                
-//                mainSubQuestion.pointsAwarded += self.question.pointsAwarded;
-                
                 self.currentPosition++;
                 //mainSubQuestion = [self.questionArray objectAtIndex:self.currentPosition];
                 [self refreshAnswerView];
@@ -643,17 +601,8 @@ int numOfSubs;
             layeredPosition--;
             
             [self.subQuesionsTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:(layeredPosition +1)*-1 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
-           // LayeredQuestion *tempQ = [self.allSublayeredQuestions objectAtIndex:(layeredPosition +1 ) *-1];
+            LayeredQuestion *tempQ = [self.allSublayeredQuestions objectAtIndex:(layeredPosition +1 ) *-1];
             //self.question = tempQ.question;
-            
-//            float mainQpointsAwarded = 0;
-//            for (LayeredQuestion *layQ in self.allSublayeredQuestions) {
-//                mainQpointsAwarded += layQ.question.pointsAwarded;
-//            }
-//            mainSubQuestion.pointsAwarded = mainQpointsAwarded;
-            //mainSubQuestion.pointsAwarded += self.question.pointsAwarded;
-
-            
             self.currentPosition = layeredPosition;
             [self refreshAnswerView];
             return;
@@ -782,8 +731,38 @@ int numOfSubs;
 }
 
 - (IBAction)verifyButtonPushed:(id)sender {
-    self.question.needsVerifying = !self.question.needsVerifying;
-    [self.verifyButton setSelected: !self.verifyButton.selected];
+   // self.question.needsVerifying = !self.question.needsVerifying;
+   // [self.verifyButton setSelected: !self.verifyButton.selected];
+    
+    //[self performSegueWithIdentifier:@"verifyPopOver" sender:sender];
+        
+        // Get destination view
+        //VerifyPopOverViewController * verifyPop = [segue destinationViewController];
+    
+    VerifyPopOverViewController *verifyPop = [self.storyboard instantiateViewControllerWithIdentifier:@"verifyPop"];
+        
+        // Pass the information to destination VC
+        verifyPop.theAnswersVC = self;
+        
+        self.verifyPopOver.delegate = self;
+        self.verifyPopOver= [[UIPopoverController alloc] initWithContentViewController:verifyPop];
+    
+    [self.verifyPopOver presentPopoverFromRect:self.verifyButton.frame inView:self.viewDashboard permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+
+    
+}
+-(void)setNeedsVerifying: (int)vSelected //to change/work with enum we had discussed
+{
+    if( vSelected == 0) //0 implies none of the tabs where toggled on
+    {
+        self.question.needsVerifying = false;
+        [self.verifyButton setSelected: false];
+    }
+    else    //!0 implies atleast one of the tabs was toggled on
+    {
+        self.question.needsVerifying = true;
+        [self.verifyButton setSelected: true];
+    }
 }
 
 - (IBAction)percentTextChanged:(id)sender {
@@ -855,8 +834,7 @@ int numOfSubs;
     
     self.calcPopOver= [[UIPopoverController alloc] initWithContentViewController:calcVC];
     
-    [self.calcPopOver presentPopoverFromRect:self.calculatorButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-    
+    [self.calcPopOver presentPopoverFromRect:self.calculatorButton.frame inView:self.viewDashboard  permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
 - (IBAction)cameraButtonPushed:(id)sender {
@@ -898,6 +876,19 @@ int numOfSubs;
         // Pass the information to your destination view
         [destVC setText:self.question.notes];
     }
+    
+//    if ([[segue identifier] isEqualToString:@"verifyPopOver"]) {
+//        
+//        // Get destination view
+//        //VerifyPopOverViewController * verifyPop = [segue destinationViewController];
+//        VerifyPopOverViewController *verifyPop = [segue destinationViewController];
+//        
+//        // Pass the information to destination VC
+//        verifyPop.theAnswersVC = self;
+//    
+//        self.verifyPopOver.delegate = self;
+//        self.verifyPopOver= [[UIPopoverController alloc] initWithContentViewController:verifyPop];
+//    }
 }
 
 #pragma mark - Image picker delegate methdos
@@ -1010,336 +1001,5 @@ int numOfSubs;
         [self.subQuesionsTableView reloadData];
     }
 
-}
--(BOOL)checkZeroDependencies{ //returns true if dependencies are met, false if they conflict
-    BOOL allGood = true;
-
-    //temp test
-   // NSArray *tempArr = @[@[@"1.1.1",@"2.3.4"],@"1.3.4",@"12.3",@"1.2.1"];
-    //NSMutableArray *tempMutArray = [NSMutableArray arrayWithArray:tempArr];
-    
-    
-  //  self.question.zeroIfNoPointsFor = tempMutArray;
-
-    if( self.question.zeroIfNoPointsFor.count >0)
-    {
-        BOOL outterOR = false;
-        
-        NSNumber *eleNum;
-        NSNumber *subEleNum;
-        NSNumber *questNum;
-        
-        NSArray *array = self.question.zeroIfNoPointsFor;
-        
-        for(int i=0; i<[array count]; i++){
-            
-            if ([[array objectAtIndex:i] isKindOfClass: [NSArray class]])
-            {//object at i is an array so use AND logic
-                
-                BOOL innerAnd = true; //true until it get sets to false
-                NSArray *innerArray = [array objectAtIndex:i];
-                for(int j=0; j<[innerArray count]; j++)
-                {
-                    NSString *str = [innerArray objectAtIndex:j];
-                    
-                    NSArray *chunks = [str componentsSeparatedByString: @"."];
-                    //[zeroIF:xxx] returns true if xxx is 0, false otherwise
-                    switch (chunks.count) {
-                        case 1:
-                            //element dependency
-                            eleNum = chunks[0];
-                            innerAnd = (innerAnd && [self zeroIf:eleNum]);
-                            break;
-                        case 2:
-                            //subElement dependency
-                            eleNum = chunks[0];
-                            subEleNum = chunks[1];
-                            innerAnd =  (innerAnd && [self zeroIf:eleNum subEle:subEleNum]);
-                            break;
-                        case 3:
-                            //question dependency
-                            eleNum = chunks[0];
-                            subEleNum = chunks[1];
-                            questNum = chunks[2];
-                            innerAnd = (innerAnd && [self zeroIf:eleNum subEle:subEleNum question:questNum]);
-                            break;
-                            
-                        default:
-                            NSLog(@"Dependency messed up");
-                            break;
-                    }//inner and switch
-                }
-
-            }
-            else{//object at i is a string so use OR logic
-                NSString *str = [array objectAtIndex:i];
-                NSArray *chunks = [str componentsSeparatedByString: @"."];
-                switch (chunks.count) {
-                    case 1:
-                        //element dependency
-                        eleNum = chunks[0];
-                        //[zeroIF:xxx] returns true if xxx is 0, false otherwise
-                        outterOR = (outterOR || [self zeroIf:eleNum]);
-                        break;
-                    case 2:
-                        //subElement dependency
-                        eleNum = chunks[0];
-                        subEleNum = chunks[1];
-                        outterOR = (outterOR || [self zeroIf:eleNum subEle:subEleNum]);
-                        break;
-                    case 3:
-                        //question dependency
-                        eleNum = chunks[0];
-                        subEleNum = chunks[1];
-                        questNum = chunks[2];
-                        outterOR = (outterOR || [self zeroIf:eleNum subEle:subEleNum question:questNum]);
-                        break;
-                        
-                    default:
-                        NSLog(@"Dependency messed up");
-                        break;
-                }//switch
-                
-            }//else
-            
-            
-        }//outer for
-        allGood =  outterOR ;
-        
-        
-    }//if zeroIfnoPoints
-    
-    
-    
-    return allGood;
-}
-
--(BOOL)zeroIf:(NSNumber*)eleNum{
-    Elements *ele = [self.audit.Elements objectAtIndex:([eleNum intValue]-1)];
-    
-    if (ele.pointsAwarded == 0) {
-        return true;
-    }
-    return false;
-}
--(BOOL)zeroIf:(NSNumber*)eleNum subEle:(NSNumber*)subEleNum{
-    Elements *ele = [self.audit.Elements objectAtIndex:([eleNum intValue]-1)];
-    SubElements *subEle = [ele.Subelements objectAtIndex:([subEleNum intValue]-1)];
-    if (subEle.pointsAwarded == 0) {
-        return true;
-    }
-    return false;
-}
--(BOOL)zeroIf:(NSNumber*)eleNum subEle:(NSNumber*)subEleNum question:(NSNumber*)questNum{
-    //Elements *ele = [self.audit.Elements objectAtIndex:([eleNum intValue]-1)];
-    //SubElements *subEle = [ele.Subelements objectAtIndex:([subEleNum intValue]-1)];
-    //Questions *question = [subEle.Questions objectAtIndex:([questNum intValue] -1)];
-    // ^ this would have worked if not for sublayer questions (dam those sublayers)
-    
-    NSArray *allQuestionsFromSubelement = [self getAllQuestionsFromEle:[eleNum intValue] andSubEle:[subEleNum intValue]];
-    
-    //NSString *eleSubQuestNum = [NSString stringWithFormat:@"%@.%@.%@",eleNum,subEleNum,questNum];
-    
-    //not using element since the example JSON does not use the element number anywhere
-    
-    //TODO: change this if going to be using element number in question text 1.8.1 vs 8.1
-    NSString *eleSubQuestNum = [NSString stringWithFormat:@"%@.%@",subEleNum,questNum];
-    
-    for (Questions *question in allQuestionsFromSubelement) {
-        
-        NSString *string = question.questionText;
-        if ([string rangeOfString:eleSubQuestNum].location == NSNotFound) {
-            //NSLog(@"string does not contain bla");
-        } else {
-            NSLog(@"Found question");
-            
-            if (question.pointsAwarded == 0) {
-                return true;
-            }
-            else return false;
-        }
-        
-    }
-    NSLog(@"ERROR: was not able to find question.");
-    
-    return false;
-    
-}
-
--(BOOL) checkLessOrEqualToDependency:(float)points
-{
-    
-    if( self.question.lessOrEqualToSmallestAnswer.count >0)
-    {
-        BOOL outterOR = false;
-        
-        NSNumber *eleNum;
-        NSNumber *subEleNum;
-        NSNumber *questNum;
-        
-        NSArray *array = self.question.lessOrEqualToSmallestAnswer;
-        
-        NSMutableArray *pointsArray = [NSMutableArray new];
-        
-        for(int i=0; i<[array count]; i++){
-            
-            if ([[array objectAtIndex:i] isKindOfClass: [NSArray class]])
-            {//object at i is an array so use AND logic
-                
-                NSArray *innerArray = [array objectAtIndex:i];
-                for(int j=0; j<[innerArray count]; j++)
-                {
-                    NSString *str = [innerArray objectAtIndex:j];
-                    
-                    NSArray *chunks = [str componentsSeparatedByString: @"."];
-                    //[getPoints] returns points from position
-                    //and means what? points must be greater than all of the end ones???
-                    switch (chunks.count) {
-                        case 1:
-                            //element dependency
-                            eleNum = chunks[0];
-                            [pointsArray addObject:[self getPoints:eleNum]];
-                            break;
-                        case 2:
-                            //subElement dependency
-                            eleNum = chunks[0];
-                            subEleNum = chunks[1];
-                            [pointsArray addObject:[self getPoints:eleNum subEle:subEleNum]];
-                            break;
-                        case 3:
-                            //question dependency
-                            eleNum = chunks[0];
-                            subEleNum = chunks[1];
-                            questNum = chunks[2];
-                            [pointsArray addObject:[self getPoints:eleNum subEle:subEleNum question:questNum]];
-                            break;
-                            
-                        default:
-                            NSLog(@"Dependency messed up");
-                            break;
-                    }//inner and switch
-                }
-                
-            }
-            else{//object at i is a string so use OR logic
-                NSString *str = [array objectAtIndex:i];
-                NSArray *chunks = [str componentsSeparatedByString: @"."];
-                switch (chunks.count) {
-                    case 1:
-                        //element dependency
-                        eleNum = chunks[0];
-                        [pointsArray addObject:[self getPoints:eleNum]];
-                        break;
-                    case 2:
-                        //subElement dependency
-                        eleNum = chunks[0];
-                        subEleNum = chunks[1];
-                        [pointsArray addObject:[self getPoints:eleNum subEle:subEleNum]];
-                        break;
-                    case 3:
-                        //question dependency
-                        eleNum = chunks[0];
-                        subEleNum = chunks[1];
-                        questNum = chunks[2];
-                        [pointsArray addObject:[self getPoints:eleNum subEle:subEleNum question:questNum]];
-                        break;
-                        
-                    default:
-                        NSLog(@"Dependency messed up");
-                        break;
-                }//switch
-                
-            }//else
-            
-            
-        }//outer for
-        
-        //get min from pointsArray
-        float minValue = MAX_POS_FLOAT32;
-        for (NSNumber *num in pointsArray) {
-            if ( [num floatValue]<= minValue)
-                minValue = [num floatValue];
-        }
-        
-        if (points <= minValue) {
-            return true;
-        }
-        else return false;
-        
-        
-    }//if lessOrEqualToSmallestAnswer.count
-    
-    return true;
-    
-    
-}
--(NSNumber*) getPoints:(NSNumber*)eleNum {
-    Elements *ele = [self.audit.Elements objectAtIndex:([eleNum intValue]- 1)];
-    NSNumber* point = [NSNumber numberWithFloat: ele.pointsAwarded];
-    return point;
-    
-}
-
--(NSNumber*) getPoints:(NSNumber*)eleNum subEle:(NSNumber*)subEleNum
-{
-    Elements *ele = [self.audit.Elements objectAtIndex:([eleNum intValue]-1)];
-    SubElements *subEle = [ele.Subelements objectAtIndex:([subEleNum intValue]-1)];
-    NSNumber* point = [NSNumber numberWithFloat: subEle.pointsAwarded];
-    return point;
-}
--(NSNumber*) getPoints:(NSNumber*)eleNum subEle:(NSNumber*)subEleNum question:(NSNumber*)questNum{
-    
-    NSArray *allQuestionsFromSubelement = [self getAllQuestionsFromEle:[eleNum intValue] andSubEle:[subEleNum intValue]];
-    
-    //NSString *eleSubQuestNum = [NSString stringWithFormat:@"%@.%@.%@",eleNum,subEleNum,questNum];
-    
-    //not using element since the example JSON does not use the element number anywhere
-    
-    //TODO: change this if going to be using element number in question text 1.8.1 vs 8.1
-    NSString *eleSubQuestNum = [NSString stringWithFormat:@"%@.%@",subEleNum,questNum];
-    
-    for (Questions *question in allQuestionsFromSubelement) {
-        
-        NSString *string = question.questionText;
-        if ([string rangeOfString:eleSubQuestNum].location == NSNotFound) {
-            //NSLog(@"string does not contain bla");
-        } else {
-            NSLog(@"Found question");
-            
-            NSNumber* point = [NSNumber numberWithFloat: question.pointsAwarded];
-            return point;
-        }
-        
-    }
-    NSLog(@"ERROR: was not able to find question.");
-    
-    return [NSNumber numberWithFloat:MAX_POS_FLOAT32];
-    
-}
-
-
--(NSArray*)getAllQuestionsFromEle:(int)eleNum andSubEle:(int)subEleNum
-{
-    Elements *ele = [self.audit.Elements objectAtIndex:(eleNum - 1)];
-    SubElements *subEle = [ele.Subelements objectAtIndex:(subEleNum - 1)];
-    
-    NSMutableArray *allQuestionsAndLayeredQs = [NSMutableArray new];
-    
-    for (Questions *question in subEle.Questions) {
-        [allQuestionsAndLayeredQs addObjectsFromArray:[self getAllQuestionsFromQuestion:question]];
-    }
-    
-    return allQuestionsAndLayeredQs;
-
-}
--(NSArray*)getAllQuestionsFromQuestion:(Questions*)question
-{
-    NSMutableArray *questionAndSubQuestions = [NSMutableArray new];
-    
-    [questionAndSubQuestions addObject:question];
-    for (Questions *layerdQuestion in question.layeredQuesions) {
-        [questionAndSubQuestions addObjectsFromArray:[self getAllQuestionsFromQuestion:layerdQuestion]];
-    }
-    return questionAndSubQuestions;
 }
 @end

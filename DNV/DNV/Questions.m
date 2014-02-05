@@ -16,8 +16,6 @@
     self = [super init];
     
     if(self){
-        
-        self.questionID = [[questionDictionary objectForKey:@"questionID"] integerValue];
         self.isCompleted = [[questionDictionary objectForKey:@"isCompleted"] boolValue];
         self.pointsPossible = [[questionDictionary objectForKey:@"pointsPossible"]floatValue];
         self.pointsAwarded = [[questionDictionary objectForKey:@"pointsAwarded"]floatValue];

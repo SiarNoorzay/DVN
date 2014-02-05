@@ -31,17 +31,52 @@
 
 - (IBAction)stpConfirmed:(id)sender
 {
-    self.lblConfirmed.text = [NSString stringWithFormat:@"%d", (int)[self.stpConfirmed stepValue] ];
+    self.lblConfirmed.text = [NSString stringWithFormat:@"%d", (int)[self.stpConfirmed value] ];
+    [self setPercent];
+    
+    self.theObject.iConfirmed = [self.lblConfirmed.text intValue];
 }
 
 - (IBAction)stpNotConfirmed:(id)sender
 {
-    self.lblNotConfirmed.text = [NSString stringWithFormat:@"%d", (int)[self.stpNotConfirmed stepValue] ];
+    self.lblNotConfirmed.text = [NSString stringWithFormat:@"%d", (int)[self.stpNotConfirmed value] ];
+    [self setPercent];
+    
+    self.theObject.iNotConfrimed = [self.lblNotConfirmed.text intValue];
 }
 
 -(void)setPercent
 {
+    if( self.stpConfirmed.value > 0 || self.stpNotConfirmed.value > 0 )
+        self.lblPercent.text = [NSString stringWithFormat:@"%.2f", 100 * (self.stpConfirmed.value/ (self.stpConfirmed.value + self.stpNotConfirmed.value)) ];
+    else
+        self.lblPercent.text = @"0";
     
+    self.theObject.fPercentage = [self.lblPercent.text floatValue];
+}
+
+-(void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@"Enter a description"]) {
+        textView.text = @"";
+    }
+}
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if( [text isEqualToString:@"\n"] )
+    {
+        [textView resignFirstResponder];
+        self.theObject.strDescription = textView.text;
+        return NO;
+    }
+    
+    return YES;
+}
+-(void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = @"Enter a description";
+    }
 }
 
 @end

@@ -26,7 +26,6 @@
      @property (nonatomic) NSArray * Questions;
      */
     
-        self.answerID = [[answerDictionary objectForKey:@"answerID"]intValue];
         self.answerText = [answerDictionary objectForKey:@"answerText"];
         self.pointsPossible = [[answerDictionary objectForKey:@"pointsPossible"]floatValue];
         self.isSelected = [[answerDictionary objectForKey:@"isSelected"] boolValue];

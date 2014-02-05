@@ -28,7 +28,6 @@
          @property (nonatomic) NSArray * Questions;
          */
 
-        self.subElementID = [[subElementDictionary objectForKey:@"subElementID"]integerValue];
         self.isCompleted = [[subElementDictionary objectForKey:@"isCompleted"] boolValue];
         self.name = [subElementDictionary objectForKey:@"name"];
         self.pointsPossible = [[subElementDictionary objectForKey:@"pointsPossible"]floatValue];
@@ -51,17 +50,6 @@
         self.Questions = objectArray;
         
         self.zeroIfNoPointsFor = [subElementDictionary objectForKey:@"zeroIfNoPointsFor"];
-    }
-    
-    if ([self.zeroIfNoPointsFor count] >0)
-    {
-        for (Questions *quests in self.Questions) {
-            if (quests.zeroIfNoPointsFor == nil) {
-                quests.zeroIfNoPointsFor = [[NSMutableArray alloc]initWithCapacity:1];
-            }
-            [quests.zeroIfNoPointsFor addObjectsFromArray:self.zeroIfNoPointsFor];
-            //Need to add to sublayers???
-        }
     }
     return self;
 }

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		4A4AFC5018A00BE1006901D1 /* observationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AFC4F18A00BE1006901D1 /* observationObject.m */; };
+		4A4AFC5518A13062006901D1 /* VerifyPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AFC5418A13062006901D1 /* VerifyPopOverViewController.m */; };
+		4A4AFC5B18A135B0006901D1 /* interview.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4AFC5818A135B0006901D1 /* interview.png */; };
+		4A4AFC5C18A135B0006901D1 /* physical.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4AFC5918A135B0006901D1 /* physical.png */; };
+		4A4AFC5D18A135B0006901D1 /* records.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4AFC5A18A135B0006901D1 /* records.png */; };
 		4A6CFD56189FE2510036DD28 /* VerifyTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CFD55189FE2510036DD28 /* VerifyTabController.m */; };
 		4A6CFD59189FE5060036DD28 /* VerifyPhysicalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CFD58189FE5060036DD28 /* VerifyPhysicalViewController.m */; };
 		4A6CFD5C189FE5170036DD28 /* VerifyInterivewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CFD5B189FE5170036DD28 /* VerifyInterivewsViewController.m */; };
@@ -166,6 +170,11 @@
 /* Begin PBXFileReference section */
 		4A4AFC4E18A00BE1006901D1 /* observationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = observationObject.h; sourceTree = "<group>"; };
 		4A4AFC4F18A00BE1006901D1 /* observationObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = observationObject.m; sourceTree = "<group>"; };
+		4A4AFC5318A13062006901D1 /* VerifyPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyPopOverViewController.h; sourceTree = "<group>"; };
+		4A4AFC5418A13062006901D1 /* VerifyPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyPopOverViewController.m; sourceTree = "<group>"; };
+		4A4AFC5818A135B0006901D1 /* interview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = interview.png; sourceTree = "<group>"; };
+		4A4AFC5918A135B0006901D1 /* physical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = physical.png; sourceTree = "<group>"; };
+		4A4AFC5A18A135B0006901D1 /* records.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = records.png; sourceTree = "<group>"; };
 		4A6CFD54189FE2510036DD28 /* VerifyTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyTabController.h; sourceTree = "<group>"; };
 		4A6CFD55189FE2510036DD28 /* VerifyTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyTabController.m; sourceTree = "<group>"; };
 		4A6CFD57189FE5060036DD28 /* VerifyPhysicalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyPhysicalViewController.h; sourceTree = "<group>"; };
@@ -386,6 +395,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A4AFC5718A13572006901D1 /* verifyIcons */ = {
+			isa = PBXGroup;
+			children = (
+				4A4AFC5818A135B0006901D1 /* interview.png */,
+				4A4AFC5918A135B0006901D1 /* physical.png */,
+				4A4AFC5A18A135B0006901D1 /* records.png */,
+			);
+			name = verifyIcons;
+			sourceTree = "<group>";
+		};
 		4A6CFD52189FE2050036DD28 /* VerificationTabBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -869,6 +888,7 @@
 				76A568261887240B000E32D3 /* Tableview Icons */,
 				76A0DFC4188504640038FD61 /* Dashboard Icons */,
 				76A1039E1899A7A700283F67 /* Edit Client Button */,
+				4A4AFC5718A13572006901D1 /* verifyIcons */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -913,6 +933,8 @@
 				76E81F3B18848C7F00441F62 /* helpTextViewController.m */,
 				7627430E18897BB500873E9F /* CalculatorViewController.h */,
 				7627430F18897BB500873E9F /* CalculatorViewController.m */,
+				4A4AFC5318A13062006901D1 /* VerifyPopOverViewController.h */,
+				4A4AFC5418A13062006901D1 /* VerifyPopOverViewController.m */,
 			);
 			name = AnswersViewController;
 			sourceTree = "<group>";
@@ -1029,6 +1051,7 @@
 				76E81F4618859E3B00441F62 /* AcousticModelEnglish.bundle in Resources */,
 				769D3D0418863436002DF3B8 /* import_icon.png in Resources */,
 				76E81F13187C908100441F62 /* usersNOTDB.json in Resources */,
+				4A4AFC5D18A135B0006901D1 /* records.png in Resources */,
 				76A103A01899A7D300283F67 /* empty_checkbox.png in Resources */,
 				76A568071886ED22000E32D3 /* mic_icon.png in Resources */,
 				76E81F581886D5ED00441F62 /* Help-100.png in Resources */,
@@ -1036,11 +1059,13 @@
 				76A103A21899A7DD00283F67 /* checkbox_checked.png in Resources */,
 				768D5653188F18CC00175EB4 /* sampleCompletedAudit.json in Resources */,
 				76A56824188723F6000E32D3 /* check_gray.png in Resources */,
+				4A4AFC5C18A135B0006901D1 /* physical.png in Resources */,
 				76A568211886FA24000E32D3 /* not_applicable_icon.png in Resources */,
 				769D3CEE1885F9FC002DF3B8 /* completed_checklist_icon.png in Resources */,
 				762797251871D53A00F22E73 /* Images.xcassets in Resources */,
 				769D3CEF1885F9FC002DF3B8 /* wip_checklist_icon.png in Resources */,
 				762797171871D53A00F22E73 /* InfoPlist.strings in Resources */,
+				4A4AFC5B18A135B0006901D1 /* interview.png in Resources */,
 				76A568151886F33B000E32D3 /* thumbs_down.png in Resources */,
 				76A103A61899ABE500283F67 /* checkbox_checked_gray_border.png in Resources */,
 				76A721A7188061E200E34CFA /* DNV_GL_logo.png in Resources */,
@@ -1136,6 +1161,7 @@
 				76AB3CB7187B20520019603F /* Report.m in Sources */,
 				7627431318898D3900873E9F /* DrawingViewController.m in Sources */,
 				768D56651890634600175EB4 /* ECCommon.m in Sources */,
+				4A4AFC5518A13062006901D1 /* VerifyPopOverViewController.m in Sources */,
 				768D567318915FFD00175EB4 /* ReportDetailsViewController.m in Sources */,
 				76A0DFBD18847B880038FD61 /* WIPAuditFilesViewController.m in Sources */,
 				76DBFA83187CAD6300F84282 /* MainWindowPopOver.m in Sources */,
