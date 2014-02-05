@@ -318,13 +318,14 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //Create the statement Object
     sqlite3_stmt * statement;
     
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSMutableArray * auditIDArray = [[NSMutableArray alloc]init];
     
     //Open the DB
     if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
         
         //Creating the SQL statment to retrieve the data from the database
-        NSString * queryAuditSQL = [NSString stringWithFormat:@"SELECT ID FROM AUDIT WHERE AUDITTYPE = %d AND AUDITNAME = \"%@\"", auditType, auditName];
+        NSString * queryAuditSQL = [NSString stringWithFormat:@"SELECT AUDIT.ID FROM AUDIT INNER JOIN CLIENT ON CLIENT.AUDITID = AUDIT.ID WHERE AUDITTYPE = %d AND AUDITNAME = \"%@\" AND CLIENTNAME = \"%@\"", auditType, auditName, [defaults objectForKey:@"currentClient"]];
         
         //Prepare the Query
         if(sqlite3_prepare_v2(dnvAuditDB, [queryAuditSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){

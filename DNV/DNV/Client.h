@@ -27,7 +27,7 @@
 
 -(id)initWithClient:(NSDictionary *)clientDictionary;
 
--(Client *)mergeClients:(Client *)primaryClient with:(Client *)secondaryClient;
+-(Client *)mergeClients:(Client *)primaryClient with:(Client *)secondaryClient ofRank:(BOOL)bRank2Higher;
 
 -(NSDictionary*)toDictionary;
 

@@ -67,12 +67,12 @@
 }
 
 //Merge two subelements
--(SubElements *)mergeSubElements:(SubElements *)primarySubElements with:(SubElements *)secondarySubElements
+-(SubElements *)mergeSubElements:(SubElements *)primarySubElements with:(SubElements *)secondarySubElements ofRank:(BOOL)bRank2Higher
 {
     SubElements *mergedSubElements = [SubElements new];
     
     MergeClass *dataMerger = [MergeClass new];
-    dataMerger.bRank2Higher = true; // rank2 > rank2;
+    dataMerger.bRank2Higher = bRank2Higher; // rank2 > rank2;
     
     //bools
     mergedSubElements.isCompleted = [dataMerger mergeBool:primarySubElements.isCompleted with:secondarySubElements.isCompleted];
@@ -93,7 +93,7 @@
     Questions *someQuestion = [Questions new];
     for( int i = 0; i < [primarySubElements.Questions count]; i++ )
     {
-        [mergedQuestions addObject:[someQuestion mergeQuestion:[primarySubElements.Questions objectAtIndex:i] with:[secondarySubElements.Questions objectAtIndex:i]]];
+        [mergedQuestions addObject:[someQuestion mergeQuestion:[primarySubElements.Questions objectAtIndex:i] with:[secondarySubElements.Questions objectAtIndex:i] ofRank:dataMerger.bRank2Higher]];
     }
     
     mergedSubElements.Questions = [NSArray arrayWithArray:mergedQuestions];

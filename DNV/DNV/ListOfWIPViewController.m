@@ -164,11 +164,10 @@
 
     }
     
-    NSLog(@"WIP Audit Path: %@",self.dbWIPFolderPath);
+    NSLog(@"WIP Audit Path: %@",self.ogdbWIPFolderPath);
     
-    [wipAuditFileVC setWipAuditPath: self.dbWIPFolderPath];
+    [wipAuditFileVC setWipAuditPath: self.ogdbWIPFolderPath];
     wipAuditFileVC.wipAuditType = _WIPType;
-    [wipAuditFileVC setWipAuditPath: self.dbWIPFolderPath];
 
 }
 

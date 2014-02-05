@@ -23,7 +23,7 @@
 
 -(id)initWithSubElement:(NSDictionary *)subElementDictionary;
 
--(SubElements *)mergeSubElements:(SubElements *)primarySubElements with:(SubElements *)secondarySubElements;
+-(SubElements *)mergeSubElements:(SubElements *)primarySubElements with:(SubElements *)secondarySubElements ofRank:(BOOL)bRank2Higher;
 
 -(NSDictionary*)toDictionary;
 

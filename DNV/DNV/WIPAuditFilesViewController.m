@@ -42,14 +42,9 @@
     
     [self.spinner startAnimating];
     
-    if ([self.wipAuditType isEqualToString:@"localWIP"]) {
-        NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
-        self.wipAuditPath = [NSString stringWithFormat:@"%@%@",self.wipAuditPath, [nsDefaults objectForKey:@"currentAudit"]];
-    }
+    NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
+    self.wipAuditPath = [NSString stringWithFormat:@"%@%@",self.wipAuditPath, [nsDefaults objectForKey:@"currentAudit"]];
     
-//    if ([self.wipAuditType isEqualToString:@"importWIP"]){
-//        
-//    }
     
     NSLog(@"WIP Path: %@", self.wipAuditPath);
     [[self restClient] loadMetadata:self.wipAuditPath];
@@ -225,6 +220,7 @@ loadMetadataFailedWithError:(NSError *)error {
         importVC.localFiles = self.localWIPList;
         importVC.currentFileType = self.wipAuditType;
         importVC.currentAudit = self.audit;
+        importVC.wipPath = self.wipAuditPath;
         
         if ([self.wipAuditType isEqualToString:@"importWIP"]) {
             importVC.currentFile = self.JSONList[self.chosenJSONfile];

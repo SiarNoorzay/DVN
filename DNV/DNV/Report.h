@@ -27,7 +27,7 @@
 
 -(id)initWithReport:(NSDictionary *)dictionary;
 
--(Report *)mergeReports:(Report *)primaryReport with:(Report *)secondaryReport;
+-(Report *)mergeReports:(Report *)primaryReport with:(Report *)secondaryReport ofRank:(BOOL)bRank2Higher;
 
 -(NSDictionary*)toDictionary;
 

@@ -30,6 +30,9 @@
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+    
     [self.baselineAuditBtn setImage:[UIImage imageNamed:@"checkbox_checked_gray_border.png"] forState:UIControlStateSelected];
     [self.baselineAuditBtn setImage:[UIImage imageNamed:@"empty_checkbox_gray_border.png"] forState:UIControlStateNormal];
     
@@ -144,5 +147,28 @@
     self.auditDateTxt.delegate = self;
 
 }
+
+//- (void)keyboardDidShow:(NSNotification *)notification
+//{
+//   
+//    //Assign new frame to your view
+//    CGRect frame =  self.view.frame;
+//        
+//    //TODO: change hardcoded value
+//    frame.origin.y = -264;
+//        
+//    [self.view setFrame:frame];
+//}
+//
+//-(void)keyboardDidHide:(NSNotification *)notification
+//{
+//    //Assign new frame to your view
+//    CGRect frame =  self.view.frame;
+//    
+//    //TODO: change hardcoded value
+//    frame.origin.y = 0;
+//    
+//    [self.view setFrame:frame];
+//}
 
 @end

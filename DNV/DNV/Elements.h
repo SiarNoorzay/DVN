@@ -26,7 +26,7 @@
 
 -(id)initWithElement:(NSDictionary *)elementDictionary;
 
--(Elements *)mergeElements:(Elements *)primaryElements with:(Elements *)secondaryElements;
+-(Elements *)mergeElements:(Elements *)primaryElements with:(Elements *)secondaryElements ofRank:(BOOL)bRank2Higher;
 
 -(NSDictionary*)toDictionary;
 
