@@ -27,6 +27,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    if (self.dropBoxSelected) {
+        self.exportToDBoxButton.enabled = false;
+    }
+    else self.exportToDBoxButton.enabled = true;
 }
 
 - (void)didReceiveMemoryWarning

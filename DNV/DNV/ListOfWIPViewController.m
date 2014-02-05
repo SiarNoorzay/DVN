@@ -37,9 +37,13 @@
 	// Do any additional setup after loading the view.
     
     
+   
+}
+-(void)viewWillAppear:(BOOL)animated
+{
     self.sectionHeaders = [[NSArray alloc]initWithObjects:@"On Device",@"From Dropbox", nil];
     
-    NSLog(@"\n\nFolder Path recieved: %@", self.dbWIPFolderPath);
+    NSLog(@"\n\nFolder Path recieved: %@", self.ogdbWIPFolderPath);
     
     self.wipAuditTable.delegate = self;
     
@@ -47,7 +51,7 @@
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
     self.localWips = [self.dnvDBManager retrieveDistinctAuditNamesForClientOfType:1];
     
-    [[self restClient] loadMetadata:self.dbWIPFolderPath];
+    [[self restClient] loadMetadata:self.ogdbWIPFolderPath];
     
     [self.spinner startAnimating];
 }
@@ -146,6 +150,8 @@
     if ([self.WIPType isEqualToString:@"localWIP"]){
         
         wipAuditFileVC.localWIPName = [self.localWips objectAtIndex:self.chosenWIP];
+        
+        
     }
     
     if ([self.WIPType isEqualToString:@"importWIP"]){
@@ -162,6 +168,7 @@
     
     [wipAuditFileVC setWipAuditPath: self.dbWIPFolderPath];
     wipAuditFileVC.wipAuditType = _WIPType;
+    [wipAuditFileVC setWipAuditPath: self.dbWIPFolderPath];
 
 }
 

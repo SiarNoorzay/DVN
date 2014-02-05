@@ -80,9 +80,13 @@
     
     mergedAudits.Elements = [NSArray arrayWithArray:mergedElements];
     
+    //TODO: merge audit ids
+   // mergedAudits.auditID =
+    
     return  mergedAudits;
 }
 -(NSDictionary*)toDictionary{
+    
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]initWithCapacity:7];
     
     [dictionary setValue:self.auditID forKey:@"auditID"];
@@ -104,7 +108,11 @@
 
     [dictionary setValue:[self.client toDictionary] forKey:@"Client"];
 
-    return dictionary;
+    NSMutableDictionary *auditDict = [[NSMutableDictionary alloc] initWithCapacity:1];
+    [auditDict setValue:dictionary forKey:@"Audit"];
+    
+    
+    return auditDict;
 
 }
 

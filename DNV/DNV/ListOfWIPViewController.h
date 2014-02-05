@@ -22,6 +22,8 @@
 @property (strong, nonatomic) NSArray * sectionHeaders;
 
 @property (strong, nonatomic) NSString * dbWIPFolderPath;
+@property (strong, nonatomic) NSString * ogdbWIPFolderPath;
+
 
 @property (strong, nonatomic) NSArray * wips;
 
