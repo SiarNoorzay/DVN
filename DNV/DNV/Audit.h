@@ -14,6 +14,7 @@
 
 @interface Audit : NSDictionary
 
+
 @property (nonatomic) NSString * auditID;
 @property (nonatomic) NSInteger auditType;
 @property (nonatomic) NSString * name;
@@ -25,7 +26,7 @@
 
 -(id)initWithAudit:(NSDictionary *)auditDictionary;
 
--(Audit*)mergeAudit:(Audit*)primaryAudit with:(Audit*)secondaryAudit;
+-(Audit*)mergeAudit:(Audit*)primaryAudit ofUserRank:(int)primaryRank with:(Audit*)secondaryAudit ofRank:(int)secondaryRank;
 
 -(NSDictionary*)toDictionary;
 

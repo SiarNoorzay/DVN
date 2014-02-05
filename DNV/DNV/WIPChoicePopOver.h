@@ -13,7 +13,11 @@
 
 @property (weak, nonatomic) WIPAuditFilesViewController * WIPAuditFilesVC;
 
+@property (nonatomic) BOOL dropBoxSelected;
+
+
 - (IBAction)wipChoiceMade:(UIButton *)sender;
 
+@property (strong, nonatomic) IBOutlet UIButton *exportToDBoxButton;
 
 @end

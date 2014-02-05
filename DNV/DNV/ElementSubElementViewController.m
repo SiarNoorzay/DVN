@@ -13,6 +13,7 @@
 #import "SubElementCell.h"
 #import "Questions.h"
 #import "Folder.h"
+#import "LayeredQuestion.h"
 
 @interface ElementSubElementViewController ()<DBRestClientDelegate>
 
@@ -34,32 +35,67 @@ int subEleNumber;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    if (self.listOfElements != nil){
+    //updating Elements and subelements
+    //self.listOfElements = self.aud.Elements;
+    
+    if (self.aud.Elements != nil){
         
-        for (int i = 0; i< [self.listOfElements count]; i++) {
-            Elements *ele = [self.listOfElements objectAtIndex:i];
-            float tempElePoints = 0;
+        for (int i = 0; i< [self.aud.Elements count]; i++) {
+            Elements *ele = [self.aud.Elements objectAtIndex:i];
+            float tempEleNAPoints = 0;
+            float elePointsAwarded = 0;
+            BOOL eleComplete = true;
             
             for (int j = 0; j<[ele.Subelements count];j++) {
                 SubElements *subEle = [ele.Subelements objectAtIndex:j];
-                float tempSubPoints = 0;
+                float tempSubNAPoints = 0;
+                float subElePointsAwarded = 0;
+                BOOL subEleComplete = true;
                 
                 for (int k = 0; k < [subEle.Questions count]; k++) {
                     Questions *question =[subEle.Questions objectAtIndex:k];
                     
                     if (!question.isApplicable) {
-                        tempSubPoints += question.pointsPossible;
-                        tempElePoints += question.pointsPossible;
+                        tempSubNAPoints += question.pointsPossible;
+                        tempEleNAPoints += question.pointsPossible;
                     }
-                    subEle.modefiedNAPoints = tempSubPoints;
+                    if (!question.isCompleted){
+                        subEleComplete = false;
+                    }
+                    if (question.layeredQuesions.count >0) {
+                        //reset all sublayerd questions and loop thru them adding points to subelePoints
+                        self.allSublayeredQuestions = [NSMutableArray new];
+                       int numOfSubs = [self getNumOfSubQuestionsAndSetAllSubsArray:question layerDepth:0];
+                        
+                        for (LayeredQuestion *layQ in self.allSublayeredQuestions) {
+                            subElePointsAwarded += layQ.question.pointsAwarded;
+                            if (!layQ.question.isApplicable) {
+                                tempSubNAPoints += layQ.question.pointsPossible;
+                                tempEleNAPoints += layQ.question.pointsPossible;
+                            }
+
+                        }
+                        NSLog(@"Subele: %d naPoints: %f",j,tempSubNAPoints);
+                    }
+                    subElePointsAwarded += question.pointsAwarded;
                 }
-                ele.modefiedNAPoints = tempElePoints;
+                subEle.modefiedNAPoints = tempSubNAPoints;
+                subEle.pointsAwarded = subElePointsAwarded;
+                elePointsAwarded += subElePointsAwarded;
+                subEle.isCompleted = subEleComplete;
+                eleComplete = eleComplete && subEleComplete;
                 
-                //TODO: save ele back to DB
             }
+            ele.modefiedNAPoints = tempEleNAPoints;
+            ele.pointsAwarded = elePointsAwarded;
+
         }
     }
-    
+//    if (self.dnvDBManager)
+//    {
+//        [self.dnvDBManager updateAudit:self.aud];
+//    }
+    [self.subElementTable reloadData];
 }
 - (void)viewDidLoad
 {
@@ -76,21 +112,18 @@ int subEleNumber;
     
 //    [self loadDropboxFile:self.auditPath];
     
-    if([self.audType isEqualToString:@"importWIP"])
-    {
-        _directoryPath = [self setFilePath];
+    NSLog(@"Audit Name: %@",self.aud.name);
+    self.auditSelectLbl.text = self.aud.name;
+    self.listOfElements = self.aud.Elements;
+    [self.elementPicker reloadAllComponents];
         
-        [[self restClient] loadFile:self.auditPath intoPath:_directoryPath];
-    }
-    else
-    {
-        [[self restClient] loadMetadata:self.auditPath];
-    }
-
-    [self.spinner startAnimating];
+    [self.elementPicker selectRow:0 inComponent:0 animated:false];
+    Elements *tempEle = [self.listOfElements objectAtIndex:0];
+    self.listOfSubElements = tempEle.Subelements;
+    [self.subElementTable reloadData];
+    [self.spinner stopAnimating];
     
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
-    
     
 }
 
@@ -140,10 +173,6 @@ int subEleNumber;
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     
     self.listOfSubElements = self.ele.Subelements;
-    
-    int selectedRow = (int)row + 1;
-    self.subElementIDs = [self.dnvDBManager getIDSFrom:@"SUBELEMENT" where:@"ELEMENTID" equals:selectedRow];
-    NSLog(@"First Sub Element ID: %d", [self.subElementIDs[0] integerValue]);
     
     [self.subElementTable reloadData];
     elementNumber = row;
@@ -199,134 +228,34 @@ int subEleNumber;
     questionsVC.questionArray = self.subEle.Questions;
     questionsVC.elementNumber = elementNumber;
     questionsVC.subEleNumber = subEleNumber;
+    questionsVC.audit = self.aud;
     
 }
-
-#pragma mark file selection methods
-
--(void)loadDropboxFile:(NSString *)file{
-    
-    NSString *filename = [self.auditPath stringByAppendingPathComponent:file];
-    
-    NSLog(@"Filename: %@", filename);
-    
-    _directoryPath = [self setFilePath];
-    
-    [restClient loadFile:filename intoPath:_directoryPath];
-}
-
--(NSString *)setFilePath{
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents directory
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"sampleAuditFromDB.json"];
-    
-    return filePath;
-    
-}
-
-#pragma mark Dropbox methods
-
-- (DBRestClient*)restClient {
-    if (restClient == nil) {
-        restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
-        restClient.delegate = self;
-    }
-    return restClient;
-}
-
-- (void)restClient:(DBRestClient *)client loadedMetadata:(DBMetadata *)metadata {
-    if (metadata.isDirectory) {
+-(int) getNumOfSubQuestionsAndSetAllSubsArray:(Questions *)question layerDepth:(int)depth
+{
+    int n = 1;
+    for (int i = 0; i < [question.layeredQuesions count]; i++)
+    {
+        LayeredQuestion *tempObject = [LayeredQuestion new];
         
-        DBMetadata * JSONFile = metadata.contents[0];
+        tempObject.question = [question.layeredQuesions objectAtIndex:i];
+        [self.allSublayeredQuestions addObject:tempObject];
+        
+        if( tempObject.question.layeredQuesions.count > 0)
+            depth++;
+        
+        n += [self getNumOfSubQuestionsAndSetAllSubsArray:tempObject.question layerDepth:depth];
+        
+        tempObject.subIndexes = [NSMutableArray new];
+        for( int j = 1; j <= tempObject.question.layeredQuesions.count; j++ )
+        {
             
-        NSLog(@"metadata content: %@", metadata.contents[0]);
-        NSLog(@"JSONFile: %@", JSONFile.filename);
-            
-        [self loadDropboxFile:JSONFile.filename];
+            [tempObject.subIndexes addObject:[NSNumber numberWithInt: j + [self.allSublayeredQuestions indexOfObject:tempObject] ] ];
+        }
+        
     }
+    return n;
 }
 
-- (void)restClient:(DBRestClient *)client
-loadMetadataFailedWithError:(NSError *)error {
-    
-    NSLog(@"Error loading metadata: %@", error);
-}
-
-
-- (void)restClient:(DBRestClient*)client loadedFile:(NSString*)localPath
-       contentType:(NSString*)contentType metadata:(DBMetadata*)metadata {
-    
-    NSLog(@"File loaded into path: %@", localPath);
-    [self getAudit];
-    [self.spinner stopAnimating];
-    
-}
-
-- (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
-    NSLog(@"There was an error loading the file - %@", error);
-}
-
-#pragma mark method to get the Audit Object
-
--(void)getAudit{
-    if (_directoryPath) { // check if file exists - if so load it:
-        NSError *error;
-        
-        NSString *stringData = [NSString stringWithContentsOfFile:_directoryPath encoding:NSUTF8StringEncoding error:&error];
-        NSData *data = [stringData dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-        
-//        NSLog(@"JSON contains:\n%@", [dictionary description]);
-        
-        NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-        
-        //use this to access the audit and its components dictionary style
-        Audit *aud = [[Audit alloc]initWithAudit:theAudit];
-        self.auditSelectLbl.text = aud.name;
-        
-        //Just a DB test
-        //Using the user defaults to create the audit ID
-        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        aud.auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
-        aud.auditID = [aud.auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
-        
-        [self.dnvDBManager saveAudit:aud];
-        
-       // aud = [self.dnvDBManager retrieveAudit:aud.auditID];
-        
-        self.elementIDs = [self.dnvDBManager getElementIDS:aud.auditID];
-        
-        NSLog(@"Audit Name: %@", aud.name);
-        //end of DB test
-        
-        
-        self.listOfElements = aud.Elements;
-        
-        Audit *second = [[Audit alloc] initWithAudit:theAudit];
-        
-        //just to test
-//         Audit *aha = [aud mergeAudit:aud with:second];
-        
-        //[self.elementPicker reloadAllComponents];
-        
-        //testing todictionary
-        
-        NSDictionary *dict = [aud toDictionary];
-        
-        Audit *todictAud = [[Audit alloc]initWithAudit:dict];
-        
-        
-        [self.elementPicker reloadAllComponents];
-        
-        [self.elementPicker selectRow:0 inComponent:0 animated:false];
-        Elements *tempEle = [self.listOfElements objectAtIndex:0];
-        self.listOfSubElements = tempEle.Subelements;
- //       self.subElementIDs = [self.dnvDBManager getIDSFrom:@"SUBELEMENT" where:@"ELEMENTID" equals:[[self.elementIDs objectAtIndex:0] integerValue]];
-        [self.subElementTable reloadData];
-
-    }
-    
-}
 
 @end

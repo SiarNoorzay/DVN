@@ -37,12 +37,12 @@
 }
 
 //Merge two clients
--(Client *)mergeClients:(Client *)primaryClient with:(Client *)secondaryClient
+-(Client *)mergeClients:(Client *)primaryClient with:(Client *)secondaryClient ofRank:(BOOL)bRank2Higher
 {
     Client *mergedClient = [Client new];
     
     MergeClass *dataMerger = [MergeClass new];
-    dataMerger.bRank2Higher = true; // rank2 > rank2;
+    dataMerger.bRank2Higher = bRank2Higher; // rank2 > rank2;
     
     //bools
     mergedClient.baselineAudit = [dataMerger mergeBool:primaryClient.baselineAudit with:secondaryClient.baselineAudit];

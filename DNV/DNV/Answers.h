@@ -18,7 +18,7 @@
 
 -(id)initWithAnswer:(NSDictionary *)answerDictionary;
 
--(Answers *)mergeAnswer:(Answers *)primaryAnswer with:(Answers *)secondaryAnswer;
+-(Answers *)mergeAnswer:(Answers *)primaryAnswer with:(Answers *)secondaryAnswer ofRank:(BOOL)bRank2Higher;
 
 -(NSDictionary*)toDictionary;
 

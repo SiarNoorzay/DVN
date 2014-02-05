@@ -44,12 +44,12 @@
 }
 
 //Merge two elements
--(Elements *)mergeElements:(Elements *)primaryElements with:(Elements *)secondaryElements
+-(Elements *)mergeElements:(Elements *)primaryElements with:(Elements *)secondaryElements ofRank:(BOOL)bRank2Higher
 {
     Elements *mergedElements = [Elements new];
     
     MergeClass *dataMerger = [MergeClass new];
-    dataMerger.bRank2Higher = true; // rank2 > rank2;
+    dataMerger.bRank2Higher = bRank2Higher; // rank2 > rank2;
     
     //bools
     mergedElements.isCompleted = [dataMerger mergeBool:primaryElements.isCompleted with:secondaryElements.isCompleted];
@@ -71,7 +71,7 @@
     SubElements *someSubElement = [SubElements new];
     for( int i = 0; i < [primaryElements.Subelements count]; i++ )
     {
-        [mergedSubElements addObject:[someSubElement mergeSubElements:[primaryElements.Subelements objectAtIndex:i] with:[secondaryElements.Subelements objectAtIndex:i]]];
+        [mergedSubElements addObject:[someSubElement mergeSubElements:[primaryElements.Subelements objectAtIndex:i] with:[secondaryElements.Subelements objectAtIndex:i] ofRank:dataMerger.bRank2Higher]];
     }
     
     mergedElements.Subelements = [NSArray arrayWithArray:mergedSubElements];

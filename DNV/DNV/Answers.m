@@ -53,12 +53,12 @@
 }
 
 //Merge two answers
--(Answers *)mergeAnswer:(Answers *)primaryAnswer with:(Answers *)secondaryAnswer
+-(Answers *)mergeAnswer:(Answers *)primaryAnswer with:(Answers *)secondaryAnswer ofRank:(BOOL)bRank2Higher
 {
     Answers *mergedAnswer = [Answers new];
     
     MergeClass *dataMerger = [MergeClass new];
-    dataMerger.bRank2Higher = true; // rank2 > rank2;
+    dataMerger.bRank2Higher = bRank2Higher; // rank2 > rank2;
     
     //bool
     mergedAnswer.isSelected = [dataMerger mergeBool:primaryAnswer.isSelected with:secondaryAnswer.isSelected];

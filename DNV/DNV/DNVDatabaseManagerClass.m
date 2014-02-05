@@ -135,6 +135,9 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
 
 -(void)saveClient:(Client *)client forAudit:(NSString *)auditID{
     
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    
+    client.companyName = [defaults objectForKey:@"currentClient"];
     
     //Query to insert into the client table
     NSString * insertClientSQL = [NSString stringWithFormat:@"INSERT INTO CLIENT (AUDITID, CLIENTNAME, DIVISION, SIC, NUMBEREMPLOYEES, AUDITOR, AUDITSITE, AUDITDATE, BASELINEAUDIT, STREETADDRESS, CITYSTATEPROVINCE, POSTALCODE, COUNTRY) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", \"%@\")", auditID, client.companyName, client.division, client.SICNumber, client.numEmployees, client.auditor, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.postalCode, client.country];
@@ -151,13 +154,13 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         
         sqlite3_stmt * statement;
         
-//        //Using the user defaults to create the audit ID
+        //Using the user defaults to create the audit ID
 //        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 //        NSString * auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
 //        auditID = [auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
         
         //Query to insert into the audit table
-        NSString * insertAuditSQL = [NSString stringWithFormat:@"INSERT INTO AUDIT (ID, AUDITNAME, AUDITTYPE, LASTMODIFIED) VALUES (\"%@\", \"%@\", %d, \"%@\")", audit.auditID, audit.name, 1, audit.lastModefied];
+        NSString * insertAuditSQL = [NSString stringWithFormat:@"INSERT INTO AUDIT (ID, AUDITNAME, AUDITTYPE, LASTMODIFIED) VALUES (\"%@\", \"%@\", %d, \"%@\")", audit.auditID, audit.name, audit.auditType, audit.lastModefied];
         
         //Preparing
         sqlite3_prepare_v2(dnvAuditDB, [insertAuditSQL UTF8String], -1, &statement, NULL);
@@ -315,13 +318,14 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //Create the statement Object
     sqlite3_stmt * statement;
     
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSMutableArray * auditIDArray = [[NSMutableArray alloc]init];
     
     //Open the DB
     if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
         
         //Creating the SQL statment to retrieve the data from the database
-        NSString * queryAuditSQL = [NSString stringWithFormat:@"SELECT ID FROM AUDIT WHERE AUDITTYPE = %d AND AUDITNAME = \"%@\"", auditType, auditName];
+        NSString * queryAuditSQL = [NSString stringWithFormat:@"SELECT AUDIT.ID FROM AUDIT INNER JOIN CLIENT ON CLIENT.AUDITID = AUDIT.ID WHERE AUDITTYPE = %d AND AUDITNAME = \"%@\" AND CLIENTNAME = \"%@\"", auditType, auditName, [defaults objectForKey:@"currentClient"]];
         
         //Prepare the Query
         if(sqlite3_prepare_v2(dnvAuditDB, [queryAuditSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){

@@ -37,9 +37,13 @@
 	// Do any additional setup after loading the view.
     
     
+   
+}
+-(void)viewWillAppear:(BOOL)animated
+{
     self.sectionHeaders = [[NSArray alloc]initWithObjects:@"On Device",@"From Dropbox", nil];
     
-    NSLog(@"\n\nFolder Path recieved: %@", self.dbWIPFolderPath);
+    NSLog(@"\n\nFolder Path recieved: %@", self.ogdbWIPFolderPath);
     
     self.wipAuditTable.delegate = self;
     
@@ -47,7 +51,7 @@
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
     self.localWips = [self.dnvDBManager retrieveDistinctAuditNamesForClientOfType:1];
     
-    [[self restClient] loadMetadata:self.dbWIPFolderPath];
+    [[self restClient] loadMetadata:self.ogdbWIPFolderPath];
     
     [self.spinner startAnimating];
 }
@@ -111,11 +115,20 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
+    
     if (indexPath.section == 0) {
         self.WIPType = @"localWIP";
+        [nsDefaults setObject:self.localWips[indexPath.row] forKey:@"currentAudit"];
+        [nsDefaults synchronize];
+        
     }
     else{
         self.WIPType = @"importWIP";
+        Folder * wip = [self.wips objectAtIndex:indexPath.row];
+        
+        [nsDefaults setObject:wip.name forKey:@"currentAudit"];
+        [nsDefaults synchronize];
     }
     
     self.chosenWIP = indexPath.row;
@@ -137,6 +150,8 @@
     if ([self.WIPType isEqualToString:@"localWIP"]){
         
         wipAuditFileVC.localWIPName = [self.localWips objectAtIndex:self.chosenWIP];
+        
+        
     }
     
     if ([self.WIPType isEqualToString:@"importWIP"]){
@@ -144,10 +159,14 @@
         Folder *temp =[self.wips objectAtIndex:self.chosenWIP];
     
         self.dbWIPFolderPath = temp.folderPath;
+        
+        wipAuditFileVC.localWIPName = temp.name;
 
-        [wipAuditFileVC setWipAuditPath: self.dbWIPFolderPath];
     }
     
+    NSLog(@"WIP Audit Path: %@",self.ogdbWIPFolderPath);
+    
+    [wipAuditFileVC setWipAuditPath: self.ogdbWIPFolderPath];
     wipAuditFileVC.wipAuditType = _WIPType;
 
 }

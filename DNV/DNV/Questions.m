@@ -61,18 +61,24 @@
         
         self.zeroIfNoPointsFor = [questionDictionary objectForKey:@"zeroIfNoPointsFor"];
         self.lessOrEqualToSmallestAnswer = [questionDictionary objectForKey:@"lessOrEqualToSmallestAnswer"];
+        self.drawnNotes = [questionDictionary objectForKey:@"drawnNotes"];
+
     }
     return self;
 }
 
 //Merge two questions
--(Questions *)mergeQuestion:(Questions *)primaryQuestion with:(Questions *)secondaryQuestion
+-(Questions *)mergeQuestion:(Questions *)primaryQuestion with:(Questions *)secondaryQuestion ofRank:(BOOL)bRank2Higher
 {
     Questions *mergedQuestion = [Questions new];
     
     MergeClass *dataMerger = [MergeClass new];
-    dataMerger.bRank2Higher = true; // rank2 > rank2;
+    dataMerger.bRank2Higher = bRank2Higher; // rank2 > rank2;
     
+    if( primaryQuestion.isThumbsDown)
+    {
+        NSLog(@"g");
+    }
     //bools
     mergedQuestion.isCompleted = [dataMerger mergeBool:primaryQuestion.isCompleted with:secondaryQuestion.isCompleted];
     mergedQuestion.isApplicable = [dataMerger mergeBool:primaryQuestion.isApplicable with:secondaryQuestion.isApplicable];
@@ -85,7 +91,7 @@
     
     //float
     mergedQuestion.pointsPossible = [dataMerger mergeFloat:primaryQuestion.pointsPossible with:secondaryQuestion.pointsPossible];
-    mergedQuestion.pointsAwarded = [dataMerger mergeFloat:primaryQuestion.pointsAwarded with:secondaryQuestion.pointsAwarded];
+    mergedQuestion.pointsAwarded = [dataMerger mergeFloat:primaryQuestion.pointsAwarded with:secondaryQuestion.pointsAwarded bCompletedPrimary:primaryQuestion.isCompleted bCompletedSecondary:secondaryQuestion.isCompleted];
     mergedQuestion.pointsNeededForLayered = [dataMerger mergeFloat:primaryQuestion.pointsNeededForLayered with:secondaryQuestion.pointsNeededForLayered];
     
     //string
@@ -104,10 +110,19 @@
     Answers *someAnswer = [Answers new];
     for( int i = 0; i < [primaryQuestion.Answers count]; i++ )
     {
-        [mergedAnswers addObject:[someAnswer mergeAnswer:[primaryQuestion.Answers objectAtIndex:i] with:[secondaryQuestion.Answers objectAtIndex:i]]];
+        [mergedAnswers addObject:[someAnswer mergeAnswer:[primaryQuestion.Answers objectAtIndex:i] with:[secondaryQuestion.Answers objectAtIndex:i] ofRank:dataMerger.bRank2Higher]];
     }
-    
     mergedQuestion.Answers = [NSArray arrayWithArray:mergedAnswers];
+    
+    
+    //layered questions array
+    NSMutableArray *mergedLayeredQuestions = [NSMutableArray new];
+    Questions *someQuestion = [Questions new];
+    for( int i = 0; i < [primaryQuestion.layeredQuesions count]; i++ )
+    {
+        [mergedLayeredQuestions addObject:[someQuestion mergeQuestion:primaryQuestion.layeredQuesions[i] with:secondaryQuestion.layeredQuesions[i] ofRank:bRank2Higher]];
+    }
+    mergedQuestion.layeredQuesions = [NSArray arrayWithArray:mergedLayeredQuestions];
     
     return  mergedQuestion;
 }
@@ -167,6 +182,8 @@
     [dictionary setValue:self.zeroIfNoPointsFor forKey:@"zeroIfNoPointsFor"];
     
     [dictionary setValue:self.lessOrEqualToSmallestAnswer forKey:@"lessOrEqualToSmallestAnswer"];
+
+    [dictionary setValue:self.drawnNotes forKey:@"drawnNotes"];
 
     
     return dictionary;

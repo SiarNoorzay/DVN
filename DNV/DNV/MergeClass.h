@@ -19,4 +19,6 @@
 -(NSString *)mergeString:(NSString *)primaryVal with:(NSString *)secondaryVal;
 -(NSArray *)mergeArray:(NSArray *)primaryVal with:(NSArray *)secondaryVal;
 
+-(float)mergeFloat:(float)primaryVal with:(float)secondaryVal bCompletedPrimary:(BOOL)bPrimary bCompletedSecondary:(BOOL)bSecondary;
+
 @end
