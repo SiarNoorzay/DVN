@@ -9,10 +9,14 @@
 #import "ImportMergeViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
 
+#import "Audit.h"
+#import "User.h"
 
 @interface ImportMergeViewController ()<DBRestClientDelegate>
 {
     int iSpotOfCurrFile;
+    
+    
 }
 @end
 
@@ -34,7 +38,8 @@
     
     NSLog(@"Current WIP: %@", self.currentFile);
     
-//    [self.jsonFileCollection reloadData];
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+    
     if ([self.currentFileType isEqualToString:@"importWIP"]) {
         iSpotOfCurrFile = (int)[self.jsonFiles indexOfObject:self.currentFile];
     }
@@ -42,9 +47,8 @@
         iSpotOfCurrFile = (int)[self.localFiles indexOfObject:self.currentFile];
     }
     
-    self.sectionHeaders = [[NSArray alloc]initWithObjects:@"On Device", @"On Dropbox", nil];
-    
-    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+    NSLog(@"Device Files: %d", self.localFiles.count);
+    NSLog(@"Dropbox Files: %d", self.jsonFiles.count);
 
 }
 
@@ -65,34 +69,44 @@
     
     if(collectionView == self.localFilesCollection)
     {
-        return [self.jsonFiles count]-1;
+        if ([self.currentFileType isEqualToString:@"localWIP"])
+            return [self.localFiles count] - 1;
+        else
+            return [self.localFiles count];
     }
         
     else
     {
-        return [self.jsonFiles count]-1;
+        if ([self.currentFileType isEqualToString:@"importWIP"])
+            return [self.jsonFiles count] -1;
+        else
+            return [self.jsonFiles count];
 
     }
-    
-    return self.jsonFiles.count - 1;
+
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     if(collectionView == self.localFilesCollection)
     {
-        static NSString *identifier = @"JSONFileCell";
+        static NSString *identifier = @"localFileCell";
         
         UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
         
         UILabel * fileLabel = (UILabel *)[cell viewWithTag:1];
         
-        if( indexPath.row < iSpotOfCurrFile)
-            fileLabel.text = self.jsonFiles[indexPath.row];
+        if ([self.currentFileType isEqualToString:@"localWIP"]){
+            iSpotOfCurrFile = (int)[self.localFiles indexOfObject:self.currentFile];
+            
+            if( indexPath.row < iSpotOfCurrFile)
+                fileLabel.text = self.localFiles[indexPath.row];
+            else
+                fileLabel.text = self.localFiles[indexPath.row+1];
+        }
         else
-            fileLabel.text = self.jsonFiles[indexPath.row+1];
+            fileLabel.text = self.localFiles[indexPath.row];
         
-        fileLabel.text = [fileLabel.text stringByAppendingString:@"THIS IS LOCAL"];
         return cell;
         
     }
@@ -104,10 +118,16 @@
     
     UILabel * fileLabel = (UILabel *)[cell viewWithTag:1];
     
-    if( indexPath.row < iSpotOfCurrFile)
-        fileLabel.text = self.jsonFiles[indexPath.row];
+    if ([self.currentFileType isEqualToString:@"importWIP"]){
+        iSpotOfCurrFile = (int)[self.jsonFiles indexOfObject:self.currentFile];
+        
+        if( indexPath.row < iSpotOfCurrFile)
+            fileLabel.text = self.jsonFiles[indexPath.row];
+        else
+            fileLabel.text = self.jsonFiles[indexPath.row+1];
+    }
     else
-        fileLabel.text = self.jsonFiles[indexPath.row+1];
+        fileLabel.text = self.jsonFiles[indexPath.row];
     
     return cell;
 }
@@ -117,7 +137,10 @@
     if(collectionView == self.localFilesCollection)
     {
         //TODO: add string from local files
-       // self.mergingAudit = self.dnvDBManager retrieveAudit:<#(NSString *)#>
+        if( indexPath.row < iSpotOfCurrFile)
+            self.mergingAudit = [self.dnvDBManager retrieveAudit:self.localFiles[indexPath.row]];
+        else
+            self.mergingAudit = [self.dnvDBManager retrieveAudit:self.localFiles[indexPath.row+1]];
         
       
         UIAlertView * mergeAlert = [[UIAlertView alloc] initWithTitle: @"Merge Files" message: @"Are you sure you want to merge the selected file with the current WIP audit?" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes",nil];
@@ -126,11 +149,10 @@
         return;
     }
 
-    
-  
-    UIAlertView * mergeAlert = [[UIAlertView alloc] initWithTitle: @"Merge Files" message: @"Are you sure you want to merge the selected file with the current WIP audit?" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes",nil];
-    [mergeAlert show];
-    
+    if( indexPath.row < iSpotOfCurrFile)
+        [self loadDropboxFile:self.jsonFiles[indexPath.row]];
+    else
+        [self loadDropboxFile:self.jsonFiles[indexPath.row+1]];
 }
 
 #pragma mark Alertview methods
@@ -145,6 +167,20 @@
     if (buttonIndex == 1)
     {
         //Code for download button
+        NSArray * auditIDs = [self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.currentAudit.name];
+        
+        NSArray * currentAuditIDChunks = [self.currentAudit.auditID componentsSeparatedByString:@"."];
+        NSArray * mergeAuditIDChunks = [self.mergingAudit.auditID componentsSeparatedByString:@"."];
+        
+        User * currentUser = [self.dnvDBManager retrieveUser:currentAuditIDChunks[2]];
+        User * mergeUser = [self.dnvDBManager retrieveUser:mergeAuditIDChunks[2]];
+        
+        Audit * mergedAudit = [self.currentAudit mergeAudit:self.currentAudit ofUserRank:currentUser.rank with:self.mergingAudit ofRank:mergeUser.rank];
+        
+        mergedAudit.auditID = [NSString stringWithFormat:@"%@.%d",self.currentAudit.auditID, auditIDs.count +1];
+        
+        [self.dnvDBManager saveAudit:mergedAudit];
+        
         UIAlertView * mergeNotice = [[UIAlertView alloc] initWithTitle:@"Merge Complete" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [mergeNotice show];
         
@@ -183,15 +219,17 @@ loadMetadataFailedWithError:(NSError *)error {
 
 #pragma mark file selection methods
 
-/*-(void)loadDropboxFile:(NSString *)file{
+-(void)loadDropboxFile:(NSString *)file{
     
-    NSString *filename = [self.wipAuditPath stringByAppendingPathComponent:file];
+    NSString * path = self.wipPath;
+ 
+    NSString *filename = [path stringByAppendingPathComponent:file];
     
     NSLog(@"Filename: %@", filename);
     
     _directoryPath = [self setFilePath];
     
-    [restClient loadFile:filename intoPath:_directoryPath];
+    [[self restClient] loadFile:filename intoPath:_directoryPath];
 }
 
 -(NSString *)setFilePath{
@@ -202,7 +240,8 @@ loadMetadataFailedWithError:(NSError *)error {
     
     return filePath;
 }
-*/
+
+
 -(void)getAudit{
     if (_directoryPath) { // check if file exists - if so load it:
         NSError *error;
@@ -217,11 +256,14 @@ loadMetadataFailedWithError:(NSError *)error {
         
         //use this to access the audit and its components dictionary style
         self.mergingAudit = [[Audit alloc]initWithAudit:theAudit];
+        
+//        [self.dnvDBManager saveAudit:self.mergingAudit];
 //        
-//        [self.dnvDBManager saveAudit:self.audit];
-//        
-//        self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
-//        
+//        self.mergingAudit = [self.dnvDBManager retrieveAudit:self.mergingAudit.auditID];
+        
+        UIAlertView * mergeAlert = [[UIAlertView alloc] initWithTitle: @"Merge Files" message: @"Are you sure you want to merge the selected file with the current WIP audit?" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes",nil];
+        [mergeAlert show];
+//
 //        NSLog(@"Audit Name: %@", self.audit.name);
         //end of DB test
         

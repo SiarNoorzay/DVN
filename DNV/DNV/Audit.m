@@ -44,12 +44,18 @@
 }
 
 //Merge two audits
--(Audit*)mergeAudit:(Audit*)primaryAudit with:(Audit*)secondaryAudit
+-(Audit*)mergeAudit:(Audit*)primaryAudit ofUserRank:(int)primaryRank with:(Audit*)secondaryAudit ofRank:(int)secondaryRank
 {
     Audit *mergedAudits = [Audit new];
     
     MergeClass *dataMerger = [MergeClass new];
-    dataMerger.bRank2Higher = true; // rank2 > rank2;
+    
+    if (secondaryRank > primaryRank)
+        dataMerger.bRank2Higher = true;
+    else
+        dataMerger.bRank2Higher = false;
+    
+    mergedAudits.auditID = primaryAudit.auditID;
     
     //int
     mergedAudits.auditType = (NSInteger)[dataMerger mergeInt:(int)primaryAudit.auditType with:(int)secondaryAudit.auditType];
@@ -63,11 +69,11 @@
     
     //report
     Report *aReport = [Report new];
-    mergedAudits.report = [aReport mergeReports:primaryAudit.report with:secondaryAudit.report ];
+    mergedAudits.report = [aReport mergeReports:primaryAudit.report with:secondaryAudit.report ofRank:dataMerger.bRank2Higher];
     
     //client
     Client *aClient = [Client new];
-    mergedAudits.client = [aClient mergeClients:primaryAudit.client with:secondaryAudit.client ];
+    mergedAudits.client = [aClient mergeClients:primaryAudit.client with:secondaryAudit.client ofRank:dataMerger.bRank2Higher];
     
     
     //elements array
@@ -75,7 +81,7 @@
     Elements *someElement = [Elements new];
     for( int i = 0; i < [primaryAudit.Elements count]; i++ )
     {
-        [mergedElements addObject:[someElement mergeElements:[primaryAudit.Elements objectAtIndex:i] with:[secondaryAudit.Elements objectAtIndex:i]]];
+        [mergedElements addObject:[someElement mergeElements:[primaryAudit.Elements objectAtIndex:i] with:[secondaryAudit.Elements objectAtIndex:i] ofRank:dataMerger.bRank2Higher]];
     }
     
     mergedAudits.Elements = [NSArray arrayWithArray:mergedElements];

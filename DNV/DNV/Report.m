@@ -31,12 +31,12 @@
     return self;
 }
 //Merge two reports
--(Report *)mergeReports:(Report *)primaryReport with:(Report *)secondaryReport
+-(Report *)mergeReports:(Report *)primaryReport with:(Report *)secondaryReport ofRank:(BOOL)bRank2Higher
 {
     Report *mergedReports = [Report new];
     
     MergeClass *dataMerger = [MergeClass new];
-    dataMerger.bRank2Higher = true; // rank2 > rank2;
+    dataMerger.bRank2Higher = bRank2Higher; // rank2 > rank2;
     
     //string
     mergedReports.summary = [dataMerger mergeString:primaryReport.summary with:secondaryReport.summary];

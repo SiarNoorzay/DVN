@@ -37,7 +37,7 @@
 
 -(id)initWithQuestion:(NSDictionary *)questionDictionary;
 
--(Questions *)mergeQuestion:(Questions *)primaryQuestion with:(Questions *)secondaryQuestion;
+-(Questions *)mergeQuestion:(Questions *)primaryQuestion with:(Questions *)secondaryQuestion ofRank:(BOOL)bRank2Higher;
 
 -(NSDictionary*)toDictionary;
 

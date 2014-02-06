@@ -292,6 +292,13 @@ loadMetadataFailedWithError:(NSError *)error {
 //    self.audit.auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
 //    self.audit.auditID = [self.audit.auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
     
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+ //   [defaults setObject:[self.localCompleted objectAtIndex:indexPath.row] forKey:@"currentAudit"];
+    [defaults synchronize];
+    
+    self.audit.auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
+    self.audit.auditID = [self.audit.auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
     if ([segue.identifier isEqualToString:@"EditClient"]) {
         
         EditClientViewController * editClientVC = [segue destinationViewController];

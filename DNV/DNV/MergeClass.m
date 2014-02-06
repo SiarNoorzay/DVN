@@ -15,10 +15,10 @@
 {
     ////Logic for bool types
     //null primary value, use secondary
-    if( [NSNumber numberWithBool:primaryVal] == NULL )
+    if( [NSNumber numberWithBool:primaryVal] == NULL || !primaryVal)
         return secondaryVal;
     //secondary rank is higher and not null
-    else if( _bRank2Higher && [NSNumber numberWithBool:secondaryVal]!= NULL)
+    else if( _bRank2Higher && [NSNumber numberWithBool:secondaryVal]!= NULL && secondaryVal)
         return secondaryVal;
     //use primary if none of the above apply
     else
@@ -29,10 +29,10 @@
 -(int)mergeInt:(int)primaryVal with:(int)secondaryVal
 {
     //null primary value, use secondary
-    if( [NSNumber numberWithInt:primaryVal ] == NULL  )
+    if( [NSNumber numberWithInt:primaryVal ] == NULL  || primaryVal == 0)
         return secondaryVal;
     //secondary rank is higher and not empty use secondary value
-    else if( _bRank2Higher && [NSNumber numberWithInt:secondaryVal]!= NULL)
+    else if( _bRank2Higher && [NSNumber numberWithInt:secondaryVal]!= NULL && secondaryVal != 0)
         return secondaryVal;
     //use primary if none of the above apply
     else
@@ -43,10 +43,23 @@
 -(float)mergeFloat:(float)primaryVal with:(float)secondaryVal
 {
     //null primary value, use secondary
-    if( [NSNumber numberWithFloat:primaryVal ] == NULL  )
+    if( [NSNumber numberWithFloat:primaryVal ] == NULL || primaryVal == 0  )
         return secondaryVal;
     //secondary rank is higher and not empty use secondary value
-    else if( _bRank2Higher && [NSNumber numberWithFloat:secondaryVal]!= NULL)
+    else if( _bRank2Higher && [NSNumber numberWithFloat:secondaryVal]!= NULL && secondaryVal != 0)
+        return secondaryVal;
+    //use primary if none of the above apply
+    else
+        return primaryVal;
+}
+//special case* for isCompleted (0 from person with highest rank)
+-(float)mergeFloat:(float)primaryVal with:(float)secondaryVal bCompletedPrimary:(BOOL)bPrimary bCompletedSecondary:(BOOL)bSecondary
+{
+    //null primary value, use secondary
+    if( ([NSNumber numberWithFloat:primaryVal ] == NULL || primaryVal == 0 ) && !bPrimary)
+        return secondaryVal;
+    //secondary rank is higher and not empty use secondary value
+    else if( _bRank2Higher && (([NSNumber numberWithFloat:secondaryVal]!= NULL && secondaryVal != 0) || bSecondary))
         return secondaryVal;
     //use primary if none of the above apply
     else

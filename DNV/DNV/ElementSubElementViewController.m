@@ -91,10 +91,10 @@ int subEleNumber;
 
         }
     }
-    if (self.dnvDBManager)
-    {
-        [self.dnvDBManager updateAudit:self.aud];
-    }
+//    if (self.dnvDBManager)
+//    {
+//        [self.dnvDBManager updateAudit:self.aud];
+//    }
     [self.subElementTable reloadData];
 }
 - (void)viewDidLoad

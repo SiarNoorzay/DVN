@@ -116,15 +116,19 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
-    [nsDefaults setObject:self.localWips[indexPath.row] forKey:@"currentAudit"];
-    [nsDefaults synchronize];
     
     if (indexPath.section == 0) {
         self.WIPType = @"localWIP";
+        [nsDefaults setObject:self.localWips[indexPath.row] forKey:@"currentAudit"];
+        [nsDefaults synchronize];
         
     }
     else{
         self.WIPType = @"importWIP";
+        Folder * wip = [self.wips objectAtIndex:indexPath.row];
+        
+        [nsDefaults setObject:wip.name forKey:@"currentAudit"];
+        [nsDefaults synchronize];
     }
     
     self.chosenWIP = indexPath.row;
@@ -155,11 +159,15 @@
         Folder *temp =[self.wips objectAtIndex:self.chosenWIP];
     
         self.dbWIPFolderPath = temp.folderPath;
+        
+        wipAuditFileVC.localWIPName = temp.name;
 
     }
     
+    NSLog(@"WIP Audit Path: %@",self.ogdbWIPFolderPath);
+    
+    [wipAuditFileVC setWipAuditPath: self.ogdbWIPFolderPath];
     wipAuditFileVC.wipAuditType = _WIPType;
-    [wipAuditFileVC setWipAuditPath: self.dbWIPFolderPath];
 
 }
 

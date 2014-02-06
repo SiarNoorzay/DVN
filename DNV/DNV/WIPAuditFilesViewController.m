@@ -46,15 +46,17 @@
     
     [self.spinner startAnimating];
     
-    if ([self.wipAuditType isEqualToString:@"importWIP"]){
-        [[self restClient] loadMetadata:self.wipAuditPath];
-    }
-    else if ([self.wipAuditType isEqualToString:@"localWIP"]){
-        self.localWIPList = [self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.localWIPName];
+    NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
+    self.wipAuditPath = [NSString stringWithFormat:@"%@%@",self.wipAuditPath, [nsDefaults objectForKey:@"currentAudit"]];
+    
+    
+    NSLog(@"WIP Path: %@", self.wipAuditPath);
+    [[self restClient] loadMetadata:self.wipAuditPath];
+    
+    self.localWIPList = [self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.localWIPName];
         
-        [self.wipJSONFileTable reloadData];
-        [self.spinner stopAnimating];
-    }
+    [self.wipJSONFileTable reloadData];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -221,11 +223,6 @@ loadMetadataFailedWithError:(NSError *)error {
         
     }
     
-//    if ([segue.identifier isEqualToString:@"VerifyQuestions"]){
-//        
-//        
-//    }
-    
     if ([segue.identifier isEqualToString:@"ImportMerge"]){
         
         ImportMergeViewController * importVC = [segue destinationViewController];
@@ -233,6 +230,9 @@ loadMetadataFailedWithError:(NSError *)error {
         importVC.jsonFiles = self.JSONList;
         importVC.localFiles = self.localWIPList;
         importVC.currentFileType = self.wipAuditType;
+        importVC.currentAudit = self.audit;
+        importVC.wipPath = self.wipAuditPath;
+        
         if ([self.wipAuditType isEqualToString:@"importWIP"]) {
             importVC.currentFile = self.JSONList[self.chosenJSONfile];
         }
@@ -240,13 +240,6 @@ loadMetadataFailedWithError:(NSError *)error {
             importVC.currentFile = self.localWIPList[self.chosenJSONfile];
         }
     }
-    
-//    NSIndexPath *indexPath = self.subElementTable.indexPathForSelectedRow;
-//    
-//    QuestionsViewController * questionsVC = [segue destinationViewController];
-//    
-//    self.subEle = [[SubElements alloc]initWithSubElement:self.listOfSubElements[indexPath.row]];
-//    questionsVC.questionArray = self.subEle.Questions;
 }
 
 #pragma mark file selection methods
