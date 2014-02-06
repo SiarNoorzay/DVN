@@ -32,12 +32,44 @@
         self.notes = [questionDictionary objectForKey:@"notes"];
         self.needsVerifying = [[questionDictionary objectForKey:@"needsVerifying"] integerValue];
         self.isVerifyDone = [[questionDictionary objectForKey:@"isVerifyDone"] boolValue];
+        
         self.attachmentsLocationArray = [questionDictionary objectForKey:@"attachmentsLocationArray"];
         self.imageLocationArray = [questionDictionary objectForKey:@"imageLocationArray"];
         self.questionType = [[questionDictionary objectForKey:@"questionType"] intValue];
         self.isThumbsUp = [[questionDictionary objectForKey:@"isThumbsUp"] boolValue];
         self.isThumbsDown = [[questionDictionary objectForKey:@"isThumbsDown"] boolValue];
         self.pointsNeededForLayered = [[questionDictionary objectForKey:@"pointsNeededForLayered"] floatValue];
+        
+        NSMutableArray *physicalArray = [questionDictionary objectForKey:@"PhysicalObservations"];
+        NSMutableArray *interviewArray = [questionDictionary objectForKey:@"InterviewObservations"];
+        NSMutableArray *recordsArray = [questionDictionary objectForKey:@"Records"];
+        
+        NSMutableArray *aTempArray = [NSMutableArray new];
+        for( int i = 0; i < [physicalArray count]; i++)
+        {
+            Observations *pObs = [[Observations alloc] initWithObservation:[physicalArray objectAtIndex:i]];
+            [aTempArray addObject:pObs];
+        }
+        self.PhysicalObservations = aTempArray;
+        
+        NSMutableArray *bTempArray = [NSMutableArray new];
+        for( int i = 0; i < [interviewArray count]; i++)
+        {
+            Observations *iObs = [[Observations alloc] initWithObservation:[interviewArray objectAtIndex:i]];
+            [bTempArray addObject:iObs];
+        }
+        self.InterviewObservations = bTempArray;
+                             
+        NSMutableArray *cTempArray = [NSMutableArray new];
+        for( int i = 0; i < [recordsArray count]; i++)
+        {
+            Records *rObj = [[Records alloc] initWithRecord:[recordsArray objectAtIndex:i]];
+            [cTempArray addObject:rObj];
+        }
+        self.Records = cTempArray;
+                                                  
+                                                  
+        
         NSMutableArray *tempArray = [questionDictionary objectForKey:@"Answers"];
         NSMutableArray *objectArray = [NSMutableArray arrayWithCapacity:[tempArray count]];
         
@@ -107,6 +139,12 @@
     mergedQuestion.zeroIfNoPointsFor = [dataMerger mergeArray:primaryQuestion.zeroIfNoPointsFor with:secondaryQuestion.zeroIfNoPointsFor];
     mergedQuestion.lessOrEqualToSmallestAnswer = [dataMerger mergeArray:primaryQuestion.lessOrEqualToSmallestAnswer with:secondaryQuestion.lessOrEqualToSmallestAnswer];
     
+    mergedQuestion.PhysicalObservations = [dataMerger mergeArray:primaryQuestion.PhysicalObservations with:secondaryQuestion.PhysicalObservations];
+    mergedQuestion.InterviewObservations = [dataMerger mergeArray:primaryQuestion.InterviewObservations with:secondaryQuestion.InterviewObservations];
+    mergedQuestion.Records = [dataMerger mergeArray:primaryQuestion.Records with:secondaryQuestion.Records];
+    
+    
+    
     //answer array
     NSMutableArray *mergedAnswers = [NSMutableArray new];
     Answers *someAnswer = [Answers new];
@@ -115,6 +153,36 @@
         [mergedAnswers addObject:[someAnswer mergeAnswer:[primaryQuestion.Answers objectAtIndex:i] with:[secondaryQuestion.Answers objectAtIndex:i] ofRank:dataMerger.bRank2Higher]];
     }
     mergedQuestion.Answers = [NSArray arrayWithArray:mergedAnswers];
+    
+    
+    
+//    //phisycial observation array
+//    NSMutableArray *mergedPhysicalObs = [NSMutableArray new];
+//    Observations *someObservation = [Observations new];
+//    for( int i = 0; i < [primaryQuestion.PhysicalObservations count]; i++ )
+//    {
+//        [mergedPhysicalObs addObject:[someObservation mergeObservations:[primaryQuestion.PhysicalObservations objectAtIndex:i] with:[secondaryQuestion.PhysicalObservations objectAtIndex:i] ofRank:dataMerger.bRank2Higher]];
+//    }
+//    mergedQuestion.PhysicalObservations = [NSArray arrayWithArray:mergedPhysicalObs];
+//    
+//    //interview observation array
+//    NSMutableArray *mergedInterviewObs = [NSMutableArray new];
+//    for( int i = 0; i < [primaryQuestion.InterviewObservations count]; i++ )
+//    {
+//        [mergedInterviewObs addObject:[someObservation mergeObservations:[primaryQuestion.InterviewObservations objectAtIndex:i] with:[secondaryQuestion.InterviewObservations objectAtIndex:i] ofRank:dataMerger.bRank2Higher]];
+//    }
+//    mergedQuestion.InterviewObservations = [NSArray arrayWithArray:mergedInterviewObs];
+//    
+//    //records array
+//    NSMutableArray *mergedRecords = [NSMutableArray new];
+//    Records *someRecord = [Records new];
+//    for( int i = 0; i < [primaryQuestion.Records count]; i++ )
+//    {
+//        [mergedRecords addObject:[someRecord mergeRecords:[primaryQuestion.Records objectAtIndex:i] with:[secondaryQuestion.Records objectAtIndex:i] ofRank:dataMerger.bRank2Higher]];
+//    }
+//    mergedQuestion.Records = [NSArray arrayWithArray:mergedRecords];
+    
+    
     
     
     //layered questions array
