@@ -101,14 +101,15 @@ int numOfSubs;
     
     [self.switchy setOn: NO animated: YES];
     
+        __weak typeof(self) weakSelf = self;
     [self.switchy setDidChangeHandler:^(BOOL isOn) {
         NSLog(@"Switchy changed to %d", isOn);
         answered = true;
         Answers *leftAns;
         Answers *rightAns;
-        if (self.ansArray.count >=2){
-            leftAns = self.ansArray[1];
-            rightAns = self.ansArray[0];
+        if (weakSelf.ansArray.count >=2){
+            leftAns = weakSelf.ansArray[1];
+            rightAns = weakSelf.ansArray[0];
         }
         
         
@@ -117,15 +118,15 @@ int numOfSubs;
             rightAns.isSelected = true;
             leftAns.isSelected = false;
             pointTotal = rightAns.pointsPossible;
-            self.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
-            [self setEnabledFlagsAndReloadQuestions];
+            weakSelf.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
+            [weakSelf setEnabledFlagsAndReloadQuestions];
         }
         else{
             leftAns.isSelected = true;
             rightAns.isSelected = true;
             pointTotal = leftAns.pointsPossible;
-            self.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
-            [self setEnabledFlagsAndReloadQuestions];
+            weakSelf.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
+            [weakSelf setEnabledFlagsAndReloadQuestions];
         }
 
 //        if (islayeredQuestion)
@@ -999,7 +1000,8 @@ int numOfSubs;
     imagePickerController.editing = YES;
     imagePickerController.delegate = (id)self;
     
-    [self presentModalViewController:imagePickerController animated:YES];
+//    [self presentModalViewController:imagePickerController animated:YES];
+    [self presentViewController:imagePickerController animated:YES completion:Nil];
     
 }
 
@@ -1054,11 +1056,13 @@ int numOfSubs;
     }
 
     
-    [picker dismissModalViewControllerAnimated:NO];
+//    [picker dismissModalViewControllerAnimated:NO];
+    [picker dismissViewControllerAnimated:NO completion:nil];
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissModalViewControllerAnimated:NO];
+//    [picker dismissModalViewControllerAnimated:NO];
+    [picker dismissViewControllerAnimated:NO completion:nil];
 }
 
 
@@ -1294,7 +1298,7 @@ int numOfSubs;
     
     if( self.question.lessOrEqualToSmallestAnswer.count >0)
     {
-        BOOL outterOR = false;
+//        BOOL outterOR = false;
         
         NSNumber *eleNum;
         NSNumber *subEleNum;
