@@ -485,8 +485,11 @@ loadMetadataFailedWithError:(NSError *)error {
 
     NSString *fileName = [chunks objectAtIndex:[chunks count]-1];
     
-    [[self restClient2] uploadFile:fileName toPath:dropboxPath withParentRev:nil fromPath:internalPath];
-   
+    //[[self restClient2] uploadFile:fileName toPath:dropboxPath withParentRev:nil fromPath:internalPath];
+    
+   //using this deprecated method since it overwrites instead of renaming
+    [[self restClient2]uploadFile:fileName toPath:dropboxPath fromPath:internalPath];
+    
     fileName = [dropboxPath stringByAppendingString:fileName];
     
     return fileName;

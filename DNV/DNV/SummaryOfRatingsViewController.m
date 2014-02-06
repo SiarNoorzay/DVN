@@ -133,7 +133,7 @@
         ReportDocViewController * destVC = [segue destinationViewController];
         
         // Pass the information to your destination view
-       [destVC setAudit:self.audit];
+   //    [destVC setAudit:self.audit];
     }
 }
 

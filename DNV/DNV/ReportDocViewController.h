@@ -11,7 +11,10 @@
 
 @interface ReportDocViewController : UIViewController
 
-@property (strong, nonatomic) Audit *audit;
+//@property (strong, nonatomic) Audit *audit;
++(ReportDocViewController*)sharedReportDocViewController;
 
+
+@property (strong, nonatomic) IBOutlet UIScrollView *finalPFDView;
 
 @end

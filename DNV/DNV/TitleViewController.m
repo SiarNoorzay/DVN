@@ -84,12 +84,28 @@
     else return nil;
     
 }
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"goToDetails"]) {
+        
+        ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
+        
+        [reportVC.finalPFDView addSubview:self.titlePdfView];
+        [reportVC.finalPFDView sizeToFit];
+        
+    }
+    
+}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
      self.audit.client.companyName = self.clientName.text;
     
      self.audit.client.auditDate = self.date.text;
+
     
+    //add view to other view
     //TODO: save audit
 }
 - (IBAction)datePickerValueChanged:(id)sender {
