@@ -23,6 +23,22 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    int needsV = self.theAnswersVC.question.needsVerifying;
+    
+    if( needsV % 2 != 0   )
+        [self btnToggler:self.btnPhysical];
+    
+    if( needsV %4 > 1 )
+        [self btnToggler:self.btnInterviews];
+    
+    if( needsV >= 4 )
+        [self btnToggler:self.btnRecords];
+    
+    //should i set needv back to needsVerifying, shouldn't have to
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -37,8 +53,11 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    //to change/work with enum we had discussed
-    [self.theAnswersVC setNeedsVerifying: self.btnInterviews.tag + self.btnPhysical.tag + self.btnRecords.tag];
+    //to change/work with enum we had discuss
+    if( self.theAnswersVC.question.needsVerifying > 0 || !self.theAnswersVC.verifyButton.selected)
+        [self.theAnswersVC.verifyButton setSelected: true];
+    else
+        [self.theAnswersVC.verifyButton setSelected: false];
 }
 
 - (IBAction)btnToggler:(id)sender
@@ -53,6 +72,12 @@
         [sender setTag:0];
         [sender setAlpha:0.3];
     }
+    
+    ////enum logic, 0-7 representing binary, 000-111
+    //physical will represent 0 or 1
+    //interview will represent 0 or 2
+    //records will represent 0 or 4
+    self.theAnswersVC.question.needsVerifying = self.btnPhysical.tag * 1 + self.btnInterviews.tag *2 + self.btnRecords.tag * 4;
 }
 
 - (IBAction)btnGoToVerifyTabBar:(id)sender

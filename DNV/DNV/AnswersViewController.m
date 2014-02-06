@@ -874,15 +874,8 @@ int numOfSubs;
     }
 }
 
-- (IBAction)verifyButtonPushed:(id)sender {
-   // self.question.needsVerifying = !self.question.needsVerifying;
-   // [self.verifyButton setSelected: !self.verifyButton.selected];
-    
-    //[self performSegueWithIdentifier:@"verifyPopOver" sender:sender];
-        
-        // Get destination view
-        //VerifyPopOverViewController * verifyPop = [segue destinationViewController];
-    
+- (IBAction)verifyButtonPushed:(id)sender
+{
     VerifyPopOverViewController *verifyPop = [self.storyboard instantiateViewControllerWithIdentifier:@"verifyPop"];
         
         // Pass the information to destination VC
@@ -1020,7 +1013,6 @@ int numOfSubs;
         // Pass the information to your destination view
         [destVC setText:self.question.notes];
         [destVC setQuestion:self.question];
-        
     }
 }
 
