@@ -813,7 +813,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="200" height="300"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
                                 <connections>
@@ -1732,7 +1732,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="V4d-to-CHO" kind="push" id="f2c-Tq-327"/>
+                                    <segue destination="V4d-to-CHO" kind="push" identifier="goToDetails" id="f2c-Tq-327"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" id="90T-Bo-rhm">
@@ -1815,6 +1815,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="clientName" destination="mJU-bu-XMI" id="FAQ-Vj-nPa"/>
                         <outlet property="date" destination="2Q6-KK-Nab" id="oi4-XH-0HW"/>
                         <outlet property="datePicker" destination="mti-SD-9G3" id="Jpi-xh-Jq0"/>
+                        <outlet property="titlePdfView" destination="90T-Bo-rhm" id="mb9-U8-J8e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ea-iy-nq6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2189,15 +2190,24 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="4131" y="6546"/>
         </scene>
-        <!--View Controller-->
+        <!--Report Doc View Controller-->
         <scene sceneID="J7X-4U-IFt">
             <objects>
-                <viewController id="fZb-vd-oiN" sceneMemberID="viewController">
+                <viewController id="fZb-vd-oiN" customClass="ReportDocViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EAk-X8-B6u">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" id="gK7-dE-JhY">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="finalPFDView" destination="gK7-dE-JhY" id="jE0-0l-ZPg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aHc-Ps-jcW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2223,7 +2233,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="4Cm-Wc-9zS" kind="push" id="WTI-4X-6vV"/>
+                                    <segue destination="4Cm-Wc-9zS" kind="push" identifier="goToExecutiveSummary" id="WTI-4X-6vV"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" id="bNd-Yt-OfM">
@@ -2326,10 +2336,16 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <navigationItem key="navigationItem" title="Details" id="0b0-b9-xcw"/>
                     <connections>
                         <outlet property="approvedBy" destination="5lw-sf-fBm" id="SoK-CT-hZF"/>
+                        <outlet property="approvedByLabel" destination="0Sd-ZL-VOe" id="RDn-rp-OXM"/>
                         <outlet property="clientRef" destination="rDR-9H-ySW" id="LQu-rO-Mco"/>
+                        <outlet property="copyrightLabel" destination="UJP-kh-OGy" id="8B8-UR-Un2"/>
                         <outlet property="dateOfIssue" destination="Fpe-Ec-i81" id="Ryf-Ns-bK3"/>
+                        <outlet property="dateOfIssueLabel" destination="Vks-ff-Lhk" id="xTR-En-ycQ"/>
                         <outlet property="preparedBy" destination="nuT-Ow-LhQ" id="EcZ-PS-kTz"/>
+                        <outlet property="preparedByLabel" destination="hG7-1z-EB7" id="zdH-if-yo7"/>
                         <outlet property="projectNum" destination="auT-tt-v0T" id="p5D-cf-1Ee"/>
+                        <outlet property="projectNumLabel" destination="moi-Uy-K3V" id="hHL-co-NHF"/>
+                        <outlet property="reportDetialsPDFView" destination="bNd-Yt-OfM" id="Sxw-rK-YtG"/>
                         <outlet property="summary" destination="fbk-jO-wCs" id="awf-ad-NJV"/>
                     </connections>
                 </viewController>
@@ -2773,6 +2789,14 @@ In general, the XXXXXXX protocol requires that the practical application of prog
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ESN-s4-IMF">
+                                <rect key="frame" x="199" y="948" width="371" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <state key="normal" title="Go to Process Profiles">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>

@@ -7,6 +7,7 @@
 //
 
 #import "ReportDetailsViewController.h"
+#import "ReportDocViewController.h"
 
 @interface ReportDetailsViewController ()
 
@@ -62,6 +63,72 @@
     
     //TODO:save audit
 }
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"goToExecutiveSummary"]) {
+        
+        ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
+        
+        int pixelsToMove = self.summary.frame.size.height;
+
+        CGRect rect         = self.summary.frame;
+        rect.size.height    = self.summary.contentSize.height;
+        self.summary.frame  = rect;
+        
+        pixelsToMove = self.summary.frame.size.height - pixelsToMove;
+        
+        //make the hieght view bigger
+        rect = self.reportDetialsPDFView.frame;
+        rect.size.height += pixelsToMove;
+        self.reportDetialsPDFView.frame = rect;
+        
+        //move each uiElement under the summary down
+        rect = self.preparedBy.frame;
+        rect.origin.y += pixelsToMove;
+        self.preparedBy.frame = rect;
+        
+        rect = self.preparedByLabel.frame;
+        rect.origin.y += pixelsToMove;
+        self.preparedByLabel.frame = rect;
+        
+        rect = self.approvedBy.frame;
+        rect.origin.y += pixelsToMove;
+        self.approvedBy.frame = rect;
+        
+        rect = self.approvedByLabel.frame;
+        rect.origin.y += pixelsToMove;
+        self.approvedByLabel.frame = rect;
+        
+        rect = self.dateOfIssueLabel.frame;
+        rect.origin.y += pixelsToMove;
+        self.dateOfIssueLabel.frame = rect;
+        
+        rect = self.dateOfIssue.frame;
+        rect.origin.y += pixelsToMove;
+        self.dateOfIssue.frame = rect;
+        
+        rect = self.projectNum.frame;
+        rect.origin.y += pixelsToMove;
+        self.projectNum.frame = rect;
+        
+        rect = self.projectNumLabel.frame;
+        rect.origin.y += pixelsToMove;
+        self.projectNumLabel.frame = rect;
+        
+        rect = self.copyrightLabel.frame;
+        rect.origin.y += pixelsToMove;
+        self.copyrightLabel.frame = rect;
+        
+        //set the frame to under the pdfview
+        
+        
+        [reportVC.finalPFDView addSubview:self.reportDetialsPDFView];
+        [reportVC.finalPFDView sizeToFit];
+        
+    }
+    
+}
+
 
 - (void)didReceiveMemoryWarning
 {

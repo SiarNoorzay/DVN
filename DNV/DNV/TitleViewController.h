@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Audit.h"
+#import "ReportDocViewController.h"
 
 @interface TitleViewController : UIViewController<UIPageViewControllerDataSource>
 
@@ -17,5 +18,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *date;
 @property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
 - (IBAction)datePickerValueChanged:(id)sender;
+
+@property (strong, nonatomic) IBOutlet UIView *titlePdfView;
 
 @end

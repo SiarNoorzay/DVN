@@ -14,11 +14,24 @@
 
 @implementation ReportDocViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+static ReportDocViewController* _sharedReportDocViewController = nil;
+
++(ReportDocViewController*)sharedReportDocViewController
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    @synchronized([ReportDocViewController class])
+    {
+        if (!_sharedReportDocViewController)
+         _sharedReportDocViewController = [[self alloc] init];
+        
+        return _sharedReportDocViewController;
+    }
+    
+    return nil;
+}
+
+- (id)init {
+    if (self = [super init]) {
+        self.finalPFDView = [[UIScrollView alloc]init];
     }
     return self;
 }
