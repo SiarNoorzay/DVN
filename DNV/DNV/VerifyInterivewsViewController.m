@@ -16,7 +16,7 @@
 
 @implementation VerifyInterivewsViewController
 
-@synthesize arrPhysicalRows;
+@synthesize arrInterviewRows;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,8 +32,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    arrPhysicalRows = [NSMutableArray new];
-    [arrPhysicalRows addObject:[observationObject new]];
+    arrInterviewRows = [NSMutableArray new];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,7 +47,7 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [arrPhysicalRows count];
+    return [arrInterviewRows count];
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -59,8 +58,41 @@
         cell = [[verificationCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
+    observationObject *aRow = [arrInterviewRows objectAtIndex:indexPath.row];
+    
+    cell.txtDescription.text = aRow.strDescription;
+    cell.lblConfirmed.text = [NSString stringWithFormat:@"%d", aRow.iConfirmed];
+    cell.lblNotConfirmed.text = [NSString stringWithFormat:@"%d", aRow.iNotConfrimed];
+    cell.lblPercent.text = [NSString stringWithFormat:@"%f", aRow.fPercentage];
+    cell.theObject = aRow;
+    
     return cell;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [arrInterviewRows removeObjectAtIndex:indexPath.row];
+    [self.tblInterview reloadData];
 }
 #pragma End TableView Methods
 
+- (IBAction)btnAddRow:(id)sender {
+    observationObject *oObj = [observationObject new];
+    oObj.strDescription = @"Enter a description";
+    oObj.iConfirmed = 0;
+    oObj.iNotConfrimed = 0;
+    oObj.fPercentage = 0.00;
+    
+    [arrInterviewRows addObject:oObj];
+    [self.tblInterview reloadData];
+}
 @end

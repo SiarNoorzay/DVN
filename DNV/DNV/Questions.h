@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "Answers.h"
+#import "Observations.h"
+#import "Records.h"
 
 @interface Questions : NSDictionary
 
@@ -22,6 +24,9 @@
 @property (nonatomic) NSString * notes;
 @property (nonatomic) int needsVerifying;
 @property (nonatomic) NSArray * attachmentsLocationArray;
+@property (nonatomic) NSArray * PhysicalObservations;
+@property (nonatomic) NSArray * InterviewObservations;
+@property (nonatomic) NSArray * Records;
 @property (nonatomic) NSArray * imageLocationArray;
 @property (nonatomic) NSArray * Answers;
 @property (nonatomic) int questionType;

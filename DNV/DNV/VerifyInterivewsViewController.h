@@ -10,6 +10,9 @@
 
 @interface VerifyInterivewsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) NSMutableArray *arrPhysicalRows;
+@property (nonatomic, strong) NSMutableArray *arrInterviewRows;
+
+@property (weak, nonatomic) IBOutlet UITableView *tblInterview;
+- (IBAction)btnAddRow:(id)sender;
 
 @end
