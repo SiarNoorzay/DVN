@@ -56,7 +56,7 @@
 -(void)updateElement:(Elements *)element;
 -(void)updateSubElment:(SubElements *)subElement;
 -(void)updateQuestion:(Questions *)question;
--(void)updateOVerify:(Observations *)observe
+-(void)updateOVerify:(Observations *)observe;
 -(void)updateRVerify:(Records *)record;
 -(void)deleteAudit:(NSString *) auditID;
 -(void)deleteVerifyForQuestion:(int)questionID ofType:(int)vType;

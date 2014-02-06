@@ -329,7 +329,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
 
 -(void)saveObservationVerify:(Observations *)observe ofType:(int)vType forQuestion:(int)questionID{
     
-    NSString * insertOVerifySQL = [NSString stringWithFormat:@"INSERT INTO VERIFY (QUESTIONID, VERIFYTYPE, VERIFYDESCRIPTION, NUMOFCONFIRMED, NUMOFNOTCONFIRMED, PERCENTCONFIRMED) VALUES (%d, %d, \"%@\", %d, %d, %f)", questionID, vType, observe.description, observe.comfirmedCount, observe.notConfirmedCount, observe.percentageComplete];
+    NSString * insertOVerifySQL = [NSString stringWithFormat:@"INSERT INTO VERIFY (QUESTIONID, VERIFYTYPE, VERIFYDESCRIPTION, NUMOFCONFIRMED, NUMOFNOTCONFIRMED, PERCENTCONFIRMED) VALUES (%d, %d, \"%@\", %d, %d, %f)", questionID, vType, observe.description, observe.confirmedCount, observe.notConfirmedCount, observe.percentComplete];
     
     [self insertRowInTable:insertOVerifySQL forTable:@"verify"];
     
@@ -929,11 +929,13 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             tempObserve.description = vDescript;
             tempObserve.confirmedCount = [numConfirm integerValue];
             tempObserve.notConfirmedCount = [numNotConfirm integerValue];
-            tempObserve.percentConfirmed = [percentConfirmed floatValue];
+            tempObserve.percentComplete = [percentConfirmed floatValue];
             
             [oVerifyArray addObject:tempObserve];
         }
     }
+    
+    return oVerifyArray;
 }
 
 -(NSArray *)retrieveRecordVerifyOfQuestion:(int)questionID ofType:(int)verifyType{
@@ -962,13 +964,15 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             //Gets the verify description data from DB and adding it to the temp verify Object
             NSString * isConfirm = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
             
-            tempRecord.recordID = [identify integerValue]
+            tempRecord.recordID = [identify integerValue];
             tempRecord.description = vDescript;
             tempRecord.isConfirmed = [isConfirm integerValue];
             
             [rVerifyArray addObject:tempRecord];
         }
     }
+    
+    return rVerifyArray;
 }
 
 
@@ -1187,7 +1191,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //Opening the SQLite DB
     if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
     
-        NSString * updateOVerifySQL = [NSString stringWithFormat:@"UPDATE VERIFY SET VERIFYDESCRIPTION = \"%@\", NUMOFCONFIRMED = %d, NUMOFNOTCONFIRMED = %d, PERCENTCONFIRMED = %f WHERE ID = %d", observe.description, observe.comfirmedCount, observe.notConfirmedCount, observe.percentConfirmed, observe.observationID];
+        NSString * updateOVerifySQL = [NSString stringWithFormat:@"UPDATE VERIFY SET VERIFYDESCRIPTION = \"%@\", NUMOFCONFIRMED = %d, NUMOFNOTCONFIRMED = %d, PERCENTCONFIRMED = %f WHERE ID = %d", observe.description, observe.confirmedCount, observe.notConfirmedCount, observe.percentComplete, observe.observationID];
         
         sqlite3_stmt * statement;
         
@@ -1216,7 +1220,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //Opening the SQLite DB
     if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
         
-        NSString * updateRVerifySQL = [NSString stringWithFormat:@"UPDATE VERIFY SET VERIFYDESCRIPTION = \"%@\", ISRECORDCONFIRMED = %d WHERE ID = %d", record.description, record.isComfirmed, record.recordID];
+        NSString * updateRVerifySQL = [NSString stringWithFormat:@"UPDATE VERIFY SET VERIFYDESCRIPTION = \"%@\", ISRECORDCONFIRMED = %d WHERE ID = %d", record.description, record.isConfirmed, record.recordID];
         
         sqlite3_stmt * statement;
         

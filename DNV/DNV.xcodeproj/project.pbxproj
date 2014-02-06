@@ -415,7 +415,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4A4AFC5718A13572006901D1 /* verifyIcons */ = {
+		4A4AFC5718A13572006901D1 /* Verify Icons */ = {
 			isa = PBXGroup;
 			children = (
 				4A4AFC7A18A4045C006901D1 /* checkBox.png */,
@@ -426,7 +426,7 @@
 				4A4AFC5918A135B0006901D1 /* physical.png */,
 				4A4AFC5A18A135B0006901D1 /* records.png */,
 			);
-			name = verifyIcons;
+			name = "Verify Icons";
 			sourceTree = "<group>";
 		};
 		4A6CFD52189FE2050036DD28 /* VerificationTabBar */ = {
@@ -920,7 +920,7 @@
 				76A568261887240B000E32D3 /* Tableview Icons */,
 				76A0DFC4188504640038FD61 /* Dashboard Icons */,
 				76A1039E1899A7A700283F67 /* Edit Client Button */,
-				4A4AFC5718A13572006901D1 /* verifyIcons */,
+				4A4AFC5718A13572006901D1 /* Verify Icons */,
 			);
 			name = Images;
 			sourceTree = "<group>";
