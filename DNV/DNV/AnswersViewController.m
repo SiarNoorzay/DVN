@@ -12,6 +12,7 @@
 #import "NotesViewController.h"
 #import "CalculatorViewController.h"
 #import "LayeredQuestion.h"
+#import "VerifyPopOverViewController.h"
 
 @interface AnswersViewController ()
 
@@ -230,6 +231,7 @@ int numOfSubs;
         pointTotal = self.question.pointsAwarded;
     }
     self.pointsLabel.text =[NSString stringWithFormat:@"%.2f", self.question.pointsAwarded]; // @"0";
+    self.pointsLabel.text = @"0";
     answered = false;
     if (self.question.questionType == 2) {
         self.percentSlider.value = self.question.pointsAwarded / (self.question.pointsPossible/100);
@@ -237,6 +239,8 @@ int numOfSubs;
     else self.percentSlider.value = self.question.pointsAwarded;
 
     self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f", self.question.pointsAwarded];
+    self.percentSlider.value = 0;
+    self.percentSliderTextField.text = @"";
     
     if (useSlider){
         self.leftSliderLabel.hidden = true;
@@ -250,6 +254,7 @@ int numOfSubs;
     }
     if (self.question.layeredQuesions.count >0) {
   //      pointTotal = self.question.pointsAwarded;
+        [self.switchy setOn:false];
     }
 }
 
@@ -864,11 +869,44 @@ int numOfSubs;
     [self.naButton setSelected: !self.naButton.selected];
     
    
+    if (self.question.isApplicable) {
+        
+    }
 }
 
 - (IBAction)verifyButtonPushed:(id)sender {
-    self.question.needsVerifying = !self.question.needsVerifying;
-    [self.verifyButton setSelected: !self.verifyButton.selected];
+   // self.question.needsVerifying = !self.question.needsVerifying;
+   // [self.verifyButton setSelected: !self.verifyButton.selected];
+    
+    //[self performSegueWithIdentifier:@"verifyPopOver" sender:sender];
+        
+        // Get destination view
+        //VerifyPopOverViewController * verifyPop = [segue destinationViewController];
+    
+    VerifyPopOverViewController *verifyPop = [self.storyboard instantiateViewControllerWithIdentifier:@"verifyPop"];
+        
+        // Pass the information to destination VC
+        verifyPop.theAnswersVC = self;
+        
+        self.verifyPopOver.delegate = self;
+        self.verifyPopOver= [[UIPopoverController alloc] initWithContentViewController:verifyPop];
+    
+    [self.verifyPopOver presentPopoverFromRect:self.verifyButton.frame inView:self.viewDashboard permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+
+    
+}
+-(void)setNeedsVerifying: (int)vSelected //to change/work with enum we had discussed
+{
+    if( vSelected == 0) //0 implies none of the tabs where toggled on
+    {
+        self.question.needsVerifying = false;
+        [self.verifyButton setSelected: false];
+    }
+    else    //!0 implies atleast one of the tabs was toggled on
+    {
+        self.question.needsVerifying = true;
+        [self.verifyButton setSelected: true];
+    }
 }
 
 - (IBAction)percentTextChanged:(id)sender {
@@ -940,8 +978,7 @@ int numOfSubs;
     
     self.calcPopOver= [[UIPopoverController alloc] initWithContentViewController:calcVC];
     
-    [self.calcPopOver presentPopoverFromRect:self.calculatorButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-    
+    [self.calcPopOver presentPopoverFromRect:self.calculatorButton.frame inView:self.viewDashboard  permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
 - (IBAction)cameraButtonPushed:(id)sender {
