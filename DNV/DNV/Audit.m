@@ -55,8 +55,6 @@
     else
         dataMerger.bRank2Higher = false;
     
-    mergedAudits.auditID = primaryAudit.auditID;
-    
     //int
     mergedAudits.auditType = (NSInteger)[dataMerger mergeInt:(int)primaryAudit.auditType with:(int)secondaryAudit.auditType];
     

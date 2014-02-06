@@ -136,23 +136,31 @@
     
     if(collectionView == self.localFilesCollection)
     {
-        //TODO: add string from local files
-        if( indexPath.row < iSpotOfCurrFile)
-            self.mergingAudit = [self.dnvDBManager retrieveAudit:self.localFiles[indexPath.row]];
+        if ([self.currentFileType isEqualToString:@"localWIP"]){
+            
+            if( indexPath.row < iSpotOfCurrFile)
+                self.mergingAudit = [self.dnvDBManager retrieveAudit:self.localFiles[indexPath.row]];
+            else
+                self.mergingAudit = [self.dnvDBManager retrieveAudit:self.localFiles[indexPath.row+1]];
+        }
         else
-            self.mergingAudit = [self.dnvDBManager retrieveAudit:self.localFiles[indexPath.row+1]];
+            self.mergingAudit = [self.dnvDBManager retrieveAudit:self.localFiles[indexPath.row]];
         
-      
         UIAlertView * mergeAlert = [[UIAlertView alloc] initWithTitle: @"Merge Files" message: @"Are you sure you want to merge the selected file with the current WIP audit?" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes",nil];
         [mergeAlert show];
         
         return;
     }
-
-    if( indexPath.row < iSpotOfCurrFile)
-        [self loadDropboxFile:self.jsonFiles[indexPath.row]];
+    
+    if ([self.currentFileType isEqualToString:@"importWIP"]){
+        
+        if( indexPath.row < iSpotOfCurrFile)
+            [self loadDropboxFile:self.jsonFiles[indexPath.row]];
+        else
+            [self loadDropboxFile:self.jsonFiles[indexPath.row+1]];
+    }
     else
-        [self loadDropboxFile:self.jsonFiles[indexPath.row+1]];
+        [self loadDropboxFile:self.jsonFiles[indexPath.row]];
 }
 
 #pragma mark Alertview methods
