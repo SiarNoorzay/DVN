@@ -87,6 +87,10 @@
 @property (strong, nonatomic) IBOutlet UITextField *percentSliderTextField;
 
 @property (strong,nonatomic) UIPopoverController * calcPopOver;
+@property (strong,nonatomic) UIPopoverController * verifyPopOver;
 
+-(void)setNeedsVerifying: (int)vSelected;
+
+@property (weak, nonatomic) IBOutlet UIView *viewDashboard;
 
 @end
