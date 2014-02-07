@@ -2629,22 +2629,40 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <rect key="frame" x="78" y="148" width="612" height="792"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="twc-Hh-ySv">
-                                <rect key="frame" x="299" y="954" width="163" height="56"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="V1y-aF-aYS">
+                                <rect key="frame" x="53" y="959" width="335" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <state key="normal" title="Create PDF">
+                                <state key="normal" title="Submit Report to Dropbox">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="createPDFPushed:" destination="fZb-vd-oiN" eventType="touchUpInside" id="mL9-3j-55T"/>
+                                    <action selector="submitToDBoxPushed:" destination="fZb-vd-oiN" eventType="touchUpInside" id="SxR-ut-SYT"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lvx-8w-mAs">
+                                <rect key="frame" x="502" y="959" width="163" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <state key="normal" title="Email Report">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="emailButtonPushed:" destination="fZb-vd-oiN" eventType="touchUpInside" id="XRz-rT-u07"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" id="A3V-hH-yYB">
+                                <rect key="frame" x="365" y="500" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" red="0.1004554288" green="0.12551632679999999" blue="0.38758916440000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="RJw-YK-oQ7"/>
                     <connections>
                         <outlet property="finalPFDView" destination="gK7-dE-JhY" id="jE0-0l-ZPg"/>
+                        <outlet property="spinner" destination="A3V-hH-yYB" id="Fkb-Wk-CPf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aHc-Ps-jcW" userLabel="First Responder" sceneMemberID="firstResponder"/>

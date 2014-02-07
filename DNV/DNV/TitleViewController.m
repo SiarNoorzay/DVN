@@ -113,8 +113,6 @@
     
      self.audit.client.auditDate = self.date.text;
 
-    
-    //add view to other view
     //TODO: save audit
 }
 - (IBAction)datePickerValueChanged:(id)sender {

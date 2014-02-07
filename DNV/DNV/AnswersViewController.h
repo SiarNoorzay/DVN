@@ -20,6 +20,7 @@
 @property (nonatomic, strong) Questions *question;
 @property (nonatomic) NSArray * questionArray;
 @property (nonatomic) int currentPosition;
+
 @property (nonatomic, strong) NSArray *ansArray;
 @property (nonatomic) int elementNumber;
 @property (nonatomic) int subElementNum;
