@@ -13,12 +13,20 @@
 #import "SubElements.h"
 #import "Questions.h"
 
+#import "DNVDatabaseManagerClass.h"
+
 @class DBRestClient;
 
 @interface VerifyQuestionsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 {
     DBRestClient * restClient;
 }
+
+@property(nonatomic, strong) DNVDatabaseManagerClass *dnvDB;
+
+@property (strong,atomic) NSMutableArray *allSublayeredQuestions;
+
+@property NSArray * verifyQuestions;
 
 @property (strong, nonatomic) NSString * auditPath;
 @property (strong,nonatomic) Audit * audit;

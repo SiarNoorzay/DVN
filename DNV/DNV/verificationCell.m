@@ -69,8 +69,8 @@
 {
     if( [text isEqualToString:@"\n"] )
     {
-        [textView resignFirstResponder];
         self.theObject.description = textView.text;
+        [textView resignFirstResponder];
         return NO;
     }
     

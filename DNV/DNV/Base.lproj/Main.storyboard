@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="gHV-i4-n0u">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="gHV-i4-n0u">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -1292,7 +1292,7 @@
         <!--Verify Questions View Controller - List of Open Verify Questions-->
         <scene sceneID="PVA-QN-ort">
             <objects>
-                <viewController id="NjM-YN-Li5" customClass="VerifyQuestionsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="verifyQuestions" id="NjM-YN-Li5" customClass="VerifyQuestionsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vf1-UB-SOI">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1468,7 +1468,12 @@
             <objects>
                 <tabBarController definesPresentationContext="YES" id="eiv-AO-kQq" customClass="VerifyTabController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="iIv-sD-D2o">
-                        <barButtonItem key="rightBarButtonItem" title="Edit Question" id="eSH-BJ-1yV"/>
+                        <barButtonItem key="rightBarButtonItem" title="Edit Question" id="eSH-BJ-1yV">
+                            <connections>
+                                <action selector="btnEditQuestion:" destination="eiv-AO-kQq" id="6KY-pB-yKT"/>
+                                <segue destination="8Xc-YB-eLc" kind="push" identifier="verifyTabToDashboard" id="gVi-n6-vqn"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="9iq-hK-BRs">
@@ -1477,6 +1482,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <outlet property="btnEditQuestion" destination="eSH-BJ-1yV" id="OF9-Jx-U5U"/>
                         <segue destination="TSN-fa-D8a" kind="relationship" relationship="viewControllers" id="zib-82-enM"/>
                         <segue destination="hkX-Qp-bq0" kind="relationship" relationship="viewControllers" id="6h8-rZ-cbs"/>
                         <segue destination="sMx-3o-ZvH" kind="relationship" relationship="viewControllers" id="GV9-gg-o1H"/>
@@ -3340,7 +3346,8 @@ In general, the XXXXXXX protocol requires that the practical application of prog
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="ssa-Ar-Zbh"/>
-        <segue reference="iwB-8H-uOu"/>
+        <segue reference="fQl-5q-x25"/>
+        <segue reference="gVi-n6-vqn"/>
         <segue reference="mdm-Om-J66"/>
         <segue reference="hrt-DA-W4A"/>
         <segue reference="JhJ-6V-9g8"/>

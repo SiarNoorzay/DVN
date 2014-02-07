@@ -11,6 +11,12 @@
 
 @interface VerifyTabController : UITabBarController
 
+@property (assign) int currentSpot;
+@property (nonatomic, strong) NSArray *listOfVerifyQuestions;
 @property (nonatomic, strong) Questions *theQuestion;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *btnEditQuestion;
+
+- (IBAction)btnEditQuestion:(id)sender;
 
 @end

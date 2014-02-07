@@ -329,11 +329,24 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
 
 -(int)saveObservationVerify:(Observations *)observe ofType:(int)vType forQuestion:(int)questionID{
     
-    NSString * insertOVerifySQL = [NSString stringWithFormat:@"INSERT INTO VERIFY (QUESTIONID, VERIFYTYPE, VERIFYDESCRIPTION, NUMOFCONFIRMED, NUMOFNOTCONFIRMED, PERCENTCONFIRMED) VALUES (%d, %d, \"%@\", %d, %d, %f)", questionID, vType, observe.description, observe.confirmedCount, observe.notConfirmedCount, observe.percentComplete];
+    int ID = -1;
     
-    [self insertRowInTable:insertOVerifySQL forTable:@"verify"];
+    //Open the DB
+    if(sqlite3_open([self.databasePath UTF8String] , &dnvAuditDB)==SQLITE_OK){
+        
+        NSString * insertOVerifySQL = [NSString stringWithFormat:@"INSERT INTO VERIFY (QUESTIONID, VERIFYTYPE, VERIFYDESCRIPTION, NUMOFCONFIRMED, NUMOFNOTCONFIRMED, PERCENTCONFIRMED) VALUES (%d, %d, \"%@\", %d, %d, %f)", questionID, vType, observe.description, observe.confirmedCount, observe.notConfirmedCount, observe.percentComplete];
     
-    int ID = [self getID:@"VERIFY"];
+        [self insertRowInTable:insertOVerifySQL forTable:@"verify"];
+    
+        ID = [self getID:@"VERIFY"];
+        
+        sqlite3_close(dnvAuditDB);
+        
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
+    }
     
     return ID;
     
@@ -341,11 +354,24 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
 
 -(int)saveRecordVerify:(Records *)record forQuestion:(int)questionID{
     
-    NSString * insertRVerifySQL = [NSString stringWithFormat:@"INSER INTO VERIFY (QUESTIONID, VERIFYTYPE, VERIFYDESCRIPTION, ISRECORDCONFIRMED) VALUES (%d, %d, \"%@\", %d)", questionID, 2, record.description, record.isConfirmed];
+    int ID = -1;
     
-    [self insertRowInTable:insertRVerifySQL forTable:@"verify"];
+    //Open the DB
+    if(sqlite3_open([self.databasePath UTF8String] , &dnvAuditDB)==SQLITE_OK){
+
+        NSString * insertRVerifySQL = [NSString stringWithFormat:@"INSERT INTO VERIFY (QUESTIONID, VERIFYTYPE, VERIFYDESCRIPTION, ISRECORDCONFIRMED) VALUES (%d, %d, \"%@\", %d)", questionID, 2, record.description, record.isConfirmed];
     
-    int ID = [self getID:@"VERIFY"];
+        [self insertRowInTable:insertRVerifySQL forTable:@"verify"];
+    
+        ID = [self getID:@"VERIFY"];
+    
+        sqlite3_close(dnvAuditDB);
+        
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
+    }
     
     return ID;
 }
@@ -1207,10 +1233,10 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         
         if(sqlite3_step(statement)==SQLITE_DONE)
         {
-            NSLog(@"Row updated from Answer table.");
+            NSLog(@"Row updated from Verify table.");
         }
         else {
-            NSLog(@"Failed to update row from Answer table.");
+            NSLog(@"Failed to update row from Verify table.");
         }
         
         sqlite3_finalize(statement);
@@ -1236,10 +1262,10 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         
         if(sqlite3_step(statement)==SQLITE_DONE)
         {
-            NSLog(@"Row updated from Answer table.");
+            NSLog(@"Row updated from Verify table.");
         }
         else {
-            NSLog(@"Failed to update row from Answer table.");
+            NSLog(@"Failed to update row from Verify table.");
         }
         
         sqlite3_finalize(statement);
@@ -1478,46 +1504,62 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
 
 -(void)deleteVerifyForQuestion:(int)questionID ofType:(int)vType{
     
-    NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM VERIFY WHERE QUESTIONID = %d AND VERIFYTYPE = %d", questionID, vType];
+    //Opening the SQLite DB
+    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
     
-    sqlite3_stmt * statement;
+        NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM VERIFY WHERE QUESTIONID = %d AND VERIFYTYPE = %d", questionID, vType];
     
-    //Prepare the Query
-    sqlite3_prepare_v2(dnvAuditDB, [deleteSQL UTF8String], -1, &statement, NULL);
+        sqlite3_stmt * statement;
     
-    if(sqlite3_step(statement)==SQLITE_DONE)
-    {
-        NSLog(@"Row deleted from Verify table.");
+        //Prepare the Query
+        sqlite3_prepare_v2(dnvAuditDB, [deleteSQL UTF8String], -1, &statement, NULL);
+    
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            NSLog(@"Row deleted from Verify table.");
         
-    }
-    else {
-        NSLog(@"Failed to delete row from Verify table.");
-    }
+        }
+        else {
+            NSLog(@"Failed to delete row from Verify table.");
+        }
     
-    sqlite3_finalize(statement);
-    
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
+    }
 }
 
 -(void)deleteVerify:(int)verifyID{
     
-    NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM VERIFY WHERE ID = %d", verifyID];
+    //Opening the SQLite DB
+    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
     
-    sqlite3_stmt * statement;
+        NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM VERIFY WHERE ID = %d", verifyID];
     
-    //Prepare the Query
-    sqlite3_prepare_v2(dnvAuditDB, [deleteSQL UTF8String], -1, &statement, NULL);
+        sqlite3_stmt * statement;
     
-    if(sqlite3_step(statement)==SQLITE_DONE)
-    {
-        NSLog(@"Row deleted from Verify table.");
+        //Prepare the Query
+        sqlite3_prepare_v2(dnvAuditDB, [deleteSQL UTF8String], -1, &statement, NULL);
+    
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            NSLog(@"Row deleted from Verify table.");
         
-    }
-    else {
-        NSLog(@"Failed to delete row from Verify table.");
-    }
+        }
+        else {
+            NSLog(@"Failed to delete row from Verify table.");
+        }
     
-    sqlite3_finalize(statement);
-    
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
+    }
 }
 
 #pragma mark User methods
