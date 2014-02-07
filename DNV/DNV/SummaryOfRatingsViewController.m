@@ -12,6 +12,7 @@
 #import "SubElements.h"
 #import "Questions.h"
 #import "ReportDocViewController.h"
+#import "ScoringAssumptionsViewController.h"
 
 
 
@@ -35,20 +36,18 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 
-    //TODO: get audit from DB instead of bundle
-   // self.audit = getAuditFromDB with ID from previous selection
     
-
-    NSError *error;
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
+//    NSError *error;
+//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
+//    
+//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+//    
+//    NSLog(@"JSON contains:\n%@", [dictionary description]);
+//    
+//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
+//    
+//    self.audit = [[Audit alloc]initWithAudit:theAudit];
     
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-    
-    NSLog(@"JSON contains:\n%@", [dictionary description]);
-    
-    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-    
-    self.audit = [[Audit alloc]initWithAudit:theAudit];
     NSMutableArray *tempArr = [[NSMutableArray alloc]initWithCapacity:[self.audit.Elements count]];
     
     for (Elements *ele in self.audit.Elements) {
@@ -127,6 +126,10 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"goToAssumptions"]) {
+        
+        ScoringAssumptionsViewController * assVC = [segue destinationViewController];
+        
+        assVC.audit = self.audit;
         
         ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
         [self.ElementRatingsTableView reloadData];

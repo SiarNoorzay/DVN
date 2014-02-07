@@ -8,6 +8,7 @@
 
 #import "MethodologyViewController.h"
 #import "ReportDocViewController.h"
+#import "ConclusionViewController.h"
 
 @interface MethodologyViewController ()
 
@@ -33,6 +34,9 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"goToConclusion"]) {
+        ConclusionViewController * concVC = [segue destinationViewController];
+        
+        concVC.audit = self.audit;
         
         ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
         

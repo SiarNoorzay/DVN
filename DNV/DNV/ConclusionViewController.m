@@ -8,6 +8,7 @@
 
 #import "ConclusionViewController.h"
 #import "ReportDocViewController.h"
+#import "KeySuggestionsViewController.h"
 
 @interface ConclusionViewController ()
 
@@ -28,20 +29,18 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    //TODO: get audit from DB instead of bundle
-    // self.audit = getAuditFromDB with ID from previous selection
     
     
-    NSError *error;
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
-    
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-    
-    NSLog(@"JSON contains:\n%@", [dictionary description]);
-    
-    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-    
-    self.audit = [[Audit alloc]initWithAudit:theAudit];
+//    NSError *error;
+//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
+//    
+//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+//    
+//    NSLog(@"JSON contains:\n%@", [dictionary description]);
+//    
+//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
+//    
+//    self.audit = [[Audit alloc]initWithAudit:theAudit];
     
     float auditPointsPossible = 0;
     float auditNAPoints = 0;
@@ -56,7 +55,7 @@
     }
     self.percent.text = [NSString stringWithFormat:@"%.2f %%",((auditAwarded / (auditPointsPossible - auditNAPoints)) *100)];
     
-    if (self.audit.report.conclusion != nil) {
+    if (![self.audit.report.conclusion isEqualToString:@"(null)"]) {
         self.conclusionTextView.text = self.audit.report.conclusion;
     }
     
@@ -64,6 +63,10 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"goToKeySugs"]) {
+        
+        KeySuggestionsViewController * keySugsVC = [segue destinationViewController];
+        
+        keySugsVC.audit = self.audit;
         
         ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
         

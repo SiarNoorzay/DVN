@@ -32,20 +32,17 @@
 	// Do any additional setup after loading the view.
     NSMutableArray *labelArray = [[NSMutableArray alloc]initWithCapacity:1];
     
-    //TODO: get audit from DB instead of bundle
-    // self.audit = getAuditFromDB with ID from previous selection
     
-    
-    NSError *error;
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
-    
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-    
-    NSLog(@"JSON contains:\n%@", [dictionary description]);
-    
-    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-    
-    self.audit = [[Audit alloc]initWithAudit:theAudit];
+//    NSError *error;
+//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
+//    
+//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+//    
+//    NSLog(@"JSON contains:\n%@", [dictionary description]);
+//    
+//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
+//    
+//    self.audit = [[Audit alloc]initWithAudit:theAudit];
     
     for (int i = 0; i<[self.audit.Elements count]; i++) {
         Elements *ele = [self.audit.Elements objectAtIndex:i];
@@ -137,6 +134,10 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"goToReportDoc"]) {
+        
+        ReportDocViewController * repVC = [segue destinationViewController];
+        
+        repVC.audit = self.audit;
         
         ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
         

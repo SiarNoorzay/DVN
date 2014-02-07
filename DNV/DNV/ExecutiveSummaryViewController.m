@@ -8,6 +8,7 @@
 
 #import "ExecutiveSummaryViewController.h"
 #import "ReportDocViewController.h"
+#import "TableofContentsViewController.h"
 
 @interface ExecutiveSummaryViewController ()
 
@@ -28,17 +29,19 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    NSError *error;
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
     
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+//    NSError *error;
+//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
+//    
+//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+//    
+//    NSLog(@"JSON contains:\n%@", [dictionary description]);
+//    
+//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
+//    
+//    self.audit = [[Audit alloc]initWithAudit:theAudit];
     
-    NSLog(@"JSON contains:\n%@", [dictionary description]);
-    
-    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-    
-    self.audit = [[Audit alloc]initWithAudit:theAudit];
-    if (self.audit.report.executiveSummary != nil) {
+    if (![self.audit.report.executiveSummary isEqualToString:@"(null)"]) {
         self.executiveSummary.text = self.audit.report.executiveSummary;
     }
     self.auditCountLabel.text = [NSString stringWithFormat:@"The audit consisted of %i elements.",[self.audit.Elements count]];
@@ -54,13 +57,15 @@
     
     self.elementList.text = tempEleList;
     
-    if (self.audit.report.executiveSummary != nil) {
-        self.executiveSummary.text = self.audit.report.executiveSummary;
-    }
+
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"goToToC"]) {
+        
+        TableofContentsViewController * tocVC = [segue destinationViewController];
+        
+        tocVC.audit = self.audit;
         
         ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
         

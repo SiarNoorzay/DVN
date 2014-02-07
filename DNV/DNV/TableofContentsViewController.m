@@ -8,6 +8,7 @@
 
 #import "TableofContentsViewController.h"
 #import "ReportDocViewController.h"
+#import "MethodologyViewController.h"
 
 @interface TableofContentsViewController ()
 
@@ -33,6 +34,11 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"goToMethodology"]) {
+
+        MethodologyViewController * methVC = [segue destinationViewController];
+        
+        methVC.audit = self.audit;
+        
         
         ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
         

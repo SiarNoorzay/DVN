@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Audit.h"
 
 @interface MethodologyViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UIView *methodPDFView;
+@property (strong,nonatomic) Audit *audit;
+
 
 @end

@@ -12,7 +12,8 @@
 @interface ReportDocViewController : UIViewController<UIScrollViewDelegate>
 
 
-//@property (strong, nonatomic) Audit *audit;
+@property (strong, nonatomic) Audit *audit;
+
 +(ReportDocViewController*)sharedReportDocViewController;
 
 

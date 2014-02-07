@@ -8,6 +8,7 @@
 
 #import "ScoringAssumptionsViewController.h"
 #import "ReportDocViewController.h"
+#import "ElementSubelementProfilesViewController.h"
 
 @interface ScoringAssumptionsViewController ()
 
@@ -29,22 +30,21 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    //TODO: get audit from DB instead of bundle
     // self.audit = getAuditFromDB with ID from previous selection
     
+//    
+//    NSError *error;
+//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
+//    
+//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+//    
+//    NSLog(@"JSON contains:\n%@", [dictionary description]);
+//    
+//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
+//    
+//    self.audit = [[Audit alloc]initWithAudit:theAudit];
     
-    NSError *error;
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
-    
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-    
-    NSLog(@"JSON contains:\n%@", [dictionary description]);
-    
-    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-    
-    self.audit = [[Audit alloc]initWithAudit:theAudit];
-    
-    if (self.audit.report.scoringAssumptions != nil)
+    if (![self.audit.report.scoringAssumptions isEqualToString:@"(null)"])
     {
         self.scoreAssumpTextView.text = self.audit.report.scoringAssumptions;
         
@@ -56,6 +56,10 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"goToProfiles"]) {
+        
+        ElementSubelementProfilesViewController * eleProfVC = [segue destinationViewController];
+        
+        eleProfVC.audit = self.audit;
         
         ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
         
