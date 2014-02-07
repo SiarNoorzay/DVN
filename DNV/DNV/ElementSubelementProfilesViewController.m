@@ -8,6 +8,7 @@
 
 #import "ElementSubelementProfilesViewController.h"
 #import "ProfileLabelCell.h"
+#import "ReportDocViewController.h"
 
 
 @interface ElementSubelementProfilesViewController ()
@@ -31,20 +32,17 @@
 	// Do any additional setup after loading the view.
     NSMutableArray *labelArray = [[NSMutableArray alloc]initWithCapacity:1];
     
-    //TODO: get audit from DB instead of bundle
-    // self.audit = getAuditFromDB with ID from previous selection
     
-    
-    NSError *error;
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
-    
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-    
-    NSLog(@"JSON contains:\n%@", [dictionary description]);
-    
-    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-    
-    self.audit = [[Audit alloc]initWithAudit:theAudit];
+//    NSError *error;
+//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
+//    
+//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+//    
+//    NSLog(@"JSON contains:\n%@", [dictionary description]);
+//    
+//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
+//    
+//    self.audit = [[Audit alloc]initWithAudit:theAudit];
     
     for (int i = 0; i<[self.audit.Elements count]; i++) {
         Elements *ele = [self.audit.Elements objectAtIndex:i];
@@ -130,6 +128,49 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [self.cellArrary count];
+    
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"goToReportDoc"]) {
+        
+        ReportDocViewController * repVC = [segue destinationViewController];
+        
+        repVC.audit = self.audit;
+        
+        ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
+        
+        int pixelsToMove = self.resultsTableView.frame.size.height;
+        
+        CGRect rect         = self.resultsTableView.frame;
+        rect.size.height    = self.resultsTableView.contentSize.height;
+        self.resultsTableView.frame  = rect;
+        
+        pixelsToMove = self.resultsTableView.frame.size.height - pixelsToMove;
+        
+        //make the pdfview height bigger
+        rect = self.profilesPDFView.frame;
+        rect.size.height += pixelsToMove;
+        int numPages = ceil( rect.size.height / 792 );
+        rect.size.height = numPages * 792;
+        self.profilesPDFView.frame = rect;
+        
+        
+        //set the frame of this view to the bottom of the finalPdfview
+//        rect = self.profilesPDFView.frame;
+//        rect.origin.y = reportVC.finalPFDView.frame.size.height;
+//        self.profilesPDFView.frame = rect;
+//        
+//        
+//        [reportVC.finalPFDView addSubview:self.profilesPDFView];
+//        [reportVC.finalPFDView sizeToFit];
+        
+       // [reportVC.viewArray addObject:self.profilesPDFView];
+        
+        [reportVC.viewArray setObject:self.profilesPDFView atIndexedSubscript:9];
+
+    }
     
 }
 

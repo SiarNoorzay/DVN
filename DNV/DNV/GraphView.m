@@ -39,7 +39,7 @@
     }
     // Drawing code
 	CGContextRef _context = UIGraphicsGetCurrentContext();
-	ECGraph *graph = [[ECGraph alloc] initWithFrame:CGRectMake(10,40, 768, 280) withContext:_context isPortrait:NO];
+	ECGraph *graph = [[ECGraph alloc] initWithFrame:CGRectMake(10,40, 612, 268) withContext:_context isPortrait:NO];
     
 	NSLog(@"draw rect %@", [self.elementNames objectAtIndex:0]);
     NSMutableArray *itemsArray = [[NSMutableArray alloc]initWithCapacity:numberOfEles];

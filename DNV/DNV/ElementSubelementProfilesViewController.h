@@ -15,6 +15,7 @@
 
 @property (strong,nonatomic) Audit *audit;
 
+@property (strong, nonatomic) IBOutlet UIView *profilesPDFView;
 @property (strong, nonatomic) NSArray *cellArrary;
 
 @property (strong, nonatomic) IBOutlet UITableView *resultsTableView;

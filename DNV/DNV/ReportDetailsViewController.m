@@ -8,6 +8,7 @@
 
 #import "ReportDetailsViewController.h"
 #import "ReportDocViewController.h"
+#import "ExecutiveSummaryViewController.h"
 
 @interface ReportDetailsViewController ()
 
@@ -29,20 +30,19 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    //TODO: get audit from DB instead of bundle
     // self.audit = getAuditFromDB with ID from previous selection
     
     
-    NSError *error;
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
-    
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-    
-    NSLog(@"JSON contains:\n%@", [dictionary description]);
-    
-    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-    
-    self.audit = [[Audit alloc]initWithAudit:theAudit];
+//    NSError *error;
+//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
+//    
+//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+//    
+//    NSLog(@"JSON contains:\n%@", [dictionary description]);
+//    
+//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
+//    
+//    self.audit = [[Audit alloc]initWithAudit:theAudit];
 
     self.clientRef.text = self.audit.report.clientRef;
     self.summary.text = self.audit.report.summary;
@@ -67,6 +67,10 @@
 {
     if ([[segue identifier] isEqualToString:@"goToExecutiveSummary"]) {
         
+        ExecutiveSummaryViewController * exeVC = [segue destinationViewController];
+        
+        exeVC.audit = self.audit;
+        
         ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
         
         int pixelsToMove = self.summary.frame.size.height;
@@ -80,6 +84,8 @@
         //make the hieght view bigger
         rect = self.reportDetialsPDFView.frame;
         rect.size.height += pixelsToMove;
+        int numPages = ceil( rect.size.height / 792 );
+        rect.size.height = numPages * 792;
         self.reportDetialsPDFView.frame = rect;
         
         //move each uiElement under the summary down
@@ -119,11 +125,17 @@
         rect.origin.y += pixelsToMove;
         self.copyrightLabel.frame = rect;
         
-        //set the frame to under the pdfview
+        //[reportVC.viewArray addObject:self.reportDetialsPDFView];
+        [reportVC.viewArray setObject:self.reportDetialsPDFView atIndexedSubscript:1];
+
         
+        //set the frame of this view to the bottom of the finalPdfview
+        //rect = self.reportDetialsPDFView.frame;
+       // rect.origin.y = reportVC.finalPFDView.frame.size.height;
+       // self.reportDetialsPDFView.frame = rect;
         
-        [reportVC.finalPFDView addSubview:self.reportDetialsPDFView];
-        [reportVC.finalPFDView sizeToFit];
+      //  [reportVC.finalPFDView addSubview:self.reportDetialsPDFView];
+       // [reportVC.finalPFDView sizeToFit];
         
     }
     

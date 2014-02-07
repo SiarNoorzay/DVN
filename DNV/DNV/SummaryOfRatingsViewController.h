@@ -18,14 +18,23 @@
 
 @property (strong, nonatomic) NSArray *elementsArray;
 
+@property (strong, nonatomic) IBOutlet UIView *ratingsPDFView;
+
 
 @property (strong, nonatomic) IBOutlet UITableView *ElementRatingsTableView;
+
+@property (strong, nonatomic) IBOutlet UILabel *possibleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *evaluatedLabel;
+
+
 @property (strong, nonatomic) IBOutlet UILabel *totalPossibleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *totalAwardedLabel;
 @property (strong, nonatomic) IBOutlet UILabel *totalPercentageLabel;
 @property (strong, nonatomic) IBOutlet UILabel *evaluatedPossibleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *evaluatedAwardedLabel;
 @property (strong, nonatomic) IBOutlet UILabel *evaluatedPercentageLabel;
+
+
 @property (nonatomic) IBOutlet GraphView *graphView;
 
 

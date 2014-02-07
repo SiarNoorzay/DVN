@@ -39,7 +39,7 @@ int subEleNumber;
     //self.listOfElements = self.aud.Elements;
     
     if (self.aud.Elements != nil){
-        
+        BOOL auditComplete = true;
         for (int i = 0; i< [self.aud.Elements count]; i++) {
             Elements *ele = [self.aud.Elements objectAtIndex:i];
             float tempEleNAPoints = 0;
@@ -85,16 +85,24 @@ int subEleNumber;
                 subEle.isCompleted = subEleComplete;
                 eleComplete = eleComplete && subEleComplete;
                 
+                [self.dnvDBManager updateSubElment:subEle];
+                
             }
             ele.modefiedNAPoints = tempEleNAPoints;
             ele.pointsAwarded = elePointsAwarded;
-
+            
+            [self.dnvDBManager updateElement:ele];
+            
+            auditComplete = auditComplete && eleComplete;
+        }//end of element loop
+        if (auditComplete) {
+            self.aud.auditType = 2;
         }
     }
-//    if (self.dnvDBManager)
-//    {
-//        [self.dnvDBManager updateAudit:self.aud];
-//    }
+    if (self.dnvDBManager)
+    {
+        [self.dnvDBManager updateAudit:self.aud];
+    }
     [self.subElementTable reloadData];
 }
 - (void)viewDidLoad
