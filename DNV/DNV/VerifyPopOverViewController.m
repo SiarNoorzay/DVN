@@ -8,6 +8,7 @@
 
 #import "VerifyPopOverViewController.h"
 
+
 @interface VerifyPopOverViewController ()
 
 @end
@@ -58,6 +59,27 @@
         [self.theAnswersVC.verifyButton setSelected: true];
     else
         [self.theAnswersVC.verifyButton setSelected: false];
+    
+    if( self.btnPhysical.tag == 0)
+    {
+        [self.theAnswersVC.dnvDBManager deleteVerifyForQuestion:self.theAnswersVC.question.questionID ofType:0];
+        
+        self.theAnswersVC.question.PhysicalObservations = nil;
+    }
+    
+    if( self.btnInterviews.tag == 0)
+    {
+        [self.theAnswersVC.dnvDBManager deleteVerifyForQuestion:self.theAnswersVC.question.questionID ofType:1];
+        
+        self.theAnswersVC.question.InterviewObservations = nil;
+    }
+    
+    if( self.btnRecords.tag == 0)
+    {
+        [self.theAnswersVC.dnvDBManager deleteVerifyForQuestion:self.theAnswersVC.question.questionID ofType:2];
+        
+        self.theAnswersVC.question.Records = nil;
+    }
 }
 
 - (IBAction)btnToggler:(id)sender

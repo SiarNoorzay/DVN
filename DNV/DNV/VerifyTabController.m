@@ -7,6 +7,7 @@
 //
 
 #import "VerifyTabController.h"
+#import "AnswersViewController.h"
 
 @interface VerifyTabController ()
 
@@ -40,4 +41,22 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)btnEditQuestion:(id)sender
+{
+    [self performSegueWithIdentifier:@"verifyTabToDashboard" sender:self];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if( [segue.identifier isEqualToString:@"verifyTabToDashboard"])
+    {
+        //to recursively go through and find all verified questions!!
+        AnswersViewController *answersVC = [segue destinationViewController];
+        
+        answersVC.question = self.theQuestion;
+        answersVC.questionArray = self.listOfVerifyQuestions;
+        answersVC.currentPosition = self.currentSpot;
+        
+    }
+}
 @end
