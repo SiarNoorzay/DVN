@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "observationObject.h"
+#import "Observations.h"
+#import "DNVDatabaseManagerClass.h"
 
 @interface verificationCell : UITableViewCell<UITextViewDelegate>
 
@@ -24,6 +25,8 @@
 @property (assign) int iConfirm;
 @property (assign) int iNotConfirm;
 
-@property (nonatomic, strong) observationObject *theObject;
+@property (nonatomic, strong) Observations *theObject;
+
+@property(nonatomic, strong) DNVDatabaseManagerClass *dnvDB;
 
 @end

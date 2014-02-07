@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Questions.h"
 
 @interface VerifyTabController : UITabBarController
+
+@property (nonatomic, strong) Questions *theQuestion;
 
 @end

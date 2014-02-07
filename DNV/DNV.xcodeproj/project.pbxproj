@@ -7,11 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4A4AFC5018A00BE1006901D1 /* observationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AFC4F18A00BE1006901D1 /* observationObject.m */; };
 		4A4AFC5518A13062006901D1 /* VerifyPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AFC5418A13062006901D1 /* VerifyPopOverViewController.m */; };
 		4A4AFC5B18A135B0006901D1 /* interview.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4AFC5818A135B0006901D1 /* interview.png */; };
 		4A4AFC5C18A135B0006901D1 /* physical.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4AFC5918A135B0006901D1 /* physical.png */; };
 		4A4AFC5D18A135B0006901D1 /* records.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4AFC5A18A135B0006901D1 /* records.png */; };
+		4A4AFC7118A3F8B4006901D1 /* interviewSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4AFC7018A3F8B3006901D1 /* interviewSmall.png */; };
+		4A4AFC7318A3F95B006901D1 /* recordsSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4AFC7218A3F95B006901D1 /* recordsSmall.png */; };
+		4A4AFC7918A3FB6A006901D1 /* physicalSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4AFC7818A3FB6A006901D1 /* physicalSmall.png */; };
+		4A4AFC7B18A4045C006901D1 /* checkBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4AFC7A18A4045C006901D1 /* checkBox.png */; };
+		4A4AFC8718A407FC006901D1 /* verifyRecordsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AFC8618A407FC006901D1 /* verifyRecordsCell.m */; };
+		4A4AFC8B18A42EEB006901D1 /* Observations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AFC8A18A42EEB006901D1 /* Observations.m */; };
+		4A4AFC8E18A42F33006901D1 /* Records.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AFC8D18A42F33006901D1 /* Records.m */; };
 		4A6CFD56189FE2510036DD28 /* VerifyTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CFD55189FE2510036DD28 /* VerifyTabController.m */; };
 		4A6CFD59189FE5060036DD28 /* VerifyPhysicalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CFD58189FE5060036DD28 /* VerifyPhysicalViewController.m */; };
 		4A6CFD5C189FE5170036DD28 /* VerifyInterivewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CFD5B189FE5170036DD28 /* VerifyInterivewsViewController.m */; };
@@ -170,13 +176,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4A4AFC4E18A00BE1006901D1 /* observationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = observationObject.h; sourceTree = "<group>"; };
-		4A4AFC4F18A00BE1006901D1 /* observationObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = observationObject.m; sourceTree = "<group>"; };
 		4A4AFC5318A13062006901D1 /* VerifyPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyPopOverViewController.h; sourceTree = "<group>"; };
 		4A4AFC5418A13062006901D1 /* VerifyPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyPopOverViewController.m; sourceTree = "<group>"; };
 		4A4AFC5818A135B0006901D1 /* interview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = interview.png; sourceTree = "<group>"; };
 		4A4AFC5918A135B0006901D1 /* physical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = physical.png; sourceTree = "<group>"; };
 		4A4AFC5A18A135B0006901D1 /* records.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = records.png; sourceTree = "<group>"; };
+		4A4AFC7018A3F8B3006901D1 /* interviewSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = interviewSmall.png; sourceTree = "<group>"; };
+		4A4AFC7218A3F95B006901D1 /* recordsSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recordsSmall.png; sourceTree = "<group>"; };
+		4A4AFC7818A3FB6A006901D1 /* physicalSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = physicalSmall.png; sourceTree = "<group>"; };
+		4A4AFC7A18A4045C006901D1 /* checkBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkBox.png; sourceTree = "<group>"; };
+		4A4AFC8518A407FC006901D1 /* verifyRecordsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = verifyRecordsCell.h; sourceTree = "<group>"; };
+		4A4AFC8618A407FC006901D1 /* verifyRecordsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = verifyRecordsCell.m; sourceTree = "<group>"; };
+		4A4AFC8918A42EEB006901D1 /* Observations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Observations.h; sourceTree = "<group>"; };
+		4A4AFC8A18A42EEB006901D1 /* Observations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Observations.m; sourceTree = "<group>"; };
+		4A4AFC8C18A42F33006901D1 /* Records.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Records.h; sourceTree = "<group>"; };
+		4A4AFC8D18A42F33006901D1 /* Records.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Records.m; sourceTree = "<group>"; };
 		4A6CFD54189FE2510036DD28 /* VerifyTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyTabController.h; sourceTree = "<group>"; };
 		4A6CFD55189FE2510036DD28 /* VerifyTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyTabController.m; sourceTree = "<group>"; };
 		4A6CFD57189FE5060036DD28 /* VerifyPhysicalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyPhysicalViewController.h; sourceTree = "<group>"; };
@@ -400,14 +414,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4A4AFC5718A13572006901D1 /* verifyIcons */ = {
+		4A4AFC5718A13572006901D1 /* Verify Icons */ = {
 			isa = PBXGroup;
 			children = (
+				4A4AFC7A18A4045C006901D1 /* checkBox.png */,
+				4A4AFC7818A3FB6A006901D1 /* physicalSmall.png */,
+				4A4AFC7218A3F95B006901D1 /* recordsSmall.png */,
+				4A4AFC7018A3F8B3006901D1 /* interviewSmall.png */,
 				4A4AFC5818A135B0006901D1 /* interview.png */,
 				4A4AFC5918A135B0006901D1 /* physical.png */,
 				4A4AFC5A18A135B0006901D1 /* records.png */,
 			);
-			name = verifyIcons;
+			name = "Verify Icons";
 			sourceTree = "<group>";
 		};
 		4A6CFD52189FE2050036DD28 /* VerificationTabBar */ = {
@@ -417,8 +435,8 @@
 				4A6CFD55189FE2510036DD28 /* VerifyTabController.m */,
 				4A6CFD63189FE6410036DD28 /* verificationCell.h */,
 				4A6CFD64189FE6410036DD28 /* verificationCell.m */,
-				4A4AFC4E18A00BE1006901D1 /* observationObject.h */,
-				4A4AFC4F18A00BE1006901D1 /* observationObject.m */,
+				4A4AFC8518A407FC006901D1 /* verifyRecordsCell.h */,
+				4A4AFC8618A407FC006901D1 /* verifyRecordsCell.m */,
 				4A6CFD60189FE5310036DD28 /* Tab 1 - Physical */,
 				4A6CFD61189FE5590036DD28 /* Tab 2 - Interviews */,
 				4A6CFD62189FE5720036DD28 /* Tab 3 - Records */,
@@ -864,10 +882,14 @@
 				76AB3CBF187B21700019603F /* Questions.m */,
 				76AB3CC1187B22300019603F /* Answers.h */,
 				76AB3CC2187B22300019603F /* Answers.m */,
-				76E81F16187DB92600441F62 /* Folder.h */,
-				76E81F17187DB92600441F62 /* Folder.m */,
+				4A4AFC8918A42EEB006901D1 /* Observations.h */,
+				4A4AFC8A18A42EEB006901D1 /* Observations.m */,
+				4A4AFC8C18A42F33006901D1 /* Records.h */,
+				4A4AFC8D18A42F33006901D1 /* Records.m */,
 				4AC04092188F71C4006A2F3C /* MergeClass.h */,
 				4AC04093188F71C4006A2F3C /* MergeClass.m */,
+				76E81F16187DB92600441F62 /* Folder.h */,
+				76E81F17187DB92600441F62 /* Folder.m */,
 				768D56EC1898136600175EB4 /* LayeredQuestion.h */,
 				768D56ED1898136600175EB4 /* LayeredQuestion.m */,
 			);
@@ -904,7 +926,7 @@
 				76A568261887240B000E32D3 /* Tableview Icons */,
 				76A0DFC4188504640038FD61 /* Dashboard Icons */,
 				76A1039E1899A7A700283F67 /* Edit Client Button */,
-				4A4AFC5718A13572006901D1 /* verifyIcons */,
+				4A4AFC5718A13572006901D1 /* Verify Icons */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -1068,7 +1090,9 @@
 				769D3D0418863436002DF3B8 /* import_icon.png in Resources */,
 				76E81F13187C908100441F62 /* usersNOTDB.json in Resources */,
 				4A4AFC5D18A135B0006901D1 /* records.png in Resources */,
+				4A4AFC7318A3F95B006901D1 /* recordsSmall.png in Resources */,
 				76A103A01899A7D300283F67 /* empty_checkbox.png in Resources */,
+				4A4AFC7118A3F8B4006901D1 /* interviewSmall.png in Resources */,
 				76A568071886ED22000E32D3 /* mic_icon.png in Resources */,
 				76E81F581886D5ED00441F62 /* Help-100.png in Resources */,
 				76A568031886E979000E32D3 /* notes_icon.png in Resources */,
@@ -1082,7 +1106,9 @@
 				769D3CEF1885F9FC002DF3B8 /* wip_checklist_icon.png in Resources */,
 				762797171871D53A00F22E73 /* InfoPlist.strings in Resources */,
 				4A4AFC5B18A135B0006901D1 /* interview.png in Resources */,
+				4A4AFC7918A3FB6A006901D1 /* physicalSmall.png in Resources */,
 				76A568151886F33B000E32D3 /* thumbs_down.png in Resources */,
+				4A4AFC7B18A4045C006901D1 /* checkBox.png in Resources */,
 				76A103A61899ABE500283F67 /* checkbox_checked_gray_border.png in Resources */,
 				76A721A7188061E200E34CFA /* DNV_GL_logo.png in Resources */,
 				76A568051886EA76000E32D3 /* verify_icon_gray.png in Resources */,
@@ -1126,7 +1152,6 @@
 				76007E261888317400FA7A39 /* QuestionCell.m in Sources */,
 				76D96A3B187B001300961260 /* LogInViewController.m in Sources */,
 				4AC04094188F71C4006A2F3C /* MergeClass.m in Sources */,
-				4A4AFC5018A00BE1006901D1 /* observationObject.m in Sources */,
 				768D566D1890678600175EB4 /* GraphView.m in Sources */,
 				76C7593618A3FA2B00467154 /* MethodologyViewController.m in Sources */,
 				76A7C9941889DC02004E4F39 /* DNVDatabaseManagerClass.m in Sources */,
@@ -1152,6 +1177,8 @@
 				7627971D1871D53A00F22E73 /* AppDelegate.m in Sources */,
 				76E81F3C18848C7F00441F62 /* helpTextViewController.m in Sources */,
 				768D56801891ABD400175EB4 /* ReportPagesViewController.m in Sources */,
+				4A4AFC8B18A42EEB006901D1 /* Observations.m in Sources */,
+				4A4AFC8718A407FC006901D1 /* verifyRecordsCell.m in Sources */,
 				76E81F3F18849DB500441F62 /* NotesViewController.m in Sources */,
 				4A6CFD65189FE6410036DD28 /* verificationCell.m in Sources */,
 				76D96A45187B585900961260 /* ClientViewController.m in Sources */,
@@ -1175,6 +1202,7 @@
 				76E81F1E187F071C00441F62 /* AnswersViewController.m in Sources */,
 				768D5679189167C900175EB4 /* TableofContentsViewController.m in Sources */,
 				768D56661890634600175EB4 /* ECGraph.m in Sources */,
+				4A4AFC8E18A42F33006901D1 /* Records.m in Sources */,
 				768D56D8189317C300175EB4 /* ElementSubelementProfilesViewController.m in Sources */,
 				76AB3CB7187B20520019603F /* Report.m in Sources */,
 				7627431318898D3900873E9F /* DrawingViewController.m in Sources */,

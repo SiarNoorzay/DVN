@@ -8,15 +8,16 @@
 
 #import "VerifyPhysicalViewController.h"
 #import "verificationCell.h"
-#import "observationObject.h"
+#import "VerifyTabController.h"
 
 @interface VerifyPhysicalViewController ()
+{
+    VerifyTabController *myTabBar;
+}
 
 @end
 
 @implementation VerifyPhysicalViewController
-
-@synthesize arrPhysicalRows;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,7 +33,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    arrPhysicalRows = [NSMutableArray new];
+    self.dnvDB = [DNVDatabaseManagerClass getSharedInstance];
+    
+    myTabBar = (VerifyTabController*)self.tabBarController;
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,7 +50,7 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [arrPhysicalRows count];
+    return [myTabBar.theQuestion.PhysicalObservations count];
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -58,13 +61,14 @@
         cell = [[verificationCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    observationObject *aRow = [arrPhysicalRows objectAtIndex:indexPath.row];
+    Observations *aRow = [myTabBar.theQuestion.PhysicalObservations objectAtIndex:indexPath.row];
     
-    cell.txtDescription.text = aRow.strDescription;
-    cell.lblConfirmed.text = [NSString stringWithFormat:@"%d", aRow.iConfirmed];
-    cell.lblNotConfirmed.text = [NSString stringWithFormat:@"%d", aRow.iNotConfrimed];
-    cell.lblPercent.text = [NSString stringWithFormat:@"%f", aRow.fPercentage];
+    cell.txtDescription.text = aRow.description;
+    cell.lblConfirmed.text = [NSString stringWithFormat:@"%d", aRow.confirmedCount];
+    cell.lblNotConfirmed.text = [NSString stringWithFormat:@"%d", aRow.notConfirmedCount];
+    cell.lblPercent.text = [NSString stringWithFormat:@"%f", aRow.percentComplete];
     cell.theObject = aRow;
+    cell.dnvDB = self.dnvDB;
     
     return cell;
 }
@@ -80,7 +84,10 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [arrPhysicalRows removeObjectAtIndex:indexPath.row];
+    NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.PhysicalObservations];
+    [temp removeObjectAtIndex:indexPath.row];
+    myTabBar.theQuestion.PhysicalObservations = temp;
+    
     [self.tblPhysical reloadData];
 }
 
@@ -88,13 +95,18 @@
 
 - (IBAction)btnAddRowToTable:(id)sender
 {
-    observationObject *oObj = [observationObject new];
-    oObj.strDescription = @"Enter a description";
-    oObj.iConfirmed = 0;
-    oObj.iNotConfrimed = 0;
-    oObj.fPercentage = 0.00;
+    Observations *oObj = [Observations new];
+    oObj.description = @"Enter a description";
+    oObj.confirmedCount = 0;
+    oObj.notConfirmedCount = 0;
+    oObj.percentComplete = 0.00;
     
-    [arrPhysicalRows addObject:oObj];
+    NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.PhysicalObservations];
+    [temp addObject:oObj];
+    myTabBar.theQuestion.PhysicalObservations = temp;
+    
+    oObj.observationID = [self.dnvDB saveObservationVerify:oObj ofType:0 forQuestion:myTabBar.theQuestion.questionID];
+    
     [self.tblPhysical reloadData];
 }
 

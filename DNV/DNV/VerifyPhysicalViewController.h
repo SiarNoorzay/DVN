@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DNVDatabaseManagerClass.h"
 
 @interface VerifyPhysicalViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) NSMutableArray *arrPhysicalRows;
 - (IBAction)btnAddRowToTable:(id)sender;
 
 
 @property (weak, nonatomic) IBOutlet UITableView *tblPhysical;
+
+@property(nonatomic, strong) DNVDatabaseManagerClass *dnvDB;
 
 @end

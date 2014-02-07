@@ -61,7 +61,8 @@ NSString *emailString = @"support@dvn-gl.com";
         // This is not an HTML formatted email
         
         // Show email view
-        [self presentModalViewController:picker animated:YES];
+//        [self presentModalViewController:picker animated:YES];
+        [self presentViewController:picker animated:YES completion:Nil];
         
     }
     else

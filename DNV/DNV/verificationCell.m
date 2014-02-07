@@ -34,7 +34,9 @@
     self.lblConfirmed.text = [NSString stringWithFormat:@"%d", (int)[self.stpConfirmed value] ];
     [self setPercent];
     
-    self.theObject.iConfirmed = [self.lblConfirmed.text intValue];
+    self.theObject.confirmedCount = [self.lblConfirmed.text intValue];
+    
+    [self.dnvDB updateOVerify:self.theObject];
 }
 
 - (IBAction)stpNotConfirmed:(id)sender
@@ -42,7 +44,9 @@
     self.lblNotConfirmed.text = [NSString stringWithFormat:@"%d", (int)[self.stpNotConfirmed value] ];
     [self setPercent];
     
-    self.theObject.iNotConfrimed = [self.lblNotConfirmed.text intValue];
+    self.theObject.notConfirmedCount = [self.lblNotConfirmed.text intValue];
+    
+    [self.dnvDB updateOVerify:self.theObject];
 }
 
 -(void)setPercent
@@ -52,7 +56,7 @@
     else
         self.lblPercent.text = @"0";
     
-    self.theObject.fPercentage = [self.lblPercent.text floatValue];
+    self.theObject.percentComplete = [self.lblPercent.text floatValue];
 }
 
 -(void)textViewDidBeginEditing:(UITextView *)textView
@@ -66,7 +70,7 @@
     if( [text isEqualToString:@"\n"] )
     {
         [textView resignFirstResponder];
-        self.theObject.strDescription = textView.text;
+        self.theObject.description = textView.text;
         return NO;
     }
     
@@ -77,6 +81,8 @@
     if ([textView.text isEqualToString:@""]) {
         textView.text = @"Enter a description";
     }
+    
+    [self.dnvDB updateOVerify:self.theObject];
 }
 
 @end

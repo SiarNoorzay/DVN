@@ -152,7 +152,8 @@
     if (metadata.isDirectory) {
         self.JSONList = [[NSMutableArray alloc]init];
         for (DBMetadata * file in metadata.contents) {
-            [self.JSONList addObject:file.filename];
+            if ([file.filename rangeOfString:@".json"].location != NSNotFound)
+                [self.JSONList addObject:file.filename];
         }
     }
     

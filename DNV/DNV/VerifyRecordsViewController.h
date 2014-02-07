@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DNVDatabaseManagerClass.h"
 
 @interface VerifyRecordsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+
+@property (weak, nonatomic) IBOutlet UITableView *tblRecords;
+- (IBAction)btnAddToTable:(id)sender;
+
+@property(nonatomic, strong) DNVDatabaseManagerClass *dnvDB;
 
 @end

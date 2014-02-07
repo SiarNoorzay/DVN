@@ -18,6 +18,8 @@
 #import "User.h"
 #import "Client.h"
 #import "Report.h"
+#import "Observations.h"
+#import "Records.h"
 
 @interface DNVDatabaseManagerClass : NSObject
 {
@@ -45,27 +47,23 @@
 -(NSArray *)retrieveAllAuditIDsOfType:(int) auditType forAuditName:(NSString *) auditName;
 -(void)saveAudit:(Audit *) audit;
 -(void)saveClient:(Client *)client forAudit:(NSString *)auditID;
+-(void)saveReport:(Report *)report forAudit:(NSString *)auditID;
+-(int)saveObservationVerify:(Observations *)observe ofType:(int)vType forQuestion:(int)questionID;
+-(int)saveRecordVerify:(Records *)record forQuestion:(int)questionID;
 -(void)updateAudit:(Audit *)audit;
 -(void)updateClient:(Client *)client;
 -(void)updateReport:(Report *)report;
 -(void)updateElement:(Elements *)element;
 -(void)updateSubElment:(SubElements *)subElement;
 -(void)updateQuestion:(Questions *)question;
+-(void)updateOVerify:(Observations *)observe;
+-(void)updateRVerify:(Records *)record;
 -(void)deleteAudit:(NSString *) auditID;
+-(void)deleteVerifyForQuestion:(int)questionID ofType:(int)vType;
+-(void)deleteVerify:(int)verifyID;
 
 //Helper methods
 -(NSArray *)getElementIDS:(NSString *) fKeyValue;
 -(NSArray *)getIDSFrom:(NSString *) table where:(NSString *) fKeyName equals:(int) fKeyValue;
-
-
-//-(void)createAuditTable
-//-(void)createElementTable
-//-(void)createSubElementTable
-//-(void)createQuestionTable
-//-(void)createAnswerTable
-//-(void)createAttachmentTable
-//-(void)createClientTable
-//-(void)createReportTable
-
 
 @end
