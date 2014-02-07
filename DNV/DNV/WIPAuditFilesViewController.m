@@ -140,6 +140,7 @@
     }
     return restClient;
 }
+
 - (DBRestClient*)restClient2 {
     if (restClient2 == nil) {
         restClient2 = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
@@ -148,16 +149,40 @@
     return restClient2;
 }
 
+- (DBRestClient*)restClient3 {
+    if (restClient3 == nil) {
+        restClient3 = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        restClient3.delegate = self;
+    }
+    return restClient3;
+}
+
 - (void)restClient:(DBRestClient *)client loadedMetadata:(DBMetadata *)metadata {
-    if (metadata.isDirectory) {
-        self.JSONList = [[NSMutableArray alloc]init];
-        for (DBMetadata * file in metadata.contents) {
-            if ([file.filename rangeOfString:@".json"].location != NSNotFound)
-                [self.JSONList addObject:file.filename];
+    
+    if (client == self->restClient) {
+    
+        if (metadata.isDirectory) {
+            self.JSONList = [[NSMutableArray alloc]init];
+            for (DBMetadata * file in metadata.contents) {
+                if ([file.filename rangeOfString:@".json"].location != NSNotFound)
+                    [self.JSONList addObject:file.filename];
+            }
         }
+    
+        [self.wipJSONFileTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     }
     
-    [self.wipJSONFileTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+//    if (client == self->restClient3) {
+//        
+//        if (metadata.isDirectory) {
+//            self.attachmentList = [NSMutableArray new];
+//            for (DBMetadata * attach in metadata.contents){
+//                if ([attach.filename rangeOfString:@".json"].location == NSNotFound)
+//                    [self.attachmentList addObject:attach.filename];
+//            }
+//        }
+//    }
+    
     [self.spinner stopAnimating];
 }
 
@@ -320,6 +345,8 @@ loadMetadataFailedWithError:(NSError *)error {
         
         //use this to access the audit and its components dictionary style
         self.audit = [[Audit alloc]initWithAudit:theAudit];
+        
+        
         
         
         

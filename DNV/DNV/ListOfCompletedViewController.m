@@ -215,12 +215,17 @@
     }
     else if (client == self->restClient2){
         
-        DBMetadata * JSONFile = metadata.contents[0];
-        
-        NSLog(@"metadata content: %@", metadata.contents[0]);
-        NSLog(@"JSONFile: %@", JSONFile.filename);
-        
-        [self loadDropboxFile:JSONFile.filename];
+        for (int i = 0; i < metadata.contents.count; i++){
+            
+            DBMetadata * JSONFile = metadata.contents[i];
+            
+            if ([JSONFile.filename rangeOfString:@".json"].location != NSNotFound){
+                NSLog(@"JSONFile: %@", JSONFile.filename);
+    
+                [self loadDropboxFile:JSONFile.filename];
+                break;
+            }
+        }
     }
 }
 

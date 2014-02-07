@@ -17,6 +17,7 @@
 {
     DBRestClient * restClient;
     DBRestClient * restClient2;
+    DBRestClient * restClient3;
 
 }
 
@@ -33,6 +34,7 @@
 @property (strong, nonatomic) NSString * wipAuditType;
 @property (strong, nonatomic) NSString * wipAuditPath;
 @property (strong, nonatomic) NSMutableArray * JSONList;
+@property (strong, nonatomic) NSMutableArray * attachmentList;
 
 @property (strong, nonatomic) UIPopoverController * wipPopOver;
 
