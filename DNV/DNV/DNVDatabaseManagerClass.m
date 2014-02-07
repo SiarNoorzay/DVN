@@ -1504,45 +1504,62 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
 
 -(void)deleteVerifyForQuestion:(int)questionID ofType:(int)vType{
     
-    NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM VERIFY WHERE QUESTIONID = %d AND VERIFYTYPE = %d", questionID, vType];
+    //Opening the SQLite DB
+    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
     
-    sqlite3_stmt * statement;
+        NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM VERIFY WHERE QUESTIONID = %d AND VERIFYTYPE = %d", questionID, vType];
     
-    //Prepare the Query
-    sqlite3_prepare_v2(dnvAuditDB, [deleteSQL UTF8String], -1, &statement, NULL);
+        sqlite3_stmt * statement;
     
-    if(sqlite3_step(statement)==SQLITE_DONE)
-    {
-        NSLog(@"Row deleted from Verify table.");
+        //Prepare the Query
+        sqlite3_prepare_v2(dnvAuditDB, [deleteSQL UTF8String], -1, &statement, NULL);
+    
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            NSLog(@"Row deleted from Verify table.");
+        
+        }
+        else {
+            NSLog(@"Failed to delete row from Verify table.");
+        }
+    
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
     }
-    else {
-        NSLog(@"Failed to delete row from Verify table.");
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
     }
-    
-    sqlite3_finalize(statement);
-    
 }
 
 -(void)deleteVerify:(int)verifyID{
     
-    NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM VERIFY WHERE ID = %d", verifyID];
+    //Opening the SQLite DB
+    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
     
-    sqlite3_stmt * statement;
+        NSString * deleteSQL = [NSString stringWithFormat:@"DELETE FROM VERIFY WHERE ID = %d", verifyID];
     
-    //Prepare the Query
-    sqlite3_prepare_v2(dnvAuditDB, [deleteSQL UTF8String], -1, &statement, NULL);
+        sqlite3_stmt * statement;
     
-    if(sqlite3_step(statement)==SQLITE_DONE)
-    {
-        NSLog(@"Row deleted from Verify table.");
+        //Prepare the Query
+        sqlite3_prepare_v2(dnvAuditDB, [deleteSQL UTF8String], -1, &statement, NULL);
+    
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            NSLog(@"Row deleted from Verify table.");
         
-    }
-    else {
-        NSLog(@"Failed to delete row from Verify table.");
-    }
+        }
+        else {
+            NSLog(@"Failed to delete row from Verify table.");
+        }
     
-    sqlite3_finalize(statement);
-    
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
+    }
 }
 
 #pragma mark User methods
