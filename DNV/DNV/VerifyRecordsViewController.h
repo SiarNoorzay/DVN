@@ -11,7 +11,6 @@
 
 @interface VerifyRecordsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) NSMutableArray *arrRecordRows;
 @property (weak, nonatomic) IBOutlet UITableView *tblRecords;
 - (IBAction)btnAddToTable:(id)sender;
 

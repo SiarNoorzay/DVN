@@ -11,7 +11,6 @@
 
 @interface VerifyPhysicalViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) NSMutableArray *arrPhysicalRows;
 - (IBAction)btnAddRowToTable:(id)sender;
 
 

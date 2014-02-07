@@ -11,12 +11,13 @@
 #import "VerifyTabController.h"
 
 @interface VerifyPhysicalViewController ()
+{
+    VerifyTabController *myTabBar;
+}
 
 @end
 
 @implementation VerifyPhysicalViewController
-
-@synthesize arrPhysicalRows;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,7 +34,8 @@
 	// Do any additional setup after loading the view.
     
     self.dnvDB = [DNVDatabaseManagerClass getSharedInstance];
-    arrPhysicalRows = [NSMutableArray new];
+    
+    myTabBar = (VerifyTabController*)self.tabBarController;
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,7 +50,7 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [arrPhysicalRows count];
+    return [myTabBar.theQuestion.PhysicalObservations count];
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -59,7 +61,7 @@
         cell = [[verificationCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    Observations *aRow = [arrPhysicalRows objectAtIndex:indexPath.row];
+    Observations *aRow = [myTabBar.theQuestion.PhysicalObservations objectAtIndex:indexPath.row];
     
     cell.txtDescription.text = aRow.description;
     cell.lblConfirmed.text = [NSString stringWithFormat:@"%d", aRow.confirmedCount];
@@ -82,7 +84,10 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [arrPhysicalRows removeObjectAtIndex:indexPath.row];
+    NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.PhysicalObservations];
+    [temp removeObjectAtIndex:indexPath.row];
+    myTabBar.theQuestion.PhysicalObservations = temp;
+    
     [self.tblPhysical reloadData];
 }
 
@@ -96,10 +101,12 @@
     oObj.notConfirmedCount = 0;
     oObj.percentComplete = 0.00;
     
-    VerifyTabController *myTabBar = (VerifyTabController*)self.tabBarController;
-    [self.dnvDB saveObservationVerify:oObj ofType:0 forQuestion:myTabBar.theQuestion.questionID];
+    NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.PhysicalObservations];
+    [temp addObject:oObj];
+    myTabBar.theQuestion.PhysicalObservations = temp;
     
-    [arrPhysicalRows addObject:oObj];
+    oObj.observationID = [self.dnvDB saveObservationVerify:oObj ofType:0 forQuestion:myTabBar.theQuestion.questionID];
+    
     [self.tblPhysical reloadData];
 }
 

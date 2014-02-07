@@ -12,12 +12,13 @@
 #import "VerifyTabController.h"
 
 @interface VerifyRecordsViewController ()
-
+{
+    VerifyTabController *myTabBar;
+}
 @end
 
 @implementation VerifyRecordsViewController
 
-@synthesize arrRecordRows;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,7 +35,8 @@
 	// Do any additional setup after loading the view.
     
     self.dnvDB = [DNVDatabaseManagerClass getSharedInstance];
-    arrRecordRows = [NSMutableArray new];
+    
+    myTabBar = (VerifyTabController*)self.tabBarController;
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,7 +52,7 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [arrRecordRows count];
+    return [myTabBar.theQuestion.Records count];
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -61,7 +63,7 @@
         cell = [[verifyRecordsCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    Records *aRow = [arrRecordRows objectAtIndex:indexPath.row];
+    Records *aRow = [myTabBar.theQuestion.Records objectAtIndex:indexPath.row];
     
     cell.txtDescription.text = aRow.description;
     
@@ -87,7 +89,10 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [arrRecordRows removeObjectAtIndex:indexPath.row];
+    NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.Records];
+    [temp removeObjectAtIndex:indexPath.row];
+    myTabBar.theQuestion.Records = temp;
+    
     [self.tblRecords reloadData];
 }
 #pragma End TableView Methods
@@ -98,10 +103,12 @@
     rObj.description = @"Enter a description";
     rObj.isConfirmed = false;
     
-    VerifyTabController *myTabBar = (VerifyTabController*)self.tabBarController;
-    [self.dnvDB saveRecordVerify:rObj forQuestion:myTabBar.theQuestion.questionID];
+    NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.Records];
+    [temp addObject:rObj];
+     myTabBar.theQuestion.Records = temp;
     
-    [arrRecordRows addObject:rObj];
+    rObj.recordID = [self.dnvDB saveRecordVerify:rObj forQuestion:myTabBar.theQuestion.questionID];
+    
     [self.tblRecords reloadData];
 }
 @end

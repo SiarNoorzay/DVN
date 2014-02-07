@@ -12,12 +12,12 @@
 #import "VerifyTabController.h"
 
 @interface VerifyInterivewsViewController ()
-
+{
+    VerifyTabController *myTabBar;
+}
 @end
 
 @implementation VerifyInterivewsViewController
-
-@synthesize arrInterviewRows;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,7 +34,7 @@
 	// Do any additional setup after loading the view.
     
     self.dnvDB = [DNVDatabaseManagerClass getSharedInstance];
-    arrInterviewRows = [NSMutableArray new];
+    myTabBar = (VerifyTabController*)self.tabBarController;
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,7 +49,7 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [arrInterviewRows count];
+    return [myTabBar.theQuestion.InterviewObservations count];
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -60,7 +60,7 @@
         cell = [[verificationCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    Observations *aRow = [arrInterviewRows objectAtIndex:indexPath.row];
+    Observations *aRow = [myTabBar.theQuestion.InterviewObservations objectAtIndex:indexPath.row];
     
     cell.txtDescription.text = aRow.description;
     cell.lblConfirmed.text = [NSString stringWithFormat:@"%d", aRow.confirmedCount];
@@ -83,7 +83,10 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [arrInterviewRows removeObjectAtIndex:indexPath.row];
+    NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.InterviewObservations];
+    [temp removeObjectAtIndex:indexPath.row];
+    myTabBar.theQuestion.InterviewObservations = temp;
+    
     [self.tblInterview reloadData];
 }
 #pragma End TableView Methods
@@ -95,10 +98,13 @@
     oObj.notConfirmedCount = 0;
     oObj.percentComplete = 0.00;
     
-    VerifyTabController *myTabBar = (VerifyTabController*)self.tabBarController;
-    [self.dnvDB saveObservationVerify:oObj ofType:1 forQuestion:myTabBar.theQuestion.questionID];
+    NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.InterviewObservations];
+    [temp addObject:oObj];
+    myTabBar.theQuestion.InterviewObservations = temp;
     
-    [arrInterviewRows addObject:oObj];
+    oObj.observationID = [self.dnvDB saveObservationVerify:oObj ofType:1 forQuestion:myTabBar.theQuestion.questionID];
+    
+    
     [self.tblInterview reloadData];
 }
 @end
