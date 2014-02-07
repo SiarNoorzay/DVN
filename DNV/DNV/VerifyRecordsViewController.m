@@ -67,10 +67,7 @@
     
     cell.txtDescription.text = aRow.description;
     
-    if( aRow.isConfirmed && cell.btnCheckBox.tag != 1)
-        [cell btnCheckBox:cell.btnCheckBox];
-    else if( !aRow.isConfirmed && cell.btnCheckBox.tag != 0)
-        [cell btnCheckBox:cell.btnCheckBox];
+    [cell setGreenCheck:aRow.isConfirmed];
     
     cell.theObject = aRow;
     cell.dnvDB = self.dnvDB;

@@ -30,9 +30,24 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)btnCheckBox:(id)sender {
+- (IBAction)btnCheckBox:(id)sender
+{
     [self.btnCheckBox setUserInteractionEnabled:false];
     
+    self.theObject.isConfirmed = !self.theObject.isConfirmed;
+    
+    [UIView animateWithDuration:.3 animations:^{
+        [self setGreenCheck:self.theObject.isConfirmed];
+      
+    } completion:^(BOOL finished) {
+        [self.btnCheckBox setUserInteractionEnabled:true];
+        [self.dnvDB updateRVerify:self.theObject];
+    }];
+
+}
+
+-(void)setGreenCheck: (BOOL)bToSet
+{
     if( imgGreenCheck == nil)
     {
         imgGreenCheck = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"check.png"]];
@@ -40,23 +55,17 @@
         [self.btnCheckBox addSubview:imgGreenCheck];
     }
     
-    [UIView animateWithDuration:.3 animations:^{
-        if( self.theObject.isConfirmed)
-        {
-            self.theObject.isConfirmed = false;
-            [imgGreenCheck setFrame:CGRectMake(0, self.btnCheckBox.frame.size.height, 0, 0)];
-        }
-        else
-        {
-            self.theObject.isConfirmed = true;
-            [imgGreenCheck setFrame:CGRectMake(0, 0, self.btnCheckBox.frame.size.width, self.btnCheckBox.frame.size.height)];
-        }
-    } completion:^(BOOL finished) {
-        [self.btnCheckBox setUserInteractionEnabled:true];
-        [self.dnvDB updateRVerify:self.theObject];
-    }];
-
+    if(bToSet)
+    {
+        [imgGreenCheck setFrame:CGRectMake(0, 0, self.btnCheckBox.frame.size.width, self.btnCheckBox.frame.size.height)];
+    }
+    else
+    {
+        [imgGreenCheck setFrame:CGRectMake(0, self.btnCheckBox.frame.size.height, 0, 0)];
+    }
 }
+
+
 
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
