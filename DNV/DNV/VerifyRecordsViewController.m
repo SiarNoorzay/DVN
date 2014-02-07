@@ -8,7 +8,8 @@
 
 #import "VerifyRecordsViewController.h"
 #import "verifyRecordsCell.h"
-#import "recordsObject.h"
+#import "Records.h"
+#import "VerifyTabController.h"
 
 @interface VerifyRecordsViewController ()
 
@@ -32,6 +33,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.dnvDB = [DNVDatabaseManagerClass getSharedInstance];
     arrRecordRows = [NSMutableArray new];
 }
 
@@ -59,16 +61,17 @@
         cell = [[verifyRecordsCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    recordsObject *aRow = [arrRecordRows objectAtIndex:indexPath.row];
+    Records *aRow = [arrRecordRows objectAtIndex:indexPath.row];
     
-    cell.txtDescription.text = aRow.strDescription;
+    cell.txtDescription.text = aRow.description;
     
-    if( aRow.bConfirmed && cell.btnCheckBox.tag != 1)
+    if( aRow.isConfirmed && cell.btnCheckBox.tag != 1)
         [cell btnCheckBox:cell.btnCheckBox];
-    else if( !aRow.bConfirmed && cell.btnCheckBox.tag != 0)
+    else if( !aRow.isConfirmed && cell.btnCheckBox.tag != 0)
         [cell btnCheckBox:cell.btnCheckBox];
     
     cell.theObject = aRow;
+    cell.dnvDB = self.dnvDB;
     
     return cell;
 }
@@ -91,9 +94,12 @@
 
 
 - (IBAction)btnAddToTable:(id)sender {
-    recordsObject *rObj = [recordsObject new];
-    rObj.strDescription = @"Enter a description";
-    rObj.bConfirmed = false;
+    Records *rObj = [Records new];
+    rObj.description = @"Enter a description";
+    rObj.isConfirmed = false;
+    
+    VerifyTabController *myTabBar = (VerifyTabController*)self.tabBarController;
+    [self.dnvDB saveRecordVerify:rObj forQuestion:myTabBar.theQuestion.questionID];
     
     [arrRecordRows addObject:rObj];
     [self.tblRecords reloadData];

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DNVDatabaseManagerClass.h"
 
 @interface VerifyPhysicalViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
@@ -15,5 +16,7 @@
 
 
 @property (weak, nonatomic) IBOutlet UITableView *tblPhysical;
+
+@property(nonatomic, strong) DNVDatabaseManagerClass *dnvDB;
 
 @end

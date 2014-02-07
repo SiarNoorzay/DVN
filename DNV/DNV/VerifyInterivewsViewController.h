@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DNVDatabaseManagerClass.h"
 
 @interface VerifyInterivewsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
@@ -14,5 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tblInterview;
 - (IBAction)btnAddRow:(id)sender;
+
+@property(nonatomic, strong) DNVDatabaseManagerClass *dnvDB;
 
 @end

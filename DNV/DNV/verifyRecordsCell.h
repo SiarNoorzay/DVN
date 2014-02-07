@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "recordsObject.h"
+#import "Records.h"
+#import "DNVDatabaseManagerClass.h"
 
 @interface verifyRecordsCell : UITableViewCell<UITextViewDelegate>
 
@@ -16,7 +17,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnCheckBox;
 - (IBAction)btnCheckBox:(id)sender;
 
-@property (nonatomic, strong) recordsObject *theObject;
+@property (nonatomic, strong) Records *theObject;
 
 @property (nonatomic, strong) UIImageView *imgGreenCheck;
+
+@property(nonatomic, strong) DNVDatabaseManagerClass *dnvDB;
+
 @end

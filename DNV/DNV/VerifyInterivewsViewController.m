@@ -8,7 +8,8 @@
 
 #import "VerifyInterivewsViewController.h"
 #import "verificationCell.h"
-#import "observationObject.h"
+#import "Observations.h"
+#import "VerifyTabController.h"
 
 @interface VerifyInterivewsViewController ()
 
@@ -32,6 +33,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.dnvDB = [DNVDatabaseManagerClass getSharedInstance];
     arrInterviewRows = [NSMutableArray new];
 }
 
@@ -58,13 +60,14 @@
         cell = [[verificationCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    observationObject *aRow = [arrInterviewRows objectAtIndex:indexPath.row];
+    Observations *aRow = [arrInterviewRows objectAtIndex:indexPath.row];
     
-    cell.txtDescription.text = aRow.strDescription;
-    cell.lblConfirmed.text = [NSString stringWithFormat:@"%d", aRow.iConfirmed];
-    cell.lblNotConfirmed.text = [NSString stringWithFormat:@"%d", aRow.iNotConfrimed];
-    cell.lblPercent.text = [NSString stringWithFormat:@"%f", aRow.fPercentage];
+    cell.txtDescription.text = aRow.description;
+    cell.lblConfirmed.text = [NSString stringWithFormat:@"%d", aRow.confirmedCount];
+    cell.lblNotConfirmed.text = [NSString stringWithFormat:@"%d", aRow.notConfirmedCount];
+    cell.lblPercent.text = [NSString stringWithFormat:@"%f", aRow.percentComplete];
     cell.theObject = aRow;
+    cell.dnvDB = self.dnvDB;
     
     return cell;
 }
@@ -86,11 +89,14 @@
 #pragma End TableView Methods
 
 - (IBAction)btnAddRow:(id)sender {
-    observationObject *oObj = [observationObject new];
-    oObj.strDescription = @"Enter a description";
-    oObj.iConfirmed = 0;
-    oObj.iNotConfrimed = 0;
-    oObj.fPercentage = 0.00;
+    Observations *oObj = [Observations new];
+    oObj.description = @"Enter a description";
+    oObj.confirmedCount = 0;
+    oObj.notConfirmedCount = 0;
+    oObj.percentComplete = 0.00;
+    
+    VerifyTabController *myTabBar = (VerifyTabController*)self.tabBarController;
+    [self.dnvDB saveObservationVerify:oObj ofType:1 forQuestion:myTabBar.theQuestion.questionID];
     
     [arrInterviewRows addObject:oObj];
     [self.tblInterview reloadData];

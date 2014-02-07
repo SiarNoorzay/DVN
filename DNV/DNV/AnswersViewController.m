@@ -13,6 +13,7 @@
 #import "CalculatorViewController.h"
 #import "LayeredQuestion.h"
 #import "VerifyPopOverViewController.h"
+#import "VerifyTabController.h"
 
 @interface AnswersViewController ()
 
@@ -1014,6 +1015,15 @@ int numOfSubs;
         // Pass the information to your destination view
         [destVC setText:self.question.notes];
         [destVC setQuestion:self.question];
+    }
+    
+    if ([[segue identifier] isEqualToString:@"questionToVerify"]) {
+        
+        // Get destination tabbar
+        VerifyTabController * destVC = [segue destinationViewController];
+        
+        // Pass the information to your destination view
+        destVC.theQuestion = self.question;
     }
 }
 

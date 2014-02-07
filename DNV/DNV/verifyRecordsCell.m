@@ -41,18 +41,19 @@
     }
     
     [UIView animateWithDuration:.3 animations:^{
-        if(self.theObject.bConfirmed)
+        if(self.theObject.isConfirmed)
         {
-            self.theObject.bConfirmed = false;
+            self.theObject.isConfirmed = false;
             [imgGreenCheck setFrame:CGRectMake(0, self.btnCheckBox.frame.size.height, 0, 0)];
         }
         else
         {
-            self.theObject.bConfirmed = true;
+            self.theObject.isConfirmed = true;
             [imgGreenCheck setFrame:CGRectMake(0, 0, self.btnCheckBox.frame.size.width, self.btnCheckBox.frame.size.height)];
         }
     } completion:^(BOOL finished) {
         [self.btnCheckBox setUserInteractionEnabled:true];
+        [self.dnvDB updateRVerify:self.theObject];
     }];
 
 }
@@ -68,7 +69,7 @@
     if( [text isEqualToString:@"\n"] )
     {
         [textView resignFirstResponder];
-        self.theObject.strDescription = textView.text;
+        self.theObject.description = textView.text;
         return NO;
     }
     
@@ -79,6 +80,8 @@
     if ([textView.text isEqualToString:@""]) {
         textView.text = @"Enter a description";
     }
+    
+    [self.dnvDB updateRVerify:self.theObject];
 }
 
 @end
