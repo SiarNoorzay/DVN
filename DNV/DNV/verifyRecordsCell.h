@@ -23,4 +23,6 @@
 
 @property(nonatomic, strong) DNVDatabaseManagerClass *dnvDB;
 
+-(void)setGreenCheck: (BOOL)bToSet;
+
 @end
