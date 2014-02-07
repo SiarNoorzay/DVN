@@ -67,13 +67,14 @@
     
     cell.txtDescription.text = aRow.description;
     
-    if( aRow.isConfirmed && cell.btnCheckBox.tag != 1)
+    if( aRow.isConfirmed && cell.imgGreenCheck.frame.size.height == 0)
         [cell btnCheckBox:cell.btnCheckBox];
-    else if( !aRow.isConfirmed && cell.btnCheckBox.tag != 0)
+    else if( !aRow.isConfirmed && cell.imgGreenCheck.frame.size.height > 0)
         [cell btnCheckBox:cell.btnCheckBox];
     
     cell.theObject = aRow;
     cell.dnvDB = self.dnvDB;
+        
     
     return cell;
 }
@@ -103,11 +104,12 @@
     rObj.description = @"Enter a description";
     rObj.isConfirmed = false;
     
+    rObj.recordID = [self.dnvDB saveRecordVerify:rObj forQuestion:myTabBar.theQuestion.questionID];
+    
     NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.Records];
     [temp addObject:rObj];
      myTabBar.theQuestion.Records = temp;
     
-    rObj.recordID = [self.dnvDB saveRecordVerify:rObj forQuestion:myTabBar.theQuestion.questionID];
     
     [self.tblRecords reloadData];
 }

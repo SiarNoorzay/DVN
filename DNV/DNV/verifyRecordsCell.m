@@ -41,7 +41,7 @@
     }
     
     [UIView animateWithDuration:.3 animations:^{
-        if(self.theObject.isConfirmed)
+        if( self.theObject.isConfirmed)
         {
             self.theObject.isConfirmed = false;
             [imgGreenCheck setFrame:CGRectMake(0, self.btnCheckBox.frame.size.height, 0, 0)];

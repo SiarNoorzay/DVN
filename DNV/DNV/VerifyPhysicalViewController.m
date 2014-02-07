@@ -70,6 +70,9 @@
     cell.theObject = aRow;
     cell.dnvDB = self.dnvDB;
     
+    [cell.stpConfirmed setValue:aRow.confirmedCount];
+    [cell.stpNotConfirmed setValue:aRow.notConfirmedCount];
+    
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -101,11 +104,11 @@
     oObj.notConfirmedCount = 0;
     oObj.percentComplete = 0.00;
     
+    oObj.observationID = [self.dnvDB saveObservationVerify:oObj ofType:0 forQuestion:myTabBar.theQuestion.questionID];
+    
     NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.PhysicalObservations];
     [temp addObject:oObj];
     myTabBar.theQuestion.PhysicalObservations = temp;
-    
-    oObj.observationID = [self.dnvDB saveObservationVerify:oObj ofType:0 forQuestion:myTabBar.theQuestion.questionID];
     
     [self.tblPhysical reloadData];
 }
