@@ -90,7 +90,10 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.Records];
+    
+    [self.dnvDB deleteVerify:((Records*)[temp objectAtIndex:indexPath.row]).recordID];
     [temp removeObjectAtIndex:indexPath.row];
+
     myTabBar.theQuestion.Records = temp;
     
     [self.tblRecords reloadData];
@@ -103,11 +106,11 @@
     rObj.description = @"Enter a description";
     rObj.isConfirmed = false;
     
+    rObj.recordID = [self.dnvDB saveRecordVerify:rObj forQuestion:myTabBar.theQuestion.questionID];
+    
     NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.Records];
     [temp addObject:rObj];
      myTabBar.theQuestion.Records = temp;
-    
-    rObj.recordID = [self.dnvDB saveRecordVerify:rObj forQuestion:myTabBar.theQuestion.questionID];
     
     [self.tblRecords reloadData];
 }

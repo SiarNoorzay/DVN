@@ -84,7 +84,11 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.InterviewObservations];
+    
+    [self.dnvDB deleteVerify:((Observations *)[temp objectAtIndex:indexPath.row]).observationID];
+
     [temp removeObjectAtIndex:indexPath.row];
+    
     myTabBar.theQuestion.InterviewObservations = temp;
     
     [self.tblInterview reloadData];
@@ -98,11 +102,11 @@
     oObj.notConfirmedCount = 0;
     oObj.percentComplete = 0.00;
     
+    oObj.observationID = [self.dnvDB saveObservationVerify:oObj ofType:1 forQuestion:myTabBar.theQuestion.questionID];
+    
     NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.InterviewObservations];
     [temp addObject:oObj];
     myTabBar.theQuestion.InterviewObservations = temp;
-    
-    oObj.observationID = [self.dnvDB saveObservationVerify:oObj ofType:1 forQuestion:myTabBar.theQuestion.questionID];
     
     
     [self.tblInterview reloadData];

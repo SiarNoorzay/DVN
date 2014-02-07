@@ -85,6 +85,8 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.PhysicalObservations];
+    
+    [self.dnvDB deleteVerify:((Observations *)[temp objectAtIndex:indexPath.row]).observationID];
     [temp removeObjectAtIndex:indexPath.row];
     myTabBar.theQuestion.PhysicalObservations = temp;
     
@@ -101,11 +103,12 @@
     oObj.notConfirmedCount = 0;
     oObj.percentComplete = 0.00;
     
+    oObj.observationID = [self.dnvDB saveObservationVerify:oObj ofType:0 forQuestion:myTabBar.theQuestion.questionID];
+    
     NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.PhysicalObservations];
     [temp addObject:oObj];
     myTabBar.theQuestion.PhysicalObservations = temp;
     
-    oObj.observationID = [self.dnvDB saveObservationVerify:oObj ofType:0 forQuestion:myTabBar.theQuestion.questionID];
     
     [self.tblPhysical reloadData];
 }
