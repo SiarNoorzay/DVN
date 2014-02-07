@@ -69,9 +69,6 @@
     cell.theObject = aRow;
     cell.dnvDB = self.dnvDB;
     
-    [cell.stpConfirmed setValue:aRow.confirmedCount];
-    [cell.stpNotConfirmed setValue:aRow.notConfirmedCount];
-    
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -87,7 +84,11 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.InterviewObservations];
+    
+    [self.dnvDB deleteVerify:((Observations *)[temp objectAtIndex:indexPath.row]).observationID];
+
     [temp removeObjectAtIndex:indexPath.row];
+    
     myTabBar.theQuestion.InterviewObservations = temp;
     
     [self.tblInterview reloadData];
@@ -106,6 +107,7 @@
     NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.InterviewObservations];
     [temp addObject:oObj];
     myTabBar.theQuestion.InterviewObservations = temp;
+    
     
     [self.tblInterview reloadData];
 }

@@ -13,5 +13,6 @@
 @property (strong, nonatomic) IBOutlet UITextView *scoreAssumpTextView;
 @property (strong,nonatomic) Audit *audit;
 
+@property (strong, nonatomic) IBOutlet UIView *scoringAsumPDFView;
 
 @end

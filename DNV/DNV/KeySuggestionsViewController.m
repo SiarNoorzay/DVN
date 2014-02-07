@@ -7,6 +7,8 @@
 //
 
 #import "KeySuggestionsViewController.h"
+#import "ReportDocViewController.h"
+#import "SummaryOfRatingsViewController.h"
 
 @interface KeySuggestionsViewController ()
 
@@ -28,22 +30,21 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    //TODO: get audit from DB instead of bundle
     // self.audit = getAuditFromDB with ID from previous selection
     self.thumbsDowndQuestions = [[NSMutableArray alloc]initWithCapacity:1];
     self.positions = [[NSMutableArray alloc]initWithCapacity:1];
 
-    
-    NSError *error;
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
-    
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-    
-    NSLog(@"JSON contains:\n%@", [dictionary description]);
-    
-    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-    
-    self.audit = [[Audit alloc]initWithAudit:theAudit];
+//    
+//    NSError *error;
+//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
+//    
+//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+//    
+//    NSLog(@"JSON contains:\n%@", [dictionary description]);
+//    
+//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
+//    
+//    self.audit = [[Audit alloc]initWithAudit:theAudit];
     
     for (int i = 0; i< [self.audit.Elements count]; i++) {
         Elements *ele = [self.audit.Elements objectAtIndex:i];
@@ -122,6 +123,58 @@
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
     NSLog(@"Deleted row.");
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"goToRatings"]) {
+        
+        SummaryOfRatingsViewController * sumVC = [segue destinationViewController];
+        
+        sumVC.audit = self.audit;
+        
+        ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
+        [self.KeySugsTableView reloadData];
+        
+        [self.KeySugsTableView layoutIfNeeded];
+
+        
+        int pixelsToMove = self.KeySugsTableView.frame.size.height;
+        
+        CGRect rect         = self.KeySugsTableView.frame;
+        rect.size.height    = self.KeySugsTableView.contentSize.height;
+        self.KeySugsTableView.frame  = rect;
+        
+        pixelsToMove = self.KeySugsTableView.frame.size.height - pixelsToMove;
+        
+        if( pixelsToMove < 0)
+            pixelsToMove = 0;
+        
+        //make the pdfview height bigger
+        rect = self.keySugsPDFView.frame;
+        rect.size.height += pixelsToMove;
+        
+        int numPages = ceil( rect.size.height / 792 );
+        rect.size.height = numPages * 792;
+        
+        self.keySugsPDFView.frame = rect;
+        
+        
+        //set the frame of this view to the bottom of the finalPdfview
+//        rect = self.keySugsPDFView.frame;
+//        rect.origin.y = reportVC.finalPFDView.frame.size.height;
+//        self.keySugsPDFView.frame = rect;
+//        
+//        
+//        [reportVC.finalPFDView addSubview:self.keySugsPDFView];
+//        [reportVC.finalPFDView sizeToFit];
+        
+       // [reportVC.viewArray addObject:self.keySugsPDFView];
+        [reportVC.viewArray setObject:self.keySugsPDFView atIndexedSubscript:6];
+        
+
+    }
+    
 }
 
     

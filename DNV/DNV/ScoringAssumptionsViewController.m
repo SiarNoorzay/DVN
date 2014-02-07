@@ -7,6 +7,8 @@
 //
 
 #import "ScoringAssumptionsViewController.h"
+#import "ReportDocViewController.h"
+#import "ElementSubelementProfilesViewController.h"
 
 @interface ScoringAssumptionsViewController ()
 
@@ -28,28 +30,70 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    //TODO: get audit from DB instead of bundle
     // self.audit = getAuditFromDB with ID from previous selection
     
+//    
+//    NSError *error;
+//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
+//    
+//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+//    
+//    NSLog(@"JSON contains:\n%@", [dictionary description]);
+//    
+//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
+//    
+//    self.audit = [[Audit alloc]initWithAudit:theAudit];
     
-    NSError *error;
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
-    
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-    
-    NSLog(@"JSON contains:\n%@", [dictionary description]);
-    
-    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-    
-    self.audit = [[Audit alloc]initWithAudit:theAudit];
-    
-    if (self.audit.report.scoringAssumptions != nil)
+    if (![self.audit.report.scoringAssumptions isEqualToString:@"(null)"])
     {
         self.scoreAssumpTextView.text = self.audit.report.scoringAssumptions;
         
     }
     
 
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"goToProfiles"]) {
+        
+        ElementSubelementProfilesViewController * eleProfVC = [segue destinationViewController];
+        
+        eleProfVC.audit = self.audit;
+        
+        ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
+        
+        int pixelsToMove = self.scoreAssumpTextView.frame.size.height;
+        
+        CGRect rect         = self.scoreAssumpTextView.frame;
+        rect.size.height    = self.scoreAssumpTextView.contentSize.height;
+        self.scoreAssumpTextView.frame  = rect;
+        
+        pixelsToMove = self.scoreAssumpTextView.frame.size.height - pixelsToMove;
+        
+        //make the pdfview height bigger
+        rect = self.scoringAsumPDFView.frame;
+        rect.size.height += pixelsToMove;
+        int numPages = ceil( rect.size.height / 792 );
+        rect.size.height = numPages * 792;
+        self.scoringAsumPDFView.frame = rect;
+        
+        //set the frame of this view to the bottom of the finalPdfview
+//        rect = self.scoringAsumPDFView.frame;
+//        rect.origin.y = reportVC.finalPFDView.frame.size.height;
+//        self.scoringAsumPDFView.frame = rect;
+//        
+//        
+//        [reportVC.finalPFDView addSubview:self.scoringAsumPDFView];
+//        [reportVC.finalPFDView sizeToFit];
+        
+       // [reportVC.viewArray addObject:self.scoringAsumPDFView];
+        
+        [reportVC.viewArray setObject:self.scoringAsumPDFView atIndexedSubscript:8];
+        
+
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning

@@ -67,14 +67,13 @@
     
     cell.txtDescription.text = aRow.description;
     
-    if( aRow.isConfirmed && cell.imgGreenCheck.frame.size.height == 0)
+    if( aRow.isConfirmed && cell.btnCheckBox.tag != 1)
         [cell btnCheckBox:cell.btnCheckBox];
-    else if( !aRow.isConfirmed && cell.imgGreenCheck.frame.size.height > 0)
+    else if( !aRow.isConfirmed && cell.btnCheckBox.tag != 0)
         [cell btnCheckBox:cell.btnCheckBox];
     
     cell.theObject = aRow;
     cell.dnvDB = self.dnvDB;
-        
     
     return cell;
 }
@@ -91,7 +90,10 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.Records];
+    
+    [self.dnvDB deleteVerify:((Records*)[temp objectAtIndex:indexPath.row]).recordID];
     [temp removeObjectAtIndex:indexPath.row];
+
     myTabBar.theQuestion.Records = temp;
     
     [self.tblRecords reloadData];
@@ -109,7 +111,6 @@
     NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:myTabBar.theQuestion.Records];
     [temp addObject:rObj];
      myTabBar.theQuestion.Records = temp;
-    
     
     [self.tblRecords reloadData];
 }

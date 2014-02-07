@@ -13,6 +13,7 @@
 #import "ElementSubElementViewController.h"
 #import "CompletedChoicePopOver.h"
 #import "Folder.h"
+#import "TitleViewController.h"
 
 @interface ListOfCompletedViewController ()<DBRestClientDelegate>
 
@@ -102,7 +103,8 @@
     
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     
     static NSString * cellIdentifier = @"CompletedCell";
     
@@ -329,6 +331,14 @@ loadMetadataFailedWithError:(NSError *)error {
 //    
 //        eleSubEleVC.audType = @"Completed";
     }
+    if ([segue.identifier isEqualToString:@"ViewReport"]) {
+        
+        TitleViewController * titleVC = [segue destinationViewController];
+        
+        titleVC.audit = self.audit;
+    }
+    
+    
 }
 
 #pragma mark file selection methods
