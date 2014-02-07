@@ -1514,7 +1514,6 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     if(sqlite3_step(statement)==SQLITE_DONE)
     {
         NSLog(@"Row deleted from Verify table.");
-        
     }
     else {
         NSLog(@"Failed to delete row from Verify table.");

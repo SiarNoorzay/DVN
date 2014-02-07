@@ -10,9 +10,9 @@
 #import "VerifyTabController.h"
 
 @interface VerifyQuestionsViewController ()
-
-@property NSArray * verifyQuestions;
-
+{
+    Questions *selectedQuestion;
+}
 @end
 
 @implementation VerifyQuestionsViewController
@@ -30,9 +30,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
-    self.verifyQuestions = [[NSArray alloc]initWithObjects:@"Is the freezer temperature at a constant 30 degrees?",@"Has the water filter been changed recently?", @"Are all meats being refrigerated properly for consumption?",@"What is the maximum hot water temperature for the kitchen faucets?", nil];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,8 +55,9 @@
     }
     
     
+    Questions *theQuestion = [self.verifyQuestions objectAtIndex:indexPath.row];
     
-    cell.textLabel.text = self.verifyQuestions[indexPath.row];
+    cell.textLabel.text = theQuestion.questionText;
     cell.textLabel.font = [UIFont systemFontOfSize:25.0];
     
     return cell;
@@ -67,17 +65,20 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    selectedQuestion = [self.verifyQuestions objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"VerifyQuestionsTabBar" sender:self];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    //to set which of the 3 tabs are selectable
-    NSIndexPath *indexPath = self.VerifyQuestionsTable.indexPathForSelectedRow;
-    VerifyTabController * verifyTabCont = [segue destinationViewController];
+    if( [segue.identifier isEqualToString:@"VerifyQuestionsTabBar"])
+    {
+        // Get destination tabbar
+        VerifyTabController * destVC = [segue destinationViewController];
+        
+        // Pass the information to your destination view
+        destVC.theQuestion = selectedQuestion;
+    }
 }
-
-
 
 @end

@@ -20,6 +20,8 @@
     DBRestClient * restClient;
 }
 
+@property NSArray * verifyQuestions;
+
 @property (strong, nonatomic) NSString * auditPath;
 @property (strong,nonatomic) Audit * audit;
 

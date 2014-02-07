@@ -188,7 +188,10 @@ loadMetadataFailedWithError:(NSError *)error {
             [self performSegueWithIdentifier:@"ContinueAudit" sender:self];
             break;
         case 1:
+        {
+
             [self performSegueWithIdentifier:@"VerifyQuestions" sender:self];
+        }
             break;
         case 2:
         {
@@ -212,6 +215,36 @@ loadMetadataFailedWithError:(NSError *)error {
             
         default:
             break;
+    }
+}
+
+-(NSMutableArray*)getVerifyQuestionsForAudit:(Audit*)anAudit
+{
+    NSMutableArray *verifyQuestions = [NSMutableArray new];
+    
+    for( Elements *Elem in anAudit.Elements)
+    {
+        for ( SubElements *SubElem in Elem.Subelements )
+        {
+            for( Questions *Quest in SubElem.Questions )
+            {
+                [self getAllVerifiedQuestionsFromQuestion:Quest forVerifyArray:verifyQuestions];
+            }
+        }
+    }
+
+    return verifyQuestions;
+}
+-(void)getAllVerifiedQuestionsFromQuestion:(Questions*)aQuestion forVerifyArray:(NSMutableArray*)vArray
+{
+    for( Questions *LayerQuestion in aQuestion.layeredQuesions )
+    {
+        [self getAllVerifiedQuestionsFromQuestion:LayerQuestion forVerifyArray:vArray];
+    }
+        
+    if ( aQuestion.needsVerifying > 0)
+    {
+        [vArray addObject:aQuestion];
     }
 }
 
@@ -240,6 +273,14 @@ loadMetadataFailedWithError:(NSError *)error {
         else if ([self.wipAuditType isEqualToString:@"localWIP"]){
             importVC.currentFile = self.localWIPList[self.chosenJSONfile];
         }
+    }
+    
+    if( [segue.identifier isEqualToString:@"VerifyQuestions"])
+    {
+        //to recursively go through and find all verified questions!!
+        VerifyQuestionsViewController *vq = [segue destinationViewController];
+        
+        vq.verifyQuestions = [self getVerifyQuestionsForAudit:self.audit];
     }
 }
 
