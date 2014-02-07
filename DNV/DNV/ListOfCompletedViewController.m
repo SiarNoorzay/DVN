@@ -130,13 +130,21 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
+    
     if (indexPath.section == 0) {
         self.completedType = @"localCompleted";
         self.audit = [self.dnvDBManager retrieveAudit:self.localCompleted[indexPath.row]];
+        
+        [nsDefaults setObject:self.audit.name forKey:@"currentAudit"];
+        [nsDefaults synchronize];
     }
     else{
         self.completedType = @"importCompleted";
         Folder *temp =[self.completed objectAtIndex:indexPath.row];
+        
+        [nsDefaults setObject:temp.name forKey:@"currentAudit"];
+        [nsDefaults synchronize];
         
         NSLog(@"Path of Audit: %@", temp.folderPath);
         self.chosenCompletedPath = temp.folderPath;
