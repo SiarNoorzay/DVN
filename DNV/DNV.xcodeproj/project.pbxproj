@@ -109,6 +109,8 @@
 		76BF9C73187222DC00ACF6DB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C72187222DC00ACF6DB /* Security.framework */; };
 		76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C74187222EF00ACF6DB /* QuartzCore.framework */; };
 		76BF9C771872237200ACF6DB /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C761872237200ACF6DB /* DropboxSDK.framework */; };
+		76C7593618A3FA2B00467154 /* MethodologyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C7593518A3FA2B00467154 /* MethodologyViewController.m */; };
+		76C7593C18A4600700467154 /* methodologyDiagram.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C7593B18A4600700467154 /* methodologyDiagram.png */; };
 		76D4A339187CE5F6007AB1A9 /* AuditSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D4A338187CE5F6007AB1A9 /* AuditSelectionViewController.m */; };
 		76D96A3B187B001300961260 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3A187B001300961260 /* LogInViewController.m */; };
 		76D96A3E187B07EA00961260 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3D187B07EA00961260 /* User.m */; };
@@ -324,6 +326,9 @@
 		76BF9C72187222DC00ACF6DB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		76BF9C74187222EF00ACF6DB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		76BF9C761872237200ACF6DB /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
+		76C7593418A3FA2B00467154 /* MethodologyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodologyViewController.h; sourceTree = "<group>"; };
+		76C7593518A3FA2B00467154 /* MethodologyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodologyViewController.m; sourceTree = "<group>"; };
+		76C7593B18A4600700467154 /* methodologyDiagram.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = methodologyDiagram.png; sourceTree = "<group>"; };
 		76D4A337187CE5F6007AB1A9 /* AuditSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuditSelectionViewController.h; sourceTree = "<group>"; };
 		76D4A338187CE5F6007AB1A9 /* AuditSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuditSelectionViewController.m; sourceTree = "<group>"; };
 		76D96A39187B001300961260 /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
@@ -598,6 +603,8 @@
 				768D5675189165C600175EB4 /* ExecutiveSummaryViewController.m */,
 				768D5677189167C900175EB4 /* TableofContentsViewController.h */,
 				768D5678189167C900175EB4 /* TableofContentsViewController.m */,
+				76C7593418A3FA2B00467154 /* MethodologyViewController.h */,
+				76C7593518A3FA2B00467154 /* MethodologyViewController.m */,
 				768D567A18916A6300175EB4 /* ConclusionViewController.h */,
 				768D567B18916A6300175EB4 /* ConclusionViewController.m */,
 				768D56CB1892CE2600175EB4 /* KeySuggestionsViewController.h */,
@@ -867,6 +874,14 @@
 			name = ClassObjects;
 			sourceTree = "<group>";
 		};
+		76C7593818A45EF400467154 /* Methodology Diagram */ = {
+			isa = PBXGroup;
+			children = (
+				76C7593B18A4600700467154 /* methodologyDiagram.png */,
+			);
+			name = "Methodology Diagram";
+			sourceTree = "<group>";
+		};
 		76D4A336187CE59C007AB1A9 /* AuditSelectionViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -879,6 +894,7 @@
 		76D4A33A187CE832007AB1A9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				76C7593818A45EF400467154 /* Methodology Diagram */,
 				76A721A6188061E200E34CFA /* DNV_GL_logo.png */,
 				76007D801886F58600FA7A39 /* App Icons */,
 				76A0DFC5188504F70038FD61 /* Audit Icons */,
@@ -1073,6 +1089,7 @@
 				76A568141886F33B000E32D3 /* thumbs_down_gray.png in Resources */,
 				76E81F0C187B559000441F62 /* sampleAudit.json in Resources */,
 				76A568191886F62B000E32D3 /* camera_icon.png in Resources */,
+				76C7593C18A4600700467154 /* methodologyDiagram.png in Resources */,
 				76A568011886E0CC000E32D3 /* export_icon.png in Resources */,
 				769D3CF518860C2B002DF3B8 /* flatFolderIcon2.png in Resources */,
 				76DCB9201889ACD700314C5D /* drawingBackGroundLines.png in Resources */,
@@ -1111,6 +1128,7 @@
 				4AC04094188F71C4006A2F3C /* MergeClass.m in Sources */,
 				4A4AFC5018A00BE1006901D1 /* observationObject.m in Sources */,
 				768D566D1890678600175EB4 /* GraphView.m in Sources */,
+				76C7593618A3FA2B00467154 /* MethodologyViewController.m in Sources */,
 				76A7C9941889DC02004E4F39 /* DNVDatabaseManagerClass.m in Sources */,
 				768D56CD1892CE2600175EB4 /* KeySuggestionsViewController.m in Sources */,
 				76E81F18187DB92600441F62 /* Folder.m in Sources */,

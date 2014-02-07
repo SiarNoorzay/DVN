@@ -16,6 +16,8 @@
 @property (strong, nonatomic) IBOutlet UITextField *percent;
 
 @property (strong, nonatomic) IBOutlet UITextView *conclusionTextView;
+@property (strong, nonatomic) IBOutlet UILabel *overPercentLabel;
 
+@property (strong, nonatomic) IBOutlet UIView *conclusionPFDView;
 
 @end

@@ -14,6 +14,8 @@
 
 @property (strong,nonatomic) Audit *audit;
 
+@property (strong, nonatomic) IBOutlet UIView *keySugsPDFView;
+
 @property (strong, nonatomic) IBOutlet UITableView *KeySugsTableView;
 
 @property (strong,nonatomic) NSMutableArray *thumbsDowndQuestions;

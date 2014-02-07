@@ -7,6 +7,7 @@
 //
 
 #import "KeySuggestionsViewController.h"
+#import "ReportDocViewController.h"
 
 @interface KeySuggestionsViewController ()
 
@@ -122,6 +123,54 @@
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
     NSLog(@"Deleted row.");
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"goToRatings"]) {
+        
+        ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
+        [self.KeySugsTableView reloadData];
+        
+        [self.KeySugsTableView layoutIfNeeded];
+
+        
+        int pixelsToMove = self.KeySugsTableView.frame.size.height;
+        
+        CGRect rect         = self.KeySugsTableView.frame;
+        rect.size.height    = self.KeySugsTableView.contentSize.height;
+        self.KeySugsTableView.frame  = rect;
+        
+        pixelsToMove = self.KeySugsTableView.frame.size.height - pixelsToMove;
+        
+        if( pixelsToMove < 0)
+            pixelsToMove = 0;
+        
+        //make the pdfview height bigger
+        rect = self.keySugsPDFView.frame;
+        rect.size.height += pixelsToMove;
+        
+        int numPages = ceil( rect.size.height / 792 );
+        rect.size.height = numPages * 792;
+        
+        self.keySugsPDFView.frame = rect;
+        
+        
+        //set the frame of this view to the bottom of the finalPdfview
+//        rect = self.keySugsPDFView.frame;
+//        rect.origin.y = reportVC.finalPFDView.frame.size.height;
+//        self.keySugsPDFView.frame = rect;
+//        
+//        
+//        [reportVC.finalPFDView addSubview:self.keySugsPDFView];
+//        [reportVC.finalPFDView sizeToFit];
+        
+       // [reportVC.viewArray addObject:self.keySugsPDFView];
+        [reportVC.viewArray setObject:self.keySugsPDFView atIndexedSubscript:6];
+        
+
+    }
+    
 }
 
     

@@ -1,19 +1,19 @@
 //
-//  TableofContentsViewController.m
+//  MethodologyViewController.m
 //  DNV
 //
-//  Created by USI on 1/23/14.
+//  Created by USI on 2/6/14.
 //  Copyright (c) 2014 USI. All rights reserved.
 //
 
-#import "TableofContentsViewController.h"
+#import "MethodologyViewController.h"
 #import "ReportDocViewController.h"
 
-@interface TableofContentsViewController ()
+@interface MethodologyViewController ()
 
 @end
 
-@implementation TableofContentsViewController
+@implementation MethodologyViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,22 +32,22 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"goToMethodology"]) {
+    if ([[segue identifier] isEqualToString:@"goToConclusion"]) {
         
         ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
         
         //set the frame of this view to the bottom of the finalPdfview
-//        CGRect rect = self.tableOfConPDFView.frame;
+//        CGRect rect = self.methodPDFView.frame;
 //        rect.origin.y = reportVC.finalPFDView.frame.size.height;
-//        self.tableOfConPDFView.frame = rect;
+//        self.methodPDFView.frame = rect;
+//        
+//        
+//        [reportVC.finalPFDView addSubview:self.methodPDFView];
+//        [reportVC.finalPFDView sizeToFit];
+//
+       // [reportVC.viewArray addObject:self.methodPDFView];
         
-        //[reportVC.viewArray addObject:self.tableOfConPDFView];
-        
-        [reportVC.viewArray setObject:self.tableOfConPDFView atIndexedSubscript:3];
-        
-       // [reportVC.finalPFDView addSubview:self.tableOfConPDFView];
-       // [reportVC.finalPFDView sizeToFit];
-        
+        [reportVC.viewArray setObject:self.methodPDFView atIndexedSubscript:4];
     }
     
 }

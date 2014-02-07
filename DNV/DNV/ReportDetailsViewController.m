@@ -80,6 +80,8 @@
         //make the hieght view bigger
         rect = self.reportDetialsPDFView.frame;
         rect.size.height += pixelsToMove;
+        int numPages = ceil( rect.size.height / 792 );
+        rect.size.height = numPages * 792;
         self.reportDetialsPDFView.frame = rect;
         
         //move each uiElement under the summary down
@@ -119,11 +121,17 @@
         rect.origin.y += pixelsToMove;
         self.copyrightLabel.frame = rect;
         
-        //set the frame to under the pdfview
+        //[reportVC.viewArray addObject:self.reportDetialsPDFView];
+        [reportVC.viewArray setObject:self.reportDetialsPDFView atIndexedSubscript:1];
+
         
+        //set the frame of this view to the bottom of the finalPdfview
+        //rect = self.reportDetialsPDFView.frame;
+       // rect.origin.y = reportVC.finalPFDView.frame.size.height;
+       // self.reportDetialsPDFView.frame = rect;
         
-        [reportVC.finalPFDView addSubview:self.reportDetialsPDFView];
-        [reportVC.finalPFDView sizeToFit];
+      //  [reportVC.finalPFDView addSubview:self.reportDetialsPDFView];
+       // [reportVC.finalPFDView sizeToFit];
         
     }
     

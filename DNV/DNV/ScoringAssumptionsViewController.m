@@ -7,6 +7,7 @@
 //
 
 #import "ScoringAssumptionsViewController.h"
+#import "ReportDocViewController.h"
 
 @interface ScoringAssumptionsViewController ()
 
@@ -50,6 +51,45 @@
     }
     
 
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"goToProfiles"]) {
+        
+        ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
+        
+        int pixelsToMove = self.scoreAssumpTextView.frame.size.height;
+        
+        CGRect rect         = self.scoreAssumpTextView.frame;
+        rect.size.height    = self.scoreAssumpTextView.contentSize.height;
+        self.scoreAssumpTextView.frame  = rect;
+        
+        pixelsToMove = self.scoreAssumpTextView.frame.size.height - pixelsToMove;
+        
+        //make the pdfview height bigger
+        rect = self.scoringAsumPDFView.frame;
+        rect.size.height += pixelsToMove;
+        int numPages = ceil( rect.size.height / 792 );
+        rect.size.height = numPages * 792;
+        self.scoringAsumPDFView.frame = rect;
+        
+        //set the frame of this view to the bottom of the finalPdfview
+//        rect = self.scoringAsumPDFView.frame;
+//        rect.origin.y = reportVC.finalPFDView.frame.size.height;
+//        self.scoringAsumPDFView.frame = rect;
+//        
+//        
+//        [reportVC.finalPFDView addSubview:self.scoringAsumPDFView];
+//        [reportVC.finalPFDView sizeToFit];
+        
+       // [reportVC.viewArray addObject:self.scoringAsumPDFView];
+        
+        [reportVC.viewArray setObject:self.scoringAsumPDFView atIndexedSubscript:8];
+        
+
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning

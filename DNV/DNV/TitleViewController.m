@@ -91,8 +91,11 @@
         
         ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
         
-        [reportVC.finalPFDView addSubview:self.titlePdfView];
-        [reportVC.finalPFDView sizeToFit];
+       // [reportVC.finalPFDView addSubview:self.titlePdfView];
+      //  [reportVC.finalPFDView sizeToFit];
+        
+        
+        [reportVC.viewArray setObject:self.titlePdfView atIndexedSubscript:0];
         
     }
     

@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) Audit *audit;
 
+@property (strong, nonatomic) IBOutlet UIView *executiveSumPDFView;
+
 @property (strong, nonatomic) IBOutlet UITextView *executiveSummary;
 @property (strong, nonatomic) IBOutlet UILabel *auditCountLabel;
 @property (strong, nonatomic) IBOutlet UITextView *elementList;

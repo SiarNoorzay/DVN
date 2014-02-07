@@ -7,6 +7,7 @@
 //
 
 #import "ConclusionViewController.h"
+#import "ReportDocViewController.h"
 
 @interface ConclusionViewController ()
 
@@ -60,6 +61,54 @@
     }
     
 }
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"goToKeySugs"]) {
+        
+        ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
+        
+        int pixelsToMove = self.conclusionTextView.frame.size.height;
+        
+        CGRect rect         = self.conclusionTextView.frame;
+        rect.size.height    = self.conclusionTextView.contentSize.height;
+        self.conclusionTextView.frame  = rect;
+        
+        pixelsToMove = self.conclusionTextView.frame.size.height - pixelsToMove;
+        
+        //make the pdfview height bigger
+        rect = self.conclusionPFDView.frame;
+        rect.size.height += pixelsToMove;
+        int numPages = ceil( rect.size.height / 792 );
+        rect.size.height = numPages * 792;
+        self.conclusionPFDView.frame = rect;
+        
+        //move each uiElement under the conclusion text view down
+        rect = self.percent.frame;
+        rect.origin.y += pixelsToMove;
+        self.percent.frame = rect;
+        
+        rect = self.overPercentLabel.frame;
+        rect.origin.y += pixelsToMove;
+        self.overPercentLabel.frame = rect;
+        
+        
+        //set the frame of this view to the bottom of the finalPdfview
+//        rect = self.conclusionPFDView.frame;
+//        rect.origin.y = reportVC.finalPFDView.frame.size.height;
+//        self.conclusionPFDView.frame = rect;
+//        
+//        
+//        [reportVC.finalPFDView addSubview:self.conclusionPFDView];
+//        [reportVC.finalPFDView sizeToFit];
+        
+      //  [reportVC.viewArray addObject:self.conclusionPFDView];
+
+        [reportVC.viewArray setObject:self.conclusionPFDView atIndexedSubscript:5];
+        
+    }
+    
+}
+
 
 - (void)didReceiveMemoryWarning
 {

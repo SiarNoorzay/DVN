@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface TableofContentsViewController : UIViewController
+@property (strong, nonatomic) IBOutlet UIView *tableOfConPDFView;
 
 @end

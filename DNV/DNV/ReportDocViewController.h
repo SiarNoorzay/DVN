@@ -9,12 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "Audit.h"
 
-@interface ReportDocViewController : UIViewController
+@interface ReportDocViewController : UIViewController<UIScrollViewDelegate>
+
 
 //@property (strong, nonatomic) Audit *audit;
 +(ReportDocViewController*)sharedReportDocViewController;
 
 
 @property (strong, nonatomic) IBOutlet UIScrollView *finalPFDView;
+
+@property (strong, nonatomic) NSMutableArray *viewArray;
+- (IBAction)createPDFPushed:(id)sender;
 
 @end
