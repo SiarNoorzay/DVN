@@ -48,8 +48,8 @@
 -(void)saveAudit:(Audit *) audit;
 -(void)saveClient:(Client *)client forAudit:(NSString *)auditID;
 -(void)saveReport:(Report *)report forAudit:(NSString *)auditID;
--(void)saveObservationVerify:(Observations *)observe ofType:(int)vType forQuestion:(int)questionID;
--(void)saveRecordVerify:(Records *)record forQuestion:(int)questionID;
+-(int)saveObservationVerify:(Observations *)observe ofType:(int)vType forQuestion:(int)questionID;
+-(int)saveRecordVerify:(Records *)record forQuestion:(int)questionID;
 -(void)updateAudit:(Audit *)audit;
 -(void)updateClient:(Client *)client;
 -(void)updateReport:(Report *)report;

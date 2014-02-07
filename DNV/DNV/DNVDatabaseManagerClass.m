@@ -327,20 +327,27 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     
 }
 
--(void)saveObservationVerify:(Observations *)observe ofType:(int)vType forQuestion:(int)questionID{
+-(int)saveObservationVerify:(Observations *)observe ofType:(int)vType forQuestion:(int)questionID{
     
     NSString * insertOVerifySQL = [NSString stringWithFormat:@"INSERT INTO VERIFY (QUESTIONID, VERIFYTYPE, VERIFYDESCRIPTION, NUMOFCONFIRMED, NUMOFNOTCONFIRMED, PERCENTCONFIRMED) VALUES (%d, %d, \"%@\", %d, %d, %f)", questionID, vType, observe.description, observe.confirmedCount, observe.notConfirmedCount, observe.percentComplete];
     
     [self insertRowInTable:insertOVerifySQL forTable:@"verify"];
     
+    int ID = [self getID:@"VERIFY"];
+    
+    return ID;
+    
 }
 
--(void)saveRecordVerify:(Records *)record forQuestion:(int)questionID{
+-(int)saveRecordVerify:(Records *)record forQuestion:(int)questionID{
     
     NSString * insertRVerifySQL = [NSString stringWithFormat:@"INSER INTO VERIFY (QUESTIONID, VERIFYTYPE, VERIFYDESCRIPTION, ISRECORDCONFIRMED) VALUES (%d, %d, \"%@\", %d)", questionID, 2, record.description, record.isConfirmed];
     
     [self insertRowInTable:insertRVerifySQL forTable:@"verify"];
     
+    int ID = [self getID:@"VERIFY"];
+    
+    return ID;
 }
 
 -(NSArray *)retrieveAllAuditIDsOfType:(int)auditType forAuditName:(NSString *)auditName{
