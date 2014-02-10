@@ -1044,6 +1044,9 @@ int numOfSubs;
         
         // Pass the information to your destination view
         destVC.theQuestion = self.question;
+        
+        //remove editQuestion button
+        destVC.navigationItem.rightBarButtonItem = nil;
     }
 }
 
@@ -1061,7 +1064,6 @@ int numOfSubs;
     
 //    [self presentModalViewController:imagePickerController animated:YES];
     [self presentViewController:imagePickerController animated:YES completion:Nil];
-    
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
