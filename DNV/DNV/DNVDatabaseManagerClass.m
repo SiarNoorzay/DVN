@@ -286,21 +286,15 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             [self saveAttachment:attach ofType:2 forQuestion:questionID];
         }
         
-        //        NSMutableArray * attachments = [NSMutableArray arrayWithArray:question.imageLocationArray];
-        //        for (NSString * attach in question.attachmentsLocationArray)
-        //            [attachments addObject:attach];
+        //Verify
+        for (Observations * physical in question.PhysicalObservations)
+            [self saveObservationVerify2:physical ofType:0 forQuestion:questionID];
         
-        //        //Loop for attachments
-        //        for (int i = 0; i < attachments.count; i++){
-        //
-        //            BOOL isImage;
-        //            if (i < question.imageLocationArray.count)
-        //                isImage = true;
-        //            else
-        //                isImage = false;
-        //
-        //            [self saveAttachment:attachments[i] ofType:isImage forQuestion:questionID];
-        //        }
+        for (Observations * interview in question.InterviewObservations)
+            [self saveObservationVerify2:interview ofType:1 forQuestion:questionID];
+        
+        for (Records * record in question.Records)
+            [self saveRecordVerify2:record forQuestion:questionID];
         
         //Condition for layered questions
         if (question.layeredQuesions.count > 0){
@@ -340,9 +334,9 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     if(sqlite3_open([self.databasePath UTF8String] , &dnvAuditDB)==SQLITE_OK){
         
         NSString * insertOVerifySQL = [NSString stringWithFormat:@"INSERT INTO VERIFY (QUESTIONID, VERIFYTYPE, VERIFYDESCRIPTION, NUMOFCONFIRMED, NUMOFNOTCONFIRMED, PERCENTCONFIRMED) VALUES (%d, %d, \"%@\", %d, %d, %f)", questionID, vType, observe.description, observe.confirmedCount, observe.notConfirmedCount, observe.percentComplete];
-    
+        
         [self insertRowInTable:insertOVerifySQL forTable:@"verify"];
-    
+        
         ID = [self getID:@"VERIFY"];
         
         sqlite3_close(dnvAuditDB);
@@ -354,7 +348,6 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     }
     
     return ID;
-    
 }
 
 -(int)saveRecordVerify:(Records *)record forQuestion:(int)questionID{
@@ -363,13 +356,13 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     
     //Open the DB
     if(sqlite3_open([self.databasePath UTF8String] , &dnvAuditDB)==SQLITE_OK){
-
+        
         NSString * insertRVerifySQL = [NSString stringWithFormat:@"INSERT INTO VERIFY (QUESTIONID, VERIFYTYPE, VERIFYDESCRIPTION, ISRECORDCONFIRMED) VALUES (%d, %d, \"%@\", %d)", questionID, 2, record.description, record.isConfirmed];
-    
+        
         [self insertRowInTable:insertRVerifySQL forTable:@"verify"];
-    
+        
         ID = [self getID:@"VERIFY"];
-    
+        
         sqlite3_close(dnvAuditDB);
         
     }
@@ -379,6 +372,23 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     }
     
     return ID;
+}
+
+-(void)saveObservationVerify2:(Observations *)observe ofType:(int)vType forQuestion:(int)questionID{
+    
+    
+    NSString * insertOVerifySQL = [NSString stringWithFormat:@"INSERT INTO VERIFY (QUESTIONID, VERIFYTYPE, VERIFYDESCRIPTION, NUMOFCONFIRMED, NUMOFNOTCONFIRMED, PERCENTCONFIRMED) VALUES (%d, %d, \"%@\", %d, %d, %f)", questionID, vType, observe.description, observe.confirmedCount, observe.notConfirmedCount, observe.percentComplete];
+    
+    [self insertRowInTable:insertOVerifySQL forTable:@"verify"];
+    
+}
+
+-(void)saveRecordVerify2:(Records *)record forQuestion:(int)questionID{
+    
+    NSString * insertRVerifySQL = [NSString stringWithFormat:@"INSERT INTO VERIFY (QUESTIONID, VERIFYTYPE, VERIFYDESCRIPTION, ISRECORDCONFIRMED) VALUES (%d, %d, \"%@\", %d)", questionID, 2, record.description, record.isConfirmed];
+    
+    [self insertRowInTable:insertRVerifySQL forTable:@"verify"];
+    
 }
 
 -(NSArray *)retrieveAllAuditIDsOfType:(int)auditType forAuditName:(NSString *)auditName{
