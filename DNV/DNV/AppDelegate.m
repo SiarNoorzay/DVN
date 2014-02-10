@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import <DropboxSDK/DropboxSDK.h>
 #import "LogInViewController.h"
+#import "Flurry.h"
+
 
 @implementation AppDelegate
 
@@ -23,6 +25,11 @@
       root:kDBRootDropbox]; // either kDBRootAppFolder or kDBRootDropbox
 
     [DBSession setSharedSession:dbSession];
+    
+    [Flurry setCrashReportingEnabled:YES];
+    //note: iOS only allows one crash reporting tool per app; if using another, set to: NO
+    [Flurry startSession:@"JXPCVN7MYZTH7P8QVNJK"];
+    
     
     return YES;
 }

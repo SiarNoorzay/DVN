@@ -117,6 +117,8 @@
 		76BF9C771872237200ACF6DB /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C761872237200ACF6DB /* DropboxSDK.framework */; };
 		76C7593618A3FA2B00467154 /* MethodologyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C7593518A3FA2B00467154 /* MethodologyViewController.m */; };
 		76C7593C18A4600700467154 /* methodologyDiagram.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C7593B18A4600700467154 /* methodologyDiagram.png */; };
+		76C7594118A5894500467154 /* libFlurry_4.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7594018A5894500467154 /* libFlurry_4.3.1.a */; };
+		76C7594418A58B3F00467154 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7594318A58B3F00467154 /* SystemConfiguration.framework */; };
 		76D4A339187CE5F6007AB1A9 /* AuditSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D4A338187CE5F6007AB1A9 /* AuditSelectionViewController.m */; };
 		76D96A3B187B001300961260 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3A187B001300961260 /* LogInViewController.m */; };
 		76D96A3E187B07EA00961260 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3D187B07EA00961260 /* User.m */; };
@@ -343,6 +345,9 @@
 		76C7593418A3FA2B00467154 /* MethodologyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodologyViewController.h; sourceTree = "<group>"; };
 		76C7593518A3FA2B00467154 /* MethodologyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodologyViewController.m; sourceTree = "<group>"; };
 		76C7593B18A4600700467154 /* methodologyDiagram.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = methodologyDiagram.png; sourceTree = "<group>"; };
+		76C7593F18A5894500467154 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		76C7594018A5894500467154 /* libFlurry_4.3.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.1.a; sourceTree = "<group>"; };
+		76C7594318A58B3F00467154 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		76D4A337187CE5F6007AB1A9 /* AuditSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuditSelectionViewController.h; sourceTree = "<group>"; };
 		76D4A338187CE5F6007AB1A9 /* AuditSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuditSelectionViewController.m; sourceTree = "<group>"; };
 		76D96A39187B001300961260 /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
@@ -386,7 +391,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76C7594418A58B3F00467154 /* SystemConfiguration.framework in Frameworks */,
 				4AC04091188F0AF2006A2F3C /* libKLSwitch.a in Frameworks */,
+				76C7594118A5894500467154 /* libFlurry_4.3.1.a in Frameworks */,
 				76A7C9961889DCCA004E4F39 /* libsqlite3.dylib in Frameworks */,
 				76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */,
 				76E81F4C18859E7D00441F62 /* AVFoundation.framework in Frameworks */,
@@ -526,6 +533,8 @@
 		7627970B1871D53A00F22E73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				76C7594318A58B3F00467154 /* SystemConfiguration.framework */,
+				76C7593E18A5894500467154 /* Flurry */,
 				768D56591890634600175EB4 /* Core */,
 				76A7C9951889DCCA004E4F39 /* libsqlite3.dylib */,
 				76E81F4B18859E7D00441F62 /* AVFoundation.framework */,
@@ -902,6 +911,15 @@
 				76C7593B18A4600700467154 /* methodologyDiagram.png */,
 			);
 			name = "Methodology Diagram";
+			sourceTree = "<group>";
+		};
+		76C7593E18A5894500467154 /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				76C7593F18A5894500467154 /* Flurry.h */,
+				76C7594018A5894500467154 /* libFlurry_4.3.1.a */,
+			);
+			path = Flurry;
 			sourceTree = "<group>";
 		};
 		76D4A336187CE59C007AB1A9 /* AuditSelectionViewController */ = {
@@ -1359,6 +1377,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DNV/DNV-Prefix.pch";
 				INFOPLIST_FILE = "DNV/DNV-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/usi/Desktop/repoDVN/DVN/DNV/Flurry,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -1380,6 +1402,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DNV/DNV-Prefix.pch";
 				INFOPLIST_FILE = "DNV/DNV-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/usi/Desktop/repoDVN/DVN/DNV/Flurry,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;

@@ -165,7 +165,8 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     
 }
 
--(void)saveAudit:(Audit *)audit{
+-(BOOL)saveAudit:(Audit *)audit{
+    BOOL newAuditCreated = false;
     
     //Open the DB
     if(sqlite3_open([self.databasePath UTF8String] , &dnvAuditDB)==SQLITE_OK){
@@ -179,6 +180,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         sqlite3_prepare_v2(dnvAuditDB, [insertAuditSQL UTF8String], -1, &statement, NULL);
         
         if(sqlite3_step(statement)==SQLITE_DONE){
+            newAuditCreated = true;
             NSLog(@"audit added to DB.");
             
             //Save Client
@@ -231,6 +233,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         }
         else{
             NSLog(@"Failed to add audit.");
+            newAuditCreated = false;
         }
         
         sqlite3_finalize(statement);
@@ -240,6 +243,8 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         
         NSLog(@"Failed to open/create DB.");
     }
+    
+    return newAuditCreated;
 }
 
 

@@ -10,6 +10,7 @@
 #import "QuartzCore/QuartzCore.h"
 #import "LayeredQuestion.h"
 #import <DropboxSDK/DropboxSDK.h>
+#import "Flurry.h"
 
 
 @interface ReportDocViewController ()<DBRestClientDelegate>
@@ -56,7 +57,18 @@ static ReportDocViewController* _sharedReportDocViewController = nil;
 }
 -(void) viewWillAppear:(BOOL)animated
 {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+    NSString *curClient = [defaults objectForKey:@"currentClient"];
+    NSString *curAudit = [defaults objectForKey:@"currentAudit"];
+    
+    NSDictionary *completedAuditParams =
+    [NSDictionary dictionaryWithObjectsAndKeys:
+     curClient, @"Client",
+     curAudit, @"Audit Name",
+     nil];
+    
+    [Flurry logEvent:@"Audit Completed" withParameters:completedAuditParams];
 }
 - (void)viewDidLoad
 {

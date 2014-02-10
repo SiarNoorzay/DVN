@@ -395,14 +395,14 @@ loadMetadataFailedWithError:(NSError *)error {
     
     //Using the user defaults to create the audit ID
     
-            NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-            NSString * auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
-            auditID = [auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
+          //  NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+          //  NSString * auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
+         //   auditID = [auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     //dont need count since dropox will automatically append (x) to filename if it already exists
     //NSString* filename = [NSString stringWithFormat:@"%d-%@.json", countOfExistingAudits,auditID];
     
-    NSString* filename = [NSString stringWithFormat:@"%@.json",auditID];
+    NSString* filename = [NSString stringWithFormat:@"%@.json",self.audit.auditID];
 
     
     NSString *destDir = self.wipAuditPath;
