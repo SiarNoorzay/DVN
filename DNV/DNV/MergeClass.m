@@ -83,10 +83,31 @@
 ////Logic for array merging
 -(NSArray *)mergeArray:(NSArray *)primaryVal with:(NSArray *)secondaryVal
 {
+    if (primaryVal.count == 0) {
+        return secondaryVal;
+    }
+    
+    if (primaryVal.count >0)
+    {
+        NSMutableArray *arrUnique = [NSMutableArray new];
+        
+        [arrUnique addObjectsFromArray:primaryVal];
+        
+        if (secondaryVal.count >0) {
+            
+            for( id anthing in secondaryVal )
+            {
+                if( ![arrUnique containsObject:anthing] )
+                    [arrUnique addObject:anthing];
+            }
+        }
+        return arrUnique;
+    }
+    
+    return  nil;
+    
     //combine objects from both arrays with no duplicates and return
-    NSMutableSet *unique = [[NSMutableSet alloc]initWithArray:primaryVal];
-    [unique addObjectsFromArray:secondaryVal];
-    return [unique allObjects];
+    
 }
 
 @end

@@ -14,6 +14,7 @@
 #import "SubElements.h"
 #import "Questions.h"
 #import "Answers.h"
+#import "Flurry.h"
 
 
 @interface LogInViewController ()<DBRestClientDelegate>
@@ -179,6 +180,11 @@
     [self attemptToLogin];
 }
 -(void)attemptToLogin{
+    NSDictionary *loginParams =
+    [NSDictionary dictionaryWithObjectsAndKeys:
+     self.userIDTextField.text, @"userID", // Capture author info
+     nil];
+    
     BOOL foundUser = false;
     
     for (User *usr in self.arrayOfUsers) {
@@ -198,6 +204,12 @@
         
         if ([[self.user objectForKey:@"password" ] isEqualToString:self.passwordTextField.text]) {
             passwordCorrect= true;
+            
+            
+            [Flurry logEvent:@"Successful Login" withParameters:loginParams];
+            [Flurry setUserID:self.userIDTextField.text];
+
+
             NSLog(@"User name and password correct");
             [self performSegueWithIdentifier:@"loginSuccess" sender:nil];
             
@@ -212,12 +224,18 @@
             [alert show];
             
             NSLog(@"Incorrect password");
+            
+            [Flurry logEvent:@"Unsuccesful Login" withParameters:loginParams];
+
         }
     }
     else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"User ID not recognized" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
-        NSLog(@"User ID not recognized");//add alert view here}
+        NSLog(@"User ID not recognized");
+        
+        [Flurry logEvent:@"Unsuccesful Login" withParameters:loginParams];
+
     }
     
 }

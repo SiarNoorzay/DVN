@@ -10,6 +10,7 @@
 #import <DropboxSDK/DropboxSDK.h>
 #import "Folder.h"
 #import "ElementSubElementViewController.h"
+#import "Flurry.h"
 
 @interface AuditSelectionViewController ()<DBRestClientDelegate>
 
@@ -219,7 +220,21 @@
         self.audit.auditType = 1;
         
         self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
-        [self.dnvDBManager saveAudit:self.audit];
+        
+        if ([self.dnvDBManager saveAudit:self.audit])//returns true if a new audit is created
+        {
+            //new audit started
+            NSString *curClient = [defaults objectForKey:@"currentClient"];
+            NSString *curAudit = [defaults objectForKey:@"currentAudit"];
+            
+            NSDictionary *newAuditParams =
+            [NSDictionary dictionaryWithObjectsAndKeys:
+             curClient, @"Client",
+             curAudit, @"Audit Name",
+             nil];
+            
+            [Flurry logEvent:@"New Audit Started" withParameters:newAuditParams];
+        }
         
         self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
         

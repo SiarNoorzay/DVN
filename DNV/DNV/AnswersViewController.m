@@ -14,6 +14,7 @@
 #import "LayeredQuestion.h"
 #import "VerifyPopOverViewController.h"
 #import "VerifyTabController.h"
+#import "Flurry.h"
 
 @interface AnswersViewController ()
 
@@ -291,6 +292,20 @@ int numOfSubs;
     
     self.ansArray =  self.question.Answers;
 
+    //Track Flury Event
+    NSString *idString = [NSString stringWithFormat:@"%d",self.question.questionID];
+    
+    NSDictionary *questionParams =
+    [NSDictionary dictionaryWithObjectsAndKeys:
+     idString, @"Question ID",
+     self.question.questionText, @"Question",
+     nil];
+    
+    [Flurry logEvent:@"Question Answered" withParameters:questionParams timed:YES];
+    
+    
+    
+    
     [self hideAnswerViews];
     NSLog(@"Question Type: %i",self.question.questionType);
     
@@ -589,7 +604,10 @@ int numOfSubs;
         return;
     }
     
+    [Flurry endTimedEvent:@"Question Answered" withParameters:nil];
+    
     if (self.question.isApplicable) {self.question.pointsAwarded = pointTotal;}
+    
     
     else {
         self.question.isThumbsDown = false;
@@ -985,6 +1003,8 @@ int numOfSubs;
 }
 
 - (IBAction)helpButtonPushed:(id)sender {
+    
+    [Flurry logEvent:@"Help Button Pushed"];
     
     //[self performSegueWithIdentifier:@"helpTextPopover" sender:sender];
 }
