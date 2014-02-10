@@ -255,6 +255,24 @@
 
     [dictionary setValue:self.drawnNotes forKey:@"drawnNotes"];
 
+    NSMutableArray *physArray = [NSMutableArray new];
+    for (Observations *pObserve in self.PhysicalObservations) {
+        [physArray addObject: [pObserve toDictionary]];
+    }
+    [dictionary setValue:physArray forKey:@"PhysicalObservations"];
+    
+    NSMutableArray *interArray = [NSMutableArray new];
+    for (Observations *iObserve in self.InterviewObservations) {
+        [interArray addObject: [iObserve toDictionary]];
+    }
+    [dictionary setValue:interArray forKey:@"InterviewObservations"];
+    
+    NSMutableArray *recoArray = [NSMutableArray new];
+    for (Records *record in self.Records) {
+        [recoArray addObject: [record toDictionary]];
+    }
+    [dictionary setValue:recoArray forKey:@"Records"];
+    
     
     return dictionary;
     

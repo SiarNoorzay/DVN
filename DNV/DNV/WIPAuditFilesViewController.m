@@ -331,6 +331,15 @@ loadMetadataFailedWithError:(NSError *)error {
     return filePath;
 }
 
+-(NSString *)setAttachPath:(NSString *)attachment{
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents directory
+    NSString *attachPath = [documentsDirectory stringByAppendingPathComponent:attachment];
+    
+    return attachPath;
+}
+
 -(void)getAudit{
     if (_directoryPath) { // check if file exists - if so load it:
         NSError *error;
@@ -358,6 +367,110 @@ loadMetadataFailedWithError:(NSError *)error {
         //end of DB test
         
     }
+}
+
+-(Audit*)formatAndImportAttachmentsAndImages:(Audit*)aud to:(NSString*)path
+//exports all images and attachments to DBox and changes arrays in audit to hold Dbox locations
+{
+    for (int i=0; i<aud.Elements.count; i++) {
+        Elements *ele = [aud.Elements objectAtIndex:i];
+        
+        for (int j=0 ; j<ele.Subelements.count; j++) {
+            SubElements *subEle = [ele.Subelements objectAtIndex:j];
+            
+            for (int k = 0; k<subEle.Questions.count; k++) {
+                Questions *question = [subEle.Questions objectAtIndex:k];
+                
+                //loop through sublayers
+                self.allSublayeredQuestions = [NSMutableArray new];
+                int throwAway = [self getNumOfSubQuestionsAndSetAllSubsArray:question layerDepth:1];
+                for (int l = 0; l<self.allSublayeredQuestions.count; l++) {
+                    LayeredQuestion *layQ = [self.allSublayeredQuestions objectAtIndex:l];
+                    NSMutableArray *tempImageArr = [NSMutableArray arrayWithArray: layQ.question.imageLocationArray];
+                    
+                    for (int m = 0; m<tempImageArr.count ; m++)
+                    {
+                        NSString *pathFrom = [tempImageArr objectAtIndex:m];
+                        pathFrom = [self importFile:pathFrom to:path];
+                        [tempImageArr setObject:pathFrom atIndexedSubscript:m];
+                    }
+                    layQ.question.imageLocationArray = tempImageArr;
+                    
+                    NSMutableArray *tempAttachArr = [NSMutableArray arrayWithArray: layQ.question.attachmentsLocationArray];
+                    
+                    for (int m = 0; m<tempAttachArr.count ; m++)
+                    {
+                        NSString *pathFrom = [tempAttachArr objectAtIndex:m];
+                        pathFrom = [self importFile:pathFrom to:path];
+                        [tempAttachArr setObject:pathFrom atIndexedSubscript:m];
+                    }
+                    layQ.question.attachmentsLocationArray = tempAttachArr;
+                    
+                    NSMutableArray *tempDrawnLocs = [NSMutableArray arrayWithArray: layQ.question.drawnNotes];
+                    
+                    for (int m = 0; m<tempDrawnLocs.count ; m++)
+                    {
+                        NSString *pathFrom = [tempDrawnLocs objectAtIndex:m];
+                        pathFrom = [self importFile:pathFrom to:path];
+                        [tempDrawnLocs setObject:pathFrom atIndexedSubscript:m];
+                    }
+                    layQ.question.drawnNotes = tempDrawnLocs;
+                    
+                }//sublayer loop
+                
+                //need to go through main question as well
+                NSMutableArray *tempImageArr = [NSMutableArray arrayWithArray: question.imageLocationArray];
+                
+                for (int m = 0; m<tempImageArr.count ; m++)
+                {
+                    NSString *pathFrom = [tempImageArr objectAtIndex:m];
+                    pathFrom = [self importFile:pathFrom to:path];
+                    [tempImageArr setObject:pathFrom atIndexedSubscript:m];
+                }
+                question.imageLocationArray = tempImageArr;
+                
+                NSMutableArray *tempAttachArr = [NSMutableArray arrayWithArray:question.attachmentsLocationArray];
+                
+                for (int m = 0; m<tempAttachArr.count ; m++)
+                {
+                    NSString *pathFrom = [tempAttachArr objectAtIndex:m];
+                    pathFrom = [self importFile:pathFrom to:path];
+                    [tempAttachArr setObject:pathFrom atIndexedSubscript:m];
+                }
+                question.attachmentsLocationArray = tempAttachArr;
+                
+                NSMutableArray *drawnLoc = [NSMutableArray arrayWithArray:question.drawnNotes];
+                
+                for (int m = 0; m<drawnLoc.count ; m++)
+                {
+                    NSString *pathFrom = [drawnLoc objectAtIndex:m];
+                    pathFrom = [self importFile:pathFrom to:path];
+                    [drawnLoc setObject:pathFrom atIndexedSubscript:m];
+                }
+                question.attachmentsLocationArray = drawnLoc;
+            }//question loop
+        }
+    }
+    return aud;
+}
+
+-(NSString*)importFile:(NSString*)internalPath to:(NSString*)dropboxPath// withFile:(NSString*)fileName
+{
+    self.numberOfUploadsLeft ++;
+    //get file name from last string chunk
+    NSArray *chunks = [internalPath componentsSeparatedByString: @"/"];
+    
+    NSString *fileName = [chunks objectAtIndex:[chunks count]-1];
+    
+    //[[self restClient2] uploadFile:fileName toPath:dropboxPath withParentRev:nil fromPath:internalPath];
+    
+    //using this deprecated method since it overwrites instead of renaming
+    [[self restClient2]uploadFile:fileName toPath:dropboxPath fromPath:internalPath];
+    
+    fileName = [dropboxPath stringByAppendingString:fileName];
+    
+    return fileName;
+    
 }
 
 - (void)restClient:(DBRestClient*)client createdFolder:(DBMetadata*)folder{
@@ -393,16 +506,10 @@ loadMetadataFailedWithError:(NSError *)error {
     NSString *appFile = [documentsDirectory stringByAppendingPathComponent:@"MyFile.txt"];
     [jsonData writeToFile:appFile atomically:YES];
     
-    //Using the user defaults to create the audit ID
-    
-            NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-            NSString * auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
-            auditID = [auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
     //dont need count since dropox will automatically append (x) to filename if it already exists
     //NSString* filename = [NSString stringWithFormat:@"%d-%@.json", countOfExistingAudits,auditID];
     
-    NSString* filename = [NSString stringWithFormat:@"%@.json",auditID];
+    NSString* filename = [NSString stringWithFormat:@"%@.json",self.audit.auditID];
 
     
     NSString *destDir = self.wipAuditPath;
@@ -462,6 +569,8 @@ loadMetadataFailedWithError:(NSError *)error {
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
+
+
 -(Audit*)formatAndExportAttachmentsAndImages:(Audit*)aud to:(NSString*)path
 //exports all images and attachments to DBox and changes arrays in audit to hold Dbox locations
 {
@@ -546,6 +655,7 @@ loadMetadataFailedWithError:(NSError *)error {
     }
     return aud;
 }
+
 -(NSString*)exportFile:(NSString*)internalPath to:(NSString*)dropboxPath// withFile:(NSString*)fileName
 {
     self.numberOfUploadsLeft ++;
