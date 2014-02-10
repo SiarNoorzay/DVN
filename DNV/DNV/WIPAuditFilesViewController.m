@@ -355,12 +355,13 @@ loadMetadataFailedWithError:(NSError *)error {
         //use this to access the audit and its components dictionary style
         self.audit = [[Audit alloc]initWithAudit:theAudit];
         
-        
-        
-        
-        
+        //import attachments locally and change attachment audit paths
+        self.audit = [self formatAndImportAttachmentsAndImages:self.audit];
+
+        //saving imported audit to database
         [self.dnvDBManager saveAudit:self.audit];
         
+        //retrieving audit from database to populate ids
         self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
         
         NSLog(@"Audit Name: %@", self.audit.name);
@@ -369,8 +370,8 @@ loadMetadataFailedWithError:(NSError *)error {
     }
 }
 
--(Audit*)formatAndImportAttachmentsAndImages:(Audit*)aud to:(NSString*)path
-//exports all images and attachments to DBox and changes arrays in audit to hold Dbox locations
+-(Audit*)formatAndImportAttachmentsAndImages:(Audit*)aud //to:(NSString*)path
+//imports all images and attachments to DBox and changes arrays in audit to hold Dbox locations
 {
     for (int i=0; i<aud.Elements.count; i++) {
         Elements *ele = [aud.Elements objectAtIndex:i];
@@ -391,7 +392,7 @@ loadMetadataFailedWithError:(NSError *)error {
                     for (int m = 0; m<tempImageArr.count ; m++)
                     {
                         NSString *pathFrom = [tempImageArr objectAtIndex:m];
-                        pathFrom = [self importFile:pathFrom to:path];
+                        pathFrom = [self importFile:pathFrom];
                         [tempImageArr setObject:pathFrom atIndexedSubscript:m];
                     }
                     layQ.question.imageLocationArray = tempImageArr;
@@ -401,7 +402,7 @@ loadMetadataFailedWithError:(NSError *)error {
                     for (int m = 0; m<tempAttachArr.count ; m++)
                     {
                         NSString *pathFrom = [tempAttachArr objectAtIndex:m];
-                        pathFrom = [self importFile:pathFrom to:path];
+                        pathFrom = [self importFile:pathFrom];
                         [tempAttachArr setObject:pathFrom atIndexedSubscript:m];
                     }
                     layQ.question.attachmentsLocationArray = tempAttachArr;
@@ -411,7 +412,7 @@ loadMetadataFailedWithError:(NSError *)error {
                     for (int m = 0; m<tempDrawnLocs.count ; m++)
                     {
                         NSString *pathFrom = [tempDrawnLocs objectAtIndex:m];
-                        pathFrom = [self importFile:pathFrom to:path];
+                        pathFrom = [self importFile:pathFrom];
                         [tempDrawnLocs setObject:pathFrom atIndexedSubscript:m];
                     }
                     layQ.question.drawnNotes = tempDrawnLocs;
@@ -424,7 +425,7 @@ loadMetadataFailedWithError:(NSError *)error {
                 for (int m = 0; m<tempImageArr.count ; m++)
                 {
                     NSString *pathFrom = [tempImageArr objectAtIndex:m];
-                    pathFrom = [self importFile:pathFrom to:path];
+                    pathFrom = [self importFile:pathFrom];
                     [tempImageArr setObject:pathFrom atIndexedSubscript:m];
                 }
                 question.imageLocationArray = tempImageArr;
@@ -434,7 +435,7 @@ loadMetadataFailedWithError:(NSError *)error {
                 for (int m = 0; m<tempAttachArr.count ; m++)
                 {
                     NSString *pathFrom = [tempAttachArr objectAtIndex:m];
-                    pathFrom = [self importFile:pathFrom to:path];
+                    pathFrom = [self importFile:pathFrom];
                     [tempAttachArr setObject:pathFrom atIndexedSubscript:m];
                 }
                 question.attachmentsLocationArray = tempAttachArr;
@@ -444,32 +445,32 @@ loadMetadataFailedWithError:(NSError *)error {
                 for (int m = 0; m<drawnLoc.count ; m++)
                 {
                     NSString *pathFrom = [drawnLoc objectAtIndex:m];
-                    pathFrom = [self importFile:pathFrom to:path];
+                    pathFrom = [self importFile:pathFrom];
                     [drawnLoc setObject:pathFrom atIndexedSubscript:m];
                 }
-                question.attachmentsLocationArray = drawnLoc;
+                question.drawnNotes = drawnLoc;
             }//question loop
         }
     }
     return aud;
 }
 
--(NSString*)importFile:(NSString*)internalPath to:(NSString*)dropboxPath// withFile:(NSString*)fileName
+-(NSString*)importFile:(NSString*)dropboxPath// withFile:(NSString*)fileName
 {
     self.numberOfUploadsLeft ++;
     //get file name from last string chunk
-    NSArray *chunks = [internalPath componentsSeparatedByString: @"/"];
+    NSArray *chunks = [dropboxPath componentsSeparatedByString: @"/"];
     
     NSString *fileName = [chunks objectAtIndex:[chunks count]-1];
+    
+    NSString * internalPath = [self setAttachPath:fileName];
     
     //[[self restClient2] uploadFile:fileName toPath:dropboxPath withParentRev:nil fromPath:internalPath];
     
     //using this deprecated method since it overwrites instead of renaming
-    [[self restClient2]uploadFile:fileName toPath:dropboxPath fromPath:internalPath];
+    [[self restClient3] loadFile:dropboxPath intoPath:internalPath];
     
-    fileName = [dropboxPath stringByAppendingString:fileName];
-    
-    return fileName;
+    return internalPath;
     
 }
 
