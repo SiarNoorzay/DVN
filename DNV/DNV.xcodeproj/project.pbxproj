@@ -30,6 +30,8 @@
 		76007DBD18872BFC00FA7A39 /* SubElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DBC18872BFC00FA7A39 /* SubElementCell.m */; };
 		76007E261888317400FA7A39 /* QuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DB7188725CF00FA7A39 /* QuestionCell.m */; };
 		760F12AD18A94431008A432E /* libFlurry_4.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 760F12AB18A943D2008A432E /* libFlurry_4.3.1.a */; };
+		760F12B418A96B36008A432E /* DNV_GL_ long_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 760F12B218A96B35008A432E /* DNV_GL_ long_logo.png */; };
+		760F12B518A96B36008A432E /* DNV_GL_login_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 760F12B318A96B36008A432E /* DNV_GL_login_logo.png */; };
 		7627430B1888508B00873E9F /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB918872AE900FA7A39 /* checkmark.png */; };
 		7627431018897BB500873E9F /* CalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7627430F18897BB500873E9F /* CalculatorViewController.m */; };
 		7627431318898D3900873E9F /* DrawingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7627431218898D3900873E9F /* DrawingViewController.m */; };
@@ -215,6 +217,8 @@
 		76007DBC18872BFC00FA7A39 /* SubElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementCell.m; sourceTree = "<group>"; };
 		760F12AA18A943D2008A432E /* Flurry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		760F12AB18A943D2008A432E /* libFlurry_4.3.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.1.a; sourceTree = "<group>"; };
+		760F12B218A96B35008A432E /* DNV_GL_ long_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DNV_GL_ long_logo.png"; sourceTree = "<group>"; };
+		760F12B318A96B36008A432E /* DNV_GL_login_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DNV_GL_login_logo.png; sourceTree = "<group>"; };
 		7627430E18897BB500873E9F /* CalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorViewController.h; sourceTree = "<group>"; };
 		7627430F18897BB500873E9F /* CalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculatorViewController.m; sourceTree = "<group>"; };
 		7627431118898D3900873E9F /* DrawingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingViewController.h; sourceTree = "<group>"; };
@@ -946,6 +950,8 @@
 		76D4A33A187CE832007AB1A9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				760F12B218A96B35008A432E /* DNV_GL_ long_logo.png */,
+				760F12B318A96B36008A432E /* DNV_GL_login_logo.png */,
 				76C7593818A45EF400467154 /* Methodology Diagram */,
 				76A721A6188061E200E34CFA /* DNV_GL_logo.png */,
 				76007D801886F58600FA7A39 /* App Icons */,
@@ -1110,6 +1116,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				760F12B418A96B36008A432E /* DNV_GL_ long_logo.png in Resources */,
 				769D3CF01885F9FC002DF3B8 /* new_checklist_icon.png in Resources */,
 				76A567FF1886DF70000E32D3 /* verify_icon.png in Resources */,
 				76A568201886FA24000E32D3 /* not_applicable_icon_gray.png in Resources */,
@@ -1139,6 +1146,7 @@
 				4A4AFC7918A3FB6A006901D1 /* physicalSmall.png in Resources */,
 				76A568151886F33B000E32D3 /* thumbs_down.png in Resources */,
 				4A4AFC7B18A4045C006901D1 /* checkBox.png in Resources */,
+				760F12B518A96B36008A432E /* DNV_GL_login_logo.png in Resources */,
 				76A103A61899ABE500283F67 /* checkbox_checked_gray_border.png in Resources */,
 				76A721A7188061E200E34CFA /* DNV_GL_logo.png in Resources */,
 				76A568051886EA76000E32D3 /* verify_icon_gray.png in Resources */,
