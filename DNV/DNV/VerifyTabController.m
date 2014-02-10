@@ -26,7 +26,22 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-
+    NSLog(@"%@", self.viewControllers);
+    
+    NSMutableArray *someVCs = [NSMutableArray new];
+    
+    int needsV = self.theQuestion.needsVerifying;
+    
+    if( needsV % 2 != 0   )
+        [someVCs addObject:[self.viewControllers objectAtIndex:0]];
+    
+    if( needsV %4 > 1 )
+        [someVCs addObject:[self.viewControllers objectAtIndex:1]];
+    
+    if( needsV >= 4 )
+        [someVCs addObject:[self.viewControllers objectAtIndex:2]];
+    
+    [self setViewControllers:someVCs animated:YES];
 }
 
 - (void)viewDidLoad
