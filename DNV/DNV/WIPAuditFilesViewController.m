@@ -196,7 +196,9 @@ loadMetadataFailedWithError:(NSError *)error {
        contentType:(NSString*)contentType metadata:(DBMetadata*)metadata {
     
     NSLog(@"File loaded into path: %@", localPath);
-    [self getAudit];
+    
+    if (client == self->restClient)
+        [self getAudit];
     
 }
 

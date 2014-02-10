@@ -29,6 +29,7 @@
 		76007DB21886FDE800FA7A39 /* dvnlogo152.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB01886FDE800FA7A39 /* dvnlogo152.png */; };
 		76007DBD18872BFC00FA7A39 /* SubElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DBC18872BFC00FA7A39 /* SubElementCell.m */; };
 		76007E261888317400FA7A39 /* QuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DB7188725CF00FA7A39 /* QuestionCell.m */; };
+		760F12AD18A94431008A432E /* libFlurry_4.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 760F12AB18A943D2008A432E /* libFlurry_4.3.1.a */; };
 		7627430B1888508B00873E9F /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB918872AE900FA7A39 /* checkmark.png */; };
 		7627431018897BB500873E9F /* CalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7627430F18897BB500873E9F /* CalculatorViewController.m */; };
 		7627431318898D3900873E9F /* DrawingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7627431218898D3900873E9F /* DrawingViewController.m */; };
@@ -117,7 +118,6 @@
 		76BF9C771872237200ACF6DB /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C761872237200ACF6DB /* DropboxSDK.framework */; };
 		76C7593618A3FA2B00467154 /* MethodologyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C7593518A3FA2B00467154 /* MethodologyViewController.m */; };
 		76C7593C18A4600700467154 /* methodologyDiagram.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C7593B18A4600700467154 /* methodologyDiagram.png */; };
-		76C7594118A5894500467154 /* libFlurry_4.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7594018A5894500467154 /* libFlurry_4.3.1.a */; };
 		76C7594418A58B3F00467154 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7594318A58B3F00467154 /* SystemConfiguration.framework */; };
 		76D4A339187CE5F6007AB1A9 /* AuditSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D4A338187CE5F6007AB1A9 /* AuditSelectionViewController.m */; };
 		76D96A3B187B001300961260 /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D96A3A187B001300961260 /* LogInViewController.m */; };
@@ -213,6 +213,8 @@
 		76007DB918872AE900FA7A39 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
 		76007DBB18872BFC00FA7A39 /* SubElementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubElementCell.h; sourceTree = "<group>"; };
 		76007DBC18872BFC00FA7A39 /* SubElementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubElementCell.m; sourceTree = "<group>"; };
+		760F12AA18A943D2008A432E /* Flurry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		760F12AB18A943D2008A432E /* libFlurry_4.3.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.1.a; sourceTree = "<group>"; };
 		7627430E18897BB500873E9F /* CalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorViewController.h; sourceTree = "<group>"; };
 		7627430F18897BB500873E9F /* CalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculatorViewController.m; sourceTree = "<group>"; };
 		7627431118898D3900873E9F /* DrawingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingViewController.h; sourceTree = "<group>"; };
@@ -391,9 +393,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				760F12AD18A94431008A432E /* libFlurry_4.3.1.a in Frameworks */,
 				76C7594418A58B3F00467154 /* SystemConfiguration.framework in Frameworks */,
 				4AC04091188F0AF2006A2F3C /* libKLSwitch.a in Frameworks */,
-				76C7594118A5894500467154 /* libFlurry_4.3.1.a in Frameworks */,
 				76A7C9961889DCCA004E4F39 /* libsqlite3.dylib in Frameworks */,
 				76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */,
 				76E81F4C18859E7D00441F62 /* AVFoundation.framework in Frameworks */,
@@ -496,6 +498,15 @@
 			path = "App Icons";
 			sourceTree = "<group>";
 		};
+		760F12A918A943D2008A432E /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				760F12AA18A943D2008A432E /* Flurry.h */,
+				760F12AB18A943D2008A432E /* libFlurry_4.3.1.a */,
+			);
+			path = Flurry;
+			sourceTree = "<group>";
+		};
 		7627431418898D4200873E9F /* NotesViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -533,6 +544,7 @@
 		7627970B1871D53A00F22E73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				760F12A918A943D2008A432E /* Flurry */,
 				76C7594318A58B3F00467154 /* SystemConfiguration.framework */,
 				76C7593E18A5894500467154 /* Flurry */,
 				768D56591890634600175EB4 /* Core */,
@@ -1372,14 +1384,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					/Users/usi/Desktop/repoDVN/DVN/DNV,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DNV/DNV-Prefix.pch";
 				INFOPLIST_FILE = "DNV/DNV-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/usi/Desktop/repoDVN/DVN/DNV/Flurry,
+					/Users/usi/Desktop/DVN/DNV/Flurry,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1397,14 +1408,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					/Users/usi/Desktop/repoDVN/DVN/DNV,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DNV/DNV-Prefix.pch";
 				INFOPLIST_FILE = "DNV/DNV-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/usi/Desktop/repoDVN/DVN/DNV/Flurry,
+					/Users/usi/Desktop/DVN/DNV/Flurry,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
