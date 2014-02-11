@@ -13,4 +13,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *points;
 @property (strong, nonatomic) IBOutlet UIImageView *image;
 
+- (IBAction)btnNASubElement:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *btnNASubElement;
+
 @end

@@ -151,8 +151,12 @@ int subEleNumber;
 -(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
 {
     self.ele = self.listOfElements[row];
+    
+    //A view to house the necessary contents of a row in the element picker:  n/a button, element name label, points attained, completed image,
+    UIView *aPickerRow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 650, 80)];
 
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, pickerView.frame.size.width, 60)];
+    //element name label
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 15, 450, 50)];
     UIColor *backColor = [[UIColor alloc]initWithRed:153.0 green:217.0 blue:239.0 alpha:.5];
 
     label.backgroundColor = backColor;
@@ -162,7 +166,25 @@ int subEleNumber;
     label.text = self.ele.name; // ASCII 65 is "A"
     [label setTextAlignment:NSTextAlignmentCenter];
     
-    return label;
+    //percentage
+    UILabel *percentLabel = [[UILabel alloc] initWithFrame:CGRectMake(465, 15, 140, 50)];
+    [percentLabel setText:[NSString stringWithFormat:@"%.2f / %.2f", self.ele.pointsAwarded,self.ele.pointsPossible]];
+    
+    //completed image
+    UIImageView *completed = [[UIImageView alloc] initWithFrame:CGRectMake(595, 15, 50, 50)];
+    [completed setImage:[UIImage imageNamed:@"check"]];
+    
+    //Add all views to main view
+    [aPickerRow addSubview:label];
+    [aPickerRow addSubview:percentLabel];
+    [aPickerRow addSubview:completed];
+    
+    return aPickerRow;
+}
+
+-(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+{
+    return 100;
 }
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
@@ -266,4 +288,7 @@ int subEleNumber;
 }
 
 
+- (IBAction)naForElements:(id)sender {
+    NSLog(@"ggg");
+}
 @end

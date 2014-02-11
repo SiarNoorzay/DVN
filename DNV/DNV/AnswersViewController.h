@@ -17,6 +17,9 @@
 
 @interface AnswersViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIPopoverControllerDelegate>
 
+
+@property (assign) bool cameFromVerifyTabBar;
+
 @property (nonatomic, strong) Questions *question;
 @property (nonatomic) NSArray * questionArray;
 @property (nonatomic) int currentPosition;

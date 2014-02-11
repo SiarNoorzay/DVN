@@ -904,6 +904,8 @@ int numOfSubs;
         self.verifyPopOver.delegate = self;
         self.verifyPopOver= [[UIPopoverController alloc] initWithContentViewController:verifyPop];
     
+    [verifyPop.btnGoToVerifyTabBar setHidden:self.cameFromVerifyTabBar];
+    
     [self.verifyPopOver presentPopoverFromRect:self.verifyButton.frame inView:self.viewDashboard permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 
     

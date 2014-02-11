@@ -26,4 +26,22 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)btnNASubElement:(id)sender
+{
+    if( self.btnNASubElement.tag == 0)
+    {
+        self.btnNASubElement.tag = 1;
+        [self.btnNASubElement setImage:[UIImage imageNamed:@"not_applicable_icon"] forState:UIControlStateNormal];
+    
+        
+        //toggle all questions in this element to N/A, call it on elemenets subelements vc
+    }
+    else
+    {
+        self.btnNASubElement.tag = 0;
+        [self.btnNASubElement setImage:[UIImage imageNamed:@"not_applicable_icon_gray"] forState:UIControlStateNormal];
+        
+        //toggle all questions in this element to not N/A, call it on elemenets subelements vc
+    }
+}
 @end
