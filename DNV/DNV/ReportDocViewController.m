@@ -419,7 +419,7 @@ static ReportDocViewController* _sharedReportDocViewController = nil;
                     pathFrom = [self exportFile:pathFrom to:path];
                     [drawnLoc setObject:pathFrom atIndexedSubscript:m];
                 }
-                question.attachmentsLocationArray = drawnLoc;
+                question.drawnNotes = drawnLoc;
             }//question loop
         }
     }
