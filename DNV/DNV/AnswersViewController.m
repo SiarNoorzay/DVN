@@ -15,6 +15,7 @@
 #import "VerifyPopOverViewController.h"
 #import "VerifyTabController.h"
 #import "Flurry.h"
+#import "ImagePopOverViewController.h"
 
 @interface AnswersViewController ()
 
@@ -995,7 +996,7 @@ int numOfSubs;
 }
 
 - (IBAction)cameraButtonPushed:(id)sender {
-    [self takePicture];
+   // [self takePicture];
     
 }
 
@@ -1048,83 +1049,20 @@ int numOfSubs;
         //remove editQuestion button
         destVC.navigationItem.rightBarButtonItem = nil;
     }
-}
-
-#pragma mark - Image picker delegate methdos
-
-- (void)takePicture {
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-#if TARGET_IPHONE_SIMULATOR
-    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-#else
-    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-#endif
-    imagePickerController.editing = YES;
-    imagePickerController.delegate = (id)self;
-    
-//    [self presentModalViewController:imagePickerController animated:YES];
-    [self presentViewController:imagePickerController animated:YES completion:Nil];
-}
-
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-	UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    // Resize the image from the camera if we need to
-    //	UIImage *scaledImage = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFill bounds:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) interpolationQuality:kCGInterpolationHigh];
-    
-    // Crop the image to a square if we wanted.
-    // UIImage *croppedImage = [scaledImage croppedImage:CGRectMake((scaledImage.size.width -photo.frame.size.width)/2, (scaledImage.size.height -photo.frame.size.height)/2, photo.frame.size.width, photo.frame.size.height)];
-    // Show the photo on the screen
-
-    
-   // self.view.backgroundColor = [UIColor colorWithPatternImage: image];
-    
-    //TODO: save image to imagelocationArray
-    self.cameraImage = image;
-    
-    //save image to file at self.cameraImage
-    if (image != nil) {
-        // Create path.
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    if ([[segue identifier] isEqualToString:@"imagePopover"]) {
         
-        // Save image.
+        // Get destination tabbar
+        ImagePopOverViewController * destVC = [segue destinationViewController];
         
-        if (self.question.imageLocationArray == nil) {
-            ///alloc string array and save image with number = 0
-            NSMutableArray *arr = [[NSMutableArray alloc]initWithCapacity:1];
-            
-            NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat: @"%d-cameraImage-%d.png",self.question.questionID,0]];
-            
-            [UIImagePNGRepresentation(self.cameraImage) writeToFile:filePath atomically:YES];
-            
-            [arr addObject:filePath];
-            self.question.imageLocationArray = arr;
-            
-        }
-        else {
-            NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat: @"%d-cameraImage-%d.png",self.question.questionID,self.question.imageLocationArray.count]];
-            
-            [UIImagePNGRepresentation(self.cameraImage) writeToFile:filePath atomically:YES];
-            NSMutableArray *arr = [[NSMutableArray alloc]initWithArray:self.question.drawnNotes];
-            
-            [arr addObject:filePath];
-            self.question.imageLocationArray = arr;
-        }
-        for (NSString *str in self.question.imageLocationArray) {
-            NSLog(@"Images in this question: %@", str);
-        }
-        
+        // Pass the information to your destination view
+        destVC.question = self.question;
+
     }
-
     
-//    [picker dismissModalViewControllerAnimated:NO];
-    [picker dismissViewControllerAnimated:NO completion:nil];
 }
 
--(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-//    [picker dismissModalViewControllerAnimated:NO];
-    [picker dismissViewControllerAnimated:NO completion:nil];
-}
+
+
 
 
 - (IBAction)mainLayeredPushed:(id)sender {
