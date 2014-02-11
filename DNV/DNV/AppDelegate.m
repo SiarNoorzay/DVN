@@ -30,12 +30,12 @@
     //note: iOS only allows one crash reporting tool per app; if using another, set to: NO
     [Flurry startSession:@"JXPCVN7MYZTH7P8QVNJK"];
     
-    
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     if ([[DBSession sharedSession] handleOpenURL:url]) {
+        
         if ([[DBSession sharedSession] isLinked]) {
             NSLog(@"App linked successfully!");
             // At this point you can start making API calls
