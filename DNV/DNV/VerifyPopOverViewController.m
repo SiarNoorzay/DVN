@@ -54,11 +54,8 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    //to change/work with enum we had discuss
-    if( self.theAnswersVC.question.needsVerifying > 0 || !self.theAnswersVC.verifyButton.selected)
-        [self.theAnswersVC.verifyButton setSelected: true];
-    else
-        [self.theAnswersVC.verifyButton setSelected: false];
+    //shows V toggled on if needs verifying enum is greater than zerp
+    [self.theAnswersVC setNeedsVerifying:self.theAnswersVC.question.needsVerifying];
     
     if( self.btnPhysical.tag == 0)
     {

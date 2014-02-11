@@ -13,6 +13,9 @@
 
 @property (nonatomic) int subElementID;
 @property (nonatomic) BOOL isCompleted;
+
+@property (nonatomic) BOOL isApplicable;
+
 @property (nonatomic) NSString * name;
 @property (nonatomic) float  pointsPossible;
 @property (nonatomic) float  pointsAwarded;

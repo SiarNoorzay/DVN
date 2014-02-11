@@ -433,8 +433,7 @@ int numOfSubs;
             }
     }
     
-    
-    
+    [self setNeedsVerifying:self.question.needsVerifying];
 }
 
 - (void)didReceiveMemoryWarning

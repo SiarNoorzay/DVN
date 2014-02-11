@@ -13,6 +13,9 @@
 
 @property (nonatomic) int elementID;
 @property (nonatomic) BOOL isCompleted;
+
+@property (nonatomic) BOOL isApplicable;
+
 @property (nonatomic) NSString * name;
 @property (nonatomic) BOOL isRequired;
 @property (nonatomic) float  pointsPossible;

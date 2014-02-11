@@ -35,6 +35,11 @@ int subEleNumber;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [self refreshView];
+}
+
+-(void)refreshView
+{
     //updating Elements and subelements
     //self.listOfElements = self.aud.Elements;
     
@@ -65,7 +70,7 @@ int subEleNumber;
                     if (question.layeredQuesions.count >0) {
                         //reset all sublayerd questions and loop thru them adding points to subelePoints
                         self.allSublayeredQuestions = [NSMutableArray new];
-                       int numOfSubs = [self getNumOfSubQuestionsAndSetAllSubsArray:question layerDepth:0];
+                        int numOfSubs = [self getNumOfSubQuestionsAndSetAllSubsArray:question layerDepth:0];
                         
                         for (LayeredQuestion *layQ in self.allSublayeredQuestions) {
                             subElePointsAwarded += layQ.question.pointsAwarded;
@@ -73,7 +78,7 @@ int subEleNumber;
                                 tempSubNAPoints += layQ.question.pointsPossible;
                                 tempEleNAPoints += layQ.question.pointsPossible;
                             }
-
+                            
                         }
                         NSLog(@"Subele: %d naPoints: %f",j,tempSubNAPoints);
                     }
@@ -103,8 +108,10 @@ int subEleNumber;
     {
         [self.dnvDBManager updateAudit:self.aud];
     }
+    
     [self.subElementTable reloadData];
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -193,12 +200,13 @@ int subEleNumber;
     return [self.listOfElements count];
 }
 
-/*-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row   forComponent:(NSInteger)component{
 
-    self.ele = [[Elements alloc]initWithElement:self.listOfElements[row]];
 
-    return self.ele.name;
-}*/
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row   forComponent:(NSInteger)component{
+
+    NSLog(@"gg");
+    return nil;
+}
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     
@@ -238,6 +246,14 @@ int subEleNumber;
         cell.image.hidden = YES;
     }
     
+    cell.theElementSubElementVC = self;
+    cell.theSubElement = self.subEle;
+    
+    if( self.subEle.isApplicable && cell.btnNASubElement.tag != 1)
+        [cell setNAImage];
+    else if ( !self.subEle.isApplicable && cell.btnNASubElement.tag == 1)
+        [cell setNAImage];
+ 
     return cell;
 }
 
@@ -288,7 +304,73 @@ int subEleNumber;
 }
 
 
+//NA all questions in an Element
 - (IBAction)naForElements:(id)sender {
-    NSLog(@"ggg");
+    if( self.naForElements.tag == 0)
+    {
+        self.naForElements.tag = 1;
+        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        self.naForElements.tag = 0;
+        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon_gray"] forState:UIControlStateNormal];
+
+    }
+    
+    Elements *currentElement = [self.listOfElements objectAtIndex:elementNumber];
+    for( SubElements *se in currentElement.Subelements)
+    {
+        [self setNAToSubElementsQuestions:se ifBool:self.naForElements.tag];
+    }
+    
+    currentElement.isApplicable = self.naForElements.tag;
+    
+    [self refreshView];
 }
+
+//NA all questions in a subelemnt
+-(void)setNAToSubElementsQuestions:(SubElements*)aSubElement ifBool: (BOOL) setNA
+{
+    for( Questions *Quest in aSubElement.Questions )
+    {
+        [self setNAToQuestions:Quest ifBool:setNA];
+    }
+    
+    aSubElement.isApplicable = setNA;
+    
+}
+-(void)setNAToQuestions:(Questions*)aQuestion ifBool: (BOOL) setNA
+{
+    for( Questions *LayerQuestion in aQuestion.layeredQuesions )
+    {
+        [self setNAToQuestions:LayerQuestion ifBool:setNA];
+    }
+    
+    if( setNA)
+    {
+        aQuestion.isApplicable = false;
+        aQuestion.isThumbsDown = false;
+        aQuestion.isThumbsUp = false;
+        aQuestion.needsVerifying =false;
+        aQuestion.pointsAwarded = 0;
+        aQuestion.isCompleted = true;
+        
+        
+        //Might not be needed, but added just incase
+        [self.dnvDBManager deleteVerifyForQuestion:aQuestion.questionID ofType:0];
+        [self.dnvDBManager deleteVerifyForQuestion:aQuestion.questionID ofType:1];
+        [self.dnvDBManager deleteVerifyForQuestion:aQuestion.questionID ofType:2];
+    }
+    else
+    {
+        aQuestion.isApplicable = true;
+        aQuestion.isThumbsDown = false;
+        aQuestion.isThumbsUp = false;
+        aQuestion.needsVerifying =false;
+        aQuestion.pointsAwarded = 0;
+        aQuestion.isCompleted = false;
+    }
+}
+
 @end
