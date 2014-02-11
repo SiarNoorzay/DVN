@@ -419,7 +419,7 @@ static ReportDocViewController* _sharedReportDocViewController = nil;
                     pathFrom = [self exportFile:pathFrom to:path];
                     [drawnLoc setObject:pathFrom atIndexedSubscript:m];
                 }
-                question.attachmentsLocationArray = drawnLoc;
+                question.drawnNotes = drawnLoc;
             }//question loop
         }
     }
@@ -438,7 +438,7 @@ static ReportDocViewController* _sharedReportDocViewController = nil;
     //using this deprecated method since it overwrites instead of renaming
     [[self restClient2]uploadFile:fileName toPath:dropboxPath fromPath:internalPath];
     
-    fileName = [dropboxPath stringByAppendingString:fileName];
+    fileName = [dropboxPath stringByAppendingString:[NSString stringWithFormat:@"/%@",fileName]];
     
     return fileName;
     

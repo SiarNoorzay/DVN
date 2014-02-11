@@ -28,7 +28,6 @@
 @property (nonatomic) int elementNumber;
 @property (nonatomic) int subElementNum;
 @property (strong,nonatomic) UIPopoverController * helpPopOver;
-@property (strong,nonatomic) UIImage *cameraImage;
 @property (strong, nonatomic) Audit * audit;
 
 @property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
