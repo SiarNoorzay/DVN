@@ -35,6 +35,11 @@
         self.pointsAwarded = [[subElementDictionary objectForKey:@"pointsAwarded"]floatValue];
         self.modefiedNAPoints = [[subElementDictionary objectForKey:@"modefiedNAPoints"]floatValue];
         
+        if ([subElementDictionary objectForKey:@"isApplicable"] == nil) {
+            self.isApplicable = true;
+        }
+        else self.isApplicable = [[subElementDictionary objectForKey:@"isApplicable"]boolValue];
+        
         NSMutableArray *tempArray = [subElementDictionary objectForKey:@"Questions"];
         NSMutableArray *objectArray = [NSMutableArray arrayWithCapacity:[tempArray count]];
 
@@ -76,6 +81,7 @@
     
     //bools
     mergedSubElements.isCompleted = [dataMerger mergeBool:primarySubElements.isCompleted with:secondarySubElements.isCompleted];
+    mergedSubElements.isApplicable = [dataMerger mergeBool:primarySubElements.isApplicable with:secondarySubElements.isApplicable];
     
     //float
     mergedSubElements.modefiedNAPoints = [dataMerger mergeFloat:primarySubElements.modefiedNAPoints with:secondarySubElements.modefiedNAPoints];

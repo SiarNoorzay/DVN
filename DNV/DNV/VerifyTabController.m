@@ -26,7 +26,13 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"%@", self.viewControllers);
+    
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view.
     
     NSMutableArray *someVCs = [NSMutableArray new];
     
@@ -42,12 +48,6 @@
         [someVCs addObject:[self.viewControllers objectAtIndex:2]];
     
     [self setViewControllers:someVCs animated:YES];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,6 +72,7 @@
         answersVC.questionArray = self.listOfVerifyQuestions;
         answersVC.currentPosition = self.currentSpot;
         
+        answersVC.cameFromVerifyTabBar = true;
     }
 }
 @end

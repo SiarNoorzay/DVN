@@ -26,6 +26,11 @@
         
         self.modefiedNAPoints = [[elementDictionary objectForKey:@"modefiedNAPoints"]floatValue];
 
+        if ([elementDictionary objectForKey:@"isApplicable"] == nil) {
+            self.isApplicable = true;
+        }
+        else self.isApplicable = [[elementDictionary objectForKey:@"isApplicable"]boolValue];
+        
         NSMutableArray *tempArray = [elementDictionary objectForKey:@"SubElements"];
         NSMutableArray *objectArray = [NSMutableArray arrayWithCapacity:[tempArray count]];
 
@@ -64,6 +69,7 @@
     //bools
     mergedElements.isCompleted = [dataMerger mergeBool:primaryElements.isCompleted with:secondaryElements.isCompleted];
     mergedElements.isRequired = [dataMerger mergeBool:primaryElements.isRequired with:secondaryElements.isRequired];
+    mergedElements.isApplicable = [dataMerger mergeBool:primaryElements.isApplicable with:secondaryElements.isApplicable];
     
     //float
     mergedElements.pointsPossible = [dataMerger mergeFloat:primaryElements.pointsPossible with:secondaryElements.pointsPossible];

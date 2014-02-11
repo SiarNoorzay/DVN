@@ -17,6 +17,8 @@
 
 - (IBAction)btnToggler:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnGoToVerifyTabBar;
+
 - (IBAction)btnGoToVerifyTabBar:(id)sender;
 
 @property (strong, nonatomic) AnswersViewController *theAnswersVC;

@@ -48,4 +48,10 @@
 
 @property (strong,atomic) NSMutableArray *allSublayeredQuestions;
 
+@property (weak, nonatomic) IBOutlet UIButton *naForElements;
+- (IBAction)naForElements:(id)sender;
+
+-(void)setNAToSubElementsQuestions:(SubElements*)aSubElement ifBool:(BOOL) setNA;
+-(void)refreshView;
+
 @end

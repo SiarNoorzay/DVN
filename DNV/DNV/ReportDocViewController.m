@@ -438,7 +438,7 @@ static ReportDocViewController* _sharedReportDocViewController = nil;
     //using this deprecated method since it overwrites instead of renaming
     [[self restClient2]uploadFile:fileName toPath:dropboxPath fromPath:internalPath];
     
-    fileName = [dropboxPath stringByAppendingString:fileName];
+    fileName = [dropboxPath stringByAppendingString:[NSString stringWithFormat:@"/%@",fileName]];
     
     return fileName;
     
