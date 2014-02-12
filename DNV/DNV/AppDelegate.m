@@ -149,6 +149,16 @@
             }
         });
     }
+    
+    if ([[DBSession sharedSession] handleOpenURL:url]) {
+        
+        if ([[DBSession sharedSession] isLinked]) {
+            NSLog(@"App linked successfully!");
+            // At this point you can start making API calls
+        }
+        return YES;
+    }
+
     return YES;
 }
 
