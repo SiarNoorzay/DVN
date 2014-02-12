@@ -38,4 +38,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *btnSetDropBox;
 - (IBAction)btnSetDropBox:(id)sender;
 
+-(void)pingUserJsonSetUpTables;
+
 @end
