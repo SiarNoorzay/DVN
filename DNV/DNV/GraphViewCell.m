@@ -18,6 +18,15 @@
     }
     return self;
 }
+-(id)initWithGraph:(GraphView*)grphView
+{
+    self = [super init];
+    if (self) {
+        self.graphViewImage = grphView;
+        self.elementSubName.text = grphView.name;
+    }
+    return self;
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

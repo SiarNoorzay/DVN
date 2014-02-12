@@ -13,6 +13,7 @@
 #import "Questions.h"
 #import "ReportDocViewController.h"
 #import "ScoringAssumptionsViewController.h"
+#import "GraphViewCell.h"
 
 
 
@@ -88,13 +89,13 @@
     NSMutableArray *subEleGraphViews = [[NSMutableArray alloc]initWithCapacity:1];
 
     GraphView *eleGraphView = [GraphView alloc];
+    [eleGraphView setName:self.audit.name];
     [eleGraphView setElementNames:eleNames];
     [eleGraphView setElementPercent:percents];
     [subEleGraphViews addObject:eleGraphView];
     
     for (Elements *ele in self.audit.Elements) {
         GraphView *subEleGraphView = [GraphView alloc];
-        
         NSMutableArray *subEleNames = [[NSMutableArray alloc]initWithCapacity:ele.Subelements.count];
         NSMutableArray *subElePercents = [[NSMutableArray alloc]initWithCapacity:ele.Subelements.count];
 
@@ -105,17 +106,19 @@
         }
         subEleGraphView.elementNames = subEleNames;
         subEleGraphView.elementPercent = subElePercents;
+        subEleGraphView.name = ele.name;
         
         [subEleGraphViews addObject: subEleGraphView];
         
     }
     NSLog(@"Count of graph views: %d", subEleGraphViews.count);
+    self.graphViews = subEleGraphViews;
     
 }
 #pragma mark - TableView Delegates
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    //if (tableView == self.ElementRatingsTableView) {
+    if (tableView == self.ElementRatingsTableView) {
         
         static NSString * cellIdentifier = @"ElementsRatingsCell";
         
@@ -138,23 +141,49 @@
         return cell;
         
         
-//    }
-//    else
-//    {
-//        
-//    }
-//    
+   }
+    static NSString * cellIdentifier = @"graphViewCell";
+    GraphView *grphView = [self.graphViews objectAtIndex:indexPath.row];
+
+    GraphViewCell * cell = [[GraphViewCell alloc]initWithGraph:grphView];
     
+    
+    [self.graphsTableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if(cell == nil){
+        cell = [GraphViewCell alloc];
+    }
+    
+    cell.graphViewImage = [[GraphView alloc]initWithFrame:cell.frame];
+    
+    
+    cell.elementSubName.text = grphView.name;
+
+    //[cell.graphViewImage drawRect:cell.graphViewImage.frame];
+    
+    //cell.graphViewImage.image = [grphView drawRect1:cell.frame];
+    
+    cell.graphViewImage.frame = CGRectMake(0, 0, 200, 100);
+    
+    return cell;
     
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-   //if (tableView == self.ElementRatingsTableView) {
+   if (tableView == self.ElementRatingsTableView) {
 
     return [self.elementsArray count];
     
+   }
+    
+    return self.graphViews.count;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
     
 }
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"goToAssumptions"]) {

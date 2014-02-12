@@ -13,4 +13,7 @@
 @property (strong, nonatomic) IBOutlet GraphView *graphViewImage;
 @property (strong, nonatomic) IBOutlet UILabel *elementSubName;
 
+-(id)initWithGraph:(GraphView*)grphView;
+
+
 @end
