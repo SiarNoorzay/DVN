@@ -148,27 +148,4 @@
 
 }
 
-//- (void)keyboardDidShow:(NSNotification *)notification
-//{
-//   
-//    //Assign new frame to your view
-//    CGRect frame =  self.view.frame;
-//        
-//    //TODO: change hardcoded value
-//    frame.origin.y = -264;
-//        
-//    [self.view setFrame:frame];
-//}
-//
-//-(void)keyboardDidHide:(NSNotification *)notification
-//{
-//    //Assign new frame to your view
-//    CGRect frame =  self.view.frame;
-//    
-//    //TODO: change hardcoded value
-//    frame.origin.y = 0;
-//    
-//    [self.view setFrame:frame];
-//}
-
 @end
