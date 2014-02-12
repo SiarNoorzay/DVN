@@ -231,6 +231,7 @@
 		760F12AB18A943D2008A432E /* libFlurry_4.3.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.1.a; sourceTree = "<group>"; };
 		760F12B218A96B35008A432E /* DNV_GL_ long_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DNV_GL_ long_logo.png"; sourceTree = "<group>"; };
 		760F12B318A96B36008A432E /* DNV_GL_login_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DNV_GL_login_logo.png; sourceTree = "<group>"; };
+		7613CB0918AC0F7E00DD0834 /* Flurry iPad SDK viPad 4.3.1.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = "Flurry iPad SDK viPad 4.3.1.zip"; path = "../../../../Downloads/Flurry iPad SDK viPad 4.3.1.zip"; sourceTree = "<group>"; };
 		7627430E18897BB500873E9F /* CalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorViewController.h; sourceTree = "<group>"; };
 		7627430F18897BB500873E9F /* CalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculatorViewController.m; sourceTree = "<group>"; };
 		7627431118898D3900873E9F /* DrawingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingViewController.h; sourceTree = "<group>"; };

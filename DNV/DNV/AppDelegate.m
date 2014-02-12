@@ -30,18 +30,6 @@
       appSecret:@"qqqibbo71cmc70d"
       root:kDBRootDropbox]; // either kDBRootAppFolder or kDBRootDropbox... INTERESTINGLY ON IPAD ONLY ROOTDROPBOX WORKS
     
-#warning TO ADJUST/REPLACE
-    //unlinks on apps first a launch... this logic should be put as a button on login screen, that way a user can easily toggle to other dropbox accounts
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"firstRun"] == nil)
-    {
-        // unlink
-        [[DBSession sharedSession] unlinkAll];
-        
-        // set 'has run' flag
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstRun"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    
     [DBSession setSharedSession:dbSession];
     
     
@@ -152,11 +140,21 @@
     
     if ([[DBSession sharedSession] handleOpenURL:url]) {
         
+        UINavigationController *theNav = (UINavigationController *)[self.window rootViewController];
+        LogInViewController *loginVC = (LogInViewController*)[theNav topViewController];
+        
         if ([[DBSession sharedSession] isLinked]) {
             NSLog(@"App linked successfully!");
             // At this point you can start making API calls
+            
+            [loginVC pingUserJsonSetUpTables];
+            [loginVC.btnSetDropBox setTitle:@"Dropbox linked: "];
         }
-        return YES;
+        else
+        {
+            [loginVC.btnSetDropBox setTitle:@"Link Dropbox"];
+        }
+        //if it fails throw error?
     }
 
     return YES;

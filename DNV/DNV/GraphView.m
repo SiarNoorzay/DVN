@@ -55,6 +55,10 @@
         item.yValue = [[self.elementPercent objectAtIndex:i] floatValue];
         item.width = width;
         item.name = [self.elementNames objectAtIndex:i];
+        int nameMaxLength = ((width * 1.5) /10);
+        if (item.name.length > nameMaxLength) {
+            item.name = [item.name substringToIndex: nameMaxLength];
+        }
         [itemsArray addObject:item];
         
     }
@@ -94,9 +98,9 @@
     
     //UIGraphicsBeginImageContext(rect.size);
     
-	[graph setXaxisTitle:@"Element Name"];
+	[graph setXaxisTitle:@"Sub Element Name"];
 	[graph setYaxisTitle:@"Percentage"];
-	[graph setGraphicTitle:@"Percentages for Evaluated Elements"];
+	[graph setGraphicTitle:@"Percentages for Evaluated Sub Elements"];
 	[graph setDelegate:self];
 	[graph setBackgroundColor:[UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1]];
 	[graph drawHistogramWithItems:itemsArray lineWidth:2 color:[UIColor blackColor]];

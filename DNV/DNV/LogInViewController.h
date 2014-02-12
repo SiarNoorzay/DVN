@@ -35,5 +35,9 @@
 //Log In Button
 - (IBAction)LogInButton:(UIBarButtonItem *)sender;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *btnSetDropBox;
+- (IBAction)btnSetDropBox:(id)sender;
+
+-(void)pingUserJsonSetUpTables;
 
 @end
