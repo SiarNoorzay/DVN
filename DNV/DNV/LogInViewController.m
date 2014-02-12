@@ -39,68 +39,21 @@
 
 - (void)viewDidLoad
 {
-    if (![[DBSession sharedSession] isLinked]) {
-        [[DBSession sharedSession] linkFromController:self];
-    }
-
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-
-//    NSError *error;
-//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleAudit"
-//                                                                                  ofType:@"json"]];
-//    
-//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-//    
-//    NSLog(@"JSON contains:\n%@", [dictionary description]);
-//    
-//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-//    
-//    
-//    //use this to access the audit and its components dictionary style
-//    Audit *aud = [[Audit alloc]initWithAudit:theAudit];
-//    NSLog(@"Audit name: %@", aud.name);
-//
-//    Elements *ele =  aud.Elements[0];
-//    NSLog(@"the first element is:%@", [ele objectForKey:@"name"]);
-    
-//    SubElements *sub = [[ele objectForKey:@"SubElements"]objectAtIndex:0];
-//    NSLog(@"the first SubElements is:%@", [sub objectForKey:@"name"]);
-//    
-//    Questions *ques = [[sub objectForKey:@"Questions"]objectAtIndex:0];
-//    NSLog(@"the first Questions is:%@", [ques objectForKey:@"questionText"]);
-//
-//    Answers *ans = [[ques objectForKey:@"Answers"]objectAtIndex:0];
-//    NSLog(@"the first Answer is:%@", [ans objectForKey:@"answerText"]);
-//
-    
-//    //other way to access the audits components (probably easier this way)
-//    Elements *ele2 = [[Elements alloc]initWithElement:aud.Elements[1]];
-//    NSLog(@"the second element is %@", ele2.name);
-//
-//    SubElements *sub2 = [[SubElements alloc]initWithSubElement:ele2.Subelements[0]];
-//    NSLog(@"the second SubElement is:%@", sub2.name);
-    
-
-//
-//    NSString *filename = @"/users.json";
-//    _myDirectory = @"users.json";
-//    _directoryPath = [NSTemporaryDirectory() stringByAppendingPathComponent:_myDirectory];
-//    
-//    [[self restClient] loadFile:filename intoPath:_directoryPath];
-
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents directory
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"usersFromDB.json"];
-    _directoryPath = filePath;
-    
-    [self.restClient loadFile:@"/users.json" intoPath:filePath];
-    
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
     
-    [self.dnvDBManager createUserTable];
-    [self.dnvDBManager createAuditTables];
+    if (![[DBSession sharedSession] isLinked]) {
+        [self.btnSetDropBox setTitle:@"Link to a Dropbox"];
+        [[DBSession sharedSession] linkFromController:self];
+    }
+    else
+    {
+        [self pingUserJsonSetUpTables];
+        
+        [self.btnSetDropBox setTitle:@"Dropbox linked: "];
+    }
     
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -108,6 +61,23 @@
     self.userIDTextField.text = @"";
     self.passwordTextField.text = @"";
     
+}
+
+-(void)pingUserJsonSetUpTables
+{
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents directory
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"usersFromDB.json"];
+    _directoryPath = filePath;
+    
+#warning  throw activity indicator and prevent attempLogin from being fired till done
+    [self.restClient loadFile:@"/users.json" intoPath:filePath];
+    
+    
+    //do we needed to delete usertable and then create?
+    [self.dnvDBManager createUserTable];
+    [self.dnvDBManager createAuditTables];
 }
 
 
@@ -137,23 +107,8 @@
         NSData *data = [stringData dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
         NSLog(@"JSON contains:\n%@", [dictionary description]);
-//        
-//        
-//        NSDictionary *dictionary1 = [NSDictionary dictionaryWithContentsOfFile:_directoryPath];
-//        NSLog(@"JSON1 contains:\n%@", [dictionary1 description]);
-//        
-//        
-//        NSData *data2 = [NSData dataWithContentsOfFile:_directoryPath];
-//        NSDictionary *dictionary2 = [NSJSONSerialization JSONObjectWithData: data2 options:kNilOptions error:&error];
-//        NSLog(@"JSON2 contains:\n%@", [dictionary2 description]);
-//        
-//        NSData *data3 = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"users"                                                                                   ofType:@"json"]];
-//        
-//        NSArray *dictionary3 = [NSJSONSerialization JSONObjectWithData: data3 options:kNilOptions error:&error];
-//        
-//        NSLog(@"JSON3 contains:\n%@", [dictionary3 description]);
 
-        self.arrayOfUsers = [dictionary objectForKey:@"Users"];
+        self.arrayOfUsers = [[NSArray alloc ] initWithArray:[dictionary objectForKey:@"Users"]];
         
     }
     
@@ -180,65 +135,96 @@
 - (IBAction)LogInButton:(UIBarButtonItem *)sender {
     [self attemptToLogin];
 }
--(void)attemptToLogin{
-    NSDictionary *loginParams =
-    [NSDictionary dictionaryWithObjectsAndKeys:
-     self.userIDTextField.text, @"userID", // Capture author info
-     nil];
-    
-    BOOL foundUser = false;
-    
-    for (User *usr in self.arrayOfUsers) {
+-(void)attemptToLogin
+{
+    if( ![[DBSession sharedSession] isLinked] )
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"No dropbox linked!" message: @"Must be linked to a dropbox in order to login" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        NSLog(@"No dropbox linked.");
+    }
+    else if( self.arrayOfUsers == nil || [self.arrayOfUsers count] == 0)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"No Users!" message: @"Users json file is not present or contains zero users." delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        NSLog(@"Nil or empty userJson (arrayOfUsers)");
+    }
+    else
+    {
+        NSDictionary *loginParams =
+        [NSDictionary dictionaryWithObjectsAndKeys:
+         self.userIDTextField.text, @"userID", // Capture author info
+         nil];
         
-        [self.dnvDBManager saveUser:usr];
+        BOOL foundUser = false;
         
-        if ([[usr objectForKey:@"userID" ] isEqualToString:self.userIDTextField.text]) {
+        for (User *usr in self.arrayOfUsers) {
             
-            self.user = usr;
-            foundUser = true;
-           // break;
+            [self.dnvDBManager saveUser:usr];
+            
+            if ([[usr objectForKey:@"userID" ] isEqualToString:self.userIDTextField.text]) {
+                
+                self.user = usr;
+                foundUser = true;
+                // break;
+            }
         }
-    }    
-    
-    if (foundUser) {
-        BOOL passwordCorrect = false;
         
-        if ([[self.user objectForKey:@"password" ] isEqualToString:self.passwordTextField.text]) {
-            passwordCorrect= true;
+        if (foundUser) {
+            BOOL passwordCorrect = false;
             
-            
-            [Flurry logEvent:@"Successful Login" withParameters:loginParams];
-            [Flurry setUserID:self.userIDTextField.text];
-
-
-            NSLog(@"User name and password correct");
-            [self performSegueWithIdentifier:@"loginSuccess" sender:nil];
-            
-            //store current user in NSUSERDEFAULTS
-            NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
-            [nsDefaults setObject:self.userIDTextField.text forKey:@"currentUser"];
-            [nsDefaults setObject:[self.user objectForKey:@"fullName"] forKey:@"currentUserName"];
-            [nsDefaults synchronize];
+            if ([[self.user objectForKey:@"password" ] isEqualToString:self.passwordTextField.text]) {
+                passwordCorrect= true;
+                
+                
+                [Flurry logEvent:@"Successful Login" withParameters:loginParams];
+                [Flurry setUserID:self.userIDTextField.text];
+                
+                
+                NSLog(@"User name and password correct");
+                [self performSegueWithIdentifier:@"loginSuccess" sender:nil];
+                
+                //store current user in NSUSERDEFAULTS
+                NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
+                [nsDefaults setObject:self.userIDTextField.text forKey:@"currentUser"];
+                [nsDefaults setObject:[self.user objectForKey:@"fullName"] forKey:@"currentUserName"];
+                [nsDefaults synchronize];
+            }
+            else{
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Incorrect Password" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+                
+                NSLog(@"Incorrect password");
+                
+                [Flurry logEvent:@"Unsuccesful Login" withParameters:loginParams];
+                
+            }
         }
-        else{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Incorrect Password" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"User ID not recognized" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
-            
-            NSLog(@"Incorrect password");
+            NSLog(@"User ID not recognized");
             
             [Flurry logEvent:@"Unsuccesful Login" withParameters:loginParams];
-
+            
         }
     }
-    else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"User ID not recognized" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        NSLog(@"User ID not recognized");
-        
-        [Flurry logEvent:@"Unsuccesful Login" withParameters:loginParams];
-
-    }
-    
 }
 
+- (IBAction)btnSetDropBox:(id)sender
+{
+    if( [[DBSession sharedSession] isLinked])
+    {
+        // unlink
+        [[DBSession sharedSession] unlinkAll];
+        
+        self.arrayOfUsers = nil;
+        
+        [self.btnSetDropBox setTitle:@"Link to a Dropbox"];
+    }
+    else
+    {
+        [[DBSession sharedSession] linkFromController:self];
+    }
+}
 @end

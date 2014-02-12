@@ -87,8 +87,31 @@
     
     self.evaluatedPercentageLabel.text = [NSString stringWithFormat:@"%.2f %%",((auditAwarded / (auditPointsPossible - auditNAPoints)) *100)];
     
-    [self.graphView setElementNames:eleNames];
-    [self.graphView setElementPercent:percents];
+    for (Elements *ele in self.audit.Elements) {
+        GraphView *subEleGraphView = [GraphView alloc];
+        NSMutableArray *subEleNames = [[NSMutableArray alloc]initWithCapacity:ele.Subelements.count];
+        NSMutableArray *subElePercents = [[NSMutableArray alloc]initWithCapacity:ele.Subelements.count];
+        
+        for (SubElements *subEle in ele.Subelements) {
+            
+            if (subEle.isApplicable) {
+                [subEleNames addObject:subEle.name];
+                [subElePercents addObject:[NSString stringWithFormat:@"%.2f",((subEle.pointsAwarded / (subEle.pointsPossible - subEle.modefiedNAPoints)) *100)]];
+            }
+            
+        }
+        subEleGraphView.elementNames = subEleNames;
+        subEleGraphView.elementPercent = subElePercents;
+        //subEleGraphView.name = ele.name;
+        
+        //[subEleGraphViews addObject: subEleGraphView];
+        
+        [self.graphView setElementNames:subEleNames];
+        [self.graphView setElementPercent:subElePercents];
+    }
+
+    
+    
     
     
 }
