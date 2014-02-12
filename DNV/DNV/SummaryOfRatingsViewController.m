@@ -13,6 +13,7 @@
 #import "Questions.h"
 #import "ReportDocViewController.h"
 #import "ScoringAssumptionsViewController.h"
+#import "GraphViewCell.h"
 
 
 
@@ -75,7 +76,6 @@
         [eleNames addObject:eleName];
         [percents addObject:percent];
         
-        //TODO: save ele back to DB
     }
     self.totalPossibleLabel.text = [NSString stringWithFormat:@"%.1f",auditPointsPossible];
     self.totalAwardedLabel.text = [NSString stringWithFormat:@"%.1f",auditAwarded];
@@ -86,68 +86,102 @@
     self.evaluatedAwardedLabel.text = [NSString stringWithFormat:@"%.1f",auditAwarded];
     
     self.evaluatedPercentageLabel.text = [NSString stringWithFormat:@"%.2f %%",((auditAwarded / (auditPointsPossible - auditNAPoints)) *100)];
+    NSMutableArray *subEleGraphViews = [[NSMutableArray alloc]initWithCapacity:1];
+
+    GraphView *eleGraphView = [GraphView alloc];
+    [eleGraphView setName:self.audit.name];
+    [eleGraphView setElementNames:eleNames];
+    [eleGraphView setElementPercent:percents];
+    [subEleGraphViews addObject:eleGraphView];
     
     for (Elements *ele in self.audit.Elements) {
         GraphView *subEleGraphView = [GraphView alloc];
         NSMutableArray *subEleNames = [[NSMutableArray alloc]initWithCapacity:ele.Subelements.count];
         NSMutableArray *subElePercents = [[NSMutableArray alloc]initWithCapacity:ele.Subelements.count];
-        
+
         for (SubElements *subEle in ele.Subelements) {
             
-            if (subEle.isApplicable) {
-                [subEleNames addObject:subEle.name];
-                [subElePercents addObject:[NSString stringWithFormat:@"%.2f",((subEle.pointsAwarded / (subEle.pointsPossible - subEle.modefiedNAPoints)) *100)]];
-            }
-            
+            [subEleNames addObject:subEle.name];
+            [subElePercents addObject:[NSString stringWithFormat:@"%.2f",((subEle.pointsAwarded / (subEle.pointsPossible - subEle.modefiedNAPoints)) *100)]];
         }
         subEleGraphView.elementNames = subEleNames;
         subEleGraphView.elementPercent = subElePercents;
-        //subEleGraphView.name = ele.name;
+        subEleGraphView.name = ele.name;
         
-        //[subEleGraphViews addObject: subEleGraphView];
+        [subEleGraphViews addObject: subEleGraphView];
         
-        [self.graphView setElementNames:subEleNames];
-        [self.graphView setElementPercent:subElePercents];
     }
-
-    
-    
-    
+    NSLog(@"Count of graph views: %d", subEleGraphViews.count);
+    self.graphViews = subEleGraphViews;
     
 }
 #pragma mark - TableView Delegates
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView == self.ElementRatingsTableView) {
+        
+        static NSString * cellIdentifier = @"ElementsRatingsCell";
+        
+        ElementRatingsCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if(cell == nil){
+            cell = [[ElementRatingsCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        }
+        Elements *element = [self.elementsArray objectAtIndex:indexPath.row];
+        
+        cell.elementName.text = element.name;
+        if (element.isRequired) {
+            cell.required.text = @"R";
+        }
+        else cell.required.text = @"O";
+        
+        cell.pointsPossible.text = [NSString stringWithFormat:@"%.1f",element.pointsPossible-element.modefiedNAPoints];
+        cell.pointsAwarded.text = [NSString stringWithFormat:@"%.1f",element.pointsAwarded];
+        
+        cell.percentage.text = [NSString stringWithFormat:@"%.2f %%", (element.pointsAwarded/(element.pointsPossible - element.modefiedNAPoints))*100];
+        return cell;
+        
+        
+   }
+    static NSString * cellIdentifier = @"graphViewCell";
+    GraphView *grphView = [self.graphViews objectAtIndex:indexPath.row];
+
+    GraphViewCell * cell = [[GraphViewCell alloc]initWithGraph:grphView];
     
-    static NSString * cellIdentifier = @"ElementsRatingsCell";
     
-    ElementRatingsCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    [self.graphsTableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if(cell == nil){
-        cell = [[ElementRatingsCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [GraphViewCell alloc];
     }
-    Elements *element = [self.elementsArray objectAtIndex:indexPath.row];
     
-    cell.elementName.text = element.name;
-    if (element.isRequired) {
-        cell.required.text = @"R";
-    }
-    else cell.required.text = @"O";
+    cell.graphViewImage = [[GraphView alloc]initWithFrame:cell.frame];
     
-    cell.pointsPossible.text = [NSString stringWithFormat:@"%.1f",element.pointsPossible-element.modefiedNAPoints];
-    cell.pointsAwarded.text = [NSString stringWithFormat:@"%.1f",element.pointsAwarded];
     
-    cell.percentage.text = [NSString stringWithFormat:@"%.2f %%", (element.pointsAwarded/(element.pointsPossible - element.modefiedNAPoints))*100];
+    cell.elementSubName.text = grphView.name;
+
+    //[cell.graphViewImage drawRect:cell.graphViewImage.frame];
+    
+    //cell.graphViewImage.image = [grphView drawRect1:cell.frame];
+    
+    cell.graphViewImage.frame = CGRectMake(0, 0, 200, 100);
+    
     return cell;
-    
     
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+   if (tableView == self.ElementRatingsTableView) {
+
     return [self.elementsArray count];
+    
+   }
+    
+    return self.graphViews.count;
 }
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
+    
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -219,9 +253,10 @@
         rect.origin.y += pixelsToMove;
         self.evaluatedPossibleLabel.frame = rect;
       
-        rect = self.graphView.frame;
-        rect.origin.y += pixelsToMove;
-        self.graphView.frame = rect;
+        //TODO: fix this sheit
+   //     rect = self.graphView.frame;
+   //     rect.origin.y += pixelsToMove;
+   //     self.graphView.frame = rect;
         
         
         //set the frame of this view to the bottom of the finalPdfview
@@ -248,3 +283,4 @@
 
 
 @end
+

@@ -27,9 +27,14 @@
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 
-- (void)drawRect:(CGRect)rect {
+-(void)drawRect:(CGRect)rect {
+    if (self.name == nil) {
+        return;
+    }
     int numberOfEles = [self.elementNames count];
-    float width = (668/ numberOfEles) - 20;
+    //if (numberOfEles == 0) numberOfEles = 1;
+    
+    float width = (668/ numberOfEles) - 10;
     if (width<30) {
         width = 30;
     }
@@ -39,7 +44,7 @@
     }
     // Drawing code
 	CGContextRef _context = UIGraphicsGetCurrentContext();
-	ECGraph *graph = [[ECGraph alloc] initWithFrame:CGRectMake(10,40, 612, 268) withContext:_context isPortrait:NO];
+	ECGraph *graph = [[ECGraph alloc] initWithFrame:CGRectMake(10,40, 612, 226) withContext:_context isPortrait:NO];
     
 	NSLog(@"draw rect %@", [self.elementNames objectAtIndex:0]);
     NSMutableArray *itemsArray = [[NSMutableArray alloc]initWithCapacity:numberOfEles];
@@ -91,6 +96,7 @@
 //	
 //	NSArray *items = [[NSArray alloc] initWithObjects:item1,item2,item3,item4,item5,nil];
     
+    //UIGraphicsBeginImageContext(rect.size);
     
 	[graph setXaxisTitle:@"Sub Element Name"];
 	[graph setYaxisTitle:@"Percentage"];
@@ -98,7 +104,10 @@
 	[graph setDelegate:self];
 	[graph setBackgroundColor:[UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1]];
 	[graph drawHistogramWithItems:itemsArray lineWidth:2 color:[UIColor blackColor]];
-	
+//    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//
+//    return image;
 }
 
 
