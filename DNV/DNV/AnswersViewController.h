@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <KLSwitch/KLSwitch.h>
 #import "DNVDatabaseManagerClass.h"
+#import "AttachmentsPopOverViewController.h"
 
 #import "Questions.h"
 #import "Answers.h"
@@ -16,6 +17,9 @@
 #import "Audit.h"
 
 @interface AnswersViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIPopoverControllerDelegate>
+
+
+@property (assign) bool cameFromVerifyTabBar;
 
 @property (nonatomic, strong) Questions *question;
 @property (nonatomic) NSArray * questionArray;

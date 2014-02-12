@@ -14,6 +14,12 @@
 
 @implementation AppDelegate
 
+{
+    NSString *pathOfFile;
+    NSString *tempURL;
+}
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
@@ -22,20 +28,33 @@
     [[DBSession alloc]
       initWithAppKey:@"u91hg98nvmqeb8g"
       appSecret:@"qqqibbo71cmc70d"
-      root:kDBRootDropbox]; // either kDBRootAppFolder or kDBRootDropbox
-
+      root:kDBRootDropbox]; // either kDBRootAppFolder or kDBRootDropbox... INTERESTINGLY ON IPAD ONLY ROOTDROPBOX WORKS
+    
+#warning TO ADJUST/REPLACE
+    //unlinks on apps first a launch... this logic should be put as a button on login screen, that way a user can easily toggle to other dropbox accounts
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"firstRun"] == nil)
+    {
+        // unlink
+        [[DBSession sharedSession] unlinkAll];
+        
+        // set 'has run' flag
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstRun"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
     [DBSession setSharedSession:dbSession];
+    
     
     [Flurry setCrashReportingEnabled:YES];
     //note: iOS only allows one crash reporting tool per app; if using another, set to: NO
     [Flurry startSession:@"JXPCVN7MYZTH7P8QVNJK"];
-    
     
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     if ([[DBSession sharedSession] handleOpenURL:url]) {
+        
         if ([[DBSession sharedSession] isLinked]) {
             NSLog(@"App linked successfully!");
             // At this point you can start making API calls
@@ -81,7 +100,89 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:
-    
 }
+
+
+
+
+
+
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    if (url != nil && [url isFileURL])
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Download data
+            tempURL = [url absoluteString];
+            
+            NSData *currData = [NSData dataWithContentsOfURL:[NSURL URLWithString:tempURL]];
+            
+            
+            NSRange range = [tempURL rangeOfString:@"Inbox/"];
+            tempURL = [tempURL substringFromIndex:range.location+7];
+            
+            // Create file at path
+            NSFileManager *fileManager = [NSFileManager new];
+            NSError *error = [NSError new];
+            
+            NSString *dataPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Attachments"];
+            if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
+                [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+            
+            
+            [fileManager createFileAtPath:[NSString stringWithFormat:@"%@/%@", dataPath, tempURL] contents:currData attributes:nil];
+            
+            AppDelegate *tmpDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            UIViewController *myCurrentController = ((UINavigationController*)tmpDelegate.window.rootViewController).visibleViewController;
+            
+            //Present opened in file through QLPreviewController
+            @try
+            {
+                QLPreviewController * preview = [[QLPreviewController alloc] init];
+                preview.dataSource = self;
+                [myCurrentController presentViewController:preview animated:YES completion:nil];
+            }
+            @catch (NSException *exception)
+            {
+                //nslog(@"Exception caught: %@", exception);
+            }
+        });
+    }
+    
+    if ([[DBSession sharedSession] handleOpenURL:url]) {
+        
+        if ([[DBSession sharedSession] isLinked]) {
+            NSLog(@"App linked successfully!");
+            // At this point you can start making API calls
+        }
+        return YES;
+    }
+
+    return YES;
+}
+
+
+//// Quick Look methods, delegates and data sources...
+#pragma mark QLPreviewControllerDelegate methods
+- (BOOL)previewController:(QLPreviewController *)controller shouldOpenURL:(NSURL *)url forPreviewItem:(id <QLPreviewItem>)item {
+	
+	return YES;
+}
+
+
+#pragma mark QLPreviewControllerDataSource methods
+- (NSInteger) numberOfPreviewItemsInPreviewController: (QLPreviewController *) controller {
+	
+    return 1;
+}
+
+- (id <QLPreviewItem>) previewController: (QLPreviewController *) controller previewItemAtIndex: (NSInteger) index
+{
+    NSString *dataPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Attachments"];
+    
+    return [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@",dataPath, tempURL]];
+}
+////
 
 @end

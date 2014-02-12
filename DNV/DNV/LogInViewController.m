@@ -36,6 +36,7 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     if (![[DBSession sharedSession] isLinked]) {

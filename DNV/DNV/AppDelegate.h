@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuickLook/QuickLook.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, QLPreviewControllerDataSource, QLPreviewControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

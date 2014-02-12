@@ -34,7 +34,6 @@
 	// Do any additional setup after loading the view.
     
     self.dnvDB = [DNVDatabaseManagerClass getSharedInstance];
-    
     myTabBar = (VerifyTabController*)self.tabBarController;
 }
 
@@ -66,9 +65,14 @@
     cell.txtDescription.text = aRow.description;
     cell.lblConfirmed.text = [NSString stringWithFormat:@"%d", aRow.confirmedCount];
     cell.lblNotConfirmed.text = [NSString stringWithFormat:@"%d", aRow.notConfirmedCount];
-    cell.lblPercent.text = [NSString stringWithFormat:@"%f", aRow.percentComplete];
+    cell.lblPercent.text = [NSString stringWithFormat:@"%.2f", aRow.percentComplete];
     cell.theObject = aRow;
     cell.dnvDB = self.dnvDB;
+    
+    cell.stpConfirmed.value = aRow.confirmedCount;
+    cell.stpNotConfirmed.value = aRow.notConfirmedCount;
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
@@ -92,7 +96,6 @@
     
     [self.tblPhysical reloadData];
 }
-
 #pragma End TableView Methods
 
 - (IBAction)btnAddRowToTable:(id)sender

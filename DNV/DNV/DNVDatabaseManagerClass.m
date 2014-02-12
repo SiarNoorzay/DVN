@@ -62,9 +62,9 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         //Create the DB
         const char * sql_stmt = "CREATE TABLE IF NOT EXISTS AUDIT (ID TEXT PRIMARY KEY, AUDITNAME TEXT, AUDITTYPE INTEGER, LASTMODIFIED TEXT)";
         
-        const char * sql_stmt2 = "CREATE TABLE IF NOT EXISTS ELEMENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, AUDITID TEXT, ELEMENTNAME TEXT, ISCOMPLETED INTEGER, ISREQUIRED INTEGER, POINTSPOSSIBLE REAL, POINTSAWARDED REAL, MODIFIEDNAPOINTS REAL)";
+        const char * sql_stmt2 = "CREATE TABLE IF NOT EXISTS ELEMENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, AUDITID TEXT, ELEMENTNAME TEXT, ISCOMPLETED INTEGER, ISREQUIRED INTEGER, ISAPPLICABLE INTEGER, POINTSPOSSIBLE REAL, POINTSAWARDED REAL, MODIFIEDNAPOINTS REAL)";
         
-        const char * sql_stmt3 = "CREATE TABLE IF NOT EXISTS SUBELEMENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, ELEMENTID INTEGER, SUBELEMENTNAME TEXT, ISCOMPLETED INTEGER, POINTSPOSSIBLE REAL, POINTSAWARDED REAL, MODIFIEDNAPOINTS REAL)";
+        const char * sql_stmt3 = "CREATE TABLE IF NOT EXISTS SUBELEMENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, ELEMENTID INTEGER, SUBELEMENTNAME TEXT, ISAPPLICABLE INTEGER, ISCOMPLETED INTEGER, POINTSPOSSIBLE REAL, POINTSAWARDED REAL, MODIFIEDNAPOINTS REAL)";
         
         const char * sql_stmt4 = "CREATE TABLE IF NOT EXISTS QUESTION (ID INTEGER PRIMARY KEY AUTOINCREMENT, SUBELEMENTID INTEGER, QUESTIONTEXT TEXT, QUESTIONTYPE INTEGER, ISCOMPLETED INTEGER, POINTSPOSSIBLE REAL, POINTSAWARDED REAL, HELPTEXT TEXT, NOTES TEXT, ISTHUMBSUP INTEGER, ISTHUMBSDOWN INTEGER, ISAPPLICABLE INTEGER, NEEDSVERIFYING INTEGER, ISVERIFYDONE INTEGER, PARENTQUESTIONID INTEGER, NUMBEROFLAYERED INTEGER, POINTSNEEDEFORLAYER REAL)";
         
@@ -197,7 +197,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             for (Elements * ele in elements){
                 
                 //Query to insert into the element table
-                NSString * insertElementSQL = [NSString stringWithFormat:@"INSERT INTO ELEMENT (AUDITID, ELEMENTNAME, ISCOMPLETED, ISREQUIRED, POINTSPOSSIBLE, POINTSAWARDED, MODIFIEDNAPOINTS) VALUES (\"%@\", \"%@\", %d, %d, %f, %f, %f)", audit.auditID, ele.name, ele.isCompleted, ele.isRequired, ele.pointsPossible, ele.pointsAwarded, ele.modefiedNAPoints];
+                NSString * insertElementSQL = [NSString stringWithFormat:@"INSERT INTO ELEMENT (AUDITID, ELEMENTNAME, ISCOMPLETED, ISREQUIRED, ISAPPLICABLE, POINTSPOSSIBLE, POINTSAWARDED, MODIFIEDNAPOINTS) VALUES (\"%@\", \"%@\", %d, %d, %d, %f, %f, %f)", audit.auditID, ele.name, ele.isCompleted, ele.isRequired, ele.isApplicable, ele.pointsPossible, ele.pointsAwarded, ele.modefiedNAPoints];
                 
                 //Call to insert a row into a table
                 [self insertRowInTable:insertElementSQL forTable:@"element"];
@@ -210,7 +210,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                 for (SubElements * subEle in subElements){
                     
                     //Query to insert into the sub element table
-                    NSString * insertSubElementSQL = [NSString stringWithFormat:@"INSERT INTO SUBELEMENT (ELEMENTID, SUBELEMENTNAME, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, MODIFIEDNAPOINTS) VALUES (%d, \"%@\", %d, %f, %f, %f)", elementID, subEle.name, subEle.isCompleted, subEle.pointsPossible, subEle.pointsAwarded, subEle.modefiedNAPoints];
+                    NSString * insertSubElementSQL = [NSString stringWithFormat:@"INSERT INTO SUBELEMENT (ELEMENTID, SUBELEMENTNAME, ISCOMPLETED, ISAPPLICABLE, POINTSPOSSIBLE, POINTSAWARDED, MODIFIEDNAPOINTS) VALUES (%d, \"%@\", %d, %d, %f, %f, %f)", elementID, subEle.name, subEle.isCompleted, subEle.isApplicable, subEle.pointsPossible, subEle.pointsAwarded, subEle.modefiedNAPoints];
                     
                     //Call to insert a row into a table
                     [self insertRowInTable:insertSubElementSQL forTable:@"sub element"];
@@ -501,6 +501,11 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                 tempAudit.auditID = auditID;
                 tempAudit.name = name;
                 tempAudit.auditType = [type intValue];
+                
+                if ([lastmodified isEqualToString:@"(null)"]) {
+                    lastmodified = @"";
+                }
+                
                 tempAudit.lastModefied = lastmodified;
                 tempAudit.client = [self retrieveClientOfAudit:tempAudit.auditID];
                 tempAudit.report = [self retrieveReportOfAudit:tempAudit.auditID];
@@ -575,6 +580,43 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             
             tempClient.clientID = [identify integerValue];
             tempClient.companyName = name;
+            
+            if ([division isEqualToString:@"(null)"]) {
+                division = @"";
+            }
+            
+            if ([sicNum isEqualToString:@"(null)"]) {
+                sicNum = @"";
+            }
+            
+            if ([auditor isEqualToString:@"(null)"]) {
+                auditor = @"";
+            }
+            
+            if ([audSite isEqualToString:@"(null)"]) {
+                audSite = @"";
+            }
+            
+            if ([audDate isEqualToString:@"(null)"]) {
+                audDate = @"";
+            }
+            
+            if ([sAddress isEqualToString:@"(null)"]) {
+                sAddress = @"";
+            }
+            
+            if ([cityStateProv isEqualToString:@"(null)"]) {
+                cityStateProv = @"";
+            }
+            
+            if ([pCode isEqualToString:@"(null)"]) {
+                pCode = @"";
+            }
+            
+            if ([country isEqualToString:@"(null)"]) {
+                country = @"";
+            }
+            
             tempClient.division = division;
             tempClient.SICNumber = sicNum;
             tempClient.numEmployees = [numOfEmp integerValue];
@@ -639,6 +681,43 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             NSString * diagFile = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 10)];
             
             tempReport.reportID = [identify integerValue];
+            
+            if ([clientRef isEqualToString:@"(null)"]) {
+                clientRef = @"";
+            }
+            
+            if ([summary isEqualToString:@"(null)"]) {
+                summary = @"";
+            }
+            
+            if ([execSum isEqualToString:@"(null)"]) {
+                execSum = @"";
+            }
+            
+            if ([prepared isEqualToString:@"(null)"]) {
+                prepared = @"";
+            }
+            
+            if ([approved isEqualToString:@"(null)"]) {
+                approved = @"";
+            }
+            
+            if ([projNum isEqualToString:@"(null)"]) {
+                projNum = @"";
+            }
+            
+            if ([scorAssump isEqualToString:@"(null)"]) {
+                scorAssump = @"";
+            }
+            
+            if ([conclusion isEqualToString:@"(null)"]) {
+                conclusion = @"";
+            }
+            
+            if ([diagFile isEqualToString:@"(null)"]) {
+                diagFile = @"";
+            }
+            
             tempReport.clientRef = clientRef;
             tempReport.summary = summary;
             tempReport.executiveSummary = execSum;
@@ -686,19 +765,23 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             //Gets the isRequired data from DB and adding it to the temp Element Object
             NSString * required = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
             
+            //Gets the isRequired data from DB and adding it to the temp Element Object
+            NSString * applicable = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
+            
             //Gets the pointsPossible data from DB and adding it to the temp Element Object
-            NSString * ptsPoss = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
+            NSString * ptsPoss = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
             
             //Gets the pointsAwarded data from DB and adding it to the temp Element Object
-            NSString * ptsAward = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
+            NSString * ptsAward = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
             
             //Gets the modifiedNAPoints data from DB and adding it to the temp Element Object
-            NSString * modNAPts = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
+            NSString * modNAPts = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 8)];
             
             tempElement.elementID = [identify integerValue];
             tempElement.name = name;
             tempElement.isCompleted = [completed integerValue];
             tempElement.isRequired = [required integerValue];
+            tempElement.isApplicable = [applicable integerValue];
             tempElement.pointsPossible = [ptsPoss floatValue];
             tempElement.pointsAwarded = [ptsAward floatValue];
             tempElement.modefiedNAPoints = [modNAPts floatValue];
@@ -737,21 +820,25 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             //Gets the sub element name data from DB and adding it to the temp Sub Element Object
             NSString * name = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
             
+            //Gets the isRequired data from DB and adding it to the temp Element Object
+            NSString * applicable = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
+            
             //Gets the isCompleted data from DB and adding it to the temp Sub Element Object
-            NSString * completed = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
+            NSString * completed = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
             
             //Gets the pointsPossible data from DB and adding it to the temp Sub Element Object
-            NSString * ptsPoss = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
+            NSString * ptsPoss = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
             
             //Gets the pointsAwarded data from DB and adding it to the temp Sub Element Object
-            NSString * ptsAward = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
+            NSString * ptsAward = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
             
             //Gets the modifiedNAPoints data from DB and adding it to the temp Sub Element Object
-            NSString * modNAPts = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
+            NSString * modNAPts = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
             
             tempSubElement.subElementID = [identify integerValue];
             tempSubElement.name = name;
             tempSubElement.isCompleted = [completed integerValue];
+            tempSubElement.isApplicable = [applicable integerValue];
             tempSubElement.pointsPossible = [ptsPoss floatValue];
             tempSubElement.pointsAwarded = [ptsAward floatValue];
             tempSubElement.modefiedNAPoints = [modNAPts floatValue];
@@ -845,6 +932,11 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             tempQuestion.pointsPossible = [ptsPoss floatValue];
             tempQuestion.pointsAwarded = [ptsAward floatValue];
             tempQuestion.helpText = help;
+            
+            if ([notes isEqualToString:@"(null)"]) {
+                notes = @"";
+            }
+            
             tempQuestion.notes = notes;
             tempQuestion.isThumbsUp = [thumbsUp boolValue];
             tempQuestion.isThumbsDown = [thumbsDown boolValue];
@@ -1117,7 +1209,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //Opening the SQLite DB
     if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
         
-        NSString * updateElementSQL = [NSString stringWithFormat:@"UPDATE ELEMENT SET ISCOMPLETED = %d, POINTSPOSSIBLE = %f, POINTSAWARDED = %f, MODIFIEDNAPOINTS = %f WHERE ID = %d", element.isCompleted, element.pointsPossible, element.pointsAwarded, element.modefiedNAPoints, element.elementID];
+        NSString * updateElementSQL = [NSString stringWithFormat:@"UPDATE ELEMENT SET ISCOMPLETED = %d, ISAPPLICABLE = %d, POINTSPOSSIBLE = %f, POINTSAWARDED = %f, MODIFIEDNAPOINTS = %f WHERE ID = %d", element.isCompleted, element.isApplicable, element.pointsPossible, element.pointsAwarded, element.modefiedNAPoints, element.elementID];
         
         sqlite3_stmt * statement;
         
@@ -1147,7 +1239,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //Opening the SQLite DB
     if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
         
-        NSString * updateSubElementSQL = [NSString stringWithFormat:@"UPDATE SUBELEMENT SET ISCOMPLETED = %d, POINTSPOSSIBLE = %f, POINTSAWARDED = %f, MODIFIEDNAPOINTS = %f WHERE ID = %d", subElement.isCompleted, subElement.pointsPossible, subElement.pointsAwarded, subElement.modefiedNAPoints, subElement.subElementID];
+        NSString * updateSubElementSQL = [NSString stringWithFormat:@"UPDATE SUBELEMENT SET ISAPPLICABLE = %d, ISCOMPLETED = %d, POINTSPOSSIBLE = %f, POINTSAWARDED = %f, MODIFIEDNAPOINTS = %f WHERE ID = %d", subElement.isApplicable, subElement.isCompleted, subElement.pointsPossible, subElement.pointsAwarded, subElement.modefiedNAPoints, subElement.subElementID];
         
         sqlite3_stmt * statement;
         
