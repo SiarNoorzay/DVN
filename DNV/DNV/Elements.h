@@ -11,6 +11,8 @@
 
 @interface Elements : NSDictionary
 
+//only set in refreshview of elesubelement view
+
 @property (nonatomic) int elementID;
 @property (nonatomic) BOOL isCompleted;
 
