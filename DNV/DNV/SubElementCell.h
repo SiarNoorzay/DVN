@@ -22,6 +22,6 @@
 
 @property (strong, nonatomic) SubElements *theSubElement;
 
--(void)setNAImage;
+-(void)setNAImage:(BOOL)isApplicable;
 
 @end

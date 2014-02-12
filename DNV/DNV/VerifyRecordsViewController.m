@@ -72,6 +72,8 @@
     cell.theObject = aRow;
     cell.dnvDB = self.dnvDB;
     
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
