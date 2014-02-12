@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tblQuestionAttachments;
 
 @property (strong, nonatomic) NSMutableArray *arrLocalFiles;
-@property (strong, nonatomic) NSMutableArray *arrQuestionFiles;
 
 - (IBAction)btnDeleteSelected:(id)sender;
 - (IBAction)btnSeeSelected:(id)sender;
