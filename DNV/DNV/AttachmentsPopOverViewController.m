@@ -172,7 +172,10 @@
 - (IBAction)btnAttachFile:(id)sender
 {
     NSMutableArray *toAdd = [[NSMutableArray alloc]initWithArray:self.question.attachmentsLocationArray];
-    [toAdd addObject:[self.arrLocalFiles objectAtIndex:iSelectedRow]];
+    
+    NSString *dataPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Attachments"];
+    
+    [toAdd addObject:[NSString stringWithFormat:@"%@/%@", dataPath,[self.arrLocalFiles objectAtIndex:iSelectedRow]]];
     self.question.attachmentsLocationArray = [[NSArray alloc]initWithArray:toAdd];
     
     [self.tblQuestionAttachments reloadData];

@@ -121,6 +121,7 @@ int subEleNumber;
         if (auditComplete) {
             self.aud.auditType = 2;
         }
+        else self.aud.auditType = 1;
     }
     if (self.dnvDBManager)
     {
