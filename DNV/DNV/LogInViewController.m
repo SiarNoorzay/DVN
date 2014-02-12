@@ -42,6 +42,15 @@
     if (![[DBSession sharedSession] isLinked]) {
         [[DBSession sharedSession] linkFromController:self];
     }
+    else
+    {
+       // [[DBSession sharedSession] ]
+        
+        
+        //NSString *forBtnLinked = [NSString stringWithFormat:@"Linked to: %@", [[account info ] displayName]];
+        
+        [self.btnSetDropBox setTitle:[DBSession description]];
+    }
 
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -241,4 +250,6 @@
     
 }
 
+- (IBAction)btnSetDropBox:(id)sender {
+}
 @end
