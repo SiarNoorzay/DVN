@@ -23,6 +23,9 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *ElementRatingsTableView;
 
+@property (strong, nonatomic) IBOutlet UITableView *graphsTableView;
+
+
 @property (strong, nonatomic) IBOutlet UILabel *possibleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *evaluatedLabel;
 
@@ -35,7 +38,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *evaluatedPercentageLabel;
 
 
-@property (nonatomic) IBOutlet GraphView *graphView;
-
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
