@@ -501,6 +501,11 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                 tempAudit.auditID = auditID;
                 tempAudit.name = name;
                 tempAudit.auditType = [type intValue];
+                
+                if ([lastmodified isEqualToString:@"(null)"]) {
+                    lastmodified = @"";
+                }
+                
                 tempAudit.lastModefied = lastmodified;
                 tempAudit.client = [self retrieveClientOfAudit:tempAudit.auditID];
                 tempAudit.report = [self retrieveReportOfAudit:tempAudit.auditID];
@@ -575,6 +580,43 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             
             tempClient.clientID = [identify integerValue];
             tempClient.companyName = name;
+            
+            if ([division isEqualToString:@"(null)"]) {
+                division = @"";
+            }
+            
+            if ([sicNum isEqualToString:@"(null)"]) {
+                sicNum = @"";
+            }
+            
+            if ([auditor isEqualToString:@"(null)"]) {
+                auditor = @"";
+            }
+            
+            if ([audSite isEqualToString:@"(null)"]) {
+                audSite = @"";
+            }
+            
+            if ([audDate isEqualToString:@"(null)"]) {
+                audDate = @"";
+            }
+            
+            if ([sAddress isEqualToString:@"(null)"]) {
+                sAddress = @"";
+            }
+            
+            if ([cityStateProv isEqualToString:@"(null)"]) {
+                cityStateProv = @"";
+            }
+            
+            if ([pCode isEqualToString:@"(null)"]) {
+                pCode = @"";
+            }
+            
+            if ([country isEqualToString:@"(null)"]) {
+                country = @"";
+            }
+            
             tempClient.division = division;
             tempClient.SICNumber = sicNum;
             tempClient.numEmployees = [numOfEmp integerValue];
@@ -639,6 +681,43 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             NSString * diagFile = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 10)];
             
             tempReport.reportID = [identify integerValue];
+            
+            if ([clientRef isEqualToString:@"(null)"]) {
+                clientRef = @"";
+            }
+            
+            if ([summary isEqualToString:@"(null)"]) {
+                summary = @"";
+            }
+            
+            if ([execSum isEqualToString:@"(null)"]) {
+                execSum = @"";
+            }
+            
+            if ([prepared isEqualToString:@"(null)"]) {
+                prepared = @"";
+            }
+            
+            if ([approved isEqualToString:@"(null)"]) {
+                approved = @"";
+            }
+            
+            if ([projNum isEqualToString:@"(null)"]) {
+                projNum = @"";
+            }
+            
+            if ([scorAssump isEqualToString:@"(null)"]) {
+                scorAssump = @"";
+            }
+            
+            if ([conclusion isEqualToString:@"(null)"]) {
+                conclusion = @"";
+            }
+            
+            if ([diagFile isEqualToString:@"(null)"]) {
+                diagFile = @"";
+            }
+            
             tempReport.clientRef = clientRef;
             tempReport.summary = summary;
             tempReport.executiveSummary = execSum;
@@ -853,6 +932,11 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             tempQuestion.pointsPossible = [ptsPoss floatValue];
             tempQuestion.pointsAwarded = [ptsAward floatValue];
             tempQuestion.helpText = help;
+            
+            if ([notes isEqualToString:@"(null)"]) {
+                notes = @"";
+            }
+            
             tempQuestion.notes = notes;
             tempQuestion.isThumbsUp = [thumbsUp boolValue];
             tempQuestion.isThumbsDown = [thumbsDown boolValue];
