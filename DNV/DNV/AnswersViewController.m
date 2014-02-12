@@ -910,16 +910,14 @@ int numOfSubs;
 
     
 }
--(void)setNeedsVerifying: (int)vSelected //to change/work with enum we had discussed
+-(void)setNeedsVerifying: (int)vSelected 
 {
     if( vSelected == 0) //0 implies none of the tabs where toggled on
     {
-        self.question.needsVerifying = false;
         [self.verifyButton setSelected: false];
     }
     else    //!0 implies atleast one of the tabs was toggled on
     {
-        self.question.needsVerifying = true;
         [self.verifyButton setSelected: true];
     }
 }
@@ -1060,6 +1058,15 @@ int numOfSubs;
 
     }
     
+    if([[segue identifier] isEqualToString:@"attachPopOver"]) {
+        
+        // Get destination tabbar
+         AttachmentsPopOverViewController* destVC = [segue destinationViewController];
+        
+        // Pass the information to your destination view
+        destVC.question = self.question;
+        
+    }
 }
 
 

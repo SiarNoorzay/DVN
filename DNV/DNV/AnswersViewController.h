@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <KLSwitch/KLSwitch.h>
 #import "DNVDatabaseManagerClass.h"
+#import "AttachmentsPopOverViewController.h"
 
 #import "Questions.h"
 #import "Answers.h"

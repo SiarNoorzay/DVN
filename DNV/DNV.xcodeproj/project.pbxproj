@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4A1D872D18A942E9006AC010 /* libFlurry_4.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7594018A5894500467154 /* libFlurry_4.3.1.a */; };
 		4A4AFC5518A13062006901D1 /* VerifyPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AFC5418A13062006901D1 /* VerifyPopOverViewController.m */; };
 		4A4AFC5B18A135B0006901D1 /* interview.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4AFC5818A135B0006901D1 /* interview.png */; };
 		4A4AFC5C18A135B0006901D1 /* physical.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4AFC5918A135B0006901D1 /* physical.png */; };
@@ -19,6 +18,9 @@
 		4A4AFC8718A407FC006901D1 /* verifyRecordsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AFC8618A407FC006901D1 /* verifyRecordsCell.m */; };
 		4A4AFC8B18A42EEB006901D1 /* Observations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AFC8A18A42EEB006901D1 /* Observations.m */; };
 		4A4AFC8E18A42F33006901D1 /* Records.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AFC8D18A42F33006901D1 /* Records.m */; };
+		4A621CB418AAEAE800AE168C /* libFlurry_4.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A621CB318AAEAE800AE168C /* libFlurry_4.3.1.a */; };
+		4A621CB718AB615B00AE168C /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A621CB618AB615B00AE168C /* QuickLook.framework */; };
+		4A621CBA18AB654400AE168C /* AttachmentsPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A621CB918AB654400AE168C /* AttachmentsPopOverViewController.m */; };
 		4A6CFD56189FE2510036DD28 /* VerifyTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CFD55189FE2510036DD28 /* VerifyTabController.m */; };
 		4A6CFD59189FE5060036DD28 /* VerifyPhysicalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CFD58189FE5060036DD28 /* VerifyPhysicalViewController.m */; };
 		4A6CFD5C189FE5170036DD28 /* VerifyInterivewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CFD5B189FE5170036DD28 /* VerifyInterivewsViewController.m */; };
@@ -30,7 +32,6 @@
 		76007DB21886FDE800FA7A39 /* dvnlogo152.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB01886FDE800FA7A39 /* dvnlogo152.png */; };
 		76007DBD18872BFC00FA7A39 /* SubElementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DBC18872BFC00FA7A39 /* SubElementCell.m */; };
 		76007E261888317400FA7A39 /* QuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DB7188725CF00FA7A39 /* QuestionCell.m */; };
-		760F12AD18A94431008A432E /* libFlurry_4.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 760F12AB18A943D2008A432E /* libFlurry_4.3.1.a */; };
 		760F12B418A96B36008A432E /* DNV_GL_ long_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 760F12B218A96B35008A432E /* DNV_GL_ long_logo.png */; };
 		760F12B518A96B36008A432E /* DNV_GL_login_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 760F12B318A96B36008A432E /* DNV_GL_login_logo.png */; };
 		7627430B1888508B00873E9F /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB918872AE900FA7A39 /* checkmark.png */; };
@@ -202,6 +203,10 @@
 		4A4AFC8A18A42EEB006901D1 /* Observations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Observations.m; sourceTree = "<group>"; };
 		4A4AFC8C18A42F33006901D1 /* Records.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Records.h; sourceTree = "<group>"; };
 		4A4AFC8D18A42F33006901D1 /* Records.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Records.m; sourceTree = "<group>"; };
+		4A621CB318AAEAE800AE168C /* libFlurry_4.3.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_4.3.1.a; path = ../../backUpDNV/DNV/Flurry/libFlurry_4.3.1.a; sourceTree = "<group>"; };
+		4A621CB618AB615B00AE168C /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		4A621CB818AB654400AE168C /* AttachmentsPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttachmentsPopOverViewController.h; sourceTree = "<group>"; };
+		4A621CB918AB654400AE168C /* AttachmentsPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttachmentsPopOverViewController.m; sourceTree = "<group>"; };
 		4A6CFD54189FE2510036DD28 /* VerifyTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyTabController.h; sourceTree = "<group>"; };
 		4A6CFD55189FE2510036DD28 /* VerifyTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyTabController.m; sourceTree = "<group>"; };
 		4A6CFD57189FE5060036DD28 /* VerifyPhysicalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyPhysicalViewController.h; sourceTree = "<group>"; };
@@ -414,7 +419,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				760F12AD18A94431008A432E /* libFlurry_4.3.1.a in Frameworks */,
+				4A621CB718AB615B00AE168C /* QuickLook.framework in Frameworks */,
+				4A621CB418AAEAE800AE168C /* libFlurry_4.3.1.a in Frameworks */,
 				76C7594418A58B3F00467154 /* SystemConfiguration.framework in Frameworks */,
 				4AC04091188F0AF2006A2F3C /* libKLSwitch.a in Frameworks */,
 				76A7C9961889DCCA004E4F39 /* libsqlite3.dylib in Frameworks */,
@@ -565,6 +571,8 @@
 		7627970B1871D53A00F22E73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4A621CB618AB615B00AE168C /* QuickLook.framework */,
+				4A621CB318AAEAE800AE168C /* libFlurry_4.3.1.a */,
 				760F12A918A943D2008A432E /* Flurry */,
 				76C7594318A58B3F00467154 /* SystemConfiguration.framework */,
 				76C7593E18A5894500467154 /* Flurry */,
@@ -1052,6 +1060,8 @@
 				7627430F18897BB500873E9F /* CalculatorViewController.m */,
 				4A4AFC5318A13062006901D1 /* VerifyPopOverViewController.h */,
 				4A4AFC5418A13062006901D1 /* VerifyPopOverViewController.m */,
+				4A621CB818AB654400AE168C /* AttachmentsPopOverViewController.h */,
+				4A621CB918AB654400AE168C /* AttachmentsPopOverViewController.m */,
 			);
 			name = AnswersViewController;
 			sourceTree = "<group>";
@@ -1239,6 +1249,7 @@
 				768D566D1890678600175EB4 /* GraphView.m in Sources */,
 				76C7593618A3FA2B00467154 /* MethodologyViewController.m in Sources */,
 				76A7C9941889DC02004E4F39 /* DNVDatabaseManagerClass.m in Sources */,
+				4A621CBA18AB654400AE168C /* AttachmentsPopOverViewController.m in Sources */,
 				768D56CD1892CE2600175EB4 /* KeySuggestionsViewController.m in Sources */,
 				76E81F18187DB92600441F62 /* Folder.m in Sources */,
 				76AB3CB4187B1FDA0019603F /* Audit.m in Sources */,
@@ -1448,6 +1459,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/usi/Desktop/DVN/DNV/Flurry,
+					/Users/jaimemartinez/Desktop/backUpDNV/DNV/Flurry,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1472,6 +1484,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/usi/Desktop/DVN/DNV/Flurry,
+					/Users/jaimemartinez/Desktop/backUpDNV/DNV/Flurry,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
