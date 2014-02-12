@@ -41,8 +41,10 @@
     self.arrLocalFiles = [NSMutableArray new];
     [self.arrLocalFiles addObjectsFromArray:arrayFiles];
     
-    
-    self.arrQuestionFiles = [NSMutableArray new];
+    if( self.question.attachmentsLocationArray == nil)
+    {
+        self.question.attachmentsLocationArray = [NSArray new];
+    }
     
     [self.tblLocalAttachments reloadData];
     
@@ -69,7 +71,7 @@
     if( tableView == self.tblLocalAttachments)
         return [self.arrLocalFiles count];
     else
-        return [self.arrQuestionFiles count];
+        return [ self.question.attachmentsLocationArray count];
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -88,7 +90,7 @@
     }
     else
     {
-        [cell.textLabel setText:[self.arrQuestionFiles objectAtIndex:indexPath.row]];
+        [cell.textLabel setText:[self.question.attachmentsLocationArray objectAtIndex:indexPath.row]];
         
         return cell;
     }
@@ -112,7 +114,7 @@
     else
     {
         iTableSelected = 1;
-        chosenFile = [self.arrQuestionFiles objectAtIndex:indexPath.row];
+        chosenFile = [self.question.attachmentsLocationArray objectAtIndex:indexPath.row];
         
         [self.btnAttachFile setEnabled:false];
         
@@ -145,7 +147,9 @@
     }
     else
     {
-        [self.arrQuestionFiles removeObjectAtIndex:iSelectedRow];
+        NSMutableArray *toRemove = [[NSMutableArray alloc]initWithArray:self.question.attachmentsLocationArray];
+        [toRemove removeObjectAtIndex:iSelectedRow];
+        self.question.attachmentsLocationArray = [[NSArray alloc]initWithArray:toRemove];
         [self.tblQuestionAttachments reloadData];
     }
 }
@@ -167,7 +171,9 @@
 
 - (IBAction)btnAttachFile:(id)sender
 {
-    [self.arrQuestionFiles addObject:[self.arrLocalFiles objectAtIndex:iSelectedRow]];
+    NSMutableArray *toAdd = [[NSMutableArray alloc]initWithArray:self.question.attachmentsLocationArray];
+    [toAdd addObject:[self.arrLocalFiles objectAtIndex:iSelectedRow]];
+    self.question.attachmentsLocationArray = [[NSArray alloc]initWithArray:toAdd];
     
     [self.tblQuestionAttachments reloadData];
 }
