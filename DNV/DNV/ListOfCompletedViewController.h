@@ -17,13 +17,15 @@
 {
     DBRestClient *restClient;
     DBRestClient *restClient2;
+    DBRestClient *restClient3;
 }
 
 @property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
 @property NSString * directoryPath;
 @property (strong, nonatomic) NSMutableArray * localCompleted;
-
 @property (strong, nonatomic) Audit * audit;
+@property (strong,atomic) NSMutableArray *allSublayeredQuestions;
+
 
 @property (strong, nonatomic) NSArray * sectionHeaders;
 

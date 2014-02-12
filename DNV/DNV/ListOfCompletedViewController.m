@@ -14,6 +14,7 @@
 #import "CompletedChoicePopOver.h"
 #import "Folder.h"
 #import "TitleViewController.h"
+#import "LayeredQuestion.h"
 
 @interface ListOfCompletedViewController ()<DBRestClientDelegate>
 
@@ -192,6 +193,14 @@
     return restClient2;
 }
 
+- (DBRestClient*)restClient3 {
+    if (restClient3 == nil) {
+        restClient3 = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        restClient3.delegate = self;
+    }
+    return restClient3;
+}
+
 - (void)restClient:(DBRestClient *)client loadedMetadata:(DBMetadata *)metadata {
     if (client == self->restClient){
         if (metadata.isDirectory) {
@@ -239,7 +248,8 @@ loadMetadataFailedWithError:(NSError *)error {
        contentType:(NSString*)contentType metadata:(DBMetadata*)metadata {
     
     NSLog(@"File loaded into path: %@", localPath);
-    [self getAudit];
+    if (client == self->restClient)
+        [self getAudit];
     
 }
 
@@ -377,6 +387,15 @@ loadMetadataFailedWithError:(NSError *)error {
     
 }
 
+-(NSString *)setAttachPath:(NSString *)attachment{
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents directory
+    NSString *attachPath = [documentsDirectory stringByAppendingPathComponent:attachment];
+    
+    return attachPath;
+}
+
 -(void)getAudit{
     if (_directoryPath) { // check if file exists - if so load it:
         NSError *error;
@@ -392,14 +411,149 @@ loadMetadataFailedWithError:(NSError *)error {
         //use this to access the audit and its components dictionary style
         self.audit = [[Audit alloc]initWithAudit:theAudit];
         
+        //import attachments locally and change attachment audit paths
+        self.audit = [self formatAndImportAttachmentsAndImages:self.audit];
+        
+        //saving imported audit to database
         [self.dnvDBManager saveAudit:self.audit];
         
+        //retrieving audit from database to populate ids
         self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
         
         NSLog(@"Audit Name: %@", self.audit.name);
         //end of DB test
         
     }
+}
+
+-(Audit*)formatAndImportAttachmentsAndImages:(Audit*)aud //to:(NSString*)path
+//imports all images and attachments to DBox and changes arrays in audit to hold Dbox locations
+{
+    for (int i=0; i<aud.Elements.count; i++) {
+        Elements *ele = [aud.Elements objectAtIndex:i];
+        
+        for (int j=0 ; j<ele.Subelements.count; j++) {
+            SubElements *subEle = [ele.Subelements objectAtIndex:j];
+            
+            for (int k = 0; k<subEle.Questions.count; k++) {
+                Questions *question = [subEle.Questions objectAtIndex:k];
+                
+                //loop through sublayers
+                self.allSublayeredQuestions = [NSMutableArray new];
+                int throwAway = [self getNumOfSubQuestionsAndSetAllSubsArray:question layerDepth:1];
+                for (int l = 0; l<self.allSublayeredQuestions.count; l++) {
+                    LayeredQuestion *layQ = [self.allSublayeredQuestions objectAtIndex:l];
+                    NSMutableArray *tempImageArr = [NSMutableArray arrayWithArray: layQ.question.imageLocationArray];
+                    
+                    for (int m = 0; m<tempImageArr.count ; m++)
+                    {
+                        NSString *pathFrom = [tempImageArr objectAtIndex:m];
+                        pathFrom = [self importFile:pathFrom];
+                        [tempImageArr setObject:pathFrom atIndexedSubscript:m];
+                    }
+                    layQ.question.imageLocationArray = tempImageArr;
+                    
+                    NSMutableArray *tempAttachArr = [NSMutableArray arrayWithArray: layQ.question.attachmentsLocationArray];
+                    
+                    for (int m = 0; m<tempAttachArr.count ; m++)
+                    {
+                        NSString *pathFrom = [tempAttachArr objectAtIndex:m];
+                        pathFrom = [self importFile:pathFrom];
+                        [tempAttachArr setObject:pathFrom atIndexedSubscript:m];
+                    }
+                    layQ.question.attachmentsLocationArray = tempAttachArr;
+                    
+                    NSMutableArray *tempDrawnLocs = [NSMutableArray arrayWithArray: layQ.question.drawnNotes];
+                    
+                    for (int m = 0; m<tempDrawnLocs.count ; m++)
+                    {
+                        NSString *pathFrom = [tempDrawnLocs objectAtIndex:m];
+                        pathFrom = [self importFile:pathFrom];
+                        [tempDrawnLocs setObject:pathFrom atIndexedSubscript:m];
+                    }
+                    layQ.question.drawnNotes = tempDrawnLocs;
+                    
+                }//sublayer loop
+                
+                //need to go through main question as well
+                NSMutableArray *tempImageArr = [NSMutableArray arrayWithArray: question.imageLocationArray];
+                
+                for (int m = 0; m<tempImageArr.count ; m++)
+                {
+                    NSString *pathFrom = [tempImageArr objectAtIndex:m];
+                    pathFrom = [self importFile:pathFrom];
+                    [tempImageArr setObject:pathFrom atIndexedSubscript:m];
+                }
+                question.imageLocationArray = tempImageArr;
+                
+                NSMutableArray *tempAttachArr = [NSMutableArray arrayWithArray:question.attachmentsLocationArray];
+                
+                for (int m = 0; m<tempAttachArr.count ; m++)
+                {
+                    NSString *pathFrom = [tempAttachArr objectAtIndex:m];
+                    pathFrom = [self importFile:pathFrom];
+                    [tempAttachArr setObject:pathFrom atIndexedSubscript:m];
+                }
+                question.attachmentsLocationArray = tempAttachArr;
+                
+                NSMutableArray *drawnLoc = [NSMutableArray arrayWithArray:question.drawnNotes];
+                
+                for (int m = 0; m<drawnLoc.count ; m++)
+                {
+                    NSString *pathFrom = [drawnLoc objectAtIndex:m];
+                    pathFrom = [self importFile:pathFrom];
+                    [drawnLoc setObject:pathFrom atIndexedSubscript:m];
+                }
+                question.drawnNotes = drawnLoc;
+            }//question loop
+        }
+    }
+    return aud;
+}
+
+-(NSString*)importFile:(NSString*)dropboxPath// withFile:(NSString*)fileName
+{
+//    self.numberOfUploadsLeft ++;
+    //get file name from last string chunk
+    NSArray *chunks = [dropboxPath componentsSeparatedByString: @"/"];
+    
+    NSString *fileName = [chunks objectAtIndex:[chunks count]-1];
+    
+    NSString * internalPath = [self setAttachPath:fileName];
+    
+    //[[self restClient2] uploadFile:fileName toPath:dropboxPath withParentRev:nil fromPath:internalPath];
+    
+    //using this deprecated method since it overwrites instead of renaming
+    [[self restClient3] loadFile:dropboxPath intoPath:internalPath];
+    
+    return internalPath;
+    
+}
+
+-(int) getNumOfSubQuestionsAndSetAllSubsArray:(Questions *)question layerDepth:(int)depth
+{
+    int n = 1;
+    for (int i = 0; i < [question.layeredQuesions count]; i++)
+    {
+        LayeredQuestion *tempObject = [LayeredQuestion new];
+        
+        tempObject.question = [question.layeredQuesions objectAtIndex:i];
+        [self.allSublayeredQuestions addObject:tempObject];
+        
+        if( tempObject.question.layeredQuesions.count > 0)
+            depth++;
+        
+        n += [self getNumOfSubQuestionsAndSetAllSubsArray:tempObject.question layerDepth:depth];
+        
+        tempObject.subIndexes = [NSMutableArray new];
+        for( int j = 1; j <= tempObject.question.layeredQuesions.count; j++ )
+        {
+            
+            [tempObject.subIndexes addObject:[NSNumber numberWithInt: j + [self.allSublayeredQuestions indexOfObject:tempObject] ] ];
+        }
+        
+    }
+    return n;
 }
 
 @end

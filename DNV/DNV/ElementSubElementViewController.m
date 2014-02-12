@@ -78,7 +78,6 @@ int subEleNumber;
                                 tempSubNAPoints += layQ.question.pointsPossible;
                                 tempEleNAPoints += layQ.question.pointsPossible;
                             }
-                            
                         }
                         NSLog(@"Subele: %d naPoints: %f",j,tempSubNAPoints);
                     }
@@ -90,11 +89,30 @@ int subEleNumber;
                 subEle.isCompleted = subEleComplete;
                 eleComplete = eleComplete && subEleComplete;
                 
+                if( subEle.pointsPossible == subEle.modefiedNAPoints)
+                    subEle.isApplicable = false;
+                else
+                    subEle.isApplicable = true;
+                
                 [self.dnvDBManager updateSubElment:subEle];
                 
             }
             ele.modefiedNAPoints = tempEleNAPoints;
             ele.pointsAwarded = elePointsAwarded;
+            ele.isCompleted = eleComplete;
+            
+            if( ele.pointsPossible == ele.modefiedNAPoints)
+                ele.isApplicable = false;
+            else
+                ele.isApplicable = true;
+    
+            if( self.ele == ele)
+            {
+                if( !ele.isApplicable)
+                    [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon"] forState:UIControlStateNormal];
+                else
+                    [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon_gray"] forState:UIControlStateNormal];
+            }
             
             [self.dnvDBManager updateElement:ele];
             
@@ -110,6 +128,7 @@ int subEleNumber;
     }
     
     [self.subElementTable reloadData];
+    [self.elementPicker reloadAllComponents];
 }
 
 - (void)viewDidLoad
@@ -138,6 +157,11 @@ int subEleNumber;
     [self.subElementTable reloadData];
     [self.spinner stopAnimating];
     
+    if ([self.listOfElements count] > 0) {
+        self.ele = self.listOfElements[0];
+    }
+
+    
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
     
 }
@@ -157,7 +181,7 @@ int subEleNumber;
 
 -(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
 {
-    self.ele = self.listOfElements[row];
+    Elements *rowELE = self.listOfElements[row];
     
     //A view to house the necessary contents of a row in the element picker:  n/a button, element name label, points attained, completed image,
     UIView *aPickerRow = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 650, 80)];
@@ -170,21 +194,25 @@ int subEleNumber;
     label.textColor = [UIColor blackColor];
     label.tintColor = [UIColor greenColor];
     label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:25];
-    label.text = self.ele.name; // ASCII 65 is "A"
+    label.text = rowELE.name; // ASCII 65 is "A"
     [label setTextAlignment:NSTextAlignmentCenter];
     
     //percentage
     UILabel *percentLabel = [[UILabel alloc] initWithFrame:CGRectMake(465, 15, 140, 50)];
-    [percentLabel setText:[NSString stringWithFormat:@"%.2f / %.2f", self.ele.pointsAwarded,self.ele.pointsPossible]];
-    
-    //completed image
-    UIImageView *completed = [[UIImageView alloc] initWithFrame:CGRectMake(595, 15, 50, 50)];
-    [completed setImage:[UIImage imageNamed:@"check"]];
+    [percentLabel setText:[NSString stringWithFormat:@"%.2f / %.2f", rowELE.pointsAwarded, rowELE.pointsPossible-rowELE.modefiedNAPoints]];
     
     //Add all views to main view
     [aPickerRow addSubview:label];
     [aPickerRow addSubview:percentLabel];
-    [aPickerRow addSubview:completed];
+    
+    //check image. create and add if element is completed or N/A'ed
+    if( !rowELE.isApplicable || rowELE.isCompleted )
+    {
+        UIImageView *completed = [[UIImageView alloc] initWithFrame:CGRectMake(595, 15, 50, 50)];
+        [completed setImage:[UIImage imageNamed:@"check"]];
+        
+        [aPickerRow addSubview:completed];
+    }
     
     return aPickerRow;
 }
@@ -193,6 +221,7 @@ int subEleNumber;
 {
     return 100;
 }
+
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
     
@@ -209,8 +238,13 @@ int subEleNumber;
 }
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    
+    self.ele = self.listOfElements[row];
     self.listOfSubElements = self.ele.Subelements;
+    
+    if( !self.ele.isApplicable)
+        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon"] forState:UIControlStateNormal];
+    else
+        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon_gray"] forState:UIControlStateNormal];
     
     [self.subElementTable reloadData];
     elementNumber = row;
@@ -249,10 +283,7 @@ int subEleNumber;
     cell.theElementSubElementVC = self;
     cell.theSubElement = self.subEle;
     
-    if( self.subEle.isApplicable && cell.btnNASubElement.tag != 1)
-        [cell setNAImage];
-    else if ( !self.subEle.isApplicable && cell.btnNASubElement.tag == 1)
-        [cell setNAImage];
+    [cell setNAImage:self.subEle.isApplicable];
  
     return cell;
 }
@@ -305,26 +336,15 @@ int subEleNumber;
 
 
 //NA all questions in an Element
-- (IBAction)naForElements:(id)sender {
-    if( self.naForElements.tag == 0)
-    {
-        self.naForElements.tag = 1;
-        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon"] forState:UIControlStateNormal];
-    }
-    else
-    {
-        self.naForElements.tag = 0;
-        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon_gray"] forState:UIControlStateNormal];
-
-    }
-    
+- (IBAction)naForElements:(id)sender
+{
     Elements *currentElement = [self.listOfElements objectAtIndex:elementNumber];
+    currentElement.isApplicable = !currentElement.isApplicable;
+    
     for( SubElements *se in currentElement.Subelements)
     {
-        [self setNAToSubElementsQuestions:se ifBool:self.naForElements.tag];
+        [self setNAToSubElementsQuestions:se ifBool:currentElement.isApplicable];
     }
-    
-    currentElement.isApplicable = self.naForElements.tag;
     
     [self refreshView];
 }
@@ -338,7 +358,6 @@ int subEleNumber;
     }
     
     aSubElement.isApplicable = setNA;
-    
 }
 -(void)setNAToQuestions:(Questions*)aQuestion ifBool: (BOOL) setNA
 {
@@ -347,7 +366,7 @@ int subEleNumber;
         [self setNAToQuestions:LayerQuestion ifBool:setNA];
     }
     
-    if( setNA)
+    if( !setNA)
     {
         aQuestion.isApplicable = false;
         aQuestion.isThumbsDown = false;
