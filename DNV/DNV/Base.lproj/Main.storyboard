@@ -13,7 +13,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User ID" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" id="dne-2S-Ach">
-                                <rect key="frame" x="259" y="555" width="250" height="30"/>
+                                <rect key="frame" x="259" y="548" width="250" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -22,7 +22,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" id="06a-0I-Teu">
-                                <rect key="frame" x="259" y="640" width="250" height="30"/>
+                                <rect key="frame" x="259" y="633" width="250" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -46,6 +46,11 @@
                                     </segue>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" id="Bfp-0m-8ng">
+                                <rect key="frame" x="366" y="586" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" cocoaTouchSystemColor="darkTextColor"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -62,6 +67,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="actLinkingDropbox" destination="Bfp-0m-8ng" id="fht-h5-4ps"/>
+                        <outlet property="btnLogIn" destination="TL0-ZL-NRB" id="c1M-VN-EiP"/>
                         <outlet property="btnSetDropBox" destination="ZPU-YX-YwO" id="xzt-jd-Ux7"/>
                         <outlet property="passwordTextField" destination="06a-0I-Teu" id="icM-2z-jEl"/>
                         <outlet property="userIDTextField" destination="dne-2S-Ach" id="HT6-gi-fuH"/>
@@ -77,7 +84,7 @@
             <objects>
                 <viewController id="mhz-2Q-ahh" customClass="LoginHelpPopOverViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fVU-3p-Xt5">
-                        <rect key="frame" x="0.0" y="0.0" width="500" height="167"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="175"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oeq-Hh-jBe">
@@ -91,7 +98,7 @@
                                 <rect key="frame" x="149" y="114" width="203" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="17"/>
-                                <state key="normal" title="support@dnv-gl.com">
+                                <state key="normal" title="sheq-atl@dnvgl.com">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -3573,7 +3580,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="import_icon.png" width="299" height="297"/>
         <image name="interview.png" width="149" height="129"/>
         <image name="interviewSmall.png" width="50" height="50"/>
-        <image name="methodologyDiagram.png" width="360" height="291"/>
+        <image name="methodologyDiagram.png" width="847" height="591"/>
         <image name="new_checklist_icon.png" width="300" height="350"/>
         <image name="not_applicable_icon.png" width="600" height="600"/>
         <image name="not_applicable_icon_gray.png" width="600" height="600"/>

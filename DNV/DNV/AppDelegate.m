@@ -143,16 +143,20 @@
         UINavigationController *theNav = (UINavigationController *)[self.window rootViewController];
         LogInViewController *loginVC = (LogInViewController*)[theNav topViewController];
         
-        if ([[DBSession sharedSession] isLinked]) {
+        if ([[DBSession sharedSession] isLinked])
+        {
             NSLog(@"App linked successfully!");
+            
+            loginVC.showAlert = true;
+            
             // At this point you can start making API calls
+            [loginVC.restClient loadAccountInfo];
             
             [loginVC pingUserJsonSetUpTables];
-            [loginVC.btnSetDropBox setTitle:@"Dropbox linked: "];
         }
         else
         {
-            [loginVC.btnSetDropBox setTitle:@"Link Dropbox"];
+            [loginVC.btnSetDropBox setTitle:@"Link to Dropbox"];
         }
         //if it fails throw error?
     }

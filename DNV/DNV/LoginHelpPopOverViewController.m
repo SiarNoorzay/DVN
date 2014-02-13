@@ -12,7 +12,7 @@
 
 
 @end
-NSString *emailString = @"support@dvn-gl.com";
+NSString *emailString = @"sheq-atl@dnvgl.com";
 
 @implementation LoginHelpPopOverViewController
 

@@ -19,7 +19,9 @@
 
 @interface LogInViewController ()<DBRestClientDelegate>
 
-@property (nonatomic, readonly) DBRestClient * restClient;
+{
+    NSString *currentUser;
+}
 
 @end
 
@@ -45,14 +47,14 @@
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
     
     if (![[DBSession sharedSession] isLinked]) {
-        [self.btnSetDropBox setTitle:@"Link to a Dropbox"];
+        [self.btnSetDropBox setTitle:@"Link to Dropbox"];
         [[DBSession sharedSession] linkFromController:self];
     }
     else
     {
         [self pingUserJsonSetUpTables];
         
-        [self.btnSetDropBox setTitle:@"Dropbox linked: "];
+        [restClient loadAccountInfo];
     }
     
 }
@@ -71,13 +73,31 @@
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"usersFromDB.json"];
     _directoryPath = filePath;
     
-#warning  throw activity indicator and prevent attempLogin from being fired till done
+    //throw activity indicator setting
+    [self activityOngoing:true];
     [self.restClient loadFile:@"/users.json" intoPath:filePath];
     
     
     //do we needed to delete usertable and then create?
     [self.dnvDBManager createUserTable];
     [self.dnvDBManager createAuditTables];
+}
+
+-(void)activityOngoing: (BOOL)doingActivity
+{
+    if( !doingActivity)
+    {
+        [self.actLinkingDropbox stopAnimating];
+    }
+    else
+    {
+        [self.actLinkingDropbox startAnimating];
+    }
+    
+    [self.userIDTextField setEnabled:!doingActivity];
+    [self.passwordTextField setEnabled:!doingActivity];
+    [self.btnSetDropBox setEnabled:!doingActivity];
+    [self.btnLogIn setEnabled:!doingActivity ];
 }
 
 
@@ -87,10 +107,19 @@
     NSLog(@"File loaded into path: %@", localPath);
     [self getUserArray];
     
+    [self activityOngoing:false];
+    
 }
 
 - (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
     NSLog(@"There was an error loading the file - %@", error);
+    
+#warning should we throw an alert here letting them know that we will use previously stored user json file if any?
+    
+    //get old array of users
+    [self getUserArray];
+    
+    [self activityOngoing:false];
 }
 
 - (void)didReceiveMemoryWarning
@@ -109,9 +138,7 @@
         NSLog(@"JSON contains:\n%@", [dictionary description]);
 
         self.arrayOfUsers = [[NSArray alloc ] initWithArray:[dictionary objectForKey:@"Users"]];
-        
     }
-    
 }
 
 - (DBRestClient*)restClient {
@@ -145,7 +172,7 @@
     }
     else if( self.arrayOfUsers == nil || [self.arrayOfUsers count] == 0)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"No Users!" message: @"Users json file is not present or contains zero users." delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"No Users!" message: @"Users json file is not present or contains zero users. Ensure you are linked to an appropriate dropbox." delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         NSLog(@"Nil or empty userJson (arrayOfUsers)");
     }
@@ -220,11 +247,28 @@
         
         self.arrayOfUsers = nil;
         
-        [self.btnSetDropBox setTitle:@"Link to a Dropbox"];
+        [self.btnSetDropBox setTitle:@"Link to Dropbox"];
+        
+        UIAlertView *notLinked = [[UIAlertView alloc] initWithTitle:@"Unlinked!" message:[NSString stringWithFormat:@"You are now no longer linked to dropbox: %@", currentUser] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [notLinked show];
     }
     else
     {
         [[DBSession sharedSession] linkFromController:self];
     }
 }
+
+- (void)restClient:(DBRestClient*)client loadedAccountInfo:(DBAccountInfo*)info {
+    currentUser = [info displayName];
+    [self.btnSetDropBox setTitle:[NSString stringWithFormat:@"Dropbox linked: %@", currentUser]];
+    
+    if( self.showAlert)
+    {
+        UIAlertView *Linked = [[UIAlertView alloc] initWithTitle:@"Linked!" message:[NSString stringWithFormat:@"You are now linked to dropbox: %@", currentUser] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [Linked show];
+        self.showAlert = false;
+    }
+}
+
+
 @end

@@ -11,6 +11,7 @@
 #import "LogInViewController.h"
 
 @interface LoginHelpPopOverViewController : UIViewController<MFMailComposeViewControllerDelegate>
+
 - (IBAction)supportEmailButtonPushed:(id)sender;
 
 @end
