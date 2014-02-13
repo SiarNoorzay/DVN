@@ -36,18 +36,18 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-
     
-//    NSError *error;
-//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
-//    
-//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-//    
-//    NSLog(@"JSON contains:\n%@", [dictionary description]);
-//    
-//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-//    
-//    self.audit = [[Audit alloc]initWithAudit:theAudit];
+    
+    //    NSError *error;
+    //    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
+    //
+    //    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+    //
+    //    NSLog(@"JSON contains:\n%@", [dictionary description]);
+    //
+    //    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
+    //
+    //    self.audit = [[Audit alloc]initWithAudit:theAudit];
     
     NSMutableArray *tempArr = [[NSMutableArray alloc]initWithCapacity:[self.audit.Elements count]];
     
@@ -86,51 +86,57 @@
     self.evaluatedAwardedLabel.text = [NSString stringWithFormat:@"%.1f",auditAwarded];
     
     self.evaluatedPercentageLabel.text = [NSString stringWithFormat:@"%.2f %%",((auditAwarded / (auditPointsPossible - auditNAPoints)) *100)];
-    NSMutableArray *subEleGraphViews = [[NSMutableArray alloc]initWithCapacity:1];
-
-    GraphView *eleGraphView = [GraphView alloc];
+    NSMutableArray *allGraphViews = [[NSMutableArray alloc]initWithCapacity:1];
+    
+    GraphView *eleGraphView = [[GraphView alloc] initWithFrame:CGRectMake(0,0,320,44)];
     [eleGraphView setName:self.audit.name];
     [eleGraphView setElementNames:eleNames];
     [eleGraphView setElementPercent:percents];
-    [subEleGraphViews addObject:eleGraphView];
+    [allGraphViews addObject:eleGraphView];
     
     for (Elements *ele in self.audit.Elements) {
-        NSMutableArray *subEleNames = [[NSMutableArray alloc]initWithCapacity:ele.Subelements.count];
-        NSMutableArray *subElePercents = [[NSMutableArray alloc]initWithCapacity:ele.Subelements.count];
-
-        for (SubElements *subEle in ele.Subelements) {
+        if (ele.isApplicable)
+        {
+            NSMutableArray *subEleNames = [[NSMutableArray alloc]initWithCapacity:ele.Subelements.count];
+            NSMutableArray *subElePercents = [[NSMutableArray alloc]initWithCapacity:ele.Subelements.count];
             
-            if (subEle.isApplicable) {
-                [subEleNames addObject:subEle.name];
-                [subElePercents addObject:[NSString stringWithFormat:@"%.2f",((subEle.pointsAwarded / (subEle.pointsPossible - subEle.modefiedNAPoints)) *100)]];
+            for (SubElements *subEle in ele.Subelements) {
+                
+                if (subEle.isApplicable) {
+                    [subEleNames addObject:subEle.name];
+                    [subElePercents addObject:[NSString stringWithFormat:@"%.2f",((subEle.pointsAwarded / (subEle.pointsPossible - subEle.modefiedNAPoints)) *100)]];
+                }
+                
             }
+            //subEleGraphView.elementNames = subEleNames;
+            //  subEleGraphView.elementPercent = subElePercents;
+            //  subEleGraphView.name = ele.name;
+            GraphView *subEleGraphView = [[GraphView alloc] initWithElementNames:subEleNames andPercents:subElePercents];
+            [subEleGraphView setName:ele.name];
             
+            
+            [allGraphViews addObject: subEleGraphView];
+            
+            //  [self.graphView setElementNames:subEleNames];
+            //   [self.graphView setElementPercent:subElePercents];
         }
-        //subEleGraphView.elementNames = subEleNames;
-      //  subEleGraphView.elementPercent = subElePercents;
-      //  subEleGraphView.name = ele.name;
-        GraphView *subEleGraphView = [[GraphView alloc]initWithElementNames:subEleNames andPercents:subElePercents];
+        NSLog(@"Count of graph views: %d", allGraphViews.count);
 
-        [subEleGraphViews addObject: subEleGraphView];
+        }
         
-      //  [self.graphView setElementNames:subEleNames];
-     //   [self.graphView setElementPercent:subElePercents];
-    }
-    NSLog(@"Count of graph views: %d", subEleGraphViews.count);
-    self.graphViews = subEleGraphViews;
     
-    
-    
+    self.graphViews = allGraphViews;
+
     
 }
 #pragma mark - TableView Delegates
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    
     if (tableView == self.ElementRatingsTableView) { return 44;}
     
     return 268;
-
+    
     
 }
 
@@ -158,14 +164,14 @@
         return cell;
         
         
-   }
+    }
     static NSString * cellIdentifier2 = @"graphViewCell";
     GraphView *grphView = [self.graphViews objectAtIndex:indexPath.row];
-
+    
     GraphViewCell * cell;// = [tableView dequeueReusableCellWithIdentifier:cellIdentifier2];
-
+    
     if(cell == nil){
-        cell = [[GraphViewCell alloc]initWithGraph:grphView reuseIdentifier:cellIdentifier2];
+        cell = [[GraphViewCell alloc] initWithGraph:grphView reuseIdentifier:cellIdentifier2];
         
     }
     //    if(cell == nil){
@@ -173,53 +179,32 @@
     //
     //    }
     //cell.graphViewImage = grphView;
+    cell.elementSubName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];
+    cell.elementSubName.text = grphView.name;
+    
+    cell.elementSubName.backgroundColor = [UIColor redColor];
+    cell.backgroundColor = [UIColor lightGrayColor];
+    
+    cell.graphViewImage.backgroundColor = [UIColor clearColor];
+
+    
     [cell.graphViewImage setNeedsDisplay];
     
-    [cell.graphViewImage drawRect:cell.frame];
+    [cell.graphViewImage drawRect:CGRectMake(0, 0, 612, 260)];
+    //-35, -42, 612, 260
     
-    //cell.graphViewImage = grphView;
-    
-  //  cell.elementSubName.text = grphView.name;
-    
-  //  [cell addSubview:grphView.self];
+ 
     
     
     return cell;
-
-    
-    
-//    static NSString * cellIdentifier = @"graphViewCell";
-//    GraphView *grphView = [self.graphViews objectAtIndex:indexPath.row];
-//
-//    GraphViewCell * cell = [[GraphViewCell alloc]initWithGraph:grphView];
-//    
-//    
-//    [self.graphsTableView dequeueReusableCellWithIdentifier:cellIdentifier];
-//    if(cell == nil){
-//        cell = [GraphViewCell alloc];
-//    }
-//    
-//    cell.graphViewImage = [[GraphView alloc]initWithFrame:cell.frame];
-//    
-//    
-//    cell.elementSubName.text = grphView.name;
-//
-//    //[cell.graphViewImage drawRect:cell.graphViewImage.frame];
-//    
-//    //cell.graphViewImage.image = [grphView drawRect1:cell.frame];
-//    
-//    cell.graphViewImage.frame = CGRectMake(0, 0, 200, 100);
-//    
-//    return cell;
-//    
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-   if (tableView == self.ElementRatingsTableView) {
-
-    return [self.elementsArray count];
-    
-   }
+    if (tableView == self.ElementRatingsTableView) {
+        
+        return [self.elementsArray count];
+        
+    }
     
     return self.graphViews.count;
 }
@@ -258,7 +243,7 @@
         if (pixelsToMove<0)
             pixelsToMove = 0;
         
-            
+        
         //make the hieght view bigger
         rect = self.ratingsPDFView.frame;
         rect.size.height += pixelsToMove;
@@ -298,27 +283,50 @@
         rect = self.evaluatedPossibleLabel.frame;
         rect.origin.y += pixelsToMove;
         self.evaluatedPossibleLabel.frame = rect;
-      
+        
+        //set height to content size of element list and update pdfview size accordingly
+        
+        int pixelsToMove2 = self.graphsTableView.frame.size.height;
+        rect = self.graphsTableView.frame;
+        rect.size.height    = self.graphsTableView.contentSize.height;
+        self.graphsTableView.frame  = rect;
+        
+        pixelsToMove2 = self.graphsTableView.frame.size.height - pixelsToMove2;
+        
+        if (pixelsToMove2<0)
+            pixelsToMove2 = 0;
+        
+        //make the pdfview height bigger
+        rect = self.ratingsPDFView.frame;
+        rect.size.height += pixelsToMove2;
+        
+        numPages = ceil( rect.size.height / 792 );
+        rect.size.height = numPages * 792;
+        self.ratingsPDFView.frame = rect;
+        
+        
+        
+        
         //TODO: fix this sheit
-   //     rect = self.graphView.frame;
-   //     rect.origin.y += pixelsToMove;
-   //     self.graphView.frame = rect;
+        //     rect = self.graphView.frame;
+        //     rect.origin.y += pixelsToMove;
+        //     self.graphView.frame = rect;
         
         
         //set the frame of this view to the bottom of the finalPdfview
-//        rect = self.ratingsPDFView.frame;
-//        rect.origin.y = reportVC.finalPFDView.frame.size.height;
-//        self.ratingsPDFView.frame = rect;
-//        
-//        [reportVC.finalPFDView addSubview:self.ratingsPDFView];
-//        [reportVC.finalPFDView sizeToFit];
-//
-    //    [reportVC.viewArray addObject:self.ratingsPDFView];
+        //        rect = self.ratingsPDFView.frame;
+        //        rect.origin.y = reportVC.finalPFDView.frame.size.height;
+        //        self.ratingsPDFView.frame = rect;
+        //
+        //        [reportVC.finalPFDView addSubview:self.ratingsPDFView];
+        //        [reportVC.finalPFDView sizeToFit];
+        //
+        //    [reportVC.viewArray addObject:self.ratingsPDFView];
         
         [reportVC.viewArray setObject:self.ratingsPDFView atIndexedSubscript:7];
-
+        
     }
-
+    
 }
 
 - (void)didReceiveMemoryWarning
