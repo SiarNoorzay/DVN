@@ -15,5 +15,8 @@
 
 -(id)initWithGraph:(GraphView*)grphView;
 
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier graphView:(GraphView*)grphView;
+
+-(id)initWithGraph:(GraphView*)grphView reuseIdentifier:(NSString *)reuseIdentifier;
 
 @end

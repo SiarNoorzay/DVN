@@ -22,13 +22,24 @@
     }
     return self;
 }
+- (id)initWithElementNames:(NSArray*)names andPercents:(NSArray*)percents
+{
+    self = [super init];
+    if (self){
+        self.elementNames = names;
+        self.elementPercent = percents;
+    }
+    return self;
+    
+}
+
 
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 
 -(void)drawRect:(CGRect)rect {
-    if (self.name == nil) {
+    if (self.elementNames == nil) {
         return;
     }
     int numberOfEles = [self.elementNames count];
