@@ -13,10 +13,17 @@
 
 @class DBRestClient;
 
-@interface LogInViewController : UIViewController<UITextFieldDelegate>{
+@interface LogInViewController : UIViewController<UITextFieldDelegate, UIAlertViewDelegate>{
     
     DBRestClient* restClient;
 }
+
+@property (nonatomic, readonly) DBRestClient * restClient;
+
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *actLinkingDropbox;
+
+
+@property (assign) BOOL showAlert;
 
 //User Info Textfields
 @property (strong, nonatomic) IBOutlet UITextField *userIDTextField;
@@ -34,6 +41,7 @@
 
 //Log In Button
 - (IBAction)LogInButton:(UIBarButtonItem *)sender;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *btnLogIn;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *btnSetDropBox;
 - (IBAction)btnSetDropBox:(id)sender;

@@ -73,6 +73,8 @@
     cell.stpConfirmed.value = aRow.confirmedCount;
     cell.stpNotConfirmed.value = aRow.notConfirmedCount;
     
+    [cell setPercent];
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;

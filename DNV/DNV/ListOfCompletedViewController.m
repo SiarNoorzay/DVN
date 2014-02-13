@@ -321,8 +321,8 @@ loadMetadataFailedWithError:(NSError *)error {
  //   [defaults setObject:[self.localCompleted objectAtIndex:indexPath.row] forKey:@"currentAudit"];
     [defaults synchronize];
     
-    self.audit.auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
-    self.audit.auditID = [self.audit.auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
+//    self.audit.auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
+//    self.audit.auditID = [self.audit.auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     if ([segue.identifier isEqualToString:@"EditClient"]) {
         
