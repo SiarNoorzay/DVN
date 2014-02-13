@@ -33,7 +33,6 @@
 		76007E261888317400FA7A39 /* QuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DB7188725CF00FA7A39 /* QuestionCell.m */; };
 		760F12B418A96B36008A432E /* DNV_GL_ long_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 760F12B218A96B35008A432E /* DNV_GL_ long_logo.png */; };
 		760F12B518A96B36008A432E /* DNV_GL_login_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 760F12B318A96B36008A432E /* DNV_GL_login_logo.png */; };
-		7613CB0618ABF8EC00DD0834 /* libFlurry_4.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7594018A5894500467154 /* libFlurry_4.3.1.a */; };
 		7627430B1888508B00873E9F /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB918872AE900FA7A39 /* checkmark.png */; };
 		7627431018897BB500873E9F /* CalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7627430F18897BB500873E9F /* CalculatorViewController.m */; };
 		7627431318898D3900873E9F /* DrawingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7627431218898D3900873E9F /* DrawingViewController.m */; };
@@ -88,6 +87,7 @@
 		76A103A21899A7DD00283F67 /* checkbox_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A103A11899A7DD00283F67 /* checkbox_checked.png */; };
 		76A103A41899ABDE00283F67 /* empty_checkbox_gray_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A103A31899ABDE00283F67 /* empty_checkbox_gray_border.png */; };
 		76A103A61899ABE500283F67 /* checkbox_checked_gray_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A103A51899ABE500283F67 /* checkbox_checked_gray_border.png */; };
+		76A14DF518AD308F00020340 /* libFlurry_4.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7594018A5894500467154 /* libFlurry_4.3.1.a */; };
 		76A2BE3C187DBF7A0056CC22 /* ElementSubElementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A2BE3B187DBF7A0056CC22 /* ElementSubElementViewController.m */; };
 		76A567FF1886DF70000E32D3 /* verify_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A567FE1886DF70000E32D3 /* verify_icon.png */; };
 		76A568011886E0CC000E32D3 /* export_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A568001886E0CC000E32D3 /* export_icon.png */; };
@@ -231,7 +231,6 @@
 		760F12AB18A943D2008A432E /* libFlurry_4.3.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.1.a; sourceTree = "<group>"; };
 		760F12B218A96B35008A432E /* DNV_GL_ long_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DNV_GL_ long_logo.png"; sourceTree = "<group>"; };
 		760F12B318A96B36008A432E /* DNV_GL_login_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DNV_GL_login_logo.png; sourceTree = "<group>"; };
-		7613CB0918AC0F7E00DD0834 /* Flurry iPad SDK viPad 4.3.1.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = "Flurry iPad SDK viPad 4.3.1.zip"; path = "../../../../Downloads/Flurry iPad SDK viPad 4.3.1.zip"; sourceTree = "<group>"; };
 		7627430E18897BB500873E9F /* CalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorViewController.h; sourceTree = "<group>"; };
 		7627430F18897BB500873E9F /* CalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculatorViewController.m; sourceTree = "<group>"; };
 		7627431118898D3900873E9F /* DrawingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingViewController.h; sourceTree = "<group>"; };
@@ -422,7 +421,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7613CB0618ABF8EC00DD0834 /* libFlurry_4.3.1.a in Frameworks */,
+				76A14DF518AD308F00020340 /* libFlurry_4.3.1.a in Frameworks */,
 				4A621CB718AB615B00AE168C /* QuickLook.framework in Frameworks */,
 				76C7594418A58B3F00467154 /* SystemConfiguration.framework in Frameworks */,
 				4AC04091188F0AF2006A2F3C /* libKLSwitch.a in Frameworks */,
@@ -1465,6 +1464,7 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					/Users/usi/Desktop/repoDVN/DVN/DNV/Flurry,
+					/Users/usi/Desktop/DVN/DNV/Flurry,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1490,6 +1490,7 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					/Users/usi/Desktop/repoDVN/DVN/DNV/Flurry,
+					/Users/usi/Desktop/DVN/DNV/Flurry,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

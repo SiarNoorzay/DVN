@@ -391,6 +391,8 @@ int subEleNumber;
         aQuestion.pointsAwarded = 0;
         aQuestion.isCompleted = false;
     }
+    
+    [self.dnvDBManager updateQuestion:aQuestion];
 }
 
 @end

@@ -29,4 +29,6 @@
 
 @property(nonatomic, strong) DNVDatabaseManagerClass *dnvDB;
 
+-(void)setPercent;
+
 @end
