@@ -574,6 +574,7 @@
 		7627970B1871D53A00F22E73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7613CB0918AC0F7E00DD0834 /* Flurry iPad SDK viPad 4.3.1.zip */,
 				4A621CB618AB615B00AE168C /* QuickLook.framework */,
 				760F12A918A943D2008A432E /* Flurry */,
 				76C7594318A58B3F00467154 /* SystemConfiguration.framework */,

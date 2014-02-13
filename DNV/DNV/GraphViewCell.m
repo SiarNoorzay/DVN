@@ -10,14 +10,27 @@
 
 @implementation GraphViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier graphView:(GraphView*)grphView
+
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        self.graphViewImage = grphView;
     }
     return self;
 }
+
+-(id)initWithGraph:(GraphView*)grphView reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+    if (self) {
+        self.graphViewImage = grphView;
+        self.elementSubName.text = grphView.name;
+    }
+    return self;
+}
+
 -(id)initWithGraph:(GraphView*)grphView
 {
     self = [super init];

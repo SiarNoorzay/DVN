@@ -95,27 +95,44 @@
     [subEleGraphViews addObject:eleGraphView];
     
     for (Elements *ele in self.audit.Elements) {
-        GraphView *subEleGraphView = [GraphView alloc];
         NSMutableArray *subEleNames = [[NSMutableArray alloc]initWithCapacity:ele.Subelements.count];
         NSMutableArray *subElePercents = [[NSMutableArray alloc]initWithCapacity:ele.Subelements.count];
 
         for (SubElements *subEle in ele.Subelements) {
             
-            [subEleNames addObject:subEle.name];
-            [subElePercents addObject:[NSString stringWithFormat:@"%.2f",((subEle.pointsAwarded / (subEle.pointsPossible - subEle.modefiedNAPoints)) *100)]];
+            if (subEle.isApplicable) {
+                [subEleNames addObject:subEle.name];
+                [subElePercents addObject:[NSString stringWithFormat:@"%.2f",((subEle.pointsAwarded / (subEle.pointsPossible - subEle.modefiedNAPoints)) *100)]];
+            }
+            
         }
-        subEleGraphView.elementNames = subEleNames;
-        subEleGraphView.elementPercent = subElePercents;
-        subEleGraphView.name = ele.name;
-        
+        //subEleGraphView.elementNames = subEleNames;
+      //  subEleGraphView.elementPercent = subElePercents;
+      //  subEleGraphView.name = ele.name;
+        GraphView *subEleGraphView = [[GraphView alloc]initWithElementNames:subEleNames andPercents:subElePercents];
+
         [subEleGraphViews addObject: subEleGraphView];
         
+      //  [self.graphView setElementNames:subEleNames];
+     //   [self.graphView setElementPercent:subElePercents];
     }
     NSLog(@"Count of graph views: %d", subEleGraphViews.count);
     self.graphViews = subEleGraphViews;
     
+    
+    
+    
 }
 #pragma mark - TableView Delegates
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if (tableView == self.ElementRatingsTableView) { return 44;}
+    
+    return 268;
+
+    
+}
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.ElementRatingsTableView) {
@@ -142,30 +159,59 @@
         
         
    }
-    static NSString * cellIdentifier = @"graphViewCell";
+    static NSString * cellIdentifier2 = @"graphViewCell";
     GraphView *grphView = [self.graphViews objectAtIndex:indexPath.row];
 
-    GraphViewCell * cell = [[GraphViewCell alloc]initWithGraph:grphView];
-    
-    
-    [self.graphsTableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if(cell == nil){
-        cell = [GraphViewCell alloc];
-    }
-    
-    cell.graphViewImage = [[GraphView alloc]initWithFrame:cell.frame];
-    
-    
-    cell.elementSubName.text = grphView.name;
+    GraphViewCell * cell;// = [tableView dequeueReusableCellWithIdentifier:cellIdentifier2];
 
-    //[cell.graphViewImage drawRect:cell.graphViewImage.frame];
+    if(cell == nil){
+        cell = [[GraphViewCell alloc]initWithGraph:grphView reuseIdentifier:cellIdentifier2];
+        
+    }
+    //    if(cell == nil){
+    //        cell = [[GraphViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier2 graphView:grphView];
+    //
+    //    }
+    //cell.graphViewImage = grphView;
+    [cell.graphViewImage setNeedsDisplay];
     
-    //cell.graphViewImage.image = [grphView drawRect1:cell.frame];
+    [cell.graphViewImage drawRect:cell.frame];
     
-    cell.graphViewImage.frame = CGRectMake(0, 0, 200, 100);
+    //cell.graphViewImage = grphView;
+    
+  //  cell.elementSubName.text = grphView.name;
+    
+  //  [cell addSubview:grphView.self];
+    
     
     return cell;
+
     
+    
+//    static NSString * cellIdentifier = @"graphViewCell";
+//    GraphView *grphView = [self.graphViews objectAtIndex:indexPath.row];
+//
+//    GraphViewCell * cell = [[GraphViewCell alloc]initWithGraph:grphView];
+//    
+//    
+//    [self.graphsTableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//    if(cell == nil){
+//        cell = [GraphViewCell alloc];
+//    }
+//    
+//    cell.graphViewImage = [[GraphView alloc]initWithFrame:cell.frame];
+//    
+//    
+//    cell.elementSubName.text = grphView.name;
+//
+//    //[cell.graphViewImage drawRect:cell.graphViewImage.frame];
+//    
+//    //cell.graphViewImage.image = [grphView drawRect1:cell.frame];
+//    
+//    cell.graphViewImage.frame = CGRectMake(0, 0, 200, 100);
+//    
+//    return cell;
+//    
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

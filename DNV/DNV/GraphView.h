@@ -16,7 +16,10 @@
 @property (strong,nonatomic) NSArray * elementNames;
 @property (strong,nonatomic) NSArray * elementPercent;
 
+- (id)initWithElementNames:(NSArray*)names andPercents:(NSArray*)percents;
 
+
+//-(void)drawRect:(CGRect)rect;
 
 
 
