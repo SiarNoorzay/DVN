@@ -162,7 +162,6 @@
     NSLog(@"File loaded into path: %@", localPath);
     [self getAudit];
     [self.spinner stopAnimating];
-    [self performSegueWithIdentifier:@"goToNewElement" sender:self];
     
 }
 
@@ -234,9 +233,19 @@
              nil];
             
             [Flurry logEvent:@"New Audit Started" withParameters:newAuditParams];
+            self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
+            [self performSegueWithIdentifier:@"goToNewElement" sender:self];
+        }
+        else{
+            
+            UIAlertView * auditAlert = [[UIAlertView alloc] initWithTitle: @"Audit Save Options" message: @"An audit with this ID already exist in the DNV Database. Would you like to work with the currently saved audit, overwrite the saved audit, or keep the saved audit and start a new audit?" delegate: self cancelButtonTitle:nil otherButtonTitles:@"Work On Current Audit", @"Overwrite Audit", @"Keep Both Audits", nil];
+            
+            [auditAlert show];
         }
         
-        self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
+        
+        
+        
         
         NSLog(@"Audit Name: %@", self.audit.name);
         
@@ -244,6 +253,63 @@
         //eleSubEleVC.aud = self.audit;
         //end of DB test
         
+    }
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    if (buttonIndex == 0)
+    {
+        [self performSegueWithIdentifier:@"goToNewElement" sender:self];
+    }
+    
+    if (buttonIndex == 1)
+    {
+        
+        [self.dnvDBManager deleteAudit:self.audit.auditID];
+        [self.dnvDBManager saveAudit:self.audit];
+        
+        UIAlertView * overwriteNotice = [[UIAlertView alloc] initWithTitle:@"Audit Overwritten" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        
+        [overwriteNotice show];
+        
+        self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
+        [self performSegueWithIdentifier:@"goToNewElement" sender:self];
+        
+    }
+    
+    if (buttonIndex == 2) {
+        
+        NSMutableArray * allAudits = [[NSMutableArray alloc]initWithArray:[self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.audit.name]];
+        NSArray * tempArray = [self.dnvDBManager retrieveAllAuditIDsOfType:2 forAuditName:self.audit.name];
+        
+        [allAudits addObjectsFromArray:tempArray];
+        
+        self.audit.auditID = [NSString stringWithFormat:@"%@%d",self.audit.auditID,allAudits.count];
+        [self.dnvDBManager saveAudit:self.audit];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        //new audit started
+        NSString *curClient = [defaults objectForKey:@"currentClient"];
+        NSString *curAudit = [defaults objectForKey:@"currentAudit"];
+        
+        NSDictionary *newAuditParams =
+        [NSDictionary dictionaryWithObjectsAndKeys:
+         curClient, @"Client",
+         curAudit, @"Audit Name",
+         nil];
+        
+        [Flurry logEvent:@"New Audit Started" withParameters:newAuditParams];
+        
+        UIAlertView * keptBothNotice = [[UIAlertView alloc] initWithTitle:@"Saved Audit" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        
+        [keptBothNotice show];
+        
+        self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
+        [self performSegueWithIdentifier:@"goToNewElement" sender:self];
     }
     
 }

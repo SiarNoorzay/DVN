@@ -159,29 +159,15 @@
 
 - (void)restClient:(DBRestClient *)client loadedMetadata:(DBMetadata *)metadata {
     
-    if (client == self->restClient) {
-    
-        if (metadata.isDirectory) {
-            self.JSONList = [[NSMutableArray alloc]init];
-            for (DBMetadata * file in metadata.contents) {
-                if ([file.filename rangeOfString:@".json"].location != NSNotFound)
-                    [self.JSONList addObject:file.filename];
-            }
+    if (metadata.isDirectory) {
+        self.JSONList = [[NSMutableArray alloc]init];
+        for (DBMetadata * file in metadata.contents) {
+            if ([file.filename rangeOfString:@".json"].location != NSNotFound)
+                [self.JSONList addObject:file.filename];
         }
-    
-        [self.wipJSONFileTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     }
     
-//    if (client == self->restClient3) {
-//        
-//        if (metadata.isDirectory) {
-//            self.attachmentList = [NSMutableArray new];
-//            for (DBMetadata * attach in metadata.contents){
-//                if ([attach.filename rangeOfString:@".json"].location == NSNotFound)
-//                    [self.attachmentList addObject:attach.filename];
-//            }
-//        }
-//    }
+    [self.wipJSONFileTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     
     [self.spinner stopAnimating];
 }

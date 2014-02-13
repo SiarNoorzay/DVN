@@ -165,6 +165,8 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     
 }
 
+
+
 -(BOOL)saveAudit:(Audit *)audit{
     BOOL newAuditCreated = false;
     
@@ -242,6 +244,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     else{
         
         NSLog(@"Failed to open/create DB.");
+    
     }
     
     return newAuditCreated;
@@ -837,8 +840,8 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             
             tempSubElement.subElementID = [identify integerValue];
             tempSubElement.name = name;
-            tempSubElement.isCompleted = [completed integerValue];
             tempSubElement.isApplicable = [applicable integerValue];
+            tempSubElement.isCompleted = [completed integerValue];
             tempSubElement.pointsPossible = [ptsPoss floatValue];
             tempSubElement.pointsAwarded = [ptsAward floatValue];
             tempSubElement.modefiedNAPoints = [modNAPts floatValue];
