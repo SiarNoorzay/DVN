@@ -95,7 +95,7 @@
     [subEleGraphViews addObject:eleGraphView];
     
     for (Elements *ele in self.audit.Elements) {
-        GraphView *subEleGraphView = [GraphView alloc];
+        GraphView *subEleGraphView = [GraphView new];
         NSMutableArray *subEleNames = [[NSMutableArray alloc]initWithCapacity:ele.Subelements.count];
         NSMutableArray *subElePercents = [[NSMutableArray alloc]initWithCapacity:ele.Subelements.count];
 
@@ -107,6 +107,9 @@
         subEleGraphView.elementNames = subEleNames;
         subEleGraphView.elementPercent = subElePercents;
         subEleGraphView.name = ele.name;
+        
+        [subEleGraphView drawRect:CGRectMake(0, 0, 200, 200)];
+        [subEleGraphView setFrame:CGRectMake(0, 0, 200, 200)];
         
         [subEleGraphViews addObject: subEleGraphView];
         
@@ -139,30 +142,38 @@
         
         cell.percentage.text = [NSString stringWithFormat:@"%.2f %%", (element.pointsAwarded/(element.pointsPossible - element.modefiedNAPoints))*100];
         return cell;
-        
-        
-   }
-    static NSString * cellIdentifier = @"graphViewCell";
-    GraphView *grphView = [self.graphViews objectAtIndex:indexPath.row];
 
-    GraphViewCell * cell = [[GraphViewCell alloc]initWithGraph:grphView];
+   }
+    static NSString * cellIdentifier1 = @"graphViewCell";
+    //GraphView *grphView = [self.graphViews objectAtIndex:indexPath.row];
+
+    GraphViewCell * cell = [[GraphViewCell alloc]initWithGraph:[self.graphViews objectAtIndex:indexPath.row]];
     
     
-    [self.graphsTableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    [self.graphsTableView dequeueReusableCellWithIdentifier:cellIdentifier1];
     if(cell == nil){
-        cell = [GraphViewCell alloc];
+        cell = [[GraphViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier1];
     }
     
-    cell.graphViewImage = [[GraphView alloc]initWithFrame:cell.frame];
+    cell.graphViewImage = [GraphView new];
+    cell.graphViewImage = (GraphView*)[self.graphViews objectAtIndex:indexPath.row];
     
     
-    cell.elementSubName.text = grphView.name;
-
-    //[cell.graphViewImage drawRect:cell.graphViewImage.frame];
+//
+//    //[cell.graphViewImage drawRect:cell.graphViewImage.frame];
+//    
+//    //cell.graphViewImage.image = [grphView drawRect1:cell.frame];
+//    
+//    cell.graphViewImage.frame = CGRectMake(0, 0, 200, 100);
+//    
+//    //[grphView drawRect:cell.graphViewImage.frame];
+//    cell.graphViewImage.elementNames = ((GraphView*)[self.graphViews objectAtIndex:indexPath.row]).elementNames;
+//    cell.graphViewImage.elementPercent = ((GraphView*)[self.graphViews objectAtIndex:indexPath.row]).elementPercent;
+//    cell.graphViewImage.name = ((GraphView*)[self.graphViews objectAtIndex:indexPath.row]).name;
     
-    //cell.graphViewImage.image = [grphView drawRect1:cell.frame];
+    cell.elementSubName.text = cell.graphViewImage.name;
     
-    cell.graphViewImage.frame = CGRectMake(0, 0, 200, 100);
+    [cell setBackgroundColor:[UIColor greenColor]];
     
     return cell;
     
@@ -182,6 +193,11 @@
 {
     return 1;
     
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 150;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

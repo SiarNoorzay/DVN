@@ -18,8 +18,10 @@
 		4A4AFC8718A407FC006901D1 /* verifyRecordsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AFC8618A407FC006901D1 /* verifyRecordsCell.m */; };
 		4A4AFC8B18A42EEB006901D1 /* Observations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AFC8A18A42EEB006901D1 /* Observations.m */; };
 		4A4AFC8E18A42F33006901D1 /* Records.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4AFC8D18A42F33006901D1 /* Records.m */; };
+		4A4EAC5218AC4D53006FF2E1 /* methodologyDiagram.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4EAC5118AC4D53006FF2E1 /* methodologyDiagram.png */; };
 		4A621CB718AB615B00AE168C /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A621CB618AB615B00AE168C /* QuickLook.framework */; };
 		4A621CBA18AB654400AE168C /* AttachmentsPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A621CB918AB654400AE168C /* AttachmentsPopOverViewController.m */; };
+		4A621CC018AC1F6700AE168C /* libFlurry_4.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7594018A5894500467154 /* libFlurry_4.3.1.a */; };
 		4A6CFD56189FE2510036DD28 /* VerifyTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CFD55189FE2510036DD28 /* VerifyTabController.m */; };
 		4A6CFD59189FE5060036DD28 /* VerifyPhysicalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CFD58189FE5060036DD28 /* VerifyPhysicalViewController.m */; };
 		4A6CFD5C189FE5170036DD28 /* VerifyInterivewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6CFD5B189FE5170036DD28 /* VerifyInterivewsViewController.m */; };
@@ -33,7 +35,6 @@
 		76007E261888317400FA7A39 /* QuestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76007DB7188725CF00FA7A39 /* QuestionCell.m */; };
 		760F12B418A96B36008A432E /* DNV_GL_ long_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 760F12B218A96B35008A432E /* DNV_GL_ long_logo.png */; };
 		760F12B518A96B36008A432E /* DNV_GL_login_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 760F12B318A96B36008A432E /* DNV_GL_login_logo.png */; };
-		7613CB0618ABF8EC00DD0834 /* libFlurry_4.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7594018A5894500467154 /* libFlurry_4.3.1.a */; };
 		7627430B1888508B00873E9F /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 76007DB918872AE900FA7A39 /* checkmark.png */; };
 		7627431018897BB500873E9F /* CalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7627430F18897BB500873E9F /* CalculatorViewController.m */; };
 		7627431318898D3900873E9F /* DrawingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7627431218898D3900873E9F /* DrawingViewController.m */; };
@@ -124,7 +125,6 @@
 		76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C74187222EF00ACF6DB /* QuartzCore.framework */; };
 		76BF9C771872237200ACF6DB /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C761872237200ACF6DB /* DropboxSDK.framework */; };
 		76C7593618A3FA2B00467154 /* MethodologyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C7593518A3FA2B00467154 /* MethodologyViewController.m */; };
-		76C7593C18A4600700467154 /* methodologyDiagram.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C7593B18A4600700467154 /* methodologyDiagram.png */; };
 		76C7594418A58B3F00467154 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7594318A58B3F00467154 /* SystemConfiguration.framework */; };
 		76C7594818A96A9E00467154 /* ImagePopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C7594718A96A9E00467154 /* ImagePopOverViewController.m */; };
 		76C7594E18A96DAC00467154 /* ImageViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C7594D18A96DAC00467154 /* ImageViewerViewController.m */; };
@@ -204,6 +204,7 @@
 		4A4AFC8A18A42EEB006901D1 /* Observations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Observations.m; sourceTree = "<group>"; };
 		4A4AFC8C18A42F33006901D1 /* Records.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Records.h; sourceTree = "<group>"; };
 		4A4AFC8D18A42F33006901D1 /* Records.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Records.m; sourceTree = "<group>"; };
+		4A4EAC5118AC4D53006FF2E1 /* methodologyDiagram.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = methodologyDiagram.png; sourceTree = "<group>"; };
 		4A621CB618AB615B00AE168C /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		4A621CB818AB654400AE168C /* AttachmentsPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttachmentsPopOverViewController.h; sourceTree = "<group>"; };
 		4A621CB918AB654400AE168C /* AttachmentsPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttachmentsPopOverViewController.m; sourceTree = "<group>"; };
@@ -231,7 +232,6 @@
 		760F12AB18A943D2008A432E /* libFlurry_4.3.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.1.a; sourceTree = "<group>"; };
 		760F12B218A96B35008A432E /* DNV_GL_ long_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DNV_GL_ long_logo.png"; sourceTree = "<group>"; };
 		760F12B318A96B36008A432E /* DNV_GL_login_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DNV_GL_login_logo.png; sourceTree = "<group>"; };
-		7613CB0918AC0F7E00DD0834 /* Flurry iPad SDK viPad 4.3.1.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = "Flurry iPad SDK viPad 4.3.1.zip"; path = "../../../../Downloads/Flurry iPad SDK viPad 4.3.1.zip"; sourceTree = "<group>"; };
 		7627430E18897BB500873E9F /* CalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorViewController.h; sourceTree = "<group>"; };
 		7627430F18897BB500873E9F /* CalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculatorViewController.m; sourceTree = "<group>"; };
 		7627431118898D3900873E9F /* DrawingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingViewController.h; sourceTree = "<group>"; };
@@ -367,7 +367,6 @@
 		76BF9C761872237200ACF6DB /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 		76C7593418A3FA2B00467154 /* MethodologyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodologyViewController.h; sourceTree = "<group>"; };
 		76C7593518A3FA2B00467154 /* MethodologyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodologyViewController.m; sourceTree = "<group>"; };
-		76C7593B18A4600700467154 /* methodologyDiagram.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = methodologyDiagram.png; sourceTree = "<group>"; };
 		76C7593F18A5894500467154 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		76C7594018A5894500467154 /* libFlurry_4.3.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.1.a; sourceTree = "<group>"; };
 		76C7594318A58B3F00467154 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -422,7 +421,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7613CB0618ABF8EC00DD0834 /* libFlurry_4.3.1.a in Frameworks */,
+				4A621CC018AC1F6700AE168C /* libFlurry_4.3.1.a in Frameworks */,
 				4A621CB718AB615B00AE168C /* QuickLook.framework in Frameworks */,
 				76C7594418A58B3F00467154 /* SystemConfiguration.framework in Frameworks */,
 				4AC04091188F0AF2006A2F3C /* libKLSwitch.a in Frameworks */,
@@ -963,7 +962,7 @@
 		76C7593818A45EF400467154 /* Methodology Diagram */ = {
 			isa = PBXGroup;
 			children = (
-				76C7593B18A4600700467154 /* methodologyDiagram.png */,
+				4A4EAC5118AC4D53006FF2E1 /* methodologyDiagram.png */,
 			);
 			name = "Methodology Diagram";
 			sourceTree = "<group>";
@@ -1185,6 +1184,7 @@
 				76E81F13187C908100441F62 /* usersNOTDB.json in Resources */,
 				4A4AFC5D18A135B0006901D1 /* records.png in Resources */,
 				4A4AFC7318A3F95B006901D1 /* recordsSmall.png in Resources */,
+				4A4EAC5218AC4D53006FF2E1 /* methodologyDiagram.png in Resources */,
 				76A103A01899A7D300283F67 /* empty_checkbox.png in Resources */,
 				4A4AFC7118A3F8B4006901D1 /* interviewSmall.png in Resources */,
 				76A568071886ED22000E32D3 /* mic_icon.png in Resources */,
@@ -1211,7 +1211,6 @@
 				76E81F0C187B559000441F62 /* sampleAudit.json in Resources */,
 				76455F9218AAC23700AF8A7C /* chooseFromPhotos.png in Resources */,
 				76A568191886F62B000E32D3 /* camera_icon.png in Resources */,
-				76C7593C18A4600700467154 /* methodologyDiagram.png in Resources */,
 				76A568011886E0CC000E32D3 /* export_icon.png in Resources */,
 				769D3CF518860C2B002DF3B8 /* flatFolderIcon2.png in Resources */,
 				76DCB9201889ACD700314C5D /* drawingBackGroundLines.png in Resources */,
@@ -1465,6 +1464,7 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					/Users/usi/Desktop/repoDVN/DVN/DNV/Flurry,
+					"/Users/jaimemartinez/Desktop/DNV-GL/DNV/Flurry",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1490,6 +1490,7 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					/Users/usi/Desktop/repoDVN/DVN/DNV/Flurry,
+					"/Users/jaimemartinez/Desktop/DNV-GL/DNV/Flurry",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
