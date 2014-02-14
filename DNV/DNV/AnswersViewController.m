@@ -141,7 +141,7 @@ int numOfSubs;
         }
         else{
             leftAns.isSelected = true;
-            rightAns.isSelected = true;
+            rightAns.isSelected = false;
             pointTotal = leftAns.pointsPossible;
             weakSelf.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
             [weakSelf setEnabledFlagsAndReloadQuestions];
@@ -316,6 +316,35 @@ int numOfSubs;
         self.questionNumberTextField.text = [NSString stringWithFormat:@"%i",(self.currentPosition +1)];
     }
     
+    //seting the mainsublayered question if its not set already
+/*    if (([self.question.layeredQuesions count] > 0) && mainSubQuestion == nil)
+    {
+        islayeredQuestion = true;
+        mainSubQuestion = self.question;
+        mainQuestionPosition = self.currentPosition;
+        NSLog(@"%i.%i.%i   %@", self.elementNumber +1,self.subElementNum +1 , self.currentPosition+1, mainSubQuestion.questionText);
+        
+        
+        self.mainLayeredQuesionButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        self.mainLayeredQuesionButton.titleLabel.textAlignment = NSTextAlignmentLeft;
+        self.mainLayeredQuesionButton.titleLabel.minimumScaleFactor = 0.5;
+        self.mainLayeredQuesionButton.titleLabel.numberOfLines = 5;
+        
+        
+        [self.mainLayeredQuesionButton setTitle:[NSString stringWithFormat:@"%@",mainSubQuestion.questionText] forState:UIControlStateNormal];
+        //[allSublayeredQuestions addObject:self.question];
+        
+        numOfSubs = [self getNumOfSubQuestionsAndSetAllSubsArray:self.question layerDepth:0];
+        
+        NSLog(@"%d",numOfSubs);
+        
+        self.subQuesionsTableView.hidden = false;
+        //[self.subQuesionsTableView reloadData];
+    }
+*/
+    
+    
+    
     
     if ([mainSubQuestion.layeredQuesions count] > 0) {
         islayeredQuestion = true;
@@ -336,7 +365,7 @@ int numOfSubs;
     
     [Flurry logEvent:@"Question Answered" withParameters:questionParams timed:YES];
     
-    unchangedQuestion = [[Questions alloc]initWithQuestion:[self.question toDictionary]];
+  //  unchangedQuestion = [self.dnvDBManager getQuestion:self.question.questionType]; //[[Questions alloc]initWithQuestion:[self.question toDictionary]];
     
     
     [self hideAnswerViews];
@@ -408,8 +437,12 @@ int numOfSubs;
     }//switch
     
     self.questionText.text = self.question.questionText;
-    self.questionText.numberOfLines = 0;
+    self.questionText.numberOfLines = 8;
+    CGRect rect = self.questionText.frame;
+    rect.size.width = 720;
+    self.questionText.frame =rect;
     [self.questionText sizeToFit];
+    //[self.questionText sizeThatFits:CGSizeMake(600, 200)];
     
     
     [self.answersTableView reloadData];
