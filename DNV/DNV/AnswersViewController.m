@@ -16,11 +16,15 @@
 #import "VerifyTabController.h"
 #import "Flurry.h"
 #import "ImagePopOverViewController.h"
+#import "AttachmentsPopOverViewController.h"
 
 @interface AnswersViewController ()
 
+{
+    UIPopoverController * attachPop;
+    bool showAttach;
+}
 @end
-
 
 
 //Change this to go from big swith to table view for bool questions
@@ -38,6 +42,9 @@ BOOL isSublayeredQuestion = false;
 
 int numOfSubs;
 
+
+
+
 @implementation AnswersViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -47,6 +54,21 @@ int numOfSubs;
         // Custom initialization
     }
     return self;
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    if(showAttach)
+    {
+        [self attachmentButtonPushed:self.btnAttach];
+        showAttach = false;
+    }
+}
+
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [attachPop dismissPopoverAnimated:YES];
 }
 
 - (void)viewDidLoad
@@ -1000,6 +1022,33 @@ int numOfSubs;
 }
 
 - (IBAction)attachmentButtonPushed:(id)sender {
+    
+    NSString *dataPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Attachments"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error = nil;
+    NSArray *arrayFiles = [fileManager contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@",dataPath] error:&error];
+    
+    if( ([arrayFiles count] == 0 || arrayFiles == nil) && ([self.question.attachmentsLocationArray count] == 0 || self.question.attachmentsLocationArray == nil) )
+    {
+        UIAlertView *noAttachments = [[UIAlertView alloc] initWithTitle:@"No attachments!" message:@"The app currently has no selectable attachments. To attach files form outside the app, you must use the open in feature of iOS, and open in DNV-GL app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+        [noAttachments show];
+        
+        
+    }
+    else
+    {
+        AttachmentsPopOverViewController  * attPop = [self.storyboard instantiateViewControllerWithIdentifier:@"attachPop"];
+        
+        attachPop.delegate = self;
+        attPop.question = self.question;
+        attPop.myAnswersVC = self;
+        
+        attachPop= [[UIPopoverController alloc] initWithContentViewController:attPop];
+        
+        //  self.modalPresentationStyle = UIModalPresentationFullScreen;
+        [attachPop presentPopoverFromRect:self.btnAttach.frame inView:self.viewDashboard  permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    }
 }
 
 - (IBAction)helpButtonPushed:(id)sender {
@@ -1016,6 +1065,28 @@ int numOfSubs;
 
 }
 
+-(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    if ( [identifier isEqualToString:@"imagePopover"] )
+    {
+            NSString *dataPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Attachments"];
+            
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            NSError *error = nil;
+            NSArray *arrayFiles = [fileManager contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@",dataPath] error:&error];
+            
+            if( ([arrayFiles count] == 0 || arrayFiles == nil) && ([self.question.attachmentsLocationArray count] == 0 || self.question.attachmentsLocationArray == nil) )
+            {
+                UIAlertView *noAttachments = [[UIAlertView alloc] initWithTitle:@"No attachments!" message:@"The app currently has no selectable attachments. To attach files form outside the app, you must use the open in feature of iOS, and open in DNV-GL app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+                [noAttachments show];
+                
+                return NO;
+            }
+    }
+        
+    return YES;
+}
+    
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"helpTextPopover"]) {
@@ -1024,7 +1095,7 @@ int numOfSubs;
         helpTextViewController * destVC = [segue destinationViewController];
         
         // Pass the information to your destination view
-        [destVC setText:self.question.helpText];
+        destVC.text = self.question.helpText;
     }
     
     if ([[segue identifier] isEqualToString:@"notesPopover"]) {
@@ -1061,11 +1132,10 @@ int numOfSubs;
     if([[segue identifier] isEqualToString:@"attachPopOver"]) {
         
         // Get destination tabbar
-         AttachmentsPopOverViewController* destVC = [segue destinationViewController];
+         AttachmentsPopOverViewController *attPopOver = [segue destinationViewController];
         
         // Pass the information to your destination view
-        destVC.question = self.question;
-        
+        attPopOver.question = self.question;
     }
 }
 
@@ -1476,4 +1546,48 @@ int numOfSubs;
     }
     return questionAndSubQuestions;
 }
+
+-(BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController {
+    return NO;
+}
+
+
+
+- (void)showAFile
+{
+    @try
+    {
+        QLPreviewController * preview = [[QLPreviewController alloc] init];
+        preview.dataSource = self;
+        [self presentViewController:preview animated:YES completion:nil];
+    }
+    @catch (NSException *exception)
+    {
+        //nslog(@"Exception caught: %@", exception);
+    }
+}
+
+//// Quick Look methods, delegates and data sources...
+#pragma mark QLPreviewControllerDelegate methods
+- (BOOL)previewController:(QLPreviewController *)controller shouldOpenURL:(NSURL *)url forPreviewItem:(id <QLPreviewItem>)item {
+	
+	return YES;
+}
+
+
+#pragma mark QLPreviewControllerDataSource methods
+- (NSInteger) numberOfPreviewItemsInPreviewController: (QLPreviewController *) controller{
+    return 1;
+}
+
+- (id <QLPreviewItem>) previewController: (QLPreviewController *) controller previewItemAtIndex: (NSInteger) index
+{
+    NSString *dataPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Attachments"];
+    
+    showAttach = true;
+
+    return [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@",dataPath, self.chosenFile]];
+}
+////
+
 @end

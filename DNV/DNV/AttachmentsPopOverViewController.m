@@ -7,14 +7,20 @@
 //
 
 #import "AttachmentsPopOverViewController.h"
+#import "AnswersViewController.h"
 
 @interface AttachmentsPopOverViewController ()
 {
     int iTableSelected;
     int iSelectedRow;
     NSString *chosenFile;
+    
+    int iRemoveItemAtThisPosition;
 }
+
 @end
+
+
 
 @implementation AttachmentsPopOverViewController
 
@@ -46,13 +52,16 @@
         self.question.attachmentsLocationArray = [NSArray new];
     }
     
+    NSString *dataPath1 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%d", self.question.questionID]];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
+        [[NSFileManager defaultManager] createDirectoryAtPath:dataPath1 withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+    
     [self.tblLocalAttachments reloadData];
     
     [self.btnAttachFile setEnabled:false];
     [self.btnDeleteSelected setEnabled:false];
     [self.btnSeeSelected setEnabled:false];
     
-    //todo add array to attachmentsarray of question, at position 0, if and only if that position does not contain an array already... inform cliff and siar to handle that accordingly
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,9 +100,9 @@
     else
     {
         NSString *fullPath =[self.question.attachmentsLocationArray objectAtIndex:indexPath.row];
-        NSString *dataPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Attachments"];
-        NSRange spotOfFullPath = [fullPath rangeOfString:dataPath];
-        [cell.textLabel setText:[fullPath substringFromIndex:spotOfFullPath.length]];
+        NSString *dataPath1 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%d", self.question.questionID]];
+        NSRange spotOfFullPath = [fullPath rangeOfString:dataPath1];
+        [cell.textLabel setText:[fullPath substringFromIndex:spotOfFullPath.length+1]];
         
         return cell;
     }
@@ -117,8 +126,8 @@
     else
     {
         iTableSelected = 1;
-        chosenFile = [self.question.attachmentsLocationArray objectAtIndex:indexPath.row];
-        
+        chosenFile = [[[tableView cellForRowAtIndexPath:indexPath] textLabel] text];
+
         [self.btnAttachFile setEnabled:false];
         
         [self.tblLocalAttachments deselectRowAtIndexPath:[self.tblLocalAttachments indexPathForSelectedRow] animated:YES];
@@ -133,15 +142,14 @@
 
 - (IBAction)btnDeleteSelected:(id)sender
 {
-    NSString *dataPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Attachments"];
-    NSError *error = [NSError new];
-    
-    [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%@/%@",dataPath, chosenFile] error: &error];
-    
     if(iTableSelected == 0)
     {
+        NSString *dataPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Attachments"];
+        NSError *error = [NSError new];
+        
+        [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%@/%@",dataPath, chosenFile] error: &error];
+        
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSError *error = nil;
         NSArray *arrayFiles = [fileManager contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@",dataPath] error:&error];
         
         self.arrLocalFiles = [[NSMutableArray alloc]initWithArray:arrayFiles];
@@ -150,6 +158,12 @@
     }
     else
     {
+        NSString *dataPath1 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%d", self.question.questionID]];
+        
+        NSError *error = [NSError new];
+        
+        [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%@/%@",dataPath1, chosenFile] error: &error];
+        
         NSMutableArray *toRemove = [[NSMutableArray alloc]initWithArray:self.question.attachmentsLocationArray];
         [toRemove removeObjectAtIndex:iSelectedRow];
         self.question.attachmentsLocationArray = [[NSArray alloc]initWithArray:toRemove];
@@ -159,30 +173,77 @@
 
 - (IBAction)btnSeeSelected:(id)sender
 {
-    //Present opened in file through QLPreviewController
-    @try
-    {
-        QLPreviewController * preview = [[QLPreviewController alloc] init];
-        preview.dataSource = self;
-        [self presentViewController:preview animated:YES completion:nil];
-    }
-    @catch (NSException *exception)
-    {
-        //nslog(@"Exception caught: %@", exception);
-    }
+    ((AnswersViewController*)self.myAnswersVC).chosenFile = chosenFile;
+    [((AnswersViewController*)self.myAnswersVC) showAFile];
+    
+//    @try
+//    {
+//        QLPreviewController * preview = [[QLPreviewController alloc] init];
+//        preview.dataSource = self;
+//        [self presentViewController:preview animated:YES completion:nil];
+//    }
+//    @catch (NSException *exception)
+//    {
+//        //nslog(@"Exception caught: %@", exception);
+//    }
 }
 
 - (IBAction)btnAttachFile:(id)sender
 {
+     NSString *toCompare = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%d", self.question.questionID]];
+    toCompare = [NSString stringWithFormat:@"%@/%@", toCompare, [self.arrLocalFiles objectAtIndex:iSelectedRow]];
+    
+    if( [self.question.attachmentsLocationArray indexOfObject:toCompare] != NSNotFound )
+    {
+        iRemoveItemAtThisPosition = [self.question.attachmentsLocationArray indexOfObject:toCompare];
+        
+        UIAlertView *containedAlready = [[UIAlertView alloc] initWithTitle:@"Duplicate!" message:@"File of that name already attached:" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Keep Original", @"Overwrite existing", @"Keep both", nil];
+    
+        [containedAlready show];
+    }
+    else
+    {
+        [self addFileToAttachmentsArrayandRemove:-1];
+    }
+}
+
+-(void)addFileToAttachmentsArrayandRemove:(int)itemAt
+{
     NSMutableArray *toAdd = [[NSMutableArray alloc]initWithArray:self.question.attachmentsLocationArray];
     
-    NSString *dataPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Attachments"];
+    NSString *dataPath1 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%d", self.question.questionID]];
     
-    [toAdd addObject:[NSString stringWithFormat:@"%@/%@", dataPath,[self.arrLocalFiles objectAtIndex:iSelectedRow]]];
+    if( itemAt > -1)
+        [toAdd removeObjectAtIndex:itemAt];
+    
+    [toAdd addObject:[NSString stringWithFormat:@"%@/%@", dataPath1,[self.arrLocalFiles objectAtIndex:iSelectedRow]]];
+    
     self.question.attachmentsLocationArray = [[NSArray alloc]initWithArray:toAdd];
+    
+
+    NSData *currData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[self.question.attachmentsLocationArray lastObject]]];
+    
+     NSFileManager *fileManager = [NSFileManager new];
+    [fileManager createFileAtPath:[NSString stringWithFormat:@"%@/%@", dataPath1, [self.arrLocalFiles objectAtIndex:iSelectedRow]] contents:currData attributes:nil];
+    
     
     [self.tblQuestionAttachments reloadData];
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //keep original, do nothing
+    if (buttonIndex == 1)   {}
+
+    //over write existing
+    if (buttonIndex == 2)
+        [self addFileToAttachmentsArrayandRemove:iRemoveItemAtThisPosition];
+    
+    //keep both
+    if (buttonIndex == 3)
+        [self addFileToAttachmentsArrayandRemove:-1];
+}
+
 
 //// Quick Look methods, delegates and data sources...
 #pragma mark QLPreviewControllerDelegate methods
@@ -204,5 +265,6 @@
     return [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@",dataPath, chosenFile]];
 }
 ////
+
 
 @end

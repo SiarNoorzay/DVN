@@ -52,6 +52,8 @@ typedef enum {
     kButton operation;
     BOOL deleteInput;
     double memory;
+    
+    
 }
 @property (weak, nonatomic) AnswersViewController *ansVC;
 

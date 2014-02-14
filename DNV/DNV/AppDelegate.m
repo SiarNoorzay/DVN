@@ -121,6 +121,10 @@
             
             [fileManager createFileAtPath:[NSString stringWithFormat:@"%@/%@", dataPath, tempURL] contents:currData attributes:nil];
             
+            //clean inbox
+            NSString *cleanIn = [[url absoluteString]substringFromIndex:7];
+            [[NSFileManager defaultManager] removeItemAtPath:cleanIn error: &error];
+            
             AppDelegate *tmpDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
             UIViewController *myCurrentController = ((UINavigationController*)tmpDelegate.window.rootViewController).visibleViewController;
             
