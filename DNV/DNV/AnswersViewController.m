@@ -60,11 +60,17 @@ int numOfSubs;
 }
 -(void) viewWillDisappear:(BOOL)animated
 {
-    self.question = unchangedQuestion;
+    //self.question = unchangedQuestion;
+    mainSubQuestion = nil;
+    
+  //  self.questionArray = passedInQuestionsArray;
+    
 
 }
 - (void)viewDidLoad
 {
+  //  passedInQuestionsArray = [NSMutableArray arrayWithArray: self.questionArray];
+    
     self.allSublayeredQuestions = [NSMutableArray new];
     
     NSLog(@"Questions: %@",self.question.questionText);
@@ -186,6 +192,8 @@ int numOfSubs;
         NSLog(@"%d",numOfSubs);
         
         self.subQuesionsTableView.hidden = false;
+        [self setEnabledFlagsAndReloadQuestions];
+
     }
     
     
@@ -315,11 +323,13 @@ int numOfSubs;
         self.question = [self.questionArray objectAtIndex:self.currentPosition];
         self.questionNumberTextField.text = [NSString stringWithFormat:@"%i",(self.currentPosition +1)];
     }
-    self.question = [self.dnvDBManager retrieveQuestion:self.question.questionID]; //[[Questions alloc]initWithQuestion:[self.question toDictionary]];
+    self.question = [self.dnvDBManager retrieveQuestion:self.question.questionID];
+    
+    //[[Questions alloc]initWithQuestion:[self.question toDictionary]];
     
     
     //seting the mainsublayered question if its not set already
-/*    if (([self.question.layeredQuesions count] > 0) && mainSubQuestion == nil)
+    if (([self.question.layeredQuesions count] > 0) && mainSubQuestion == nil)
     {
         islayeredQuestion = true;
         mainSubQuestion = self.question;
@@ -341,12 +351,13 @@ int numOfSubs;
         NSLog(@"%d",numOfSubs);
         
         self.subQuesionsTableView.hidden = false;
-        //[self.subQuesionsTableView reloadData];
+        pointTotal = self.question.pointsAwarded;
+        [self setEnabledFlagsAndReloadQuestions];
     }
-*/
+    pointTotal = self.question.pointsAwarded;
     
-    
-    
+    [self setEnabledFlagsAndReloadQuestions];
+
     
     if ([mainSubQuestion.layeredQuesions count] > 0) {
         islayeredQuestion = true;
@@ -573,10 +584,7 @@ int numOfSubs;
                 [cell setUserInteractionEnabled:NO];
 
             }
-
-            
             return cell;
-            
         }
         
     }
@@ -737,8 +745,11 @@ int numOfSubs;
 
     //Update DNV Database
     [self.dnvDBManager updateQuestion:self.question];
+    if (self.currentPosition >=0) {
+       // [passedInQuestionsArray replaceObjectAtIndex:self.currentPosition withObject:self.question];
+    }
     
-    if (islayeredQuestion && (pointTotal >= self.question.pointsNeededForLayered )&& !(isSublayeredQuestion) &&(self.question ==mainSubQuestion)) {
+    if (islayeredQuestion && (pointTotal >= self.question.pointsNeededForLayered )&& !(isSublayeredQuestion) &&([self.question.questionText isEqualToString:mainSubQuestion.questionText])) {
         //main question answered to show subs so go to first subquestion
        
         [self.subQuesionsTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
@@ -891,13 +902,11 @@ int numOfSubs;
 }
 
 - (IBAction)lastButtonPushed:(id)sender {
-   // self.question = unchangedQuestion;
     self.currentPosition = [self.questionArray count]-1;
     [self refreshAnswerView];
 }
 
 - (IBAction)firstButtonPushed:(id)sender {
-   // self.question = unchangedQuestion;
     
     self.currentPosition = 0;
     [self refreshAnswerView];
@@ -907,7 +916,6 @@ int numOfSubs;
 - (IBAction)nextButtonPushed:(id)sender {
     if (self.nextButton.enabled)
     {
-     //   self.question = unchangedQuestion;
         self.currentPosition++;
         [self refreshAnswerView];
     }
@@ -916,7 +924,6 @@ int numOfSubs;
 - (IBAction)previousButtonPushed:(id)sender {
     
     if (self.previousButton.enabled) {
-      //  self.question = unchangedQuestion;
         self.currentPosition--;
         [self refreshAnswerView];
     }
@@ -1223,9 +1230,6 @@ int numOfSubs;
 }
 
 
-
-
-
 - (IBAction)mainLayeredPushed:(id)sender {
     isSublayeredQuestion = false;
     self.question = mainSubQuestion;
@@ -1262,7 +1266,7 @@ int numOfSubs;
 -(void)setEnabledFlagsAndReloadQuestions{
 //pointTotal should be updated before calling this method
     
-    if (mainSubQuestion == self.question) {
+    if ([mainSubQuestion.questionText isEqualToString:self.question.questionText]) {
         for (Questions *subQuestion in self.question.layeredQuesions) {
             for (int i = 0; i < [self.allSublayeredQuestions count]; i++)
             {

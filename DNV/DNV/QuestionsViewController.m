@@ -85,6 +85,8 @@
     }
     Questions *question = [self.questionArray objectAtIndex:indexPath.row];
     
+    //TODO: get question from DB Here or set class object back on dasj=hobard
+    
     cell.questionText.text = question.questionText;
     if (question.isApplicable) {
         cell.points.text = [NSString stringWithFormat:@"%.2f / %.2f", question.pointsAwarded,question.pointsPossible];
