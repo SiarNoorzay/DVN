@@ -32,7 +32,10 @@ BOOL keyboardShouldMove = false;
 
 BOOL islayeredQuestion = false;
 int subLayerPosition = 0;
+
 Questions *mainSubQuestion;
+Questions *unchangedQuestion;
+
 int mainQuestionPosition;
 BOOL isSublayeredQuestion = false;
 
@@ -48,7 +51,11 @@ int numOfSubs;
     }
     return self;
 }
+-(void) viewWillDisappear:(BOOL)animated
+{
+    self.question = unchangedQuestion;
 
+}
 - (void)viewDidLoad
 {
     self.allSublayeredQuestions = [NSMutableArray new];
@@ -97,7 +104,7 @@ int numOfSubs;
     //Switchy
     if (useSlider){
         if (self.switchy == nil) {
-            self.switchy = [[KLSwitch alloc]initWithFrame:CGRectMake(300, 615, 160, 96)];
+            self.switchy = [[KLSwitch alloc]initWithFrame:CGRectMake(280, 670, 160, 96)];
         }
     
     [self.view addSubview:self.switchy];
@@ -222,6 +229,7 @@ int numOfSubs;
     //self.subQuesionsTableView.hidden = true;
     self.questionText.hidden = true;
 
+    answered = false;
     
     [self.firstButton setEnabled:true];
     [self.lastButton setEnabled:true];
@@ -229,22 +237,38 @@ int numOfSubs;
     [self.previousButton setEnabled:true];
     
     
-    
-    pointTotal = 0;
-    if (self.question.questionType == 3) {
+    if (self.question.isCompleted) {
         pointTotal = self.question.pointsAwarded;
+    }else
+    {
+        pointTotal = 0;
+        
     }
-    self.pointsLabel.text =[NSString stringWithFormat:@"%.2f", self.question.pointsAwarded]; // @"0";
-    self.pointsLabel.text = @"0";
-    answered = false;
+    
+
+
+    
+//    if (self.question.questionType == 3) {
+//        pointTotal = self.question.pointsAwarded;
+//    }
+    
+   // self.pointsLabel.text = @"0";
     if (self.question.questionType == 2) {
         self.percentSlider.value = self.question.pointsAwarded / (self.question.pointsPossible/100);
+        self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f", self.question.pointsAwarded];
     }
-    else self.percentSlider.value = self.question.pointsAwarded;
+    else if(self.question.questionType == 4)
+    {
+        self.percentSlider.value = self.question.pointsAwarded;
+        self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f", self.question.pointsAwarded];
 
-    self.percentSliderTextField.text = [NSString stringWithFormat:@"%.2f", self.question.pointsAwarded];
-    self.percentSlider.value = 0;
-    self.percentSliderTextField.text = @"";
+    }
+    
+    self.pointsLabel.text =[NSString stringWithFormat:@"%.2f", self.question.pointsAwarded]; // @"0";
+
+    
+    //self.percentSlider.value = 0;
+    //self.percentSliderTextField.text = @"";
     
     if (useSlider){
         self.leftSliderLabel.hidden = true;
@@ -264,6 +288,7 @@ int numOfSubs;
 
 -(void) refreshAnswerView
 {
+    
     isSublayeredQuestion = (self.currentPosition <0);
     
     //seting the current question
@@ -304,10 +329,12 @@ int numOfSubs;
     
     [Flurry logEvent:@"Question Answered" withParameters:questionParams timed:YES];
     
-    
+    unchangedQuestion = [[Questions alloc]initWithQuestion:[self.question toDictionary]];
     
     
     [self hideAnswerViews];
+    
+
     NSLog(@"Question Type: %i",self.question.questionType);
     
     //shows the certain answer parts based on question type
@@ -372,10 +399,15 @@ int numOfSubs;
             NSLog(@"Should never get here!! Questions type incorrect");
             break;
     }//switch
+    
     self.questionText.text = self.question.questionText;
+    self.questionText.numberOfLines = 0;
+    [self.questionText sizeToFit];
+    
+    
     [self.answersTableView reloadData];
     
-    self.questionNumLabel.text = [NSString stringWithFormat:@"%i.%i.%i", self.elementNumber +1,self.subElementNum +1 , self.currentPosition+1];
+   // self.questionNumLabel.text = [NSString stringWithFormat:@"%i.%i.%i", self.elementNumber +1,self.subElementNum +1 , self.currentPosition+1];
     
     if (isSublayeredQuestion) {
         [self.lastButton setEnabled:false];
@@ -459,7 +491,7 @@ int numOfSubs;
         cell.textLabel.text = ans.answerText;
         
 //        [cell setSelected:ans.isSelected];
-        if (ans.isSelected) {
+        if (ans.isSelected && self.question.isCompleted) {
             [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         }
         
@@ -482,11 +514,11 @@ int numOfSubs;
             
             Questions * subQuest = tempLayered.question;
             
-            cell.textLabel.font = [UIFont systemFontOfSize:24];
-            cell.textLabel.numberOfLines = 5;
-            cell.textLabel.minimumScaleFactor = 0.75;
-            
             cell.textLabel.text =[NSString stringWithFormat: @"%@", subQuest.questionText];
+            cell.textLabel.font = [UIFont fontWithName:@"Verdana" size:24];
+            cell.textLabel.numberOfLines = 0;
+            [cell.textLabel sizeToFit];
+            cell.textLabel.minimumScaleFactor = 0.75;
             
             if (tempLayered.shouldBeEnabled) {
                 cell.selectionStyle = UITableViewCellSelectionStyleDefault;
@@ -516,6 +548,32 @@ int numOfSubs;
     return cell;
     
 
+}
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (tableView == self.subQuesionsTableView)
+    {
+        LayeredQuestion *tempLayered = [self.allSublayeredQuestions objectAtIndex:indexPath.row];
+    
+        Questions * subQuest = tempLayered.question;
+        
+        // Get the text so we can measure it
+        NSString *text = subQuest.questionText;
+        // Get a CGSize for the width and, effectively, unlimited height
+        CGSize constraint = CGSizeMake(740, 20000.0f);
+        // Get the size of the text given the CGSize we just made as a constraint
+        CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Verdana" size:24.0] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+        
+        //how to use this??
+       // CGSize size2 = [text boundingRectWithSize:<#(CGSize)#> options:<#(NSStringDrawingOptions)#> attributes:<#(NSDictionary *)#> context:<#(NSStringDrawingContext *)#>]
+        
+        // Get the height of our measurement, with a minimum of 44 (standard cell size)
+        CGFloat height = MAX(size.height, 44.0f);
+        // return the height, with a bit of extra padding in
+        return height + 44;
+    }
+    
+    else return  44.0;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -791,11 +849,14 @@ int numOfSubs;
 }
 
 - (IBAction)lastButtonPushed:(id)sender {
+    self.question = unchangedQuestion;
     self.currentPosition = [self.questionArray count]-1;
     [self refreshAnswerView];
 }
 
 - (IBAction)firstButtonPushed:(id)sender {
+    self.question = unchangedQuestion;
+    
     self.currentPosition = 0;
     [self refreshAnswerView];
 
@@ -804,6 +865,7 @@ int numOfSubs;
 - (IBAction)nextButtonPushed:(id)sender {
     if (self.nextButton.enabled)
     {
+        self.question = unchangedQuestion;
         self.currentPosition++;
         [self refreshAnswerView];
     }
@@ -812,6 +874,7 @@ int numOfSubs;
 - (IBAction)previousButtonPushed:(id)sender {
     
     if (self.previousButton.enabled) {
+        self.question = unchangedQuestion;
         self.currentPosition--;
         [self refreshAnswerView];
     }

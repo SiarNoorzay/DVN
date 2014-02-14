@@ -58,18 +58,18 @@
                 Questions *question = [subEle.Questions objectAtIndex:k];
                 
                 if (question.isThumbsUp) {
-                    [upArray addObject: [NSString stringWithFormat:@"\t\t\t%d.%d.%d %@",i+1,j+1,k+1, question.notes]];
+                    [upArray addObject: [NSString stringWithFormat:@"\t\t\t%d.%d.%d\n%@",i+1,j+1,k+1, question.notes]];
                 }
                 if (question.isThumbsDown) {
-                    [downArray addObject: [NSString stringWithFormat:@"\t\t\t%d.%d.%d %@",i+1,j+1,k+1, question.notes]];
+                    [downArray addObject: [NSString stringWithFormat:@"\t\t\t%d.%d.%d\n%@",i+1,j+1,k+1, question.notes]];
                 }
                 if ([question.layeredQuesions count] >0) {
                     for (int l = 0; l<[question.layeredQuesions count]; l++) {
                         if (question.isThumbsUp) {
-                            [upArray addObject: [NSString stringWithFormat:@"\t\t\t\t%d.%d.%d.%d %@",i+1,j+1,k+1,l+1, question.notes]];
+                            [upArray addObject: [NSString stringWithFormat:@"\t\t\t\t%d.%d.%d.%d\n%@",i+1,j+1,k+1,l+1, question.notes]];
                         }
                         if (question.isThumbsDown) {
-                            [downArray addObject: [NSString stringWithFormat:@"\t\t\t\t\t%d.%d.%d.%d %@",i+1,j+1,k+1,l+1, question.notes]];
+                            [downArray addObject: [NSString stringWithFormat:@"\t\t\t\t\t%d.%d.%d.%d \n%@",i+1,j+1,k+1,l+1, question.notes]];
                         }
                     }
                 }

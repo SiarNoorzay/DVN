@@ -29,7 +29,8 @@
 	// Do any additional setup after loading the view.
     
     self.helpTextView.text= self.text;
-    
+    [self.helpTextView setFont: [UIFont fontWithName:@"Verdana" size:20]];
+
     
 }
 

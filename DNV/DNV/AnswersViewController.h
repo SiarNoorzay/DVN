@@ -87,7 +87,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *questionText;
 @property (strong, nonatomic) IBOutlet UILabel *pointsLabel;
-@property (strong, nonatomic) IBOutlet UILabel *questionNumLabel;
+//@property (strong, nonatomic) IBOutlet UILabel *questionNumLabel;
 @property (strong, nonatomic) IBOutlet UITextField *percentSliderTextField;
 
 @property (strong,nonatomic) UIPopoverController * calcPopOver;
