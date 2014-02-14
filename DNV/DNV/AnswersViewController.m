@@ -315,6 +315,8 @@ int numOfSubs;
         self.question = [self.questionArray objectAtIndex:self.currentPosition];
         self.questionNumberTextField.text = [NSString stringWithFormat:@"%i",(self.currentPosition +1)];
     }
+    self.question = [self.dnvDBManager retrieveQuestion:self.question.questionID]; //[[Questions alloc]initWithQuestion:[self.question toDictionary]];
+    
     
     //seting the mainsublayered question if its not set already
 /*    if (([self.question.layeredQuesions count] > 0) && mainSubQuestion == nil)
@@ -363,9 +365,9 @@ int numOfSubs;
      self.question.questionText, @"Question",
      nil];
     
+    //start the timed event (Stops in the submit method)
     [Flurry logEvent:@"Question Answered" withParameters:questionParams timed:YES];
     
-  //  unchangedQuestion = [self.dnvDBManager getQuestion:self.question.questionType]; //[[Questions alloc]initWithQuestion:[self.question toDictionary]];
     
     
     [self hideAnswerViews];
@@ -889,13 +891,13 @@ int numOfSubs;
 }
 
 - (IBAction)lastButtonPushed:(id)sender {
-    self.question = unchangedQuestion;
+   // self.question = unchangedQuestion;
     self.currentPosition = [self.questionArray count]-1;
     [self refreshAnswerView];
 }
 
 - (IBAction)firstButtonPushed:(id)sender {
-    self.question = unchangedQuestion;
+   // self.question = unchangedQuestion;
     
     self.currentPosition = 0;
     [self refreshAnswerView];
@@ -905,7 +907,7 @@ int numOfSubs;
 - (IBAction)nextButtonPushed:(id)sender {
     if (self.nextButton.enabled)
     {
-        self.question = unchangedQuestion;
+     //   self.question = unchangedQuestion;
         self.currentPosition++;
         [self refreshAnswerView];
     }
@@ -914,7 +916,7 @@ int numOfSubs;
 - (IBAction)previousButtonPushed:(id)sender {
     
     if (self.previousButton.enabled) {
-        self.question = unchangedQuestion;
+      //  self.question = unchangedQuestion;
         self.currentPosition--;
         [self refreshAnswerView];
     }
