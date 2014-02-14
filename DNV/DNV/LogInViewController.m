@@ -48,6 +48,7 @@
     
     if (![[DBSession sharedSession] isLinked]) {
         [self.btnSetDropBox setTitle:@"Link to Dropbox"];
+        
         [[DBSession sharedSession] linkFromController:self];
     }
     else
@@ -63,6 +64,11 @@
     self.userIDTextField.text = @"";
     self.passwordTextField.text = @"";
     
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSLog(@"ggg");
 }
 
 -(void)pingUserJsonSetUpTables
@@ -114,13 +120,12 @@
 - (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
     NSLog(@"There was an error loading the file - %@", error);
     
-#warning should we throw an alert here letting them know that we will use previously stored user json file if any?
-    
     //get old array of users
     [self getUserArray];
     
     [self activityOngoing:false];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -139,6 +144,12 @@
 
         self.arrayOfUsers = [[NSArray alloc ] initWithArray:[dictionary objectForKey:@"Users"]];
     }
+}
+
+-(void)resetRestClient
+{
+    restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+    restClient.delegate = self;
 }
 
 - (DBRestClient*)restClient {
@@ -254,13 +265,15 @@
     }
     else
     {
-        [[DBSession sharedSession] linkFromController:self];
+            [[DBSession sharedSession] linkFromController:self];
     }
 }
 
 - (void)restClient:(DBRestClient*)client loadedAccountInfo:(DBAccountInfo*)info {
     currentUser = [info displayName];
     [self.btnSetDropBox setTitle:[NSString stringWithFormat:@"Dropbox linked: %@", currentUser]];
+    
+    
     
     if( self.showAlert)
     {

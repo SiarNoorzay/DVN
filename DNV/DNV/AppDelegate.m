@@ -91,11 +91,6 @@
 }
 
 
-
-
-
-
-
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     if (url != nil && [url isFileURL])
@@ -153,6 +148,9 @@
             
             loginVC.showAlert = true;
             
+            //reset restClient to new link
+            [loginVC resetRestClient];
+            
             // At this point you can start making API calls
             [loginVC.restClient loadAccountInfo];
             
@@ -161,6 +159,9 @@
         else
         {
             [loginVC.btnSetDropBox setTitle:@"Link to Dropbox"];
+            [loginVC.userIDTextField setEnabled:false];
+            [loginVC.passwordTextField setEnabled:false];
+            [loginVC.btnLogIn setEnabled:false ];
         }
         //if it fails throw error?
     }

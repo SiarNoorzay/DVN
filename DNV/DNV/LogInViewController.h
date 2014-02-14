@@ -18,7 +18,7 @@
     DBRestClient* restClient;
 }
 
-@property (nonatomic, readonly) DBRestClient * restClient;
+@property (nonatomic, strong) DBRestClient * restClient;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *actLinkingDropbox;
 
@@ -47,5 +47,6 @@
 - (IBAction)btnSetDropBox:(id)sender;
 
 -(void)pingUserJsonSetUpTables;
+-(void)resetRestClient;
 
 @end
