@@ -62,9 +62,9 @@
     }
     else
     {
-        [self pingUserJsonSetUpTables];
+        [self.btnSetDropBox setTitle:[NSString stringWithFormat:@"Dropbox linked: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"linkedDisplayName"]]];
         
-        [restClient loadAccountInfo];
+        [self pingUserJsonSetUpTables];
     }
     
 }
@@ -282,6 +282,8 @@
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[info userId] forKey:@"dropboxID"];
+    [defaults setObject:[info displayName] forKey:@"linkedDisplayName"];
+    [defaults synchronize];
     
     if( self.showAlert)
     {
