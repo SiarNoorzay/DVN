@@ -46,6 +46,7 @@
 -(NSArray *)retrieveDistinctAuditNamesForClientOfType:(int) auditType;
 -(NSArray *)retrieveAllAuditIDsOfType:(int) auditType forAuditName:(NSString *) auditName;
 -(NSArray *)retrieveAllClients;
+-(Questions *)retrieveQuestion:(int)questionID;
 -(BOOL)saveAudit:(Audit *) audit;
 -(void)saveClient:(Client *)client forAudit:(NSString *)auditID;
 -(void)saveReport:(Report *)report forAudit:(NSString *)auditID;

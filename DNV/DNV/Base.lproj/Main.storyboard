@@ -1326,7 +1326,7 @@
             </objects>
             <point key="canvasLocation" x="10945" y="1891"/>
         </scene>
-        <!--List OfWIP View Controller - List of WIP Audits-->
+        <!--List OfWIP View Controller - Choose WIP Audit-->
         <scene sceneID="c8n-iQ-f3f">
             <objects>
                 <viewController storyboardIdentifier="WIPList" id="MKD-O5-KK7" customClass="ListOfWIPViewController" sceneMemberID="viewController">
@@ -1368,7 +1368,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="List of WIP Audits" id="o7s-Fw-GMX"/>
+                    <navigationItem key="navigationItem" title="Choose WIP Audit" id="o7s-Fw-GMX"/>
                     <connections>
                         <outlet property="spinner" destination="xYE-xm-tiO" id="mrK-hD-VI7"/>
                         <outlet property="wipAuditTable" destination="rYD-5p-YUN" id="xKi-ix-9Dt"/>
@@ -1378,7 +1378,7 @@
             </objects>
             <point key="canvasLocation" x="2966" y="1090"/>
         </scene>
-        <!--Audit Files View Controller - List of JSON Files-->
+        <!--Audit Files View Controller-->
         <scene sceneID="Tge-Us-0QG">
             <objects>
                 <viewController id="OXf-Jd-FXZ" customClass="WIPAuditFilesViewController" sceneMemberID="viewController">
@@ -1422,7 +1422,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="List of JSON Files" id="8TA-2l-2sz"/>
+                    <navigationItem key="navigationItem" id="8TA-2l-2sz"/>
                     <connections>
                         <outlet property="spinner" destination="biD-BF-c7Y" id="2dY-KF-ndB"/>
                         <outlet property="wipJSONFileTable" destination="2rh-xh-qDU" id="14M-v2-die"/>
@@ -2066,7 +2066,7 @@
             </objects>
             <point key="canvasLocation" x="4989" y="2168"/>
         </scene>
-        <!--List Of Completed View Controller - List of Completed Audits-->
+        <!--List Of Completed View Controller - Choose Completed Audits-->
         <scene sceneID="Lce-tt-q6a">
             <objects>
                 <viewController storyboardIdentifier="completedList" id="28Y-W0-upZ" customClass="ListOfCompletedViewController" sceneMemberID="viewController">
@@ -2110,7 +2110,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="List of Completed Audits" id="k7m-zh-7kY"/>
+                    <navigationItem key="navigationItem" title="Choose Completed Audits" id="k7m-zh-7kY"/>
                     <connections>
                         <outlet property="completedAuditTable" destination="mYt-om-ZhN" id="PaI-9M-oT8"/>
                         <outlet property="spinner" destination="SYi-gh-IIV" id="tE5-YO-nSe"/>
@@ -3722,15 +3722,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="cnZ-cn-LI0"/>
+        <segue reference="2VJ-lN-Cgg"/>
+        <segue reference="0gA-F9-yeZ"/>
+        <segue reference="mdm-Om-J66"/>
         <segue reference="hrt-DA-W4A"/>
         <segue reference="JhJ-6V-9g8"/>
         <segue reference="qKN-QJ-s0B"/>
         <segue reference="sOY-bc-kKG"/>
         <segue reference="z9l-uk-5Nw"/>
         <segue reference="xXC-Ay-Dh8"/>
-        <segue reference="2VJ-lN-Cgg"/>
-        <segue reference="ssa-Ar-Zbh"/>
         <segue reference="iwB-8H-uOu"/>
     </inferredMetricsTieBreakers>
 </document>

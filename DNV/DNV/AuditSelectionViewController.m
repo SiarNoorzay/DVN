@@ -262,6 +262,7 @@
     
     if (buttonIndex == 0)
     {
+        self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
         [self performSegueWithIdentifier:@"goToNewElement" sender:self];
     }
     

@@ -57,6 +57,12 @@
         
     [self.wipJSONFileTable reloadData];
     
+    if ([self.wipAuditType isEqualToString:@"localWIP"])
+        self.navigationItem.title = @"List of Local Audits";
+    
+    if ([self.wipAuditType isEqualToString:@"importWIP"])
+        self.navigationItem.title = @"List of External Audits";
+    
 }
 
 - (void)didReceiveMemoryWarning
