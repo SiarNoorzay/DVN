@@ -294,19 +294,35 @@
 
 - (void)updateInterfaceWithReachability:(Reachability *)reachability
 {
-    if (reachability == self.internetReachability)
-	{
-//		[self configureTextField:self.internetConnectionStatusField imageView:self.internetConnectionImageView reachability:reachability];
-        
-//        UIAlertView *Linked = [[UIAlertView alloc] initWithTitle:@"Linked!" message:[NSString stringWithFormat:@"You are now linked to dropbox: %@", currentUser] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-//        [Linked show];
-        
-	}
     
-	if (reachability == self.wifiReachability)
+//    if (reachability == self.internetReachability)
+//	{
+////		[self configureTextField:self.internetConnectionStatusField imageView:self.internetConnectionImageView reachability:reachability];
+//        
+////        UIAlertView *Linked = [[UIAlertView alloc] initWithTitle:@"Linked!" message:[NSString stringWithFormat:@"You are now linked to dropbox: %@", currentUser] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+////        [Linked show];
+//        
+//        [self.navigationController.navigationBar setBackgroundColor:[UIColor greenColor]];
+//        [self.navigationItem setTitle:@"Internet On"];
+//        
+//	}
+//    else{
+//        
+//        [self.navigationController.navigationBar setBackgroundColor:[UIColor redColor]];
+//        [self.navigationItem setTitle:@"Internet Off"];
+//    }
+    self.netStatus = [reachability currentReachabilityStatus];
+	if (self.netStatus)
 	{
 //		[self configureTextField:self.localWiFiConnectionStatusField imageView:self.localWiFiConnectionImageView reachability:reachability];
+        
+        [self.navigationController.navigationBar setBackgroundColor:[UIColor greenColor]];
+        
 	}
+    else{
+        
+        [self.navigationController.navigationBar setBackgroundColor:[UIColor redColor]];
+    }
 }
 
 

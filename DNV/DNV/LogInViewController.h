@@ -28,8 +28,9 @@
 @property (assign) BOOL showAlert;
 
 //Reachability properties
-@property (nonatomic) Reachability *internetReachability;
-@property (nonatomic) Reachability *wifiReachability;
+@property (nonatomic) Reachability * internetReachability;
+@property (nonatomic) Reachability * wifiReachability;
+@property (nonatomic) NetworkStatus netStatus;
 
 //User Info Textfields
 @property (strong, nonatomic) IBOutlet UITextField *userIDTextField;
