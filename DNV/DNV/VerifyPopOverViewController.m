@@ -37,6 +37,11 @@
     if( needsV >= 4 )
         [self btnToggler:self.btnRecords];
     
+    if (needsV == 0)
+        [[self btnGoToVerifyTabBar] setEnabled:false];
+    else
+        [[self btnGoToVerifyTabBar] setEnabled:true];
+    
     //should i set needv back to needsVerifying, shouldn't have to
 }
 
@@ -97,6 +102,11 @@
     //interview will represent 0 or 2
     //records will represent 0 or 4
     self.theAnswersVC.question.needsVerifying = self.btnPhysical.tag * 1 + self.btnInterviews.tag *2 + self.btnRecords.tag * 4;
+   
+    if( self.theAnswersVC.question.needsVerifying == 0)
+        [[self btnGoToVerifyTabBar] setEnabled:false];
+    else
+        [[self btnGoToVerifyTabBar] setEnabled:true];
 }
 
 - (IBAction)btnGoToVerifyTabBar:(id)sender

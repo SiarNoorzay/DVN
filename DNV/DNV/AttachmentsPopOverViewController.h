@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <QuickLook/QuickLook.h>
 #import "Questions.h"
 
-@interface AttachmentsPopOverViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, QLPreviewControllerDataSource, QLPreviewControllerDelegate>
+#import <QuickLook/QuickLook.h>
+
+@interface AttachmentsPopOverViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, QLPreviewControllerDataSource, QLPreviewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tblLocalAttachments;
 @property (weak, nonatomic) IBOutlet UITableView *tblQuestionAttachments;
@@ -27,4 +28,7 @@
 
 @property(strong, nonatomic) Questions *question;
 
+@property (nonatomic, strong) UIViewController *myAnswersVC;
+
 @end
+

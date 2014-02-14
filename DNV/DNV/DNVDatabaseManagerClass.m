@@ -46,6 +46,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     return self;
 }
 
+
 #pragma mark Audit methods
 
 -(void)createAuditTables{
@@ -53,9 +54,6 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //Object to save errors
     char * errMsg;
     
-    //    NSFileManager * fileManager = [NSFileManager defaultManager];
-    //
-    //    if(![fileManager fileExistsAtPath:self.databasePath]){
     //Opening the SQLite DB
     if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
         
@@ -137,9 +135,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     else{
         NSLog(@"Failed to open/create DB.");
     }
-    //    }
 }
-
 
 -(void)saveClient:(Client *)client forAudit:(NSString *)auditID{
     
@@ -152,7 +148,6 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     
     //Call to insert a row into a table
     [self insertRowInTable:insertClientSQL forTable:@"client"];
-    
 }
 
 -(void)saveReport:(Report *)report forAudit:(NSString *)auditID{
@@ -162,10 +157,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     
     //Call to insert a row into a table
     [self insertRowInTable:insertReportSQL forTable:@"report"];
-    
 }
-
-
 
 -(BOOL)saveAudit:(Audit *)audit{
     BOOL newAuditCreated = false;
@@ -228,7 +220,6 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
                         NSString * insertQuestionSQL = [NSString stringWithFormat:@"INSERT INTO QUESTION (SUBELEMENTID, QUESTIONTEXT, QUESTIONTYPE, ISCOMPLETED, POINTSPOSSIBLE, POINTSAWARDED, HELPTEXT, NOTES, ISTHUMBSUP, ISTHUMBSDOWN, ISAPPLICABLE, NEEDSVERIFYING, ISVERIFYDONE, PARENTQUESTIONID, NUMBEROFLAYERED, POINTSNEEDEFORLAYER) VALUES (%d, \"%@\", %d, %d, %f, %f, \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %d, %f)", subElementID, question.questionText, question.questionType, question.isCompleted, question.pointsPossible, question.pointsAwarded, question.helpText, question.notes, question.isThumbsUp, question.isThumbsDown, question.isApplicable, question.needsVerifying, question.isVerifyDone, nil, question.layeredQuesions.count, question.pointsNeededForLayered];
                         
                         [self saveQuestion:insertQuestionSQL forQuestion:question inSubElement:subElementID];
-                        
                     }
                 }
             }
@@ -242,17 +233,13 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         sqlite3_close(dnvAuditDB);
     }
     else{
-        
         NSLog(@"Failed to open/create DB.");
-    
     }
     
     return newAuditCreated;
 }
 
-
 -(void)saveQuestion:(NSString *)insertQSQL forQuestion:(Questions *)question inSubElement:(int)subElementID{
-    
     
     sqlite3_stmt * statement;
     sqlite3_prepare_v2(dnvAuditDB, [insertQSQL UTF8String], -1, &statement, NULL);
@@ -432,7 +419,6 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     return auditIDArray;
 }
 
-
 -(NSArray *)retrieveDistinctAuditNamesForClientOfType:(int)auditType{
     
     //Create the statement Object
@@ -471,6 +457,43 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     return auditArray;
 }
 
+-(NSArray *)retrieveAllClients{
+    
+    //Create the statement Object
+    sqlite3_stmt * statement;
+    
+    //Temperary audit to hold the audit information from DB
+    NSMutableArray * clientNameArray = [NSMutableArray new];
+    
+    //Open the DB
+    if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
+        
+        NSString * allClientSQL = [NSString stringWithFormat:@"SELECT DISTINCT(CLIENTNAME) FROM CLIENT"];
+    
+        //Prepare the Query
+        if(sqlite3_prepare_v2(dnvAuditDB, [allClientSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
+            
+            //If this work, there must be a row if the data was there
+            while (sqlite3_step(statement) == SQLITE_ROW){
+                
+                //Gets the audit name data from DB and adding it to the temp Audit Object
+                NSString * companyName = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+                
+                [clientNameArray addObject:companyName];
+            }
+        }
+        
+        sqlite3_finalize(statement);
+        sqlite3_close(dnvAuditDB);
+    }
+    else{
+        
+        NSLog(@"Failed to open/create DB.");
+    }
+    
+    return clientNameArray;
+    
+}
 
 -(Audit *)retrieveAudit:(NSString *)auditID{
     

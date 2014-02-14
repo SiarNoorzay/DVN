@@ -9,14 +9,15 @@
 #import <UIKit/UIKit.h>
 #import <KLSwitch/KLSwitch.h>
 #import "DNVDatabaseManagerClass.h"
-#import "AttachmentsPopOverViewController.h"
+
+#import <QuickLook/QuickLook.h>
 
 #import "Questions.h"
 #import "Answers.h"
 
 #import "Audit.h"
 
-@interface AnswersViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIPopoverControllerDelegate>
+@interface AnswersViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIPopoverControllerDelegate, UIAlertViewDelegate, QLPreviewControllerDataSource, QLPreviewControllerDelegate>
 
 
 @property (assign) bool cameFromVerifyTabBar;
@@ -38,6 +39,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *rightSliderLabel;
 @property (strong, nonatomic) IBOutlet UILabel *leftSliderLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnAttach;
 
 - (IBAction)submitButton:(id)sender;
 - (IBAction)sliderChanged:(id)sender;
@@ -92,9 +94,14 @@
 
 @property (strong,nonatomic) UIPopoverController * calcPopOver;
 @property (strong,nonatomic) UIPopoverController * verifyPopOver;
+//@property (strong,nonatomic) UIPopoverController * attachPop;
 
 -(void)setNeedsVerifying: (int)vSelected;
 
 @property (weak, nonatomic) IBOutlet UIView *viewDashboard;
+
+@property(nonatomic, strong)  NSString *chosenFile;
+- (void)showAFile;
+
 
 @end
