@@ -72,7 +72,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         
         const char * sql_stmt7 = "CREATE TABLE IF NOT EXISTS VERIFY (ID INTEGER PRIMARY KEY AUTOINCREMENT, QUESTIONID INTEGER, VERIFYTYPE INTEGER, VERIFYDESCRIPTION TEXT, NUMOFCONFIRMED INTEGER, NUMOFNOTCONFIRMED INTEGER, PERCENTCONFIRMED REAL, ISRECORDCONFIRMED INTEGER)";
         
-        const char * sql_stmt8 = "CREATE TABLE IF NOT EXISTS CLIENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, AUDITID TEXT, CLIENTNAME TEXT, DIVISION TEXT, SIC TEXT, NUMBEREMPLOYEES INTEGER, AUDITOR TEXT, AUDITSITE TEXT, AUDITDATE TEXT, BASELINEAUDIT INTEGER, STREETADDRESS TEXT, CITYSTATEPROVINCE TEXT, POSTALCODE TEXT, COUNTRY TEXT)";
+        const char * sql_stmt8 = "CREATE TABLE IF NOT EXISTS CLIENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, AUDITID TEXT, CLIENTNAME TEXT, DROPBOXID TEXT, DIVISION TEXT, SIC TEXT, NUMBEREMPLOYEES INTEGER, AUDITOR TEXT, AUDITSITE TEXT, AUDITDATE TEXT, BASELINEAUDIT INTEGER, STREETADDRESS TEXT, CITYSTATEPROVINCE TEXT, POSTALCODE TEXT, COUNTRY TEXT)";
         
         const char * sql_stmt9 = "CREATE TABLE IF NOT EXISTS REPORT (ID INTEGER PRIMARY KEY AUTOINCREMENT, AUDITID TEXT, CLIENTREF TEXT, SUMMARY TEXT, EXECSUMMARY TEXT, PREPAREDBY TEXT, APPROVEDBY TEXT, PROJECTNUMBER TEXT, SCORINGASSUMPTIONS TEXT, CONCLUSION TEXT, DIAGRAMFILENAME TEXT)";
         
@@ -144,7 +144,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     client.companyName = [defaults objectForKey:@"currentClient"];
     
     //Query to insert into the client table
-    NSString * insertClientSQL = [NSString stringWithFormat:@"INSERT INTO CLIENT (AUDITID, CLIENTNAME, DIVISION, SIC, NUMBEREMPLOYEES, AUDITOR, AUDITSITE, AUDITDATE, BASELINEAUDIT, STREETADDRESS, CITYSTATEPROVINCE, POSTALCODE, COUNTRY) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", \"%@\")", auditID, client.companyName, client.division, client.SICNumber, client.numEmployees, client.auditor, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.postalCode, client.country];
+    NSString * insertClientSQL = [NSString stringWithFormat:@"INSERT INTO CLIENT (AUDITID, CLIENTNAME, DROPBOXID, DIVISION, SIC, NUMBEREMPLOYEES, AUDITOR, AUDITSITE, AUDITDATE, BASELINEAUDIT, STREETADDRESS, CITYSTATEPROVINCE, POSTALCODE, COUNTRY) VALUES (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", \"%@\")", auditID, client.companyName, [defaults objectForKey:@"dropboxID"], client.division, client.SICNumber, client.numEmployees, client.auditor, client.auditedSite, client.auditDate, client.baselineAudit, client.address, client.cityStateProvince, client.postalCode, client.country];
     
     //Call to insert a row into a table
     [self insertRowInTable:insertClientSQL forTable:@"client"];
@@ -468,7 +468,9 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //Open the DB
     if(sqlite3_open([self.databasePath UTF8String], &dnvAuditDB)==SQLITE_OK){
         
-        NSString * allClientSQL = [NSString stringWithFormat:@"SELECT DISTINCT(CLIENTNAME) FROM CLIENT"];
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        
+        NSString * allClientSQL = [NSString stringWithFormat:@"SELECT DISTINCT(CLIENTNAME) FROM CLIENT WHERE DROPBOXID = \"%@\"", [defaults objectForKey:@"dropboxID"]];
     
         //Prepare the Query
         if(sqlite3_prepare_v2(dnvAuditDB, [allClientSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){

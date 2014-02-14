@@ -16,7 +16,6 @@
 #import "Answers.h"
 #import "Flurry.h"
 
-
 @interface LogInViewController ()<DBRestClientDelegate>
 
 {
@@ -44,7 +43,18 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    
+    self.internetReachability = [Reachability reachabilityForInternetConnection];
+	[self.internetReachability startNotifier];
+	[self updateInterfaceWithReachability:self.internetReachability];
+    
+    self.wifiReachability = [Reachability reachabilityForLocalWiFi];
+	[self.wifiReachability startNotifier];
+	[self updateInterfaceWithReachability:self.wifiReachability];
+    
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+    [self.dnvDBManager createAuditTables];
     
     if (![[DBSession sharedSession] isLinked]) {
         [self.btnSetDropBox setTitle:@"Link to Dropbox"];
@@ -77,10 +87,6 @@
     [self activityOngoing:true];
     [self.restClient loadFile:@"/users.json" intoPath:filePath];
     
-    
-    //do we needed to delete usertable and then create?
-    [self.dnvDBManager createUserTable];
-    [self.dnvDBManager createAuditTables];
 }
 
 -(void)activityOngoing: (BOOL)doingActivity
@@ -105,6 +111,8 @@
        contentType:(NSString*)contentType metadata:(DBMetadata*)metadata {
     
     NSLog(@"File loaded into path: %@", localPath);
+    [self.dnvDBManager deleteUserTable];
+    [self.dnvDBManager createUserTable];
     [self getUserArray];
     
     [self activityOngoing:false];
@@ -113,8 +121,6 @@
 
 - (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
     NSLog(@"There was an error loading the file - %@", error);
-    
-#warning should we throw an alert here letting them know that we will use previously stored user json file if any?
     
     //get old array of users
     [self getUserArray];
@@ -262,12 +268,43 @@
     currentUser = [info displayName];
     [self.btnSetDropBox setTitle:[NSString stringWithFormat:@"Dropbox linked: %@", currentUser]];
     
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[info userId] forKey:@"dropboxID"];
+    
     if( self.showAlert)
     {
         UIAlertView *Linked = [[UIAlertView alloc] initWithTitle:@"Linked!" message:[NSString stringWithFormat:@"You are now linked to dropbox: %@", currentUser] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [Linked show];
         self.showAlert = false;
     }
+}
+
+
+#pragma mark - Reachability Methods
+
+/*!
+ * Called by Reachability whenever status changes.
+ */
+- (void) reachabilityChanged:(NSNotification *)note
+{
+	Reachability* curReach = [note object];
+	NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
+	[self updateInterfaceWithReachability:curReach];
+}
+
+- (void)updateInterfaceWithReachability:(Reachability *)reachability
+{
+    if (reachability == self.internetReachability)
+	{
+//		[self configureTextField:self.internetConnectionStatusField imageView:self.internetConnectionImageView reachability:reachability];
+        
+        
+	}
+    
+	if (reachability == self.wifiReachability)
+	{
+//		[self configureTextField:self.localWiFiConnectionStatusField imageView:self.localWiFiConnectionImageView reachability:reachability];
+	}
 }
 
 
