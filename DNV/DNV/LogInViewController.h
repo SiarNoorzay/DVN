@@ -11,6 +11,8 @@
 
 #import "User.h"
 
+#import "Reachability.h"
+
 @class DBRestClient;
 
 @interface LogInViewController : UIViewController<UITextFieldDelegate, UIAlertViewDelegate>{
@@ -24,6 +26,10 @@
 
 
 @property (assign) BOOL showAlert;
+
+//Reachability properties
+@property (nonatomic) Reachability *internetReachability;
+@property (nonatomic) Reachability *wifiReachability;
 
 //User Info Textfields
 @property (strong, nonatomic) IBOutlet UITextField *userIDTextField;

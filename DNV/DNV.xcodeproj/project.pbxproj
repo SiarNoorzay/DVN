@@ -124,6 +124,7 @@
 		76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C74187222EF00ACF6DB /* QuartzCore.framework */; };
 		76BF9C771872237200ACF6DB /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C761872237200ACF6DB /* DropboxSDK.framework */; };
 		76C500E018AD8C2F0029952B /* libFlurry_4.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7594018A5894500467154 /* libFlurry_4.3.1.a */; };
+		76C500E618AE8D420029952B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C500E418AE8D420029952B /* Reachability.m */; };
 		76C7593618A3FA2B00467154 /* MethodologyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C7593518A3FA2B00467154 /* MethodologyViewController.m */; };
 		76C7594418A58B3F00467154 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7594318A58B3F00467154 /* SystemConfiguration.framework */; };
 		76C7594818A96A9E00467154 /* ImagePopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C7594718A96A9E00467154 /* ImagePopOverViewController.m */; };
@@ -365,6 +366,8 @@
 		76BF9C72187222DC00ACF6DB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		76BF9C74187222EF00ACF6DB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		76BF9C761872237200ACF6DB /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
+		76C500E418AE8D420029952B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		76C500E518AE8D420029952B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		76C7593418A3FA2B00467154 /* MethodologyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodologyViewController.h; sourceTree = "<group>"; };
 		76C7593518A3FA2B00467154 /* MethodologyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodologyViewController.m; sourceTree = "<group>"; };
 		76C7593F18A5894500467154 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
@@ -601,6 +604,7 @@
 				7627971E1871D53A00F22E73 /* Main.storyboard */,
 				7627971B1871D53A00F22E73 /* AppDelegate.h */,
 				7627971C1871D53A00F22E73 /* AppDelegate.m */,
+				76C500E218AE8D110029952B /* Reachability */,
 				76A7C9901889DBB6004E4F39 /* DNV Database Manager */,
 				76AB3CAE187B16920019603F /* ClassObjects */,
 				76D4A33A187CE832007AB1A9 /* Images */,
@@ -959,6 +963,15 @@
 			name = ClassObjects;
 			sourceTree = "<group>";
 		};
+		76C500E218AE8D110029952B /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				76C500E418AE8D420029952B /* Reachability.m */,
+				76C500E518AE8D420029952B /* Reachability.h */,
+			);
+			name = Reachability;
+			sourceTree = "<group>";
+		};
 		76C7593818A45EF400467154 /* Methodology Diagram */ = {
 			isa = PBXGroup;
 			children = (
@@ -1251,6 +1264,7 @@
 				4AC04094188F71C4006A2F3C /* MergeClass.m in Sources */,
 				768D566D1890678600175EB4 /* GraphView.m in Sources */,
 				76C7593618A3FA2B00467154 /* MethodologyViewController.m in Sources */,
+				76C500E618AE8D420029952B /* Reachability.m in Sources */,
 				76A7C9941889DC02004E4F39 /* DNVDatabaseManagerClass.m in Sources */,
 				4A621CBA18AB654400AE168C /* AttachmentsPopOverViewController.m in Sources */,
 				768D56CD1892CE2600175EB4 /* KeySuggestionsViewController.m in Sources */,
