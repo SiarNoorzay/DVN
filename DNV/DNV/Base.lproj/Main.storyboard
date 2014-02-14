@@ -595,9 +595,6 @@
                                         </state>
                                         <connections>
                                             <action selector="attachmentButtonPushed:" destination="8Xc-YB-eLc" eventType="touchUpInside" id="7Qf-et-umF"/>
-                                            <segue destination="st9-EE-Phh" kind="popover" identifier="attachPopOver" popoverAnchorView="MxC-10-NnU" id="o8V-QW-Yj9">
-                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                            </segue>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3b5-i9-fvJ">
@@ -815,6 +812,7 @@
                     <navigationItem key="navigationItem" title="Dashboard" id="Oxn-2J-tw0"/>
                     <connections>
                         <outlet property="answersTableView" destination="YJP-VQ-QIa" id="636-RG-kfb"/>
+                        <outlet property="btnAttach" destination="MxC-10-NnU" id="Nw8-Pp-xsx"/>
                         <outlet property="calculatorButton" destination="rpS-wk-8Bo" id="3Q1-sX-pJY"/>
                         <outlet property="firstButton" destination="kpJ-bf-gcS" id="Occ-jY-PfU"/>
                         <outlet property="lastButton" destination="UNB-GJ-4v4" id="7IE-JZ-fAb"/>
@@ -843,6 +841,9 @@
                         </segue>
                         <segue destination="eiv-AO-kQq" kind="push" identifier="questionToVerify" id="iwB-8H-uOu"/>
                         <segue destination="CeT-MT-roR" kind="popover" identifier="verifyPopOver" id="iYV-gc-8wp">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
+                        <segue destination="st9-EE-Phh" kind="popover" id="bYe-gZ-oMC">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
                     </connections>
@@ -943,8 +944,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" selectable="NO" id="jK1-zG-JLs">
-                                <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
+                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" id="jK1-zG-JLs">
+                                <rect key="frame" x="10" y="10" width="380" height="280"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -1037,13 +1038,13 @@
         <!--Attachments Pop Over View Controller-->
         <scene sceneID="o27-ua-eyN">
             <objects>
-                <viewController id="st9-EE-Phh" customClass="AttachmentsPopOverViewController" sceneMemberID="viewController">
+                <viewController restorationIdentifier="attachPop" storyboardIdentifier="attachPop" id="st9-EE-Phh" customClass="AttachmentsPopOverViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Pk9-EY-Tig">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="550" height="660"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="3tR-Ag-NjG">
-                                <rect key="frame" x="10" y="49" width="448" height="954"/>
+                                <rect key="frame" x="10" y="49" width="230" height="590"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -1052,7 +1053,7 @@
                                 </connections>
                             </tableView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="w7s-hz-yd7">
-                                <rect key="frame" x="310" y="49" width="448" height="954"/>
+                                <rect key="frame" x="310" y="49" width="230" height="590"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -3721,10 +3722,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qKN-QJ-s0B"/>
-        <segue reference="JhJ-6V-9g8"/>
-        <segue reference="hrt-DA-W4A"/>
         <segue reference="cnZ-cn-LI0"/>
+        <segue reference="hrt-DA-W4A"/>
+        <segue reference="JhJ-6V-9g8"/>
+        <segue reference="qKN-QJ-s0B"/>
         <segue reference="sOY-bc-kKG"/>
         <segue reference="z9l-uk-5Nw"/>
         <segue reference="xXC-Ay-Dh8"/>

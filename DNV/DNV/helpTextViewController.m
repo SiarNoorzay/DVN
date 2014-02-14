@@ -30,6 +30,8 @@
     
     self.helpTextView.text= self.text;
     
+    [self.helpTextView setFont:[UIFont fontWithName:@"Verdana" size:18]];
+    
     
 }
 
