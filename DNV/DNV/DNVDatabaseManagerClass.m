@@ -1008,10 +1008,7 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
         if(sqlite3_prepare_v2(dnvAuditDB, [queryQuestionSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
         
             //If this work, there must be a row if the data was there
-            while (sqlite3_step(statement) == SQLITE_ROW){
-            
-                //Temperary question to hold the question information from DB
-                Questions * tempQuestion = [Questions new];
+            if (sqlite3_step(statement) == SQLITE_ROW){
             
                 //Gets the question id data from DB and adding it to the temp Question Object
                 NSString * identify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
