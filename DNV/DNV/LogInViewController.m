@@ -62,9 +62,9 @@
     }
     else
     {
-        [self pingUserJsonSetUpTables];
+        [self.btnSetDropBox setTitle:[NSString stringWithFormat:@"Dropbox linked: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"linkedDisplayName"]]];
         
-        [restClient loadAccountInfo];
+        [self pingUserJsonSetUpTables];
     }
     
 }
@@ -147,6 +147,12 @@
     }
 }
 
+
+-(void)resetRestClient
+{
+    restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+    restClient.delegate = self;
+}
 - (DBRestClient*)restClient {
     if (restClient == nil) {
         restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
@@ -248,8 +254,14 @@
 {
     if( [[DBSession sharedSession] isLinked])
     {
+        [self.userIDTextField setEnabled:false];
+        [self.passwordTextField setEnabled:false];
+        [self.btnLogIn setEnabled:false ];
+        
         // unlink
         [[DBSession sharedSession] unlinkAll];
+        
+        
         
         self.arrayOfUsers = nil;
         
@@ -270,6 +282,8 @@
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[info userId] forKey:@"dropboxID"];
+    [defaults setObject:[info displayName] forKey:@"linkedDisplayName"];
+    [defaults synchronize];
     
     if( self.showAlert)
     {
@@ -294,19 +308,35 @@
 
 - (void)updateInterfaceWithReachability:(Reachability *)reachability
 {
-    if (reachability == self.internetReachability)
-	{
-//		[self configureTextField:self.internetConnectionStatusField imageView:self.internetConnectionImageView reachability:reachability];
-        
-//        UIAlertView *Linked = [[UIAlertView alloc] initWithTitle:@"Linked!" message:[NSString stringWithFormat:@"You are now linked to dropbox: %@", currentUser] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-//        [Linked show];
-        
-	}
     
-	if (reachability == self.wifiReachability)
+//    if (reachability == self.internetReachability)
+//	{
+////		[self configureTextField:self.internetConnectionStatusField imageView:self.internetConnectionImageView reachability:reachability];
+//        
+////        UIAlertView *Linked = [[UIAlertView alloc] initWithTitle:@"Linked!" message:[NSString stringWithFormat:@"You are now linked to dropbox: %@", currentUser] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+////        [Linked show];
+//        
+//        [self.navigationController.navigationBar setBackgroundColor:[UIColor greenColor]];
+//        [self.navigationItem setTitle:@"Internet On"];
+//        
+//	}
+//    else{
+//        
+//        [self.navigationController.navigationBar setBackgroundColor:[UIColor redColor]];
+//        [self.navigationItem setTitle:@"Internet Off"];
+//    }
+    self.netStatus = [reachability currentReachabilityStatus];
+	if (self.netStatus)
 	{
 //		[self configureTextField:self.localWiFiConnectionStatusField imageView:self.localWiFiConnectionImageView reachability:reachability];
+        
+        [self.navigationController.navigationBar setBackgroundColor:[UIColor greenColor]];
+        
 	}
+    else{
+        
+        [self.navigationController.navigationBar setBackgroundColor:[UIColor redColor]];
+    }
 }
 
 
