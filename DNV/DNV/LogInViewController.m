@@ -147,6 +147,12 @@
     }
 }
 
+
+-(void)resetRestClient
+{
+    restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+    restClient.delegate = self;
+}
 - (DBRestClient*)restClient {
     if (restClient == nil) {
         restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
@@ -248,8 +254,14 @@
 {
     if( [[DBSession sharedSession] isLinked])
     {
+        [self.userIDTextField setEnabled:false];
+        [self.passwordTextField setEnabled:false];
+        [self.btnLogIn setEnabled:false ];
+        
         // unlink
         [[DBSession sharedSession] unlinkAll];
+        
+        
         
         self.arrayOfUsers = nil;
         
