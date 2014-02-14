@@ -991,6 +991,226 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     return questionArray;
 }
 
+-(Questions *)retrieveQuestion:(int)questionID{
+    
+    //Create the statement Object
+    sqlite3_stmt * statement;
+    
+    Questions * tempQuestion = [Questions new];
+    
+    //Creating the SQL statment to retrieve the data from the database
+    NSString * queryQuestionSQL = [NSString stringWithFormat:@"SELECT * FROM QUESTION WHERE ID= %d", questionID];
+    
+    //Prepare the Query
+    if(sqlite3_prepare_v2(dnvAuditDB, [queryQuestionSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
+        
+        //If this work, there must be a row if the data was there
+        while (sqlite3_step(statement) == SQLITE_ROW){
+            
+            //Temperary question to hold the question information from DB
+            Questions * tempQuestion = [Questions new];
+            //          int questionID;
+            //          int parentQID;
+            
+            //Gets the question id data from DB and adding it to the temp Question Object
+            NSString * identify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+            
+            //Gets the auditText data from DB and adding it to the temp Question Object
+            NSString * text = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
+            
+            //Gets the auditType data from DB and adding it to the temp Question Object
+            NSString * type = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
+            
+            //Gets the isCompleted data from DB and adding it to the temp Question Object
+            NSString * completed = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
+            
+            //Gets the pointsPossible data from DB and adding it to the temp Question Object
+            NSString * ptsPoss = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
+            
+            //Gets the pointsAwarded data from DB and adding it to the temp Question Object
+            NSString * ptsAward = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
+            
+            //Gets the help text data from DB and adding it to the temp Question Object
+            NSString * help = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
+            
+            //Gets the notes data from DB and adding it to the temp Question Object
+            NSString * notes = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 8)];
+            
+            //Gets the isThumbsUp data from DB and adding it to the temp Question Object
+            NSString * thumbsUp = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 9)];
+            
+            //Gets the isThumbsDown data from DB and adding it to the temp Question Object
+            NSString * thumbsDown = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 10)];
+            
+            //Gets the isApplicable data from DB and adding it to the temp Question Object
+            NSString * isNA = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 11)];
+            
+            //Gets the needVerifying data from DB and adding it to the temp Question Object
+            NSString * isVerify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 12)];
+            
+            //Gets the isVerifyDone data from DB and adding it to the temp Question Object
+            NSString * verifyDone = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 13)];
+            
+            //          //Gets the parent question ID data from DB and adding it to the temp Question Object
+            //          NSString *  parentQuestID = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 14)];
+            
+            //Gets the parent question ID data from DB and adding it to the temp Question Object
+            NSString *  numOfLayered = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 15)];
+            
+            //Gets the pointsPossibleForLayered data from DB and adding it to the temp Question Object
+            NSString * ptsPossForLay = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 16)];
+            
+            //          questionID = [identify integerValue];
+            //          parentQID = [parentQuestID integerValue];
+            
+            tempQuestion.questionID = [identify integerValue];
+            tempQuestion.questionText = text;
+            tempQuestion.questionType = [type integerValue];
+            tempQuestion.isCompleted = [completed integerValue];
+            tempQuestion.pointsPossible = [ptsPoss floatValue];
+            tempQuestion.pointsAwarded = [ptsAward floatValue];
+            tempQuestion.helpText = help;
+            
+            if ([notes isEqualToString:@"(null)"]) {
+                notes = @"";
+            }
+            
+            tempQuestion.notes = notes;
+            tempQuestion.isThumbsUp = [thumbsUp boolValue];
+            tempQuestion.isThumbsDown = [thumbsDown boolValue];
+            tempQuestion.isApplicable = [isNA boolValue];
+            tempQuestion.needsVerifying = [isVerify integerValue];
+            tempQuestion.isVerifyDone = [verifyDone boolValue];
+            tempQuestion.pointsNeededForLayered = [ptsPossForLay floatValue];
+            tempQuestion.Answers = [self retrieveAnswersOfQuestion:tempQuestion.questionID];
+            tempQuestion.imageLocationArray = [self retrieveAttachmentsOfQuestion:tempQuestion.questionID ofType:0];
+            tempQuestion.attachmentsLocationArray = [self retrieveAttachmentsOfQuestion:tempQuestion.questionID ofType:1];
+            tempQuestion.drawnNotes = [self retrieveAttachmentsOfQuestion:tempQuestion.questionID ofType:2];
+            tempQuestion.PhysicalObservations = [self retrieveObserveVerifyOfQuestion:tempQuestion.questionID ofType:0];
+            tempQuestion.InterviewObservations = [self retrieveObserveVerifyOfQuestion:tempQuestion.questionID ofType:1];
+            tempQuestion.Records = [self retrieveRecordVerifyOfQuestion:tempQuestion.questionID ofType:2];
+            
+            
+            if( [numOfLayered integerValue] > 0 )
+                tempQuestion.layeredQuesions = [self retrieveLayeredQuestions:questionID];
+        }
+    }
+    
+    return tempQuestion;
+}
+
+-(NSArray *)retrieveLayeredQuestions:(int)parentQID{
+    
+    //Create the statement Object
+    sqlite3_stmt * statement;
+    
+    NSMutableArray * layeredQArray = [[NSMutableArray alloc]init];
+    //    NSMutableArray * layeredQuestionArray = [[NSMutableArray alloc]init];
+    
+    
+    //Creating the SQL statment to retrieve the data from the database
+    NSString * queryQuestionSQL = [NSString stringWithFormat:@"SELECT * FROM QUESTION WHERE PARENTQUESTIONID = %d", parentQID];
+    
+    //Prepare the Query
+    if(sqlite3_prepare_v2(dnvAuditDB, [queryQuestionSQL UTF8String], -1, &statement, NULL)==SQLITE_OK){
+        
+        //If this work, there must be a row if the data was there
+        while (sqlite3_step(statement) == SQLITE_ROW){
+            
+            //Temperary question to hold the question information from DB
+            Questions * tempQuestion = [Questions new];
+            //          int questionID;
+            //          int parentQID;
+            
+            //Gets the question id data from DB and adding it to the temp Question Object
+            NSString * identify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+            
+            //Gets the auditText data from DB and adding it to the temp Question Object
+            NSString * text = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
+            
+            //Gets the auditType data from DB and adding it to the temp Question Object
+            NSString * type = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
+            
+            //Gets the isCompleted data from DB and adding it to the temp Question Object
+            NSString * completed = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
+            
+            //Gets the pointsPossible data from DB and adding it to the temp Question Object
+            NSString * ptsPoss = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
+            
+            //Gets the pointsAwarded data from DB and adding it to the temp Question Object
+            NSString * ptsAward = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
+            
+            //Gets the help text data from DB and adding it to the temp Question Object
+            NSString * help = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
+            
+            //Gets the notes data from DB and adding it to the temp Question Object
+            NSString * notes = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 8)];
+            
+            //Gets the isThumbsUp data from DB and adding it to the temp Question Object
+            NSString * thumbsUp = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 9)];
+            
+            //Gets the isThumbsDown data from DB and adding it to the temp Question Object
+            NSString * thumbsDown = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 10)];
+            
+            //Gets the isApplicable data from DB and adding it to the temp Question Object
+            NSString * isNA = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 11)];
+            
+            //Gets the needVerifying data from DB and adding it to the temp Question Object
+            NSString * isVerify = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 12)];
+            
+            //Gets the isVerifyDone data from DB and adding it to the temp Question Object
+            NSString * verifyDone = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 13)];
+            
+            //          //Gets the parent question ID data from DB and adding it to the temp Question Object
+            //          NSString *  parentQuestID = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 14)];
+            
+            //Gets the parent question ID data from DB and adding it to the temp Question Object
+            NSString *  numOfLayered = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 15)];
+            
+            //Gets the pointsPossibleForLayered data from DB and adding it to the temp Question Object
+            NSString * ptsPossForLay = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 16)];
+            
+            //          questionID = [identify integerValue];
+            //          parentQID = [parentQuestID integerValue];
+            
+            tempQuestion.questionID = [identify integerValue];
+            tempQuestion.questionText = text;
+            tempQuestion.questionType = [type integerValue];
+            tempQuestion.isCompleted = [completed integerValue];
+            tempQuestion.pointsPossible = [ptsPoss floatValue];
+            tempQuestion.pointsAwarded = [ptsAward floatValue];
+            tempQuestion.helpText = help;
+            
+            if ([notes isEqualToString:@"(null)"]) {
+                notes = @"";
+            }
+            
+            tempQuestion.notes = notes;
+            tempQuestion.isThumbsUp = [thumbsUp boolValue];
+            tempQuestion.isThumbsDown = [thumbsDown boolValue];
+            tempQuestion.isApplicable = [isNA boolValue];
+            tempQuestion.needsVerifying = [isVerify integerValue];
+            tempQuestion.isVerifyDone = [verifyDone boolValue];
+            tempQuestion.pointsNeededForLayered = [ptsPossForLay floatValue];
+            tempQuestion.Answers = [self retrieveAnswersOfQuestion:tempQuestion.questionID];
+            tempQuestion.imageLocationArray = [self retrieveAttachmentsOfQuestion:tempQuestion.questionID ofType:0];
+            tempQuestion.attachmentsLocationArray = [self retrieveAttachmentsOfQuestion:tempQuestion.questionID ofType:1];
+            tempQuestion.drawnNotes = [self retrieveAttachmentsOfQuestion:tempQuestion.questionID ofType:2];
+            tempQuestion.PhysicalObservations = [self retrieveObserveVerifyOfQuestion:tempQuestion.questionID ofType:0];
+            tempQuestion.InterviewObservations = [self retrieveObserveVerifyOfQuestion:tempQuestion.questionID ofType:1];
+            tempQuestion.Records = [self retrieveRecordVerifyOfQuestion:tempQuestion.questionID ofType:2];
+            
+            
+            if( [numOfLayered integerValue] > 0 )
+                tempQuestion.layeredQuesions = [self retrieveLayeredQuestions:tempQuestion.questionID];
+            
+            [layeredQArray addObject:tempQuestion];
+        }
+    }
+    
+    return layeredQArray;
+}
+
 -(NSArray *)retrieveAnswersOfQuestion:(int)questionID{
     
     //Create the statement Object

@@ -1326,7 +1326,7 @@
             </objects>
             <point key="canvasLocation" x="10945" y="1891"/>
         </scene>
-        <!--List OfWIP View Controller - Choose Audit Type-->
+        <!--List OfWIP View Controller - Choose WIP Audit-->
         <scene sceneID="c8n-iQ-f3f">
             <objects>
                 <viewController storyboardIdentifier="WIPList" id="MKD-O5-KK7" customClass="ListOfWIPViewController" sceneMemberID="viewController">
@@ -1368,7 +1368,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Choose Audit Type" id="o7s-Fw-GMX"/>
+                    <navigationItem key="navigationItem" title="Choose WIP Audit" id="o7s-Fw-GMX"/>
                     <connections>
                         <outlet property="spinner" destination="xYE-xm-tiO" id="mrK-hD-VI7"/>
                         <outlet property="wipAuditTable" destination="rYD-5p-YUN" id="xKi-ix-9Dt"/>
@@ -1378,7 +1378,7 @@
             </objects>
             <point key="canvasLocation" x="2966" y="1090"/>
         </scene>
-        <!--Audit Files View Controller - List of JSON Files-->
+        <!--Audit Files View Controller-->
         <scene sceneID="Tge-Us-0QG">
             <objects>
                 <viewController id="OXf-Jd-FXZ" customClass="WIPAuditFilesViewController" sceneMemberID="viewController">
@@ -1422,7 +1422,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="List of JSON Files" id="8TA-2l-2sz"/>
+                    <navigationItem key="navigationItem" id="8TA-2l-2sz"/>
                     <connections>
                         <outlet property="spinner" destination="biD-BF-c7Y" id="2dY-KF-ndB"/>
                         <outlet property="wipJSONFileTable" destination="2rh-xh-qDU" id="14M-v2-die"/>
@@ -3723,7 +3723,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="2VJ-lN-Cgg"/>
-        <segue reference="Kjd-jP-nx9"/>
+        <segue reference="0gA-F9-yeZ"/>
         <segue reference="mdm-Om-J66"/>
         <segue reference="hrt-DA-W4A"/>
         <segue reference="JhJ-6V-9g8"/>
