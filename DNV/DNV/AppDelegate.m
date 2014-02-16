@@ -32,6 +32,11 @@
     
     [DBSession setSharedSession:dbSession];
     
+    //ensure app unlinked on first launch (if reinstalled)
+    if( [[NSUserDefaults standardUserDefaults] objectForKey:@"linkedDisplayName"] == nil )
+    {
+        [[DBSession sharedSession] unlinkAll];
+    }
     
     [Flurry setCrashReportingEnabled:YES];
     //note: iOS only allows one crash reporting tool per app; if using another, set to: NO
