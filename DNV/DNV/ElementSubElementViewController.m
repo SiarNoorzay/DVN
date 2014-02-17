@@ -35,6 +35,23 @@ int subEleNumber;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    self.aud = [self.dnvDBManager retrieveAudit:self.aud.auditID];
+    
+    NSLog(@"Audit Name: %@",self.aud.name);
+    self.auditSelectLbl.text = self.aud.name;
+    self.listOfElements = self.aud.Elements;
+    [self.elementPicker reloadAllComponents];
+    
+    [self.elementPicker selectRow:0 inComponent:0 animated:false];
+    Elements *tempEle = [self.listOfElements objectAtIndex:0];
+    self.listOfSubElements = tempEle.Subelements;
+    [self.subElementTable reloadData];
+    [self.spinner stopAnimating];
+    
+    if ([self.listOfElements count] > 0) {
+        self.ele = self.listOfElements[0];
+    }
+
     [self refreshView];
 }
 
@@ -147,21 +164,7 @@ int subEleNumber;
     
 //    [self loadDropboxFile:self.auditPath];
     
-    NSLog(@"Audit Name: %@",self.aud.name);
-    self.auditSelectLbl.text = self.aud.name;
-    self.listOfElements = self.aud.Elements;
-    [self.elementPicker reloadAllComponents];
-        
-    [self.elementPicker selectRow:0 inComponent:0 animated:false];
-    Elements *tempEle = [self.listOfElements objectAtIndex:0];
-    self.listOfSubElements = tempEle.Subelements;
-    [self.subElementTable reloadData];
-    [self.spinner stopAnimating];
-    
-    if ([self.listOfElements count] > 0) {
-        self.ele = self.listOfElements[0];
-    }
-
+   
     
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
     

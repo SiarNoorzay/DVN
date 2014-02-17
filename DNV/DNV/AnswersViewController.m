@@ -17,6 +17,7 @@
 #import "Flurry.h"
 #import "ImagePopOverViewController.h"
 #import "AttachmentsPopOverViewController.h"
+#import "QuestionsViewController.h"
 
 @interface AnswersViewController ()
 
@@ -63,8 +64,21 @@ int numOfSubs;
     //self.question = unchangedQuestion;
     mainSubQuestion = nil;
     
-  //  self.questionArray = passedInQuestionsArray;
-    
+ 
+    if(!self.cameFromVerifyTabBar)
+    {
+        //NSLog([self.navigationController.view description]);
+        QuestionsViewController *questVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-1];
+
+        if ([questVC isKindOfClass:[QuestionsViewController class]]) {
+        
+            questVC.questionArray = self.questionArray;
+            questVC.audit = self.audit;
+            
+        }
+        
+    }
+
 
 }
 - (void)viewDidLoad
@@ -745,13 +759,21 @@ int numOfSubs;
 
     //Update DNV Database
     [self.dnvDBManager updateQuestion:self.question];
-    if (self.currentPosition >=0) {
-       // [passedInQuestionsArray replaceObjectAtIndex:self.currentPosition withObject:self.question];
+    
+    if (islayeredQuestion && (![self.question.questionText isEqualToString:mainSubQuestion.questionText])) {
+        [self.questionArray replaceObjectAtIndex:mainQuestionPosition withObject:mainSubQuestion];
+        
     }
+    else [self.questionArray replaceObjectAtIndex:self.currentPosition withObject:self.question];
+
     
     if (islayeredQuestion && (pointTotal >= self.question.pointsNeededForLayered )&& !(isSublayeredQuestion) &&([self.question.questionText isEqualToString:mainSubQuestion.questionText])) {
         //main question answered to show subs so go to first subquestion
        
+        assert(self.currentPosition >= 0);
+       // [self.questionArray replaceObjectAtIndex:self.currentPosition withObject:self.question];
+        
+        
         [self.subQuesionsTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
         LayeredQuestion *tempQ = [self.allSublayeredQuestions objectAtIndex:0];
         tempQ.shouldBeEnabled = YES;
@@ -870,6 +892,8 @@ int numOfSubs;
             
         }
     }
+    
+    
     
     if (self.currentPosition == ([self.questionArray count]-1))
     {

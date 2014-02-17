@@ -11,6 +11,8 @@
 #import "Elements.h"
 #import "SubElements.h"
 #import "AnswersViewController.h"
+#import "ElementSubElementViewController.h"
+
 
 
 @interface QuestionsViewController ()
@@ -22,7 +24,28 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
+
+    for(int i=0; i<self.questionArray.count; i++)
+    {
+        Questions *question = [self.questionArray objectAtIndex:i];
+
+        question = [self.dnvDBManager retrieveQuestion:question.questionID];
+    }
     [self.questionsTableView reloadData];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    
+    ElementSubElementViewController *eleSubVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-1];
+    
+    if ([eleSubVC isKindOfClass:[ElementSubElementViewController class]]) {
+        eleSubVC.aud = self.audit;
+
+    }
+
+    
 }
 
 
@@ -40,6 +63,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+
     if (self.questionArray == nil)
     {
         NSLog(@"Getting data from file for now");
@@ -125,7 +150,7 @@
     [vc setSubElementNum:self.subEleNumber];
     
     [vc setQuestion:question];
-    [vc setQuestionArray:self.questionArray];
+    [vc setQuestionArray:[NSMutableArray arrayWithArray:self.questionArray]];
     [vc setCurrentPosition:indexPath.row];
     
     vc.audit = self.audit;

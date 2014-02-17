@@ -16,6 +16,9 @@
 
 @interface QuestionsViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
+@property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
+
+
 @property (nonatomic) NSArray * questionArray;
 @property (strong, nonatomic) IBOutlet UITableView *questionsTableView;
 
