@@ -17,6 +17,7 @@
 #import "Flurry.h"
 #import "ImagePopOverViewController.h"
 #import "AttachmentsPopOverViewController.h"
+#import "QuestionsViewController.h"
 
 @interface AnswersViewController ()
 
@@ -58,21 +59,26 @@ int numOfSubs;
     }
     return self;
 }
-
--(void)viewWillAppear:(BOOL)animated
-{
-    self.navigationItem.title = @"Dashboard";
-}
-
 -(void) viewWillDisappear:(BOOL)animated
 {
     //self.question = unchangedQuestion;
     mainSubQuestion = nil;
     
-    self.navigationItem.title = @"Back to Question";
-    
-  //  self.questionArray = passedInQuestionsArray;
-    
+ 
+    if(!self.cameFromVerifyTabBar)
+    {
+        //NSLog([self.navigationController.view description]);
+        QuestionsViewController *questVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-1];
+
+        if ([questVC isKindOfClass:[QuestionsViewController class]]) {
+        
+            questVC.questionArray = self.questionArray;
+            questVC.audit = self.audit;
+            
+        }
+        
+    }
+
 
 }
 - (void)viewDidLoad
@@ -753,13 +759,21 @@ int numOfSubs;
 
     //Update DNV Database
     [self.dnvDBManager updateQuestion:self.question];
-    if (self.currentPosition >=0) {
-       // [passedInQuestionsArray replaceObjectAtIndex:self.currentPosition withObject:self.question];
+    
+    if (islayeredQuestion && (![self.question.questionText isEqualToString:mainSubQuestion.questionText])) {
+        [self.questionArray replaceObjectAtIndex:mainQuestionPosition withObject:mainSubQuestion];
+        
     }
+    else [self.questionArray replaceObjectAtIndex:self.currentPosition withObject:self.question];
+
     
     if (islayeredQuestion && (pointTotal >= self.question.pointsNeededForLayered )&& !(isSublayeredQuestion) &&([self.question.questionText isEqualToString:mainSubQuestion.questionText])) {
         //main question answered to show subs so go to first subquestion
        
+        assert(self.currentPosition >= 0);
+       // [self.questionArray replaceObjectAtIndex:self.currentPosition withObject:self.question];
+        
+        
         [self.subQuesionsTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
         LayeredQuestion *tempQ = [self.allSublayeredQuestions objectAtIndex:0];
         tempQ.shouldBeEnabled = YES;
@@ -878,6 +892,8 @@ int numOfSubs;
             
         }
     }
+    
+    
     
     if (self.currentPosition == ([self.questionArray count]-1))
     {
@@ -1129,7 +1145,7 @@ int numOfSubs;
     
     if( ([arrayFiles count] == 0 || arrayFiles == nil) && ([self.question.attachmentsLocationArray count] == 0 || self.question.attachmentsLocationArray == nil) )
     {
-        UIAlertView *noAttachments = [[UIAlertView alloc] initWithTitle:@"No attachments!" message:@"The app currently has no selectable attachments. To attach files from outside the app, you must use the open in feature of iOS, and open in DNV-GL app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+        UIAlertView *noAttachments = [[UIAlertView alloc] initWithTitle:@"No attachments!" message:@"The app currently has no selectable attachments. To attach files form outside the app, you must use the open in feature of iOS, and open in DNV-GL app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
         [noAttachments show];
         
         
@@ -1175,7 +1191,7 @@ int numOfSubs;
             
             if( ([arrayFiles count] == 0 || arrayFiles == nil) && ([self.question.attachmentsLocationArray count] == 0 || self.question.attachmentsLocationArray == nil) )
             {
-                UIAlertView *noAttachments = [[UIAlertView alloc] initWithTitle:@"No attachments!" message:@"The app currently has no selectable attachments. To attach files from outside the app, you must use the open in feature of iOS, and open in DNV-GL app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+                UIAlertView *noAttachments = [[UIAlertView alloc] initWithTitle:@"No attachments!" message:@"The app currently has no selectable attachments. To attach files form outside the app, you must use the open in feature of iOS, and open in DNV-GL app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
                 [noAttachments show];
                 
                 return NO;
