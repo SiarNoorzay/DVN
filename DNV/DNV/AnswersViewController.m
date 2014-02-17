@@ -706,7 +706,7 @@ int numOfSubs;
 
 - (IBAction)submitButton:(id)sender {
     
-    if (!answered && self.question.questionType == 1) {
+    if (!answered && self.question.questionType == 1 && self.question.isApplicable){
        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"No answer" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
@@ -759,6 +759,13 @@ int numOfSubs;
 
     //Update DNV Database
     [self.dnvDBManager updateQuestion:self.question];
+    
+    //update mainSubQuestion is were on it
+    if ([self.question.questionText isEqualToString:mainSubQuestion.questionText])
+    {
+        mainSubQuestion = self.question;
+        
+    }
     
     if (islayeredQuestion && (![self.question.questionText isEqualToString:mainSubQuestion.questionText])) {
         [self.questionArray replaceObjectAtIndex:mainQuestionPosition withObject:mainSubQuestion];
@@ -1181,23 +1188,23 @@ int numOfSubs;
 
 -(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-    if ( [identifier isEqualToString:@"imagePopover"] )
-    {
-            NSString *dataPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Attachments"];
-            
-            NSFileManager *fileManager = [NSFileManager defaultManager];
-            NSError *error = nil;
-            NSArray *arrayFiles = [fileManager contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@",dataPath] error:&error];
-            
-            if( ([arrayFiles count] == 0 || arrayFiles == nil) && ([self.question.attachmentsLocationArray count] == 0 || self.question.attachmentsLocationArray == nil) )
-            {
-                UIAlertView *noAttachments = [[UIAlertView alloc] initWithTitle:@"No attachments!" message:@"The app currently has no selectable attachments. To attach files form outside the app, you must use the open in feature of iOS, and open in DNV-GL app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
-                [noAttachments show];
-                
-                return NO;
-            }
-    }
-        
+//    if ( [identifier isEqualToString:@"imagePopover"] )
+//    {
+//            NSString *dataPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Attachments"];
+//            
+//            NSFileManager *fileManager = [NSFileManager defaultManager];
+//            NSError *error = nil;
+//            NSArray *arrayFiles = [fileManager contentsOfDirectoryAtPath:[NSString stringWithFormat:@"%@",dataPath] error:&error];
+//            
+//            if( ([arrayFiles count] == 0 || arrayFiles == nil) && ([self.question.attachmentsLocationArray count] == 0 || self.question.attachmentsLocationArray == nil) )
+//            {
+//                UIAlertView *noAttachments = [[UIAlertView alloc] initWithTitle:@"No attachments!" message:@"The app currently has no selectable attachments. To attach files form outside the app, you must use the open in feature of iOS, and open in DNV-GL app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+//                [noAttachments show];
+//                
+//                return NO;
+//            }
+//    }
+//        
     return YES;
 }
     
