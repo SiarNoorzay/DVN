@@ -110,7 +110,7 @@
     }
     Questions *question = [self.questionArray objectAtIndex:indexPath.row];
     
-    //TODO: get question from DB Here or set class object back on dasj=hobard
+    
     
     cell.questionText.text = question.questionText;
     if (question.isApplicable) {
@@ -132,9 +132,54 @@
     else{
        cell.doneImage.hidden = YES;
     }
+    cell.questionText.numberOfLines = 0;
+    
+    NSString *text = question.questionText;
+    
+    // Get a CGSize for the width and, effectively, unlimited height
+    CGSize constraint = cell.questionText.frame.size;
+    constraint.height = 99999;
+
+    // Get the size of the text given the CGSize we just made as a constraint
+    CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Verdana" size:20.0] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+    
+    //how to use this??
+    // CGSize size2 = [text boundingRectWithSize:<#(CGSize)#> options:<#(NSStringDrawingOptions)#> attributes:<#(NSDictionary *)#> context:<#(NSStringDrawingContext *)#>]
+    
+    // Get the height of our measurement, with a minimum of 44 (standard cell size)
+    CGFloat height = MAX(size.height, 44.0f);
+    CGRect rect = cell.questionText.frame;
+    rect.size.height = height + 44;
+    
+    cell.questionText.frame = rect;
+    
     return cell;
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //TODO: FIX THIS SHIET
+    Questions * quest = [self.questionArray objectAtIndex:indexPath.row];
+    
+    // Get the text so we can measure it
+    NSString *text = quest.questionText;
+    QuestionCell * cell = [tableView dequeueReusableCellWithIdentifier:@"QuestionCell"];
 
+    // Get a CGSize for the width and, effectively, unlimited height
+    CGSize constraint = cell.questionText.frame.size;
+    constraint.height = 99999;
+    
+    // Get the size of the text given the CGSize we just made as a constraint
+    CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Verdana" size:20.0] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+    
+    //how to use this??
+    // CGSize size2 = [text boundingRectWithSize:<#(CGSize)#> options:<#(NSStringDrawingOptions)#> attributes:<#(NSDictionary *)#> context:<#(NSStringDrawingContext *)#>]
+    
+    // Get the height of our measurement, with a minimum of 44 (standard cell size)
+    CGFloat height = MAX(size.height, 44.0f);
+    // return the height, with a bit of extra padding in
+    return height + 44;
+
+}
 #pragma mark Segue Preparation
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     

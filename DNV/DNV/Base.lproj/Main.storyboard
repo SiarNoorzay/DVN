@@ -1733,7 +1733,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="verifyCell" rowHeight="100" id="AXO-Je-jmp" customClass="verificationCell">
-                                        <rect key="frame" x="0.0" y="22" width="768" height="100"/>
+                                        <rect key="frame" x="0.0" y="86" width="768" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AXO-Je-jmp" id="zTH-Kz-rpA">
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="99"/>
@@ -1862,7 +1862,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="verifyRecords" rowHeight="100" id="D47-pk-8Re" customClass="verifyRecordsCell">
-                                        <rect key="frame" x="0.0" y="22" width="768" height="100"/>
+                                        <rect key="frame" x="0.0" y="86" width="768" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D47-pk-8Re" id="NvA-hT-0Ql">
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="99"/>
@@ -3715,15 +3715,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="gVi-n6-vqn"/>
-        <segue reference="iwB-8H-uOu"/>
-        <segue reference="z9l-uk-5Nw"/>
-        <segue reference="sOY-bc-kKG"/>
-        <segue reference="qKN-QJ-s0B"/>
-        <segue reference="JhJ-6V-9g8"/>
-        <segue reference="hrt-DA-W4A"/>
-        <segue reference="mdm-Om-J66"/>
+        <segue reference="2VJ-lN-Cgg"/>
         <segue reference="0gA-F9-yeZ"/>
+        <segue reference="mdm-Om-J66"/>
+        <segue reference="hrt-DA-W4A"/>
+        <segue reference="JhJ-6V-9g8"/>
+        <segue reference="qKN-QJ-s0B"/>
+        <segue reference="sOY-bc-kKG"/>
+        <segue reference="z9l-uk-5Nw"/>
         <segue reference="xXC-Ay-Dh8"/>
+        <segue reference="iwB-8H-uOu"/>
     </inferredMetricsTieBreakers>
 </document>
