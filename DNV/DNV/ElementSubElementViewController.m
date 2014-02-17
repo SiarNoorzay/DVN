@@ -109,9 +109,9 @@ int subEleNumber;
             if( self.ele == ele)
             {
                 if( !ele.isApplicable)
-                    [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon"] forState:UIControlStateNormal];
+                    [self.naForElements setBackgroundImage:[UIImage imageNamed:@"no.png"] forState:UIControlStateNormal];
                 else
-                    [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon_gray"] forState:UIControlStateNormal];
+                    [self.naForElements setBackgroundImage:[UIImage imageNamed:@"yes.png"] forState:UIControlStateNormal];
             }
             
             [self.dnvDBManager updateElement:ele];
@@ -194,7 +194,7 @@ int subEleNumber;
     label.backgroundColor = backColor;
     label.textColor = [UIColor blackColor];
     label.tintColor = [UIColor greenColor];
-    label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:25];
+    label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:24];
     label.text = rowELE.name; // ASCII 65 is "A"
     [label setTextAlignment:NSTextAlignmentCenter];
     
@@ -243,9 +243,9 @@ int subEleNumber;
     self.listOfSubElements = self.ele.Subelements;
     
     if( !self.ele.isApplicable)
-        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon"] forState:UIControlStateNormal];
+        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"no.png"] forState:UIControlStateNormal];
     else
-        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon_gray"] forState:UIControlStateNormal];
+        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"yes.png"] forState:UIControlStateNormal];
     
     [self.subElementTable reloadData];
     elementNumber = row;

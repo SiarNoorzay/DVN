@@ -40,9 +40,9 @@
 -(void)setNAImage:(BOOL)isApplicable
 {
     if( !isApplicable)
-        [self.btnNASubElement setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon"] forState:UIControlStateNormal];
+        [self.btnNASubElement setBackgroundImage:[UIImage imageNamed:@"no.png"] forState:UIControlStateNormal];
     else
-        [self.btnNASubElement setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon_gray"] forState:UIControlStateNormal];
+        [self.btnNASubElement setBackgroundImage:[UIImage imageNamed:@"yes.png"] forState:UIControlStateNormal];
 }
 
 @end

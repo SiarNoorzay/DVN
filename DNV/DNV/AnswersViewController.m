@@ -58,10 +58,18 @@ int numOfSubs;
     }
     return self;
 }
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationItem.title = @"Dashboard";
+}
+
 -(void) viewWillDisappear:(BOOL)animated
 {
     //self.question = unchangedQuestion;
     mainSubQuestion = nil;
+    
+    self.navigationItem.title = @"Back to Question";
     
   //  self.questionArray = passedInQuestionsArray;
     
@@ -1121,7 +1129,7 @@ int numOfSubs;
     
     if( ([arrayFiles count] == 0 || arrayFiles == nil) && ([self.question.attachmentsLocationArray count] == 0 || self.question.attachmentsLocationArray == nil) )
     {
-        UIAlertView *noAttachments = [[UIAlertView alloc] initWithTitle:@"No attachments!" message:@"The app currently has no selectable attachments. To attach files form outside the app, you must use the open in feature of iOS, and open in DNV-GL app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+        UIAlertView *noAttachments = [[UIAlertView alloc] initWithTitle:@"No attachments!" message:@"The app currently has no selectable attachments. To attach files from outside the app, you must use the open in feature of iOS, and open in DNV-GL app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
         [noAttachments show];
         
         
@@ -1167,7 +1175,7 @@ int numOfSubs;
             
             if( ([arrayFiles count] == 0 || arrayFiles == nil) && ([self.question.attachmentsLocationArray count] == 0 || self.question.attachmentsLocationArray == nil) )
             {
-                UIAlertView *noAttachments = [[UIAlertView alloc] initWithTitle:@"No attachments!" message:@"The app currently has no selectable attachments. To attach files form outside the app, you must use the open in feature of iOS, and open in DNV-GL app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+                UIAlertView *noAttachments = [[UIAlertView alloc] initWithTitle:@"No attachments!" message:@"The app currently has no selectable attachments. To attach files from outside the app, you must use the open in feature of iOS, and open in DNV-GL app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
                 [noAttachments show];
                 
                 return NO;

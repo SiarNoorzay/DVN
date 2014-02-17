@@ -26,7 +26,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
+    NSRange rangeQuestionNumber = [self.theQuestion.questionText rangeOfString:@" "];
+    [self.navigationItem setTitle:[NSString stringWithFormat:@"Verification of Question - %@", [self.theQuestion.questionText substringToIndex:rangeQuestionNumber.location] ]];
 }
 
 - (void)viewDidLoad
