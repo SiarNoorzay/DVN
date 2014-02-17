@@ -46,4 +46,6 @@
     [self.WIPAuditFilesVC goToWIPChoice];
 }
 
+- (IBAction)btnDeleteWip:(id)sender {
+}
 @end

@@ -342,16 +342,51 @@ int subEleNumber;
 //NA all questions in an Element
 - (IBAction)naForElements:(id)sender
 {
+    
     Elements *currentElement = [self.listOfElements objectAtIndex:elementNumber];
-    currentElement.isApplicable = !currentElement.isApplicable;
     
-    for( SubElements *se in currentElement.Subelements)
+    if( currentElement.isApplicable )
     {
-        [self setNAToSubElementsQuestions:se ifBool:currentElement.isApplicable];
-    }
+        UIAlertView * deleteAuditAlert = [[UIAlertView alloc] initWithTitle: @"N/A Element" message: @"Are you sure you want to set this element to not applicable? Note, all saved answers will be reset to 0." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes",nil];
     
-    [self refreshView];
+        [deleteAuditAlert show];
+    }
+    else
+    {
+        currentElement.isApplicable = !currentElement.isApplicable;
+        
+        for( SubElements *se in currentElement.Subelements)
+        {
+            [self setNAToSubElementsQuestions:se ifBool:currentElement.isApplicable];
+        }
+        
+        [self refreshView];
+    }
 }
+
+#pragma mark Alertview method
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        //Code for OK button
+    }
+    if (buttonIndex == 1)
+    {
+        Elements *currentElement = [self.listOfElements objectAtIndex:elementNumber];
+        
+        currentElement.isApplicable = !currentElement.isApplicable;
+        
+        for( SubElements *se in currentElement.Subelements)
+        {
+            [self setNAToSubElementsQuestions:se ifBool:currentElement.isApplicable];
+        }
+        
+        [self refreshView];
+    }
+}
+
 
 //NA all questions in a subelemnt
 -(void)setNAToSubElementsQuestions:(SubElements*)aSubElement ifBool: (BOOL) setNA

@@ -28,13 +28,22 @@
 
 - (IBAction)btnNASubElement:(id)sender
 {
-    self.theSubElement.isApplicable = !self.theSubElement.isApplicable;
-    [self setNAImage:self.theSubElement.isApplicable];
-    
-    //toggle all questions in this element to not N/A or not according to tag, call it on elemenets subelements vc
-    [self.theElementSubElementVC setNAToSubElementsQuestions:self.theSubElement ifBool:self.theSubElement.isApplicable];
-    
-    [self.theElementSubElementVC refreshView];
+    if( self.theSubElement.isApplicable )
+    {
+        UIAlertView * deleteAuditAlert = [[UIAlertView alloc] initWithTitle: @"N/A Sub Element" message: @"Are you sure you want to set this sub element to not applicable? Note, all saved answers will be reset to 0." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes",nil];
+        
+        [deleteAuditAlert show];
+    }
+    else
+    {
+        self.theSubElement.isApplicable = !self.theSubElement.isApplicable;
+        [self setNAImage:self.theSubElement.isApplicable];
+        
+        //toggle all questions in this element to not N/A or not according to tag, call it on elemenets subelements vc
+        [self.theElementSubElementVC setNAToSubElementsQuestions:self.theSubElement ifBool:self.theSubElement.isApplicable];
+        
+        [self.theElementSubElementVC refreshView];
+    }
 }
 
 -(void)setNAImage:(BOOL)isApplicable
@@ -44,5 +53,26 @@
     else
         [self.btnNASubElement setBackgroundImage:[UIImage imageNamed:@"yes.png"] forState:UIControlStateNormal];
 }
+
+#pragma mark Alertview method
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        //Code for OK button
+    }
+    if (buttonIndex == 1)
+    {
+        self.theSubElement.isApplicable = !self.theSubElement.isApplicable;
+        [self setNAImage:self.theSubElement.isApplicable];
+        
+        //toggle all questions in this element to not N/A or not according to tag, call it on elemenets subelements vc
+        [self.theElementSubElementVC setNAToSubElementsQuestions:self.theSubElement ifBool:self.theSubElement.isApplicable];
+        
+        [self.theElementSubElementVC refreshView];
+    }
+}
+
 
 @end

@@ -10,7 +10,7 @@
 #import "ElementSubElementViewController.h"
 #import "SubElements.h"
 
-@interface SubElementCell : UITableViewCell
+@interface SubElementCell : UITableViewCell<UIAlertViewDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *subElementName;
 @property (strong, nonatomic) IBOutlet UILabel *points;
 @property (strong, nonatomic) IBOutlet UIImageView *image;
