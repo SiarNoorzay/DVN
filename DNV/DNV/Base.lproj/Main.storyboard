@@ -1763,7 +1763,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="verifyCell" rowHeight="100" id="AXO-Je-jmp" customClass="verificationCell">
-                                        <rect key="frame" x="0.0" y="22" width="768" height="100"/>
+                                        <rect key="frame" x="0.0" y="86" width="768" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AXO-Je-jmp" id="zTH-Kz-rpA">
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="99"/>
