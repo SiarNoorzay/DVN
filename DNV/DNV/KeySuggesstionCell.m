@@ -15,6 +15,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        self.notesTextView = [[UITextView alloc]init];
     }
     return self;
 }

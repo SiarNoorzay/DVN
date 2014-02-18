@@ -73,6 +73,9 @@ static ReportDocViewController* _sharedReportDocViewController = nil;
 - (void)viewDidLoad
 {
 
+    [self.navigationItem.backBarButtonItem setEnabled:NO];
+    self.navigationController.navigationItem.backBarButtonItem.enabled = NO;
+
     
     [self.spinner startAnimating];
     

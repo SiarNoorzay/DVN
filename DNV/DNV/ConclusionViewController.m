@@ -62,6 +62,12 @@
     
     
 }
+- (void)textViewDidBeginEditing:(UITextView*)textView
+{
+    NSString *notes =textView.text;
+    notes = [notes stringByReplacingOccurrencesOfString:@"<insert text here>" withString:@""];
+    textView.text = notes;
+}
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"goToKeySugs"]) {
