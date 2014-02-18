@@ -44,25 +44,31 @@
     
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
     
-    [self.spinner startAnimating];
-    
-    NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
-    self.wipAuditPath = [NSString stringWithFormat:@"%@%@",self.wipAuditPath, [nsDefaults objectForKey:@"currentAudit"]];
-    
-    
-    NSLog(@"WIP Path: %@", self.wipAuditPath);
-    [[self restClient] loadMetadata:self.wipAuditPath];
-    
-    self.localWIPList = [[NSMutableArray alloc] initWithArray:[self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.localWIPName]];
-        
-    [self.wipJSONFileTable reloadData];
-    
     if ([self.wipAuditType isEqualToString:@"localWIP"])
         self.navigationItem.title = @"List of Local Audits";
     
     if ([self.wipAuditType isEqualToString:@"importWIP"])
         self.navigationItem.title = @"List of External Audits";
     
+    //Checks for internect connectivity when the View Appears
+    if ([self.navigationController.navigationBar.backgroundColor isEqual:[UIColor greenColor]]){
+        
+        NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
+        
+        self.wipAuditPath = [NSString stringWithFormat:@"%@%@",self.wipAuditPath, [nsDefaults objectForKey:@"currentAudit"]];
+        
+        [self.spinner startAnimating];
+        
+        NSLog(@"WIP Path: %@", self.wipAuditPath);
+        [[self restClient] loadMetadata:self.wipAuditPath];
+        
+    }
+    else
+        [self.spinner stopAnimating];
+    
+    self.localWIPList = [self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.localWIPName];
+    
+    [self.wipJSONFileTable reloadData];
 }
 
 - (void)didReceiveMemoryWarning

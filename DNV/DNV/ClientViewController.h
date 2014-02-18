@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DNVDatabaseManagerClass.h"
 
 @class DBRestClient;
 
@@ -28,6 +29,8 @@
 @property (nonatomic, readonly) DBRestClient *restClient;
 
 @property (nonatomic) NSArray * clients;
+
+@property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
 
 -(void)goToChoice;
 
