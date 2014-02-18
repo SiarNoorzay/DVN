@@ -74,7 +74,6 @@
         question = [self.dnvDBManager retrieveQuestion:question.questionID];
     }
     
-    self.buttonTag = 0;
     [self.questionsTableView reloadData];
 }
 
@@ -156,8 +155,7 @@
     
     /* make button one pixel less high than customView above, to account for separator line */
     UIButton * questionBtn = [[UIButton alloc] initWithFrame: CGRectMake(0.0, 0.0, tableView.frame.size.width, customView.frame.size.height)];
-    [questionBtn setTag:self.buttonTag];
-    self.buttonTag ++;
+    [questionBtn setTag:section];
     
     [questionBtn setBackgroundColor:[UIColor clearColor]];
     [questionBtn addTarget:self action:@selector(headerTapped:) forControlEvents:UIControlEventTouchUpInside];
