@@ -212,7 +212,7 @@ int subEleNumber;
     //check image. create and add if element is completed or N/A'ed
     if( !rowELE.isApplicable || rowELE.isCompleted )
     {
-        UIImageView *completed = [[UIImageView alloc] initWithFrame:CGRectMake(595, 15, 50, 50)];
+        UIImageView *completed = [[UIImageView alloc] initWithFrame:CGRectMake(600, 15, 50, 50)];
         [completed setImage:[UIImage imageNamed:@"check"]];
         
         [aPickerRow addSubview:completed];
@@ -353,6 +353,8 @@ int subEleNumber;
     }
     else
     {
+        [self.spinner startAnimating];
+        
         currentElement.isApplicable = !currentElement.isApplicable;
         
         for( SubElements *se in currentElement.Subelements)
@@ -361,6 +363,8 @@ int subEleNumber;
         }
         
         [self refreshView];
+        
+        [self.spinner stopAnimating];
     }
 }
 
@@ -368,12 +372,16 @@ int subEleNumber;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    
+    
     if (buttonIndex == 0)
     {
         //Code for OK button
     }
     if (buttonIndex == 1)
     {
+        [self.spinner startAnimating];
+        
         Elements *currentElement = [self.listOfElements objectAtIndex:elementNumber];
         
         currentElement.isApplicable = !currentElement.isApplicable;
@@ -384,19 +392,26 @@ int subEleNumber;
         }
         
         [self refreshView];
+        
+        [self.spinner stopAnimating];
     }
+    
+    
 }
 
 
 //NA all questions in a subelemnt
 -(void)setNAToSubElementsQuestions:(SubElements*)aSubElement ifBool: (BOOL) setNA
 {
+   
+    
     for( Questions *Quest in aSubElement.Questions )
     {
         [self setNAToQuestions:Quest ifBool:setNA];
     }
     
     aSubElement.isApplicable = setNA;
+    
 }
 -(void)setNAToQuestions:(Questions*)aQuestion ifBool: (BOOL) setNA
 {

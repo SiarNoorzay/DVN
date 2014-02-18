@@ -36,6 +36,8 @@
     }
     else
     {
+        [self.theElementSubElementVC.spinner startAnimating];
+        
         self.theSubElement.isApplicable = !self.theSubElement.isApplicable;
         [self setNAImage:self.theSubElement.isApplicable];
         
@@ -43,6 +45,8 @@
         [self.theElementSubElementVC setNAToSubElementsQuestions:self.theSubElement ifBool:self.theSubElement.isApplicable];
         
         [self.theElementSubElementVC refreshView];
+        
+        [self.theElementSubElementVC.spinner stopAnimating];
     }
 }
 
@@ -64,6 +68,9 @@
     }
     if (buttonIndex == 1)
     {
+        
+        [self.theElementSubElementVC.spinner startAnimating];
+        
         self.theSubElement.isApplicable = !self.theSubElement.isApplicable;
         [self setNAImage:self.theSubElement.isApplicable];
         
@@ -71,6 +78,8 @@
         [self.theElementSubElementVC setNAToSubElementsQuestions:self.theSubElement ifBool:self.theSubElement.isApplicable];
         
         [self.theElementSubElementVC refreshView];
+        
+        [self.theElementSubElementVC.spinner stopAnimating];
     }
 }
 
