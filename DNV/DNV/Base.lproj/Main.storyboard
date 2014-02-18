@@ -3204,16 +3204,23 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="methodologyDiagram.png" id="opm-iM-FSQ">
-                                        <rect key="frame" x="126" y="297" width="360" height="291"/>
+                                        <rect key="frame" x="24" y="159" width="564" height="440"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </imageView>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="The audit process adopted is described in the diagram below:" borderStyle="roundedRect" minimumFontSize="17" id="7Ms-iN-2Ue">
-                                        <rect key="frame" x="20" y="138" width="464" height="30"/>
+                                        <rect key="frame" x="20" y="98" width="464" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="13"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" text="&lt;insert text here>" id="P5g-ad-C21">
+                                        <rect key="frame" x="45" y="607" width="522" height="185"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="13"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -3227,6 +3234,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <navigationItem key="navigationItem" title="Methodology" id="Ur6-Sq-3VV"/>
                     <connections>
                         <outlet property="methodPDFView" destination="j5H-mm-67z" id="Ewo-YC-p1f"/>
+                        <outlet property="methodSummary" destination="P5g-ad-C21" id="8c3-8A-nE6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7F7-8h-wty" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3263,7 +3271,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" id="10x-c2-NYT">
-                                        <rect key="frame" x="30" y="88" width="552" height="163"/>
+                                        <rect key="frame" x="30" y="161" width="552" height="366"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <string key="text">The over-all view of the XXXXXX process at the site is positive. The Management team and employees are working together to provide safe operation for XXXXXXX. As the auditors, we appreciated the obvious commitment from management to the XXXXXXX process and the open dialog throughout the audit. The XXXXXXX evaluates the achievement of the implementation of the system. In conclusion, two elements (Behavioral Observation and System Evaluation) did not have enough implementation to receive credit on the audit. Therefore the site received the following overall score on the assessment.</string>
@@ -3271,13 +3279,13 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="100 %" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" id="7Zz-pZ-UQ1">
-                                        <rect key="frame" x="361" y="318" width="97" height="30"/>
+                                        <rect key="frame" x="374" y="104" width="97" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overall Percentage Score:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dxR-2K-qbf">
-                                        <rect key="frame" x="105" y="318" width="234" height="30"/>
+                                        <rect key="frame" x="111" y="104" width="234" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="17"/>
                                         <nil key="highlightedColor"/>

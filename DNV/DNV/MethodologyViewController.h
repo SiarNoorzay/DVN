@@ -13,5 +13,6 @@
 @property (strong, nonatomic) IBOutlet UIView *methodPDFView;
 @property (strong,nonatomic) Audit *audit;
 
+@property (strong, nonatomic) IBOutlet UITextView *methodSummary;
 
 @end
