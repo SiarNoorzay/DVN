@@ -10,9 +10,12 @@
 #import "VoiceRecognizer.h"
 #import "Questions.h"
 #import "DrawingViewController.h"
+#import "AnswersViewController.h"
 
 
 @interface NotesViewController : UIViewController<UITextViewDelegate>
+
+@property (strong, nonatomic) AnswersViewController *theAnswersVC;
 
 @property (strong,nonatomic) NSString *text;
 

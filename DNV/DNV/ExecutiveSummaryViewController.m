@@ -41,20 +41,42 @@
 //    
 //    self.audit = [[Audit alloc]initWithAudit:theAudit];
     
+    
     if (![self.audit.report.executiveSummary isEqualToString:@"(null)"]) {
         self.executiveSummary.text = self.audit.report.executiveSummary;
     }
-    self.auditCountLabel.text = [NSString stringWithFormat:@"The audit consisted of %i elements.",[self.audit.Elements count]];
-    NSString *tempEleList = @"Elements: ";
     
-    for (int i = 0; i < [self.audit.Elements count]-1; i++)
+    if ([self.executiveSummary.text isEqualToString:@""] || [self.executiveSummary.text isEqualToString:@"(null)"] || self.executiveSummary.text ==nil)
+    {
+        self.executiveSummary.text = @"<insert summary here>";
+        
+    }
+    
+    self.auditCountLabel.text = [NSString stringWithFormat:@"The audit consisted of %i elements.",[self.audit.Elements count]];
+    NSString *tempEleList = @"";
+   // NSString *tempSubEleList = [NSString new];
+    
+    for (int i = 0; i < [self.audit.Elements count]; i++)
     {
         Elements *ele = [self.audit.Elements objectAtIndex:i];
-        tempEleList = [tempEleList stringByAppendingString:[NSString stringWithFormat:@"%i (%@), ",i+1, ele.name]];
+        if (i==0) tempEleList = [tempEleList stringByAppendingString:[NSString stringWithFormat:@"%@, ", ele.name]];
+
+            else tempEleList = [tempEleList stringByAppendingString:[NSString stringWithFormat:@"\n\n%@, ", ele.name]];
+
+        tempEleList = [tempEleList stringByAppendingString:@"with Subelements: "];
+        for (int j = 0; j< ele.Subelements.count; j++) {
+            SubElements *sub = [ele.Subelements objectAtIndex:j];
+            tempEleList = [tempEleList stringByAppendingString:[NSString stringWithFormat:@"%@ ", sub.name]];
+        }
     }
-    Elements *ele = [self.audit.Elements objectAtIndex:[self.audit.Elements count]-1];
-    tempEleList = [tempEleList stringByAppendingString:[NSString stringWithFormat:@"%i (%@). ",[self.audit.Elements count], ele.name]];
+//    Elements *ele = [self.audit.Elements objectAtIndex:[self.audit.Elements count]-1];
+//    tempEleList = [tempEleList stringByAppendingString:[NSString stringWithFormat:@"%i (%@). ",[self.audit.Elements count], ele.name]];
+//    SubElements *sub = [ele.Subelements objectAtIndex:[ele.Subelements.count]-1] ;
+//    tempSubEleList = [tempSubEleList stringByAppendingString:[NSString stringWithFormat:@"%i <%@>",[ele.Subelements count], sub.name]];
     
+    //NSAttributedString *atrString = [[NSAttributedString alloc]initWithString:tempEleList];
+    
+   
     self.elementList.text = tempEleList;
     
 

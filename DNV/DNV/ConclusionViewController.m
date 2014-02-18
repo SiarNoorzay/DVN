@@ -55,9 +55,11 @@
     }
     self.percent.text = [NSString stringWithFormat:@"%.2f %%",((auditAwarded / (auditPointsPossible - auditNAPoints)) *100)];
     
-    if (![self.audit.report.conclusion isEqualToString:@"(null)"]) {
+    if (!([self.audit.report.conclusion isEqualToString:@"(null)"] ||[self.audit.report.conclusion isEqualToString:@""])) {
         self.conclusionTextView.text = self.audit.report.conclusion;
     }
+    else self.conclusionTextView.text = @"<insert text here>";
+    
     
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -84,15 +86,6 @@
         int numPages = ceil( rect.size.height / 792 );
         rect.size.height = numPages * 792;
         self.conclusionPFDView.frame = rect;
-        
-        //move each uiElement under the conclusion text view down
-        rect = self.percent.frame;
-        rect.origin.y += pixelsToMove;
-        self.percent.frame = rect;
-        
-        rect = self.overPercentLabel.frame;
-        rect.origin.y += pixelsToMove;
-        self.overPercentLabel.frame = rect;
         
         
         //set the frame of this view to the bottom of the finalPdfview

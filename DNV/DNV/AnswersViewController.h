@@ -103,5 +103,6 @@
 @property(nonatomic, strong)  NSString *chosenFile;
 - (void)showAFile;
 
+@property (assign, nonatomic) bool bNAToSubmit;
 
 @end
