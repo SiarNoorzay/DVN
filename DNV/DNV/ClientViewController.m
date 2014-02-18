@@ -18,6 +18,7 @@
 @interface ClientViewController ()<DBRestClientDelegate>
 
 @property int chosenClient;
+@property BOOL internetConnect;
 
 @end
 
@@ -38,12 +39,22 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    [self.spinner startAnimating];
-    
-    [[self restClient] loadMetadata:@"/"];
-
+    [self clientReload];
 }
 
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    NSString * notificationName = @"conncectionChanged";
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(useNotificationWithString:) name:notificationName object:nil];
+    
+}
+
+//-(void)viewWillDisappear:(BOOL)animated{
+//    
+//    [[NSNotificationCenter defaultCenter]removeObserver:self];
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -69,10 +80,16 @@
     UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     
     UILabel * nameLabel = (UILabel *)[cell viewWithTag:1];
-    Folder *client = [self.clients objectAtIndex:indexPath.row];
     
-    nameLabel.text = client.name;
+    if (self.internetConnect) {
+        
+        Folder *client = self.clients[indexPath.row];
     
+        nameLabel.text = client.name;
+    }
+    else{
+        nameLabel.text = self.clients[indexPath.row];
+    }
     
     return cell;
     
@@ -90,9 +107,10 @@
     UICollectionViewCell * cell = [self.ClientCollectionView cellForItemAtIndexPath:indexPath];
     
     popContent.clientVC = self;
+    popContent.internetConnect = self.internetConnect;
     
     [self.clientPopOver setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.85]];
-//    [[[self.clientPopOver contentViewController] view] setAlpha:0];
+
     
     [self.clientPopOver presentPopoverFromRect:cell.frame inView:self.ClientCollectionView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     
@@ -137,7 +155,7 @@ loadMetadataFailedWithError:(NSError *)error {
     NSLog(@"Error loading metadata: %@", error);
 }
 
-#pragma mark Audit Type methods
+#pragma mark - Audit Type methods
 
 -(void)goToChoice
 {
@@ -162,7 +180,13 @@ loadMetadataFailedWithError:(NSError *)error {
     
     //store current user in NSUSERDEFAULTS
     NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
-    [nsDefaults setObject:[[self.clients objectAtIndex:self.chosenClient] name] forKey:@"currentClient"];
+    
+    //check for internet connectivity
+    if (self.internetConnect)
+        [nsDefaults setObject:[[self.clients objectAtIndex:self.chosenClient] name] forKey:@"currentClient"];
+    else
+        [nsDefaults setObject:self.clients[self.chosenClient] forKey:@"currentClient"];
+    
     [nsDefaults synchronize];
     
     if ([[segue identifier] isEqualToString:@"NewAuditChoice"]) {
@@ -183,11 +207,13 @@ loadMetadataFailedWithError:(NSError *)error {
         // Get destination view
         ListOfWIPViewController * wipAuditVC = [segue destinationViewController];
         
-        // Pass the information to your destination view
-        Folder *folder = [self.clients objectAtIndex:self.chosenClient];
+        if (self.internetConnect){
+            // Pass the information to your destination view
+            Folder *folder = [self.clients objectAtIndex:self.chosenClient];
         
-        [wipAuditVC setDbWIPFolderPath: [folder.folderPath stringByAppendingString:@"/WIP/"]];
-        [wipAuditVC setOgdbWIPFolderPath: [folder.folderPath stringByAppendingString:@"/WIP/"]];
+            [wipAuditVC setDbWIPFolderPath: [folder.folderPath stringByAppendingString:@"/WIP/"]];
+            [wipAuditVC setOgdbWIPFolderPath: [folder.folderPath stringByAppendingString:@"/WIP/"]];
+        }
         
 
         
@@ -198,13 +224,51 @@ loadMetadataFailedWithError:(NSError *)error {
         // Get destination view
         ListOfCompletedViewController * completedAuditVC = [segue destinationViewController];
         
-        // Pass the information to your destination view
-        Folder *folder = [self.clients objectAtIndex:self.chosenClient];
+        if (self.internetConnect){
+            // Pass the information to your destination view
+            Folder *folder = [self.clients objectAtIndex:self.chosenClient];
         
-        [completedAuditVC setDbCompletedFolderPath: [folder.folderPath stringByAppendingString:@"/Completed/"]];
+            [completedAuditVC setDbCompletedFolderPath: [folder.folderPath stringByAppendingString:@"/Completed/"]];
+        }
     }
 }
 
+-(void)clientReload{
+    
+    //Checks for internect connectivity when the View Appears
+    if ([self.navigationController.navigationBar.backgroundColor isEqual:[UIColor greenColor]]){
+        
+        /*
+         logic to set BOOL internetConnect to true,
+         start spinner, and begin loading client folders
+         from the dropbox
+         */
+        self.internetConnect = true;
+        [self.spinner startAnimating];
+        [[self restClient] loadMetadata:@"/"];
+        
+    }
+    else{
+        
+        /*
+         logic to set BOOL internetConnect to false,
+         instantiate the DNV Database Manager, and get
+         the list of clients from the database
+         */
+        self.internetConnect = false;
+        [self.spinner stopAnimating];
+        self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+        self.clients = [self.dnvDBManager retrieveAllClients];
+        [self.ClientCollectionView reloadData];
+        
+    }
+}
 
+#pragma mark - Observer Method
+
+-(void)useNotificationWithString:(NSNotification *)notification{
+    
+    [self clientReload];
+}
 
 @end

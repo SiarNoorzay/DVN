@@ -24,4 +24,6 @@
 
 @property (strong, nonatomic) Audit * audit;
 
+@property (strong,atomic) NSMutableArray *allSublayeredQuestions;
+
 @end
