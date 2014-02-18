@@ -59,6 +59,11 @@ int numOfSubs;
     }
     return self;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    if ([self.question.layeredQuesions count] > 0)
+        mainSubQuestion = self.question;
+}
 -(void) viewWillDisappear:(BOOL)animated
 {
     //self.question = unchangedQuestion;
