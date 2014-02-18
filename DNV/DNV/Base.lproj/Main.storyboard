@@ -3329,9 +3329,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <rect key="frame" x="30" y="161" width="552" height="366"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <string key="text">The over-all view of the XXXXXX process at the site is positive. The Management team and employees are working together to provide safe operation for XXXXXXX. As the auditors, we appreciated the obvious commitment from management to the XXXXXXX process and the open dialog throughout the audit. The XXXXXXX evaluates the achievement of the implementation of the system. In conclusion, two elements (Behavioral Observation and System Evaluation) did not have enough implementation to receive credit on the audit. Therefore the site received the following overall score on the assessment.</string>
+                                        <mutableString key="text">The over-all view of the XXXXXX process at the site is positive. The Management team and employees are working together to provide safe operation for XXXXXXX. As the auditors, we appreciated the obvious commitment from management to the XXXXXXX process and the open dialog throughout the audit. The XXXXXXX evaluates the achievement of the implementation of the system. In conclusion, two elements (Behavioral Observation and System Evaluation) did not have enough implementation to receive credit on the audit. Therefore the site received the following overall score on the assessment.</mutableString>
                                         <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="13"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="pEJ-PY-m4U" id="O5E-bq-g1H"/>
+                                        </connections>
                                     </textView>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="100 %" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" id="7Zz-pZ-UQ1">
                                         <rect key="frame" x="374" y="104" width="97" height="30"/>
@@ -3414,12 +3417,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                             <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="16"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes of thumbs down question goes here" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" minimumFontSize="5" adjustsLetterSpacingToFitWidth="YES" id="TzJ-ab-NT2">
-                                                            <rect key="frame" x="68" y="0.0" width="475" height="99"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="16"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
                                                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="PBw-7T-Lf1">
                                                             <rect key="frame" x="496" y="27" width="57" height="35"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -3428,10 +3425,21 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                                 <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
                                                         </button>
+                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" id="21Y-a3-Sxx">
+                                                            <rect key="frame" x="86" y="13" width="402" height="72"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut </string>
+                                                            <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="18"/>
+                                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                            <connections>
+                                                                <outlet property="delegate" destination="Fvf-hk-yMy" id="Q9Y-hf-DuR"/>
+                                                            </connections>
+                                                        </textView>
                                                     </subviews>
                                                 </tableViewCellContentView>
                                                 <connections>
-                                                    <outlet property="notesTextLabel" destination="TzJ-ab-NT2" id="bE0-aq-mux"/>
+                                                    <outlet property="notesTextView" destination="21Y-a3-Sxx" id="n8i-hz-XH6"/>
                                                     <outlet property="numberLabel" destination="XPY-zA-1Ok" id="tl6-mu-5nq"/>
                                                 </connections>
                                             </tableViewCell>
@@ -3444,9 +3452,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DNV_GL_ long_logo.png" id="HCE-O7-jys">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DNV_GL_ long_logo.png" id="HCE-O7-jys">
                                 <rect key="frame" x="0.0" y="65" width="758" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

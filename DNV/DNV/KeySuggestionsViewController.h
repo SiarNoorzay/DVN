@@ -10,7 +10,7 @@
 #import "Audit.h"
 #import "KeySuggesstionCell.h"
 
-@interface KeySuggestionsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface KeySuggestionsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate, UITextViewDelegate>
 
 @property (strong,nonatomic) Audit *audit;
 
@@ -20,5 +20,7 @@
 
 @property (strong,nonatomic) NSMutableArray *thumbsDowndQuestions;
 @property (strong,nonatomic) NSMutableArray *positions;
+
+@property (strong,nonatomic) UIView* parentView;
 
 @end

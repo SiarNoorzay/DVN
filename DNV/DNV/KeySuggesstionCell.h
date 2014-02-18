@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KeySuggesstionCell : UITableViewCell
+@interface KeySuggesstionCell : UITableViewCell<UITextViewDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *numberLabel;
-@property (strong, nonatomic) IBOutlet UILabel *notesTextLabel;
+@property (strong, nonatomic) IBOutlet UITextView *notesTextView;
 
 @end

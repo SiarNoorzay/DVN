@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Audit.h"
 
-@interface ConclusionViewController : UIViewController
+@interface ConclusionViewController : UIViewController<UITextViewDelegate>
 @property(strong,nonatomic) Audit *audit;
 
 
