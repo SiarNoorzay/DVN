@@ -562,6 +562,8 @@ int numOfSubs;
             [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         }
         
+        cell.textLabel.font = [UIFont fontWithName:@"Verdana" size:18];
+        [cell.textLabel setNumberOfLines:3];
         
         return cell;
     }
@@ -626,7 +628,7 @@ int numOfSubs;
         // Get a CGSize for the width and, effectively, unlimited height
         CGSize constraint = CGSizeMake(740, 20000.0f);
         // Get the size of the text given the CGSize we just made as a constraint
-        CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Verdana" size:24.0] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+        CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Verdana" size:24.0] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
         
         //how to use this??
        // CGSize size2 = [text boundingRectWithSize:<#(CGSize)#> options:<#(NSStringDrawingOptions)#> attributes:<#(NSDictionary *)#> context:<#(NSStringDrawingContext *)#>]
@@ -636,8 +638,25 @@ int numOfSubs;
         // return the height, with a bit of extra padding in
         return height + 44;
     }
+    else if (tableView == self.answersTableView)
+    {
+
+        Answers *ans = [self.ansArray objectAtIndex:indexPath.row];
+        
+        // Get the text so we can measure it
+        NSString *text = ans.answerText;
+        // Get a CGSize for the width and, effectively, unlimited height
+        CGSize constraint = CGSizeMake(700, 20000.0f);
+        // Get the size of the text given the CGSize we just made as a constraint
+        CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Verdana" size:18.0] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+        
+        // Get the height of our measurement, with a minimum of 44 (standard cell size)
+        CGFloat height = MAX(size.height, 44.0f);
+        // return the height, with a bit of extra padding in
+        return height+22;
+    }
     
-    else return  44.0;
+    return  44.0;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -1015,25 +1034,40 @@ int numOfSubs;
     [self.thumbsDownButton setSelected: !self.thumbsDownButton.selected];
 }
 
-- (IBAction)naButtonPushed:(id)sender {
+- (IBAction)naButtonPushed:(id)sender
+{
+    if( self.question.isApplicable)
+    {
+        UIAlertView *comfirmNA = [[UIAlertView alloc]initWithTitle:@"Comfirm N/A" message:@"Are you sure you want to N/A this question? Points awarded will be set to zero and the question will not be factored into audit score." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
     
-    //This is off for now to test NA flows since isRequired is true for all questions in the bbsDraft audit
-    /*
-    Elements *tempEle = [self.audit.Elements objectAtIndex:self.elementNumber];
-    if (tempEle.isRequired) {
-        self.question.isApplicable = true;
-        [self.naButton setSelected:false];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Question must be applicable" message: @"Element is required" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        return;
+        [comfirmNA show];
     }
-     */
-    self.question.isApplicable = !self.question.isApplicable;
-    [self.naButton setSelected: !self.naButton.selected];
-    
-   
-    if (self.question.isApplicable) {
+    else
+    {
+        self.question.isApplicable = !self.question.isApplicable;
+        [self.naButton setSelected: !self.naButton.selected];
+    }
+}
+
+#pragma mark Alertview method
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        //Code for OK button
+    }
+    if (buttonIndex == 1)
+    {
+        self.question.isApplicable = !self.question.isApplicable;
+        [self.naButton setSelected: !self.naButton.selected];
+        _bNAToSubmit = true;
         
+        UIAlertView *informWriteNotes = [[UIAlertView alloc] initWithTitle:@"Reason for N/A" message:@"Please note your motivation to accept N/A." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        
+        [informWriteNotes show];
+        
+        [self performSegueWithIdentifier:@"notesPopover" sender:self];
     }
 }
 
@@ -1227,6 +1261,7 @@ int numOfSubs;
         // Pass the information to your destination view
         [destVC setText:self.question.notes];
         [destVC setQuestion:self.question];
+        destVC.theAnswersVC = self;
     }
     
     if ([[segue identifier] isEqualToString:@"questionToVerify"]) {
@@ -1664,12 +1699,6 @@ int numOfSubs;
     }
     return questionAndSubQuestions;
 }
-
--(BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController {
-    return NO;
-}
-
-
 
 - (void)showAFile
 {

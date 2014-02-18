@@ -15,6 +15,7 @@
 #import "Folder.h"
 #import "TitleViewController.h"
 #import "LayeredQuestion.h"
+#import "VerifyQuestionsViewController.h"
 
 @interface ListOfCompletedViewController ()<DBRestClientDelegate>
 
@@ -49,11 +50,15 @@
     //local Completed
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
     
-//    [self.dnvDBManager deleteAudit:@"USI.KitchenAudit.kat"];
-    [[self restClient] loadMetadata:self.dbCompletedFolderPath];
+    //Checks for internect connectivity when the View Appears
+    if ([self.navigationController.navigationBar.backgroundColor isEqual:[UIColor greenColor]]){
     
-    [self.spinner startAnimating];
-    [self.completedAuditTable reloadData];
+        [[self restClient] loadMetadata:self.dbCompletedFolderPath];
+        [self.spinner startAnimating];
+        [self.completedAuditTable reloadData];
+    }
+    else
+        [self.spinner stopAnimating];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -64,11 +69,6 @@
     
     [self.completedAuditTable reloadData];
 }
-
-//-(void)viewDidAppear:(BOOL)animated{
-//    
-//    [self.completedAuditTable reloadData];
-//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -161,15 +161,11 @@
     completedPopContent.compType = self.completedType;
     
     self.completedPopOver = [[UIPopoverController alloc] initWithContentViewController:completedPopContent];
-    
     self.completedPopOver.delegate = self;
     
     UITableViewCell * cell = [self.completedAuditTable cellForRowAtIndexPath:indexPath];
     
-    
     [self.completedPopOver setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.35]];
-    
-    
     [self.completedPopOver presentPopoverFromRect:cell.frame inView:self.completedAuditTable permittedArrowDirections:UIPopoverArrowDirectionAny animated:true];
     
 }
@@ -278,6 +274,11 @@ loadMetadataFailedWithError:(NSError *)error {
             [deleteAuditAlert show];
         }
             break;
+        case 4:
+        {
+            [self performSegueWithIdentifier:@"completedToListVerify" sender:self];
+            break;
+        }
         default:
             break;
     }
@@ -306,23 +307,9 @@ loadMetadataFailedWithError:(NSError *)error {
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
-//    NSIndexPath *indexPath = self.completedAuditTable.indexPathForSelectedRow;
-//    
-//    self.audit = [Audit new];
-    
-//    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-//    [defaults setObject:[self.localCompleted objectAtIndex:indexPath.row] forKey:@"currentAudit"];
-//    [defaults synchronize];
-//    
-//    self.audit.auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
-//    self.audit.auditID = [self.audit.auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
- //   [defaults setObject:[self.localCompleted objectAtIndex:indexPath.row] forKey:@"currentAudit"];
+ 
     [defaults synchronize];
-    
-//    self.audit.auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
-//    self.audit.auditID = [self.audit.auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     if ([segue.identifier isEqualToString:@"EditClient"]) {
         
@@ -341,18 +328,6 @@ loadMetadataFailedWithError:(NSError *)error {
         
         NSLog(@"Audit Name: %@", self.audit.name);
         
-//        if ([self.completedType isEqualToString:@"importCompleted"]){
-//        
-//            NSLog(@"Selected %@,",[self.completed objectAtIndex:indexPath.row]);
-//    
-//            Folder *temp =[self.completed objectAtIndex:indexPath.row];
-//    
-//            NSLog(@"Path of Audit: %@", temp.folderPath);
-//            
-//            [eleSubEleVC setAuditPath: temp.folderPath];
-//        }
-//    
-//        eleSubEleVC.audType = @"Completed";
     }
     if ([segue.identifier isEqualToString:@"ViewReport"]) {
         
@@ -361,8 +336,8 @@ loadMetadataFailedWithError:(NSError *)error {
         titleVC.audit = self.audit;
     }
     
-    
 }
+
 
 #pragma mark file selection methods
 

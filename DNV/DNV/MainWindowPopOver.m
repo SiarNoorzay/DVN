@@ -29,6 +29,16 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 
+
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    if (self.internetConnect)
+        self.auditBtnNew.enabled = true;
+    else
+        self.auditBtnNew.enabled = false;
+    
 }
 
 - (void)didReceiveMemoryWarning

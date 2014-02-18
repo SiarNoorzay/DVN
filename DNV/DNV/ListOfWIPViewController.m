@@ -51,9 +51,17 @@
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
     self.localWips = [self.dnvDBManager retrieveDistinctAuditNamesForClientOfType:1];
     
-    [[self restClient] loadMetadata:self.ogdbWIPFolderPath];
-    
-    [self.spinner startAnimating];
+    //Checks for internect connectivity when the View Appears
+    if ([self.navigationController.navigationBar.backgroundColor isEqual:[UIColor greenColor]]){
+        
+        if (self.ogdbWIPFolderPath != nil) {
+            [[self restClient] loadMetadata:self.ogdbWIPFolderPath];
+            [self.spinner startAnimating];
+        }
+    }
+    else{
+        [self.spinner stopAnimating];
+    }
 }
 
 - (void)didReceiveMemoryWarning

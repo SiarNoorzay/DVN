@@ -238,7 +238,7 @@
         }
         else{
             
-            UIAlertView * auditAlert = [[UIAlertView alloc] initWithTitle: @"Audit Save Options" message: @"An audit with this ID already exist in the DNV Database. Would you like to work with the currently saved audit, overwrite the saved audit, or keep the saved audit and start a new audit?" delegate: self cancelButtonTitle:nil otherButtonTitles:@"Work On Current Audit", @"Overwrite Audit", @"Keep Both Audits", nil];
+            UIAlertView * auditAlert = [[UIAlertView alloc] initWithTitle: @"Audit Save Options" message: @"An audit with this ID already exist in the DNV Database. Would you like to work with the currently saved audit, overwrite the saved audit, or keep the saved audit and start a new audit?" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Work On Current Audit", @"Overwrite Audit", @"Keep Both Audits", nil];
             
             [auditAlert show];
         }
@@ -259,14 +259,16 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    if( buttonIndex == 0)
+    {} // cancel button
     
-    if (buttonIndex == 0)
+    if (buttonIndex == 1)
     {
         self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
         [self performSegueWithIdentifier:@"goToNewElement" sender:self];
     }
     
-    if (buttonIndex == 1)
+    if (buttonIndex == 2)
     {
         
         [self.dnvDBManager deleteAudit:self.audit.auditID];
@@ -281,7 +283,7 @@
         
     }
     
-    if (buttonIndex == 2) {
+    if (buttonIndex == 3) {
         
         NSMutableArray * allAudits = [[NSMutableArray alloc]initWithArray:[self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.audit.name]];
         NSArray * tempArray = [self.dnvDBManager retrieveAllAuditIDsOfType:2 forAuditName:self.audit.name];

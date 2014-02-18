@@ -44,25 +44,31 @@
     
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
     
-    [self.spinner startAnimating];
-    
-    NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
-    self.wipAuditPath = [NSString stringWithFormat:@"%@%@",self.wipAuditPath, [nsDefaults objectForKey:@"currentAudit"]];
-    
-    
-    NSLog(@"WIP Path: %@", self.wipAuditPath);
-    [[self restClient] loadMetadata:self.wipAuditPath];
-    
-    self.localWIPList = [self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.localWIPName];
-        
-    [self.wipJSONFileTable reloadData];
-    
     if ([self.wipAuditType isEqualToString:@"localWIP"])
         self.navigationItem.title = @"List of Local Audits";
     
     if ([self.wipAuditType isEqualToString:@"importWIP"])
         self.navigationItem.title = @"List of External Audits";
     
+    //Checks for internect connectivity when the View Appears
+    if ([self.navigationController.navigationBar.backgroundColor isEqual:[UIColor greenColor]]){
+        
+        NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
+        
+        self.wipAuditPath = [NSString stringWithFormat:@"%@%@",self.wipAuditPath, [nsDefaults objectForKey:@"currentAudit"]];
+        
+        [self.spinner startAnimating];
+        
+        NSLog(@"WIP Path: %@", self.wipAuditPath);
+        [[self restClient] loadMetadata:self.wipAuditPath];
+        
+    }
+    else
+        [self.spinner stopAnimating];
+    
+    self.localWIPList = [self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.localWIPName];
+    
+    [self.wipJSONFileTable reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -231,9 +237,38 @@ loadMetadataFailedWithError:(NSError *)error {
         case 3:
             [self performSegueWithIdentifier:@"ImportMerge" sender:self];
             break;
+        case 4:
+        {
+            UIAlertView * deleteAuditAlert = [[UIAlertView alloc] initWithTitle: @"Delete Audit On Device" message: @"Are you sure you would like to delete this audit from local storage?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes",nil];
+            
+            [deleteAuditAlert show];
+        }
+            break;
             
         default:
             break;
+    }
+}
+
+#pragma mark Alertview method
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        //Code for OK button
+    }
+    if (buttonIndex == 1)
+    {
+        [self.dnvDBManager deleteAudit:self.audit.auditID];
+        UIAlertView * deleteAuditNotice = [[UIAlertView alloc] initWithTitle:@"Audit Deleted" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        
+        [deleteAuditNotice show];
+        
+        [self.dnvDBManager deleteAudit:self.localWIPList[self.chosenJSONfile]];
+   
+        [self.localWIPList removeObjectAtIndex:self.chosenJSONfile];
+        [self.wipJSONFileTable reloadData];
     }
 }
 

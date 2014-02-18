@@ -126,9 +126,9 @@ int subEleNumber;
             if( self.ele == ele)
             {
                 if( !ele.isApplicable)
-                    [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon"] forState:UIControlStateNormal];
+                    [self.naForElements setBackgroundImage:[UIImage imageNamed:@"no.png"] forState:UIControlStateNormal];
                 else
-                    [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon_gray"] forState:UIControlStateNormal];
+                    [self.naForElements setBackgroundImage:[UIImage imageNamed:@"yes.png"] forState:UIControlStateNormal];
             }
             
             [self.dnvDBManager updateElement:ele];
@@ -197,7 +197,7 @@ int subEleNumber;
     label.backgroundColor = backColor;
     label.textColor = [UIColor blackColor];
     label.tintColor = [UIColor greenColor];
-    label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:25];
+    label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:24];
     label.text = rowELE.name; // ASCII 65 is "A"
     [label setTextAlignment:NSTextAlignmentCenter];
     
@@ -212,7 +212,7 @@ int subEleNumber;
     //check image. create and add if element is completed or N/A'ed
     if( !rowELE.isApplicable || rowELE.isCompleted )
     {
-        UIImageView *completed = [[UIImageView alloc] initWithFrame:CGRectMake(595, 15, 50, 50)];
+        UIImageView *completed = [[UIImageView alloc] initWithFrame:CGRectMake(600, 15, 50, 50)];
         [completed setImage:[UIImage imageNamed:@"check"]];
         
         [aPickerRow addSubview:completed];
@@ -246,9 +246,9 @@ int subEleNumber;
     self.listOfSubElements = self.ele.Subelements;
     
     if( !self.ele.isApplicable)
-        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon"] forState:UIControlStateNormal];
+        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"no.png"] forState:UIControlStateNormal];
     else
-        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon_gray"] forState:UIControlStateNormal];
+        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"yes.png"] forState:UIControlStateNormal];
     
     [self.subElementTable reloadData];
     elementNumber = row;
@@ -342,26 +342,76 @@ int subEleNumber;
 //NA all questions in an Element
 - (IBAction)naForElements:(id)sender
 {
-    Elements *currentElement = [self.listOfElements objectAtIndex:elementNumber];
-    currentElement.isApplicable = !currentElement.isApplicable;
     
-    for( SubElements *se in currentElement.Subelements)
+    Elements *currentElement = [self.listOfElements objectAtIndex:elementNumber];
+    
+    if( currentElement.isApplicable )
     {
-        [self setNAToSubElementsQuestions:se ifBool:currentElement.isApplicable];
+        UIAlertView * deleteAuditAlert = [[UIAlertView alloc] initWithTitle: @"N/A Element" message: @"Are you sure you want to set this element to not applicable? Note, all saved answers will be reset to 0." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes",nil];
+    
+        [deleteAuditAlert show];
+    }
+    else
+    {
+        [self.spinner startAnimating];
+        
+        currentElement.isApplicable = !currentElement.isApplicable;
+        
+        for( SubElements *se in currentElement.Subelements)
+        {
+            [self setNAToSubElementsQuestions:se ifBool:currentElement.isApplicable];
+        }
+        
+        [self refreshView];
+        
+        [self.spinner stopAnimating];
+    }
+}
+
+#pragma mark Alertview method
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    
+    if (buttonIndex == 0)
+    {
+        //Code for OK button
+    }
+    if (buttonIndex == 1)
+    {
+        [self.spinner startAnimating];
+        
+        Elements *currentElement = [self.listOfElements objectAtIndex:elementNumber];
+        
+        currentElement.isApplicable = !currentElement.isApplicable;
+        
+        for( SubElements *se in currentElement.Subelements)
+        {
+            [self setNAToSubElementsQuestions:se ifBool:currentElement.isApplicable];
+        }
+        
+        [self refreshView];
+        
+        [self.spinner stopAnimating];
     }
     
-    [self refreshView];
+    
 }
+
 
 //NA all questions in a subelemnt
 -(void)setNAToSubElementsQuestions:(SubElements*)aSubElement ifBool: (BOOL) setNA
 {
+   
+    
     for( Questions *Quest in aSubElement.Questions )
     {
         [self setNAToQuestions:Quest ifBool:setNA];
     }
     
     aSubElement.isApplicable = setNA;
+    
 }
 -(void)setNAToQuestions:(Questions*)aQuestion ifBool: (BOOL) setNA
 {

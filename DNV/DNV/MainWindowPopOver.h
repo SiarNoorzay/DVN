@@ -11,7 +11,11 @@
 
 @interface MainWindowPopOver : UIViewController
 
+@property (nonatomic) BOOL internetConnect;
+
 @property (weak, nonatomic) ClientViewController *clientVC;
+
+@property (strong, nonatomic) IBOutlet UIButton *auditBtnNew;
 
 - (IBAction)btnChoiceMade:(UIButton *)sender;
 

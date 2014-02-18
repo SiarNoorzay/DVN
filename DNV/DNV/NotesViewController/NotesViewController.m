@@ -48,6 +48,11 @@ bool start = true;
 -(void)viewWillDisappear:(BOOL)animated
 {
     self.question.notes = self.notesTextView.text;
+    if( _theAnswersVC.bNAToSubmit )
+    {
+        _theAnswersVC.bNAToSubmit = false;
+        [_theAnswersVC submitButton:_theAnswersVC];
+    }
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
