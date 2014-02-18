@@ -563,6 +563,8 @@ int numOfSubs;
         }
         
         cell.textLabel.font = [UIFont fontWithName:@"Verdana" size:18];
+        [cell.textLabel sizeToFit];
+        cell.textLabel.minimumScaleFactor = .75;
         [cell.textLabel setNumberOfLines:3];
         
         return cell;
