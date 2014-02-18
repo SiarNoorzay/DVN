@@ -454,7 +454,7 @@
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="QuestionCell" id="He0-mY-3Bv" customClass="QuestionCell">
                                         <rect key="frame" x="0.0" y="86" width="768" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="He0-mY-3Bv" id="qjK-iT-wRS">
+                                        <tableViewCellContentView key="contentView" autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="He0-mY-3Bv" id="qjK-iT-wRS">
                                             <rect key="frame" x="0.0" y="0.0" width="735" height="89"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -498,6 +498,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Sub Element Questions" id="tKa-fF-LQe"/>
                     <connections>
+                        <outlet property="questionsTableView" destination="FPO-o2-lsL" id="0W3-Jh-Y0A"/>
                         <segue destination="8Xc-YB-eLc" kind="push" identifier="NewAuditQuestions" id="JLZ-cP-KQy"/>
                     </connections>
                 </viewController>
@@ -3763,6 +3764,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="0gA-F9-yeZ"/>
+        <segue reference="c2D-KO-MSn"/>
+        <segue reference="JLZ-cP-KQy"/>
+        <segue reference="iwB-8H-uOu"/>
         <segue reference="mdm-Om-J66"/>
         <segue reference="hrt-DA-W4A"/>
         <segue reference="JhJ-6V-9g8"/>
@@ -3770,9 +3775,5 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <segue reference="sOY-bc-kKG"/>
         <segue reference="z9l-uk-5Nw"/>
         <segue reference="xXC-Ay-Dh8"/>
-        <segue reference="0gA-F9-yeZ"/>
-        <segue reference="c2D-KO-MSn"/>
-        <segue reference="gVi-n6-vqn"/>
-        <segue reference="iwB-8H-uOu"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -81,6 +81,7 @@ int numOfSubs;
         
             questVC.questionArray = self.questionArray;
             questVC.audit = self.audit;
+            [questVC.questionsTableView reloadData];
             
         }
         

@@ -67,14 +67,18 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
-    
+    NSMutableArray *tempArr = [NSMutableArray new];
+
     for(int i=0; i<self.questionArray.count; i++)
     {
         Questions *question = [self.questionArray objectAtIndex:i];
         
         question = [self.dnvDBManager retrieveQuestion:question.questionID];
+        [tempArr addObject:question];
+
     }
-    
+    self.questionArray = tempArr;
+
     [self.questionsTableView reloadData];
 }
 
@@ -289,6 +293,7 @@
     
     cell.doneImage.frame = CGRectMake(630.0, 15.0, 76, 60.0);
     
+    
     return cell;
 }
 
@@ -301,7 +306,7 @@
     // Get the text so we can measure it
     NSString *text = quest.question.questionText;
     QuestionCell * cell = [tableView dequeueReusableCellWithIdentifier:@"QuestionCell"];
-
+    
     // Get a CGSize for the width and, effectively, unlimited height
     CGSize constraint = cell.questionText.frame.size;
     constraint.height = 99999;
@@ -315,6 +320,8 @@
     // Get the height of our measurement, with a minimum of 44 (standard cell size)
     CGFloat height = MAX(size.height, 44.0f);
     // return the height, with a bit of extra padding in
+    
+    
     
     return height + 65;
 
