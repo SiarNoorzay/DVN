@@ -159,7 +159,11 @@
     Questions *theQuestion = [self.verifyQuestions objectAtIndex:indexPath.row];
     
     cell.textLabel.text = theQuestion.questionText;
-    cell.textLabel.font = [UIFont systemFontOfSize:25.0];
+    cell.textLabel.font = [UIFont fontWithName:@"Verdana" size:24.0] ;
+    
+    [cell.textLabel sizeToFit];
+    cell.textLabel.minimumScaleFactor = .75;
+    [cell.textLabel setNumberOfLines:3];
     
     return cell;
 }
@@ -169,6 +173,25 @@
     theSpot = indexPath.row;
     selectedQuestion = [self.verifyQuestions objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"VerifyQuestionsTabBar" sender:self];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Questions *theQuestion = [self.verifyQuestions objectAtIndex:indexPath.row];
+    
+    NSString *text = theQuestion.questionText;
+    // Get a CGSize for the width and, effectively, unlimited height
+    CGSize constraint = CGSizeMake(740, 20000.0f);
+    // Get the size of the text given the CGSize we just made as a constraint
+    CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Verdana" size:24.0] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    
+    //how to use this??
+    // CGSize size2 = [text boundingRectWithSize:<#(CGSize)#> options:<#(NSStringDrawingOptions)#> attributes:<#(NSDictionary *)#> context:<#(NSStringDrawingContext *)#>]
+    
+    // Get the height of our measurement, with a minimum of 44 (standard cell size)
+    CGFloat height = MAX(size.height, 44.0f);
+    // return the height, with a bit of extra padding in
+    return height + 44;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

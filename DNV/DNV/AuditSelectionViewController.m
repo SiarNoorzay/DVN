@@ -154,6 +154,7 @@
 - (void)restClient:(DBRestClient *)client loadMetadataFailedWithError:(NSError *)error {
     
     NSLog(@"Error loading metadata: %@", error);
+    [self.spinner stopAnimating];
 }
 
 - (void)restClient:(DBRestClient*)client loadedFile:(NSString*)localPath
@@ -167,6 +168,7 @@
 
 - (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
     NSLog(@"There was an error loading the file - %@", error);
+    [self.spinner stopAnimating];
 }
 
 #pragma mark file selection methods
@@ -206,6 +208,8 @@
         
         //use this to access the audit and its components dictionary style
         self.audit = [[Audit alloc]initWithAudit:theAudit];
+        
+        //checking for correct audit
         
         //store current user in NSUSERDEFAULTS
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
