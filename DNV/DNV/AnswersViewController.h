@@ -103,6 +103,9 @@
 @property(nonatomic, strong)  NSString *chosenFile;
 - (void)showAFile;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnSubmit;
+
+
 @property (assign, nonatomic) bool bNAToSubmit;
 
 @end
