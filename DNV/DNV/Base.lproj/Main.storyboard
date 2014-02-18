@@ -470,7 +470,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="question text" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ok6-Ea-MKD">
-                                                    <rect key="frame" x="40" y="0.0" width="414" height="89"/>
+                                                    <rect key="frame" x="20" y="0.0" width="414" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="20"/>
                                                     <nil key="highlightedColor"/>
@@ -3742,9 +3742,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="0gA-F9-yeZ"/>
-        <segue reference="JLZ-cP-KQy"/>
-        <segue reference="iwB-8H-uOu"/>
         <segue reference="mdm-Om-J66"/>
         <segue reference="hrt-DA-W4A"/>
         <segue reference="JhJ-6V-9g8"/>
@@ -3752,5 +3749,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <segue reference="sOY-bc-kKG"/>
         <segue reference="z9l-uk-5Nw"/>
         <segue reference="xXC-Ay-Dh8"/>
+        <segue reference="0gA-F9-yeZ"/>
+        <segue reference="c2D-KO-MSn"/>
+        <segue reference="gVi-n6-vqn"/>
+        <segue reference="iwB-8H-uOu"/>
     </inferredMetricsTieBreakers>
 </document>

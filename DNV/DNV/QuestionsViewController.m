@@ -11,7 +11,10 @@
 #import "Elements.h"
 #import "SubElements.h"
 #import "AnswersViewController.h"
+#import "ElementSubElementViewController.h"
 #import "LayeredQuestion.h"
+
+
 
 @interface QuestionsViewController ()
 
@@ -21,6 +24,7 @@
 @end
 
 @implementation QuestionsViewController
+
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -61,8 +65,28 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
+    
+    for(int i=0; i<self.questionArray.count; i++)
+    {
+        Questions *question = [self.questionArray objectAtIndex:i];
+        
+        question = [self.dnvDBManager retrieveQuestion:question.questionID];
+    }
+    
     self.buttonTag = 0;
     [self.questionsTableView reloadData];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    
+    ElementSubElementViewController *eleSubVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-1];
+    
+    if ([eleSubVC isKindOfClass:[ElementSubElementViewController class]]) {
+        eleSubVC.aud = self.audit;
+        
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -185,6 +209,27 @@
     
         LayeredQuestion * lQuestion = [self.allSublayeredQuestions objectAtIndex:indexPath.row];
         cell.questionText.text = lQuestion.question.questionText;
+        cell.questionText.lineBreakMode = NSLineBreakByWordWrapping;
+        cell.questionText.numberOfLines = 0;
+        
+        NSString *text = question.questionText;
+        
+        // Get a CGSize for the width and, effectively, unlimited height
+        CGSize constraint = cell.questionText.frame.size;
+        constraint.height = 99999;
+        
+        // Get the size of the text given the CGSize we just made as a constraint
+        CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Verdana" size:18.0] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+        
+        //how to use this??
+        // CGSize size2 = [text boundingRectWithSize:<#(CGSize)#> options:<#(NSStringDrawingOptions)#> attributes:<#(NSDictionary *)#> context:<#(NSStringDrawingContext *)#>]
+        
+        // Get the height of our measurement, with a minimum of 44 (standard cell size)
+        CGFloat height = MAX(size.height, 44.0f);
+        CGRect rect = cell.questionText.frame;
+        rect.size.height = height + 55;// + 44;
+        
+        cell.questionText.frame = rect;
     
         if (lQuestion.question.isApplicable) {
             cell.points.text = [NSString stringWithFormat:@"%.2f / %.2f", lQuestion.question.pointsAwarded,lQuestion.question.pointsPossible];
@@ -204,24 +249,44 @@
     }
     
     [cell.questionText setTextColor:[UIColor lightGrayColor]];
-    cell.questionText.font = [UIFont fontWithName:@"Verdana" size:18.0];
+//    cell.questionText.font = [UIFont fontWithName:@"Verdana" size:18.0];
     
     [cell.points setTextColor:[UIColor lightGrayColor]];
     cell.points.font = [UIFont fontWithName:@"Verdana" size:14.0];
     
+    cell.doneImage.frame = CGRectMake(630.0, 15.0, 76, 60.0);
+    
     return cell;
 }
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //TODO: FIX THIS SHIET
-    Questions * quest = [self.questionArray objectAtIndex:indexPath.row];
+    LayeredQuestion * quest = [self.allSublayeredQuestions objectAtIndex:indexPath.row];
     
     // Get the text so we can measure it
-    NSString *text = quest.questionText;
+    NSString *text = quest.question.questionText;
     QuestionCell * cell = [tableView dequeueReusableCellWithIdentifier:@"QuestionCell"];
 
-#pragma mark - Segue Preparation
+    // Get a CGSize for the width and, effectively, unlimited height
+    CGSize constraint = cell.questionText.frame.size;
+    constraint.height = 99999;
+    
+    // Get the size of the text given the CGSize we just made as a constraint
+    CGSize size = [text sizeWithFont:[UIFont fontWithName:@"Verdana" size:18.0] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+    
+    //how to use this??
+    // CGSize size2 = [text boundingRectWithSize:<#(CGSize)#> options:<#(NSStringDrawingOptions)#> attributes:<#(NSDictionary *)#> context:<#(NSStringDrawingContext *)#>]
+    
+    // Get the height of our measurement, with a minimum of 44 (standard cell size)
+    CGFloat height = MAX(size.height, 44.0f);
+    // return the height, with a bit of extra padding in
+    return height + 55;
 
+}
+
+
+#pragma mark Segue Preparation
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     AnswersViewController *vc = [segue destinationViewController];
@@ -232,7 +297,8 @@
     [vc setSubElementNum:self.subEleNumber];
     
     [vc setQuestion:question];
-    [vc setQuestionArray:self.questionArray];
+    [vc setQuestionArray:[NSMutableArray arrayWithArray:self.questionArray]];
+//    [vc setQuestionArray:self.questionArray];
     [vc setCurrentPosition:self.chosenQuestion];
     
     vc.audit = self.audit;
