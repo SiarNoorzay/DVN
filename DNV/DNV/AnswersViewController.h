@@ -23,7 +23,7 @@
 @property (assign) bool cameFromVerifyTabBar;
 
 @property (nonatomic, strong) Questions *question;
-@property (nonatomic) NSArray * questionArray;
+@property (nonatomic) NSMutableArray * questionArray;
 @property (nonatomic) int currentPosition;
 
 @property (nonatomic, strong) NSArray *ansArray;

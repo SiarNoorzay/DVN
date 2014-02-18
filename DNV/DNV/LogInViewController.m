@@ -254,21 +254,10 @@
 {
     if( [[DBSession sharedSession] isLinked])
     {
-        [self.userIDTextField setEnabled:false];
-        [self.passwordTextField setEnabled:false];
-        [self.btnLogIn setEnabled:false ];
-        
-        // unlink
-        [[DBSession sharedSession] unlinkAll];
+        UIAlertView *confirmUnlink = [[UIAlertView alloc] initWithTitle:@"Unlink Confirmation" message:[NSString stringWithFormat:@"Are you sure you want to unlink from the dropbox of %@?", [[NSUserDefaults standardUserDefaults] objectForKey:@"linkedDisplayName"]] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+        [confirmUnlink show];
         
         
-        
-        self.arrayOfUsers = nil;
-        
-        [self.btnSetDropBox setTitle:@"Link to Dropbox"];
-        
-        UIAlertView *notLinked = [[UIAlertView alloc] initWithTitle:@"Unlinked!" message:[NSString stringWithFormat:@"You are now no longer linked to dropbox: %@", currentUser] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [notLinked show];
     }
     else
     {
@@ -293,6 +282,25 @@
     }
 }
 
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 1)
+    {
+        [self.userIDTextField setEnabled:false];
+        [self.passwordTextField setEnabled:false];
+        [self.btnLogIn setEnabled:false ];
+        
+        // unlink
+        [[DBSession sharedSession] unlinkAll];
+        
+        self.arrayOfUsers = nil;
+        
+        [self.btnSetDropBox setTitle:@"Link to Dropbox"];
+        
+        UIAlertView *notLinked = [[UIAlertView alloc] initWithTitle:@"Unlinked!" message:[NSString stringWithFormat:@"You are now no longer linked to the dropbox of %@.", currentUser] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [notLinked show];
+    }
+}
 
 #pragma mark - Reachability Methods
 

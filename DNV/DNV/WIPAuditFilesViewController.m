@@ -237,9 +237,38 @@ loadMetadataFailedWithError:(NSError *)error {
         case 3:
             [self performSegueWithIdentifier:@"ImportMerge" sender:self];
             break;
+        case 4:
+        {
+            UIAlertView * deleteAuditAlert = [[UIAlertView alloc] initWithTitle: @"Delete Audit On Device" message: @"Are you sure you would like to delete this audit from local storage?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes",nil];
+            
+            [deleteAuditAlert show];
+        }
+            break;
             
         default:
             break;
+    }
+}
+
+#pragma mark Alertview method
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        //Code for OK button
+    }
+    if (buttonIndex == 1)
+    {
+        [self.dnvDBManager deleteAudit:self.audit.auditID];
+        UIAlertView * deleteAuditNotice = [[UIAlertView alloc] initWithTitle:@"Audit Deleted" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        
+        [deleteAuditNotice show];
+        
+        [self.dnvDBManager deleteAudit:self.localWIPList[self.chosenJSONfile]];
+   
+        [self.localWIPList removeObjectAtIndex:self.chosenJSONfile];
+        [self.wipJSONFileTable reloadData];
     }
 }
 

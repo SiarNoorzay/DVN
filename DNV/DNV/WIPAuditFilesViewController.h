@@ -29,7 +29,7 @@
 
 
 @property (strong, nonatomic) NSString * localWIPName;
-@property (strong, nonatomic) NSArray * localWIPList;
+@property (strong, nonatomic) NSMutableArray * localWIPList;
 
 @property (strong, nonatomic) NSString * wipAuditType;
 @property (strong, nonatomic) NSString * wipAuditPath;

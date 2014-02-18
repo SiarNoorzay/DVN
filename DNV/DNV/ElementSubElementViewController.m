@@ -35,6 +35,23 @@ int subEleNumber;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    self.aud = [self.dnvDBManager retrieveAudit:self.aud.auditID];
+    
+    NSLog(@"Audit Name: %@",self.aud.name);
+    self.auditSelectLbl.text = self.aud.name;
+    self.listOfElements = self.aud.Elements;
+    [self.elementPicker reloadAllComponents];
+    
+    [self.elementPicker selectRow:0 inComponent:0 animated:false];
+    Elements *tempEle = [self.listOfElements objectAtIndex:0];
+    self.listOfSubElements = tempEle.Subelements;
+    [self.subElementTable reloadData];
+    [self.spinner stopAnimating];
+    
+    if ([self.listOfElements count] > 0) {
+        self.ele = self.listOfElements[0];
+    }
+
     [self refreshView];
 }
 
@@ -109,9 +126,9 @@ int subEleNumber;
             if( self.ele == ele)
             {
                 if( !ele.isApplicable)
-                    [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon"] forState:UIControlStateNormal];
+                    [self.naForElements setBackgroundImage:[UIImage imageNamed:@"no.png"] forState:UIControlStateNormal];
                 else
-                    [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon_gray"] forState:UIControlStateNormal];
+                    [self.naForElements setBackgroundImage:[UIImage imageNamed:@"yes.png"] forState:UIControlStateNormal];
             }
             
             [self.dnvDBManager updateElement:ele];
@@ -147,21 +164,7 @@ int subEleNumber;
     
 //    [self loadDropboxFile:self.auditPath];
     
-    NSLog(@"Audit Name: %@",self.aud.name);
-    self.auditSelectLbl.text = self.aud.name;
-    self.listOfElements = self.aud.Elements;
-    [self.elementPicker reloadAllComponents];
-        
-    [self.elementPicker selectRow:0 inComponent:0 animated:false];
-    Elements *tempEle = [self.listOfElements objectAtIndex:0];
-    self.listOfSubElements = tempEle.Subelements;
-    [self.subElementTable reloadData];
-    [self.spinner stopAnimating];
-    
-    if ([self.listOfElements count] > 0) {
-        self.ele = self.listOfElements[0];
-    }
-
+   
     
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
     
@@ -194,7 +197,7 @@ int subEleNumber;
     label.backgroundColor = backColor;
     label.textColor = [UIColor blackColor];
     label.tintColor = [UIColor greenColor];
-    label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:25];
+    label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:24];
     label.text = rowELE.name; // ASCII 65 is "A"
     [label setTextAlignment:NSTextAlignmentCenter];
     
@@ -243,9 +246,9 @@ int subEleNumber;
     self.listOfSubElements = self.ele.Subelements;
     
     if( !self.ele.isApplicable)
-        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon"] forState:UIControlStateNormal];
+        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"no.png"] forState:UIControlStateNormal];
     else
-        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"not_applicable_icon_gray"] forState:UIControlStateNormal];
+        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"yes.png"] forState:UIControlStateNormal];
     
     [self.subElementTable reloadData];
     elementNumber = row;
@@ -339,16 +342,51 @@ int subEleNumber;
 //NA all questions in an Element
 - (IBAction)naForElements:(id)sender
 {
+    
     Elements *currentElement = [self.listOfElements objectAtIndex:elementNumber];
-    currentElement.isApplicable = !currentElement.isApplicable;
     
-    for( SubElements *se in currentElement.Subelements)
+    if( currentElement.isApplicable )
     {
-        [self setNAToSubElementsQuestions:se ifBool:currentElement.isApplicable];
-    }
+        UIAlertView * deleteAuditAlert = [[UIAlertView alloc] initWithTitle: @"N/A Element" message: @"Are you sure you want to set this element to not applicable? Note, all saved answers will be reset to 0." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes",nil];
     
-    [self refreshView];
+        [deleteAuditAlert show];
+    }
+    else
+    {
+        currentElement.isApplicable = !currentElement.isApplicable;
+        
+        for( SubElements *se in currentElement.Subelements)
+        {
+            [self setNAToSubElementsQuestions:se ifBool:currentElement.isApplicable];
+        }
+        
+        [self refreshView];
+    }
 }
+
+#pragma mark Alertview method
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        //Code for OK button
+    }
+    if (buttonIndex == 1)
+    {
+        Elements *currentElement = [self.listOfElements objectAtIndex:elementNumber];
+        
+        currentElement.isApplicable = !currentElement.isApplicable;
+        
+        for( SubElements *se in currentElement.Subelements)
+        {
+            [self setNAToSubElementsQuestions:se ifBool:currentElement.isApplicable];
+        }
+        
+        [self refreshView];
+    }
+}
+
 
 //NA all questions in a subelemnt
 -(void)setNAToSubElementsQuestions:(SubElements*)aSubElement ifBool: (BOOL) setNA

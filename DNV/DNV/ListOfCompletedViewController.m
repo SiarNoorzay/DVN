@@ -15,6 +15,7 @@
 #import "Folder.h"
 #import "TitleViewController.h"
 #import "LayeredQuestion.h"
+#import "VerifyQuestionsViewController.h"
 
 @interface ListOfCompletedViewController ()<DBRestClientDelegate>
 
@@ -273,6 +274,11 @@ loadMetadataFailedWithError:(NSError *)error {
             [deleteAuditAlert show];
         }
             break;
+        case 4:
+        {
+            [self performSegueWithIdentifier:@"completedToListVerify" sender:self];
+            break;
+        }
         default:
             break;
     }
@@ -331,6 +337,7 @@ loadMetadataFailedWithError:(NSError *)error {
     }
     
 }
+
 
 #pragma mark file selection methods
 

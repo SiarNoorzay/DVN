@@ -37,6 +37,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+
     if (self.questionArray == nil)
     {
         NSLog(@"Getting data from file for now");
@@ -209,6 +211,14 @@
     
     return cell;
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //TODO: FIX THIS SHIET
+    Questions * quest = [self.questionArray objectAtIndex:indexPath.row];
+    
+    // Get the text so we can measure it
+    NSString *text = quest.questionText;
+    QuestionCell * cell = [tableView dequeueReusableCellWithIdentifier:@"QuestionCell"];
 
 #pragma mark - Segue Preparation
 
