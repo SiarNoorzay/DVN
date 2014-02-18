@@ -238,6 +238,7 @@
 loadMetadataFailedWithError:(NSError *)error {
     
     NSLog(@"Error loading metadata: %@", error);
+    [self.spinner stopAnimating];
 }
 
 - (void)restClient:(DBRestClient*)client loadedFile:(NSString*)localPath
@@ -247,10 +248,13 @@ loadMetadataFailedWithError:(NSError *)error {
     if (client == self->restClient)
         [self getAudit];
     
+    [self.spinner stopAnimating];
+    
 }
 
 - (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
     NSLog(@"There was an error loading the file - %@", error);
+    [self.spinner stopAnimating];
 }
 
 #pragma mark WIP selection methods

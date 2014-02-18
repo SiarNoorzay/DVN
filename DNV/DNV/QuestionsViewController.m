@@ -20,6 +20,7 @@
 
 @property int chosenQuestion;
 @property int buttonTag;
+@property NSMutableArray * tableCellArray;
 
 @end
 
@@ -118,7 +119,22 @@
     //make question text label
     Questions *question = [self.questionArray objectAtIndex:section];
     
-    UILabel * questionLbl = [[UILabel alloc]initWithFrame:CGRectMake(20.0, 0.0, 414.0, 89.0)];
+    UILabel * questionLbl = [UILabel new];
+    
+    // Get a CGSize for the width and, effectively, unlimited height
+    CGSize constraint = CGSizeMake(414.0, 0.0);
+    constraint.height = 99999;
+    
+    // Get the size of the text given the CGSize we just made as a constraint
+    CGSize size = [question.questionText sizeWithFont:[UIFont fontWithName:@"Verdana" size:18.0] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+    
+    //how to use this??
+    // CGSize size2 = [text boundingRectWithSize: options:<#(NSStringDrawingOptions)#> attributes:<#(NSDictionary *)#> context:<#(NSStringDrawingContext *)#>]
+    
+    // Get the height of our measurement, with a minimum of 44 (standard cell size)
+    CGFloat height = MAX(size.height, 44.0f);
+    questionLbl.frame = CGRectMake(20.0, 0.0, 414.0, height + 25);
+    
     questionLbl.text = question.questionText;
     questionLbl.font = [UIFont fontWithName:@"Verdana" size:20.0];
     questionLbl.lineBreakMode = NSLineBreakByWordWrapping;
@@ -168,7 +184,24 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
-    return 100.0;
+    //TODO: FIX THIS SHIET
+    Questions * question = [self.questionArray objectAtIndex:section];
+    
+    // Get a CGSize for the width and, effectively, unlimited height
+    CGSize constraint = CGSizeMake(414.0, 0.0);
+    constraint.height = 99999;
+    
+    // Get the size of the text given the CGSize we just made as a constraint
+    CGSize size = [question.questionText sizeWithFont:[UIFont fontWithName:@"Verdana" size:20.0] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+    
+    //how to use this??
+    // CGSize size2 = [text boundingRectWithSize:; options:<#(NSStringDrawingOptions)#> attributes:<#(NSDictionary *)#> context:<#(NSStringDrawingContext *)#>]
+    
+    // Get the height of our measurement, with a minimum of 44 (standard cell size)
+    CGFloat height = MAX(size.height, 44.0f);
+    // return the height, with a bit of extra padding in
+    
+    return height + 35;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -193,6 +226,8 @@
     
     static NSString * cellIdentifier = @"QuestionCell";
     
+    self.tableCellArray = [NSMutableArray new];
+    
     QuestionCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if(cell == nil){
         cell = [[QuestionCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
@@ -203,6 +238,7 @@
     Questions * question = [self.questionArray objectAtIndex:indexPath.section];
     
     if (question.layeredQuesions > 0) {
+        self.allSublayeredQuestions = [NSMutableArray new];
         int throwAway = [self getNumOfSubQuestionsAndSetAllSubsArray:question layerDepth:1];
     
         LayeredQuestion * lQuestion = [self.allSublayeredQuestions objectAtIndex:indexPath.row];
@@ -210,7 +246,7 @@
         cell.questionText.lineBreakMode = NSLineBreakByWordWrapping;
         cell.questionText.numberOfLines = 0;
         
-        NSString *text = question.questionText;
+        NSString *text = lQuestion.question.questionText;
         
         // Get a CGSize for the width and, effectively, unlimited height
         CGSize constraint = cell.questionText.frame.size;
@@ -247,7 +283,6 @@
     }
     
     [cell.questionText setTextColor:[UIColor lightGrayColor]];
-//    cell.questionText.font = [UIFont fontWithName:@"Verdana" size:18.0];
     
     [cell.points setTextColor:[UIColor lightGrayColor]];
     cell.points.font = [UIFont fontWithName:@"Verdana" size:14.0];
@@ -259,6 +294,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     //TODO: FIX THIS SHIET
     LayeredQuestion * quest = [self.allSublayeredQuestions objectAtIndex:indexPath.row];
     
@@ -279,7 +315,8 @@
     // Get the height of our measurement, with a minimum of 44 (standard cell size)
     CGFloat height = MAX(size.height, 44.0f);
     // return the height, with a bit of extra padding in
-    return height + 55;
+    
+    return height + 65;
 
 }
 
