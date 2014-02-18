@@ -372,8 +372,6 @@ int subEleNumber;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    
-    
     if (buttonIndex == 0)
     {
         //Code for OK button

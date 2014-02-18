@@ -59,6 +59,13 @@ int numOfSubs;
     }
     return self;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    if ([self.question.layeredQuesions count] > 0)
+        mainSubQuestion = self.question;
+    
+    self.navigationItem.title = @"Dashboard";
+}
 -(void) viewWillDisappear:(BOOL)animated
 {
     //self.question = unchangedQuestion;
@@ -157,14 +164,14 @@ int numOfSubs;
             leftAns.isSelected = false;
             pointTotal = rightAns.pointsPossible;
             weakSelf.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
-            [weakSelf setEnabledFlagsAndReloadQuestions];
+            //[weakSelf setEnabledFlagsAndReloadQuestions];
         }
         else{
             leftAns.isSelected = true;
             rightAns.isSelected = false;
             pointTotal = leftAns.pointsPossible;
             weakSelf.pointsLabel.text = [NSString stringWithFormat:@"%.2f",pointTotal];
-            [weakSelf setEnabledFlagsAndReloadQuestions];
+          //  [weakSelf setEnabledFlagsAndReloadQuestions];
         }
 
 //        if (islayeredQuestion)
@@ -206,7 +213,7 @@ int numOfSubs;
         NSLog(@"%d",numOfSubs);
         
         self.subQuesionsTableView.hidden = false;
-        [self setEnabledFlagsAndReloadQuestions];
+      //  [self setEnabledFlagsAndReloadQuestions];
 
     }
     
@@ -366,7 +373,7 @@ int numOfSubs;
         
         self.subQuesionsTableView.hidden = false;
         pointTotal = self.question.pointsAwarded;
-        [self setEnabledFlagsAndReloadQuestions];
+      //  [self setEnabledFlagsAndReloadQuestions];
     }
     pointTotal = self.question.pointsAwarded;
     
@@ -406,6 +413,9 @@ int numOfSubs;
             if (useSlider)
             {
                 self.switchy.hidden = false;
+                
+                if( self.question.pointsAwarded > 0) {[self.switchy setOn:true];}
+                
                 self.leftSliderLabel.hidden = false;
                 self.rightSliderLabel.hidden = false;
                 Answers *leftAns = self.ansArray[1];
@@ -533,6 +543,8 @@ int numOfSubs;
             }
     }
     
+    [self.btnSubmit setEnabled:self.question.isApplicable];
+    
     [self setNeedsVerifying:self.question.needsVerifying];
 }
 
@@ -563,6 +575,8 @@ int numOfSubs;
         }
         
         cell.textLabel.font = [UIFont fontWithName:@"Verdana" size:18];
+        [cell.textLabel sizeToFit];
+        cell.textLabel.minimumScaleFactor = .75;
         [cell.textLabel setNumberOfLines:3];
         
         return cell;
@@ -691,7 +705,7 @@ int numOfSubs;
         [ans setIsSelected:true];
         
         answered = true;//used for submit button logic
-        [self setEnabledFlagsAndReloadQuestions];
+       // [self setEnabledFlagsAndReloadQuestions];
     }
     
     else if ( tableView == self.subQuesionsTableView)
@@ -716,8 +730,7 @@ int numOfSubs;
         self.pointsLabel.text =[NSString stringWithFormat:@"%.2f",pointTotal];
         [ans setIsSelected:false];
         
-        [self setEnabledFlagsAndReloadQuestions];
-        
+      //  [self setEnabledFlagsAndReloadQuestions];
     }
 }
 
@@ -746,6 +759,9 @@ int numOfSubs;
     }
     
     [Flurry endTimedEvent:@"Question Answered" withParameters:nil];
+    
+    [self setEnabledFlagsAndReloadQuestions];
+
     
     if (self.question.isApplicable) {self.question.pointsAwarded = pointTotal;}
     
@@ -920,7 +936,6 @@ int numOfSubs;
     }
     
     
-    
     if (self.currentPosition == ([self.questionArray count]-1))
     {
         //pop 2 view controllers
@@ -946,7 +961,7 @@ int numOfSubs;
     }
     self.question.pointsAwarded = [self.pointsLabel.text floatValue];
     pointTotal = self.question.pointsAwarded;
-    [self setEnabledFlagsAndReloadQuestions];
+    //[self setEnabledFlagsAndReloadQuestions];
     
     answered = true;
 }
@@ -966,16 +981,21 @@ int numOfSubs;
 - (IBAction)nextButtonPushed:(id)sender {
     if (self.nextButton.enabled)
     {
-        self.currentPosition++;
-        [self refreshAnswerView];
+        [UIView animateWithDuration:.3 animations:^{
+            
+            self.currentPosition++;
+            [self refreshAnswerView];
+        }];
     }
 }
 
 - (IBAction)previousButtonPushed:(id)sender {
     
     if (self.previousButton.enabled) {
-        self.currentPosition--;
-        [self refreshAnswerView];
+        [UIView animateWithDuration:.3 animations:^{
+            self.currentPosition--;
+            [self refreshAnswerView];
+        }];
     }
 }
 
@@ -1046,6 +1066,7 @@ int numOfSubs;
     {
         self.question.isApplicable = !self.question.isApplicable;
         [self.naButton setSelected: !self.naButton.selected];
+        [self.btnSubmit setEnabled:true];
     }
 }
 
@@ -1059,6 +1080,14 @@ int numOfSubs;
     }
     if (buttonIndex == 1)
     {
+        if( self.question.questionType == 3)
+        {
+            for (int i = 0; i < [self.answersTableView numberOfRowsInSection:0]; i++)
+            {
+                [self tableView:self.answersTableView didDeselectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] ];
+            }
+        }
+        
         self.question.isApplicable = !self.question.isApplicable;
         [self.naButton setSelected: !self.naButton.selected];
         _bNAToSubmit = true;
@@ -1274,6 +1303,9 @@ int numOfSubs;
         
         //remove editQuestion button
         destVC.navigationItem.rightBarButtonItem = nil;
+        
+        //per request to get back button text to what was asked for.
+        self.navigationItem.title = @"Back to Question";
     }
     if ([[segue identifier] isEqualToString:@"imagePopover"]) {
         
