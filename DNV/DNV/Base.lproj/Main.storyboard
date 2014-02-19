@@ -1534,6 +1534,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="btnDelete" destination="mmw-Q8-QfG" id="A2w-xW-o3f"/>
                         <outlet property="exportToDBoxButton" destination="RpU-Pf-JDH" id="Vth-aT-6jH"/>
                     </connections>
                 </viewController>

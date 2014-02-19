@@ -175,7 +175,9 @@
     if (buttonIndex == 1)
     {
         //Code for download button
-        NSArray * auditIDs = [self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.currentAudit.name];
+        NSMutableArray * auditIDs = [self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.currentAudit.name];
+        
+        [auditIDs addObjectsFromArray:[self.dnvDBManager retrieveAllAuditIDsOfType:2 forAuditName:self.currentAudit.name]];
         
         NSArray * currentAuditIDChunks = [self.currentAudit.auditID componentsSeparatedByString:@"."];
         NSArray * mergeAuditIDChunks = [self.mergingAudit.auditID componentsSeparatedByString:@"."];

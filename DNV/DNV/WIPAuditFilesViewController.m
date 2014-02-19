@@ -35,6 +35,13 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.localWIPList = [self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.localWIPName];
+    
+    [self.wipJSONFileTable reloadData];
+}
+
 - (void)viewDidLoad
 {
     self.numberOfUploadsLeft = 0;
@@ -66,9 +73,9 @@
     else
         [self.spinner stopAnimating];
     
-    self.localWIPList = [self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.localWIPName];
-    
-    [self.wipJSONFileTable reloadData];
+//    self.localWIPList = [self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.localWIPName];
+//    
+//    [self.wipJSONFileTable reloadData];
 }
 
 - (void)didReceiveMemoryWarning
