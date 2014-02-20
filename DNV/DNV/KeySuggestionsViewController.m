@@ -360,6 +360,8 @@ float animatedDistance = 0;
         
         self.keySugsPDFView.frame = rect;
         
+        [self.KeySugsTableView setHidden:YES];
+        
         [reportVC.viewArray setObject:self.keySugsPDFView atIndexedSubscript:6];
         
     }

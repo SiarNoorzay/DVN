@@ -246,6 +246,119 @@
             pixelsToMove = 0;
         
         
+        MergeClass *fixHeight = [MergeClass new];
+        UIView *someView = [[UIView alloc] initWithFrame:CGRectMake( 50, self.lblElementTitle.frame.origin.y+self.lblElementTitle.frame.size.height+20, 600, 80)];
+        
+        for( int i=0; i<self.elementsArray.count; i++)
+        {
+            Elements *element = [self.elementsArray objectAtIndex:i];
+            ElementRatingsCell * cell = [ElementRatingsCell new];
+            
+            cell.elementName = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 127, 60)];
+            cell.elementName.numberOfLines = 3;
+            [cell.elementName setLineBreakMode:NSLineBreakByWordWrapping];
+            cell.required = [[UILabel alloc] initWithFrame:CGRectMake(147, 10, 44, 40)];
+            cell.pointsPossible = [[UILabel alloc] initWithFrame:CGRectMake(200, 10, 158, 40)];
+            cell.pointsAwarded = [[UILabel alloc] initWithFrame:CGRectMake(325, 10, 160, 40)];
+            cell.percentage = [[UILabel alloc] initWithFrame:CGRectMake(448, 10, 127, 40)];
+            
+            cell.elementName.text = element.name;
+            if (element.isApplicable) {
+                cell.required.text = @"No";
+            }
+            else cell.required.text = @"Yes";
+            
+            cell.pointsPossible.text = [NSString stringWithFormat:@"%.1f",element.pointsPossible];//-element.modefiedNAPoints];
+            cell.pointsAwarded.text = [NSString stringWithFormat:@"%.1f",element.pointsAwarded];
+            
+            cell.percentage.text = [NSString stringWithFormat:@"%.2f %%", (element.pointsAwarded/(element.pointsPossible - element.modefiedNAPoints))*100];
+            
+           // someLabel.text = [NSString stringWithFormat:@"%@\t%@\t%@\t%@\t%@", cell.elementName.t] ;
+            
+            [someView addSubview:cell.elementName];
+            [someView addSubview:cell.required];
+            [someView addSubview:cell.pointsPossible];
+            [someView addSubview:cell.pointsAwarded];
+            [someView addSubview:cell.percentage];
+            
+//            CGSize stringSize = [someLabel.text sizeWithFont:[UIFont fontWithName:@"Verdana" size:18]
+//                                           constrainedToSize:CGSizeMake(600, 9999)
+//                                               lineBreakMode:NSLineBreakByWordWrapping];
+//            stringSize.height += 20;
+//            
+//            CGRect rect = someLabel.frame;
+//            rect.size = stringSize;
+//            
+//            someLabel.frame = rect;
+            
+            
+            someView = [fixHeight adjustSpaceForMyObject:someView];
+            
+            [self.ratingsPDFView addSubview:someView];
+            
+            //            ySpacer +=
+            someView = [[UIView alloc] initWithFrame:CGRectMake(50, someView.frame.origin.y + someView.frame.size.height +10, 600, 80)];
+        }
+        
+        pixelsToMove = [self.elementsArray count] * 90;
+        
+        //move each uiElement under elements tableview
+        rect = self.possibleLabel.frame;
+        rect.origin.y += pixelsToMove;
+        self.possibleLabel.frame = rect;
+        self.possibleLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.possibleLabel];
+        
+        rect = self.totalPossibleLabel.frame;
+        rect.origin.y += pixelsToMove;
+        self.totalPossibleLabel.frame = rect;
+        self.totalPossibleLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.totalPossibleLabel];
+        
+        rect = self.totalAwardedLabel.frame;
+        rect.origin.y += pixelsToMove;
+        self.totalAwardedLabel.frame = rect;
+        self.totalAwardedLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.totalAwardedLabel];
+        
+        rect = self.totalPercentageLabel.frame;
+        rect.origin.y += pixelsToMove;
+        self.totalPercentageLabel.frame = rect;
+        self.totalPercentageLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.totalPercentageLabel];
+        
+        
+        rect = self.evaluatedLabel.frame;
+        rect.origin.y += pixelsToMove;
+        self.evaluatedLabel.frame = rect;
+        self.evaluatedLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.evaluatedLabel];
+        
+        rect = self.evaluatedPossibleLabel.frame;
+        rect.origin.y += pixelsToMove;
+        self.evaluatedPossibleLabel.frame = rect;
+        self.evaluatedPossibleLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.evaluatedPossibleLabel];
+        
+        rect = self.evaluatedAwardedLabel.frame;
+        rect.origin.y += pixelsToMove;
+        self.evaluatedAwardedLabel.frame = rect;
+        self.evaluatedAwardedLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.evaluatedAwardedLabel];
+        
+        rect = self.evaluatedPercentageLabel.frame;
+        rect.origin.y += pixelsToMove;
+        self.evaluatedPercentageLabel.frame = rect;
+        self.evaluatedPercentageLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.evaluatedPercentageLabel];
+        
+        
+        //set height to content size of element list and update pdfview size accordingly
+        
+        int pixelsToMove2 = self.graphsTableView.frame.size.height+ pixelsToMove;
+        rect = self.graphsTableView.frame;
+        rect.size.height    = self.graphsTableView.contentSize.height;
+        self.graphsTableView.frame  = CGRectMake(0, self.evaluatedPercentageLabel.frame.origin.y, 700, self.graphsTableView.contentSize.height);
+        self.graphsTableView = (UITableView*)[fixHeight adjustSpaceForMyObject:self.graphsTableView];
+        
+        
+        if (pixelsToMove2<0)
+            pixelsToMove2 = 0;
+        
+        
+        
         //make the hieght view bigger
         rect = self.ratingsPDFView.frame;
         rect.size.height += pixelsToMove;
@@ -253,54 +366,10 @@
         rect.size.height = numPages * 792;
         self.ratingsPDFView.frame = rect;
         
-        //move each uiElement under elements tableview
-        rect = self.possibleLabel.frame;
-        rect.origin.y += pixelsToMove;
-        self.possibleLabel.frame = rect;
-        
-        rect = self.evaluatedLabel.frame;
-        rect.origin.y += pixelsToMove;
-        self.evaluatedLabel.frame = rect;
-        
-        rect = self.totalPossibleLabel.frame;
-        rect.origin.y += pixelsToMove;
-        self.totalPossibleLabel.frame = rect;
-        
-        rect = self.totalAwardedLabel.frame;
-        rect.origin.y += pixelsToMove;
-        self.totalAwardedLabel.frame = rect;
-        
-        rect = self.totalPercentageLabel.frame;
-        rect.origin.y += pixelsToMove;
-        self.totalPercentageLabel.frame = rect;
-        
-        rect = self.evaluatedAwardedLabel.frame;
-        rect.origin.y += pixelsToMove;
-        self.evaluatedAwardedLabel.frame = rect;
-        
-        rect = self.evaluatedPercentageLabel.frame;
-        rect.origin.y += pixelsToMove;
-        self.evaluatedPercentageLabel.frame = rect;
-        
-        rect = self.evaluatedPossibleLabel.frame;
-        rect.origin.y += pixelsToMove;
-        self.evaluatedPossibleLabel.frame = rect;
-        
-        //set height to content size of element list and update pdfview size accordingly
-        
-        int pixelsToMove2 = self.graphsTableView.frame.size.height;
-        rect = self.graphsTableView.frame;
-        rect.size.height    = self.graphsTableView.contentSize.height;
-        self.graphsTableView.frame  = rect;
-        
-        pixelsToMove2 = self.graphsTableView.frame.size.height - pixelsToMove2;
-        
-        if (pixelsToMove2<0)
-            pixelsToMove2 = 0;
-        
         //make the pdfview height bigger
         rect = self.ratingsPDFView.frame;
         rect.size.height += pixelsToMove2;
+        
         
         numPages = ceil( rect.size.height / 792 );
         rect.size.height = numPages * 792;
@@ -321,6 +390,9 @@
         //        [reportVC.finalPFDView sizeToFit];
         //
         //    [reportVC.viewArray addObject:self.ratingsPDFView];
+        
+        self.ElementRatingsTableView.hidden = true;
+        //self.graphsTableView.hidden = true;
         
         [reportVC.viewArray setObject:self.ratingsPDFView atIndexedSubscript:7];
         
