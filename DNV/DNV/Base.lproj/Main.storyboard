@@ -3621,6 +3621,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </view>
                     <navigationItem key="navigationItem" title="Process Profiles" id="HKa-lD-fhg"/>
                     <connections>
+                        <outlet property="lblProfilesTitle" destination="hA0-38-b3t" id="7w1-gh-Z3Z"/>
                         <outlet property="profilesPDFView" destination="vka-Sx-OnN" id="p4N-SA-HiL"/>
                         <outlet property="resultsTableView" destination="4Di-QG-BMJ" id="JZa-BF-eSq"/>
                     </connections>

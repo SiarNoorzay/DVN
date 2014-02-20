@@ -11,9 +11,10 @@
 
 
 
-@interface ElementSubelementProfilesViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface ElementSubelementProfilesViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
 
 @property (strong,nonatomic) Audit *audit;
+@property (strong, nonatomic) IBOutlet UILabel *lblProfilesTitle;
 
 @property (strong, nonatomic) IBOutlet UIView *profilesPDFView;
 //@property (strong, nonatomic) NSArray *cellArrary;
