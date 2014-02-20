@@ -1724,14 +1724,7 @@
         <scene sceneID="eRW-vg-MUl">
             <objects>
                 <tabBarController definesPresentationContext="YES" id="eiv-AO-kQq" customClass="VerifyTabController" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="iIv-sD-D2o">
-                        <barButtonItem key="rightBarButtonItem" title="Edit Question" id="eSH-BJ-1yV">
-                            <connections>
-                                <action selector="btnEditQuestion:" destination="eiv-AO-kQq" id="6KY-pB-yKT"/>
-                                <segue destination="8Xc-YB-eLc" kind="push" identifier="verifyTabToDashboard" id="gVi-n6-vqn"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="iIv-sD-D2o"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="9iq-hK-BRs">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
@@ -1739,7 +1732,6 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <outlet property="btnEditQuestion" destination="eSH-BJ-1yV" id="OF9-Jx-U5U"/>
                         <segue destination="TSN-fa-D8a" kind="relationship" relationship="viewControllers" id="zib-82-enM"/>
                         <segue destination="hkX-Qp-bq0" kind="relationship" relationship="viewControllers" id="6h8-rZ-cbs"/>
                         <segue destination="sMx-3o-ZvH" kind="relationship" relationship="viewControllers" id="GV9-gg-o1H"/>
@@ -3118,7 +3110,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Details" id="0b0-b9-xcw"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="approvedBy" destination="5lw-sf-fBm" id="SoK-CT-hZF"/>
                         <outlet property="approvedByLabel" destination="0Sd-ZL-VOe" id="RDn-rp-OXM"/>
@@ -3773,16 +3767,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="0gA-F9-yeZ"/>
-        <segue reference="JLZ-cP-KQy"/>
-        <segue reference="iwB-8H-uOu"/>
-        <segue reference="mdm-Om-J66"/>
+        <segue reference="Kjd-jP-nx9"/>
         <segue reference="Xof-A4-Klh"/>
+        <segue reference="mdm-Om-J66"/>
         <segue reference="hrt-DA-W4A"/>
         <segue reference="JhJ-6V-9g8"/>
         <segue reference="qKN-QJ-s0B"/>
         <segue reference="sOY-bc-kKG"/>
         <segue reference="z9l-uk-5Nw"/>
         <segue reference="xXC-Ay-Dh8"/>
+        <segue reference="iwB-8H-uOu"/>
     </inferredMetricsTieBreakers>
 </document>

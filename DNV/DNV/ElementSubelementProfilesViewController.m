@@ -9,7 +9,7 @@
 #import "ElementSubelementProfilesViewController.h"
 #import "ProfileLabelCell.h"
 #import "ReportDocViewController.h"
-
+#import "ListOfCompletedViewController.h"
 
 @interface ElementSubelementProfilesViewController ()
 
@@ -30,19 +30,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
     NSMutableArray *labelArray = [[NSMutableArray alloc]initWithCapacity:1];
-    
-    
-//    NSError *error;
-//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
-//    
-//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-//    
-//    NSLog(@"JSON contains:\n%@", [dictionary description]);
-//    
-//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-//    
-//    self.audit = [[Audit alloc]initWithAudit:theAudit];
     
     for (int i = 0; i<[self.audit.Elements count]; i++) {
         Elements *ele = [self.audit.Elements objectAtIndex:i];
@@ -104,6 +93,25 @@
     
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Back to Completed Audits List" style:UIBarButtonItemStylePlain target:self action:@selector(popBackToCompletedAudits)];
+    
+}
+
+-(void)popBackToCompletedAudits{
+    
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[ListOfCompletedViewController class]]) {
+            //Do not forget to import AnOldViewController.h
+            
+            [self.navigationController popToViewController:controller
+                                                  animated:YES];
+            break;
+        }
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -156,22 +164,9 @@
         rect.size.height = numPages * 792;
         self.profilesPDFView.frame = rect;
         
-        
-        //set the frame of this view to the bottom of the finalPdfview
-//        rect = self.profilesPDFView.frame;
-//        rect.origin.y = reportVC.finalPFDView.frame.size.height;
-//        self.profilesPDFView.frame = rect;
-//        
-//        
-//        [reportVC.finalPFDView addSubview:self.profilesPDFView];
-//        [reportVC.finalPFDView sizeToFit];
-        
-       // [reportVC.viewArray addObject:self.profilesPDFView];
-        
         [reportVC.viewArray setObject:self.profilesPDFView atIndexedSubscript:9];
 
     }
-    
 }
 
 @end

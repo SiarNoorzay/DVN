@@ -8,6 +8,7 @@
 
 #import "TitleViewController.h"
 #import "ReportDetailsViewController.h"
+#import "ListOfCompletedViewController.h"
 
 @interface TitleViewController ()
 
@@ -28,36 +29,32 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-
-    
-    
-//    NSError *error;
-//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
-//    
-//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-//    
-//    NSLog(@"JSON contains:\n%@", [dictionary description]);
-//    
-//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-//    
-//    self.audit = [[Audit alloc]initWithAudit:theAudit];
     
     self.clientName.text = self.audit.client.companyName;
     
     self.date.text = self.audit.client.auditDate;
     
-//    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-//    [formatter setDateFormat:@"MM/dd/yyyy"];
-//    
-//    NSDate *date = [formatter dateFromString:self.audit.client.auditDate];
-//    
-//    NSLog(@"%@",date);
-//    
-//    [self.datePicker setDate:date];
-//    
 //TODO: wire up the date picker so it changes based on the text field and the other way around
-
     
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Back to Completed Audits List" style:UIBarButtonItemStylePlain target:self action:@selector(popBackToCompletedAudits)];
+    
+}
+
+-(void)popBackToCompletedAudits{
+    
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[ListOfCompletedViewController class]]) {
+            //Do not forget to import AnOldViewController.h
+            
+            [self.navigationController popToViewController:controller
+                                                  animated:YES];
+            break;
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning

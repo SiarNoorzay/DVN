@@ -9,6 +9,7 @@
 #import "ScoringAssumptionsViewController.h"
 #import "ReportDocViewController.h"
 #import "ElementSubelementProfilesViewController.h"
+#import "ListOfCompletedViewController.h"
 
 @interface ScoringAssumptionsViewController ()
 
@@ -30,27 +31,11 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    // self.audit = getAuditFromDB with ID from previous selection
-    
-//    
-//    NSError *error;
-//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
-//    
-//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-//    
-//    NSLog(@"JSON contains:\n%@", [dictionary description]);
-//    
-//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-//    
-//    self.audit = [[Audit alloc]initWithAudit:theAudit];
-    
     if (![self.audit.report.scoringAssumptions isEqualToString:@"(null)"])
     {
         self.scoreAssumpTextView.text = self.audit.report.scoringAssumptions;
         
     }
-    
-
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -78,22 +63,28 @@
         rect.size.height = numPages * 792;
         self.scoringAsumPDFView.frame = rect;
         
-        //set the frame of this view to the bottom of the finalPdfview
-//        rect = self.scoringAsumPDFView.frame;
-//        rect.origin.y = reportVC.finalPFDView.frame.size.height;
-//        self.scoringAsumPDFView.frame = rect;
-//        
-//        
-//        [reportVC.finalPFDView addSubview:self.scoringAsumPDFView];
-//        [reportVC.finalPFDView sizeToFit];
-        
-       // [reportVC.viewArray addObject:self.scoringAsumPDFView];
-        
         [reportVC.viewArray setObject:self.scoringAsumPDFView atIndexedSubscript:8];
         
-
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated{
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Back to Completed Audits List" style:UIBarButtonItemStylePlain target:self action:@selector(popBackToCompletedAudits)];
+    
+}
+
+-(void)popBackToCompletedAudits{
+    
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[ListOfCompletedViewController class]]) {
+            //Do not forget to import AnOldViewController.h
+            
+            [self.navigationController popToViewController:controller
+                                                  animated:YES];
+            break;
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning

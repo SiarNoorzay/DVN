@@ -9,6 +9,7 @@
 #import "TableofContentsViewController.h"
 #import "ReportDocViewController.h"
 #import "MethodologyViewController.h"
+#import "ListOfCompletedViewController.h"
 
 @interface TableofContentsViewController ()
 
@@ -29,6 +30,25 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Back to Completed Audits List" style:UIBarButtonItemStylePlain target:self action:@selector(popBackToCompletedAudits)];
+    
+}
+
+-(void)popBackToCompletedAudits{
+    
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[ListOfCompletedViewController class]]) {
+            //Do not forget to import AnOldViewController.h
+            
+            [self.navigationController popToViewController:controller
+                                                  animated:YES];
+            break;
+        }
+    }
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

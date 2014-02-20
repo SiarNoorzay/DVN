@@ -11,7 +11,7 @@
 #import "LayeredQuestion.h"
 #import <DropboxSDK/DropboxSDK.h>
 #import "Flurry.h"
-
+#import "ListOfCompletedViewController.h"
 
 @interface ReportDocViewController ()<DBRestClientDelegate>
 @property int numberOfUploadsLeft;
@@ -36,13 +36,8 @@ static ReportDocViewController* _sharedReportDocViewController = nil;
 }
 
 - (id)init {
+    
     if (self = [super init]) {
-//        self.finalPFDView = [[UIScrollView alloc]initWithFrame:CGRectMake(0,0,612,792)];
-//        self.finalPFDView.showsVerticalScrollIndicator=YES;
-//        self.finalPFDView.scrollEnabled=YES;
-//        self.finalPFDView.userInteractionEnabled=YES;
-//        self.finalPFDView.contentSize = CGSizeMake(612,0);
-//        self.finalPFDView.delegate = self;
         
         self.viewArray = [[NSMutableArray alloc]initWithCapacity:10];
         
@@ -50,8 +45,6 @@ static ReportDocViewController* _sharedReportDocViewController = nil;
         {
             [self.viewArray addObject:[NSNull null]];
         }
-
-        
     }
     return self;
 }
@@ -69,7 +62,22 @@ static ReportDocViewController* _sharedReportDocViewController = nil;
      nil];
     
     [Flurry logEvent:@"Audit Completed" withParameters:completedAuditParams];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Back to Completed Audits List" style:UIBarButtonItemStylePlain target:self action:@selector(popBackToCompletedAudits)];
+    
 }
+
+-(void)popBackToCompletedAudits{
+    
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[ListOfCompletedViewController class]]) {
+                [self.navigationController popToViewController:controller
+                                                  animated:YES];
+            break;
+        }
+    }
+}
+
 - (void)viewDidLoad
 {
 

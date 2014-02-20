@@ -9,6 +9,7 @@
 #import "ReportDetailsViewController.h"
 #import "ReportDocViewController.h"
 #import "ExecutiveSummaryViewController.h"
+#import "ListOfCompletedViewController.h"
 
 @interface ReportDetailsViewController ()
 
@@ -30,21 +31,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    // self.audit = getAuditFromDB with ID from previous selection
-    
-    
-//    NSError *error;
-//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
-//    
-//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-//    
-//    NSLog(@"JSON contains:\n%@", [dictionary description]);
-//    
-//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-//    
-//    self.audit = [[Audit alloc]initWithAudit:theAudit];
-
-    self.clientRef.text = self.audit.report.clientRef;
+     self.clientRef.text = self.audit.report.clientRef;
     self.summary.text = self.audit.report.summary;
     if ([self.summary.text isEqualToString:@""] || [self.summary.text isEqualToString:@"(null)"] || self.summary.text ==nil)
     {
@@ -57,6 +44,26 @@
     self.projectNum.text = [NSString stringWithFormat:@"%@",self.audit.report.projectNum];
     
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Back to Completed Audits List" style:UIBarButtonItemStylePlain target:self action:@selector(popBackToCompletedAudits)];
+    
+}
+
+-(void)popBackToCompletedAudits{
+    
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[ListOfCompletedViewController class]]) {
+            //Do not forget to import AnOldViewController.h
+            
+            [self.navigationController popToViewController:controller
+                                                  animated:YES];
+            break;
+        }
+    }
+}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     self.audit.report.clientRef = self.clientRef.text;
