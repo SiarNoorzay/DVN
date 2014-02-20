@@ -9,6 +9,8 @@
 #import "ElementSubelementProfilesViewController.h"
 #import "ProfileLabelCell.h"
 #import "ReportDocViewController.h"
+#import "Profile.h"
+#import "LayeredQuestion.h"
 #import "ListOfCompletedViewController.h"
 
 @interface ElementSubelementProfilesViewController ()
@@ -52,8 +54,7 @@ float animatedDistance2 = 0;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
-    NSMutableArray *labelArray = [[NSMutableArray alloc]initWithCapacity:1];
+    self.thumbedQuestions = [[NSMutableArray alloc]initWithCapacity:1];
     
     for (int i = 0; i<[self.audit.Elements count]; i++) {
         Elements *ele = [self.audit.Elements objectAtIndex:i];

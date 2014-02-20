@@ -31,7 +31,25 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    if (![self.audit.report.scoringAssumptions isEqualToString:@"(null)"])
+    // self.audit = getAuditFromDB with ID from previous selection
+    
+//    
+//    NSError *error;
+//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
+//    
+//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
+//    
+//    NSLog(@"JSON contains:\n%@", [dictionary description]);
+//    
+//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
+//    
+//    self.audit = [[Audit alloc]initWithAudit:theAudit];
+    
+    if ([self.audit.report.scoringAssumptions isEqualToString:@"(null)"]|| [self.audit.report.scoringAssumptions isEqualToString:@""])
+    {
+        self.scoreAssumpTextView.text = @"<change text here as needed>\nThe audit followed defined XXXXXXX procedures and was conducted as a base line audit. The audit interviews were conducted with individuals identified as having ""in depth"" knowledge of specific controls and systems. This information was then verified by follow-up interviews with line management and employees, and supporting documentation was reviewed. A ""Physical Condition Tour"" evaluation was also conducted to establish that controls were in place and working.\nA total of XXXXXXX employee interviews were carried out XXXXXXX, representing all departments of the organization. The sample was conducted in order to verify the implementation of the XXXXXXX system activities. Additional questions were asked about the employee perception of the Council Bluff safety system. The over-all impression is that employees feel safety is the number one priority at the site.\nThe Physical Conditions Tour is not a comprehensive inspection, but rather a sampling of typical workplace conditions which reflect upon the XXXXXXX system implemented at the site. The overall physical conditions throughout the plant were found to be in good order. Specifics of substandard conditions can be viewed on the Physical Condition sheet attached with the audit. The concerns the auditors found on the PCT was shared in the closing meeting with the management team.\nIn general, the XXXXXXX protocol requires that the practical application of program activities across the plant be reflected in policies and/or, procedures at a 75% compliance level. This “objective” requirement will not, therefore, recognise a number of plant activities due to there being insufficient documented procedures in place to reflect these practices. The practical application of some of the Company’s written procedures may also not have been able to be demonstrated sufficiently for credit to be awarded at this time. Generally, systems have to be in place and working for a minimum of 3 months in order to score in the audit. Therefore, activities carried on at the present level of implementation would likely result in a lower audit score.";
+    }
+    else
     {
         self.scoreAssumpTextView.text = self.audit.report.scoringAssumptions;
 
@@ -148,6 +166,7 @@
         int numPages = ceil( rect.size.height / 792 );
         rect.size.height = numPages * 792;
         self.scoringAsumPDFView.frame = rect;
+        
         
         [reportVC.viewArray setObject:self.scoringAsumPDFView atIndexedSubscript:8];
         

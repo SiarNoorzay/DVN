@@ -179,8 +179,12 @@
         cell = [[GraphViewCell alloc] initWithGraph:grphView reuseIdentifier:cellIdentifier2];
         
     }
-    
-    cell.elementSubName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];
+    //    if(cell == nil){
+    //        cell = [[GraphViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier2 graphView:grphView];
+    //
+    //    }
+    //cell.graphViewImage = grphView;
+    //cell.elementSubName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];
     cell.elementSubName.text = grphView.name;
     
     cell.elementSubName.backgroundColor = [UIColor redColor];
