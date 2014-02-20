@@ -677,7 +677,7 @@ static inline double radians(double degrees){
 	[[UIColor blackColor] set];
 	NSString *percentage = [NSString stringWithFormat:@"%.1f%%",item.yValue];
 	[percentage drawAtPoint:CGPointMake(_histogramStartX,_xaxisStart.y - _ySpacingScale*item.yValue - 15) withFont:[UIFont boldSystemFontOfSize:10]];
-	[self drawWords:item.name AtPoint:CGPointMake(_histogramStartX + item.width/8 ,_xaxisStart.y + 5)  color:[UIColor blackColor]];
+	[self drawWords:item.name AtPoint:CGPointMake(_histogramStartX + item.width/8 -15,_xaxisStart.y + 5)  color:[UIColor blackColor]];
 }
 
 @end 

@@ -24,6 +24,12 @@
     }
     return self;
 }
+-(void)textViewDidBeginEditing:(UITextView *)textView
+{
+    NSString *notes =textView.text;
+    notes = [notes stringByReplacingOccurrencesOfString:@"<insert summary here>\n" withString:@""];
+    textView.text = notes;
+}
 
 - (void)viewDidLoad
 {
@@ -46,7 +52,7 @@
 
     self.clientRef.text = self.audit.report.clientRef;
     self.summary.text = self.audit.report.summary;
-    if ([self.summary.text isEqualToString:@""] || [self.summary.text isEqualToString:@"(null)"] || self.summary.text ==nil)
+    if ([self.summary.text isEqualToString:@""] || [self.summary.text isEqualToString:@"(null)"] || self.summary.text == nil)
     {
         self.summary.text = @"<insert summary here>";
         

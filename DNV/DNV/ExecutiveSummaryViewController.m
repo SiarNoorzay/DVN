@@ -153,7 +153,12 @@
     
 }
 
-
+-(void)textViewDidBeginEditing:(UITextView *)textView
+{
+    NSString *notes =textView.text;
+    notes = [notes stringByReplacingOccurrencesOfString:@"<insert summary here>" withString:@""];
+    textView.text = notes;
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

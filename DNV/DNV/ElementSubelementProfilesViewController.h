@@ -16,8 +16,13 @@
 @property (strong,nonatomic) Audit *audit;
 
 @property (strong, nonatomic) IBOutlet UIView *profilesPDFView;
-@property (strong, nonatomic) NSArray *cellArrary;
+//@property (strong, nonatomic) NSArray *cellArrary;
+@property (strong, nonatomic) NSMutableArray *thumbedQuestions;//stores both thumbs up and thumbs down questions along with other labels
+
+@property (strong,nonatomic) UIView* parentView; //used for finding cell from textView delegate
 
 @property (strong, nonatomic) IBOutlet UITableView *resultsTableView;
+@property (strong,atomic) NSMutableArray *allSublayeredQuestions;
+
 
 @end

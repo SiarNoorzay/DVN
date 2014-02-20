@@ -39,7 +39,7 @@
 // An empty implementation adversely affects performance during animation.
 
 -(void)drawRect:(CGRect)rect {
-    self.frame  = CGRectMake(0, 0, 612, 220);
+    self.frame  = CGRectMake(0, 0, 612, 360);
     if (self.elementNames == nil || self.elementNames.count == 0) {
         NSLog(@"SHOULD NEVER SEE THIS");
         return;
@@ -69,7 +69,7 @@
         item.yValue = [[self.elementPercent objectAtIndex:i] floatValue];
         item.width = width;
         item.name = [self.elementNames objectAtIndex:i];
-        int nameMaxLength = ((width * 1.5) /10);
+        int nameMaxLength = (((width * 1.5) /10) + 3);
         if (item.name.length > nameMaxLength) {
             item.name = [item.name substringToIndex: nameMaxLength];
         }
@@ -112,9 +112,17 @@
     
     //UIGraphicsBeginImageContext(rect.size);
     
-	[graph setXaxisTitle:self.name];
 	[graph setYaxisTitle:@"Percentage"];
-	[graph setGraphicTitle:@"Percentages"];
+    if (self.isAudit)
+    {
+        [graph setGraphicTitle:@"Elements of Audit"];
+        [graph setXaxisTitle:@"Elements"];
+
+    }else
+    {
+        [graph setGraphicTitle:[NSString stringWithFormat:@"Element: %@ ",self.name]];
+        [graph setXaxisTitle:@"Sub-Elements"];
+    }
 	[graph setDelegate:self];
 	[graph setBackgroundColor:[UIColor whiteColor]];// colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1]];
 	[graph drawHistogramWithItems:itemsArray lineWidth:2 color:[UIColor blackColor]];

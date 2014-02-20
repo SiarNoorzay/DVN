@@ -70,11 +70,14 @@
         auditPointsPossible += ele.pointsPossible;
         auditNAPoints += ele.modefiedNAPoints;
         auditAwarded += ele.pointsAwarded;
-        NSString *eleName = ele.name;
-        NSString *percent = [NSString stringWithFormat:@"%.2f",((ele.pointsAwarded / (ele.pointsPossible - ele.modefiedNAPoints)) *100)];
+        if (ele.isApplicable) {
+            NSString *eleName = ele.name;
+            NSString *percent = [NSString stringWithFormat:@"%.2f",((ele.pointsAwarded / (ele.pointsPossible - ele.modefiedNAPoints)) *100)];
+            
+            [eleNames addObject:eleName];
+            [percents addObject:percent];
+        }
         
-        [eleNames addObject:eleName];
-        [percents addObject:percent];
         
     }
     self.totalPossibleLabel.text = [NSString stringWithFormat:@"%.1f",auditPointsPossible];
@@ -92,6 +95,7 @@
     [eleGraphView setName:self.audit.name];
     [eleGraphView setElementNames:eleNames];
     [eleGraphView setElementPercent:percents];
+    [eleGraphView setIsAudit:YES];
     [allGraphViews addObject:eleGraphView];
     
     for (Elements *ele in self.audit.Elements) {
@@ -113,6 +117,7 @@
             //  subEleGraphView.name = ele.name;
             GraphView *subEleGraphView = [[GraphView alloc] initWithElementNames:subEleNames andPercents:subElePercents];
             [subEleGraphView setName:ele.name];
+            [subEleGraphView setIsAudit:NO];
             
             
             [allGraphViews addObject: subEleGraphView];
@@ -152,12 +157,12 @@
         Elements *element = [self.elementsArray objectAtIndex:indexPath.row];
         
         cell.elementName.text = element.name;
-        if (element.isRequired) {
-            cell.required.text = @"R";
+        if (element.isApplicable) {
+            cell.required.text = @"No";
         }
-        else cell.required.text = @"O";
+        else cell.required.text = @"Yes";
         
-        cell.pointsPossible.text = [NSString stringWithFormat:@"%.1f",element.pointsPossible-element.modefiedNAPoints];
+        cell.pointsPossible.text = [NSString stringWithFormat:@"%.1f",element.pointsPossible];//-element.modefiedNAPoints];
         cell.pointsAwarded.text = [NSString stringWithFormat:@"%.1f",element.pointsAwarded];
         
         cell.percentage.text = [NSString stringWithFormat:@"%.2f %%", (element.pointsAwarded/(element.pointsPossible - element.modefiedNAPoints))*100];
@@ -179,7 +184,7 @@
     //
     //    }
     //cell.graphViewImage = grphView;
-    cell.elementSubName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];
+    //cell.elementSubName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];
     cell.elementSubName.text = grphView.name;
     
     cell.elementSubName.backgroundColor = [UIColor redColor];
@@ -190,7 +195,7 @@
     
     [cell.graphViewImage setNeedsDisplay];
     
-    [cell.graphViewImage drawRect:CGRectMake(0, 0, 612, 260)];
+    [cell.graphViewImage drawRect:CGRectMake(0, 0, 612, 340)];
     //-35, -42, 612, 260
     
  
@@ -227,6 +232,7 @@
         [self.ElementRatingsTableView reloadData];
         [self.ElementRatingsTableView layoutIfNeeded];
         
+        self.ElementRatingsTableView.separatorColor = [UIColor clearColor];
         
         int pixelsToMove = self.ElementRatingsTableView.frame.size.height;
         

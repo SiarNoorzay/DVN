@@ -21,6 +21,6 @@
 @property (strong,nonatomic) NSMutableArray *thumbsDowndQuestions;
 @property (strong,nonatomic) NSMutableArray *positions;
 
-@property (strong,nonatomic) UIView* parentView;
+@property (strong,nonatomic) UIView* parentView;//used for finding cell from textView delegate
 
 @end

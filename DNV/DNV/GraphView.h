@@ -12,6 +12,7 @@
 @interface GraphView : UIView<ECGraphDelegate>
 
 @property (strong,nonatomic) NSString *name;
+@property (nonatomic) BOOL isAudit;
 
 @property (strong,nonatomic) NSArray * elementNames;
 @property (strong,nonatomic) NSArray * elementPercent;

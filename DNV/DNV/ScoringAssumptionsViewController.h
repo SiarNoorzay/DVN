@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Audit.h"
 
-@interface ScoringAssumptionsViewController : UIViewController
+@interface ScoringAssumptionsViewController : UIViewController<UITextViewDelegate>
 @property (strong, nonatomic) IBOutlet UITextView *scoreAssumpTextView;
 @property (strong,nonatomic) Audit *audit;
 

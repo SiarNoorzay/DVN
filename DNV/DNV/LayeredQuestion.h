@@ -10,7 +10,7 @@
 #import "Questions.h"
 
 
-@interface LayeredQuestion :NSObject
+@interface LayeredQuestion : NSObject
 
 @property (nonatomic,strong) Questions *question;
 @property (nonatomic,strong) NSMutableArray  *subIndexes;
