@@ -170,9 +170,8 @@ float animatedDistance2 = 0;
         }
         
             
-    }//loop eles
+    }//loop element
 
-   // self.cellArrary = labelArray;
     for (int i = 0; i<self.thumbedQuestions.count; i++) {
         Profile *temp = [self.thumbedQuestions objectAtIndex:i];
         NSLog(@"%d %d: %@\n",i,temp.question==nil,temp.text);
@@ -246,12 +245,9 @@ float animatedDistance2 = 0;
         cell.notesTextView.selectable = NO;
         cell.userInteractionEnabled = NO;
     }
-    
-    
 
     return cell;
-    
-    
+
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -260,7 +256,7 @@ float animatedDistance2 = 0;
 }
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return NO;
+    return YES;
     
 }
 -(void)textViewDidEndEditing:(UITextView *)textView
@@ -270,9 +266,9 @@ float animatedDistance2 = 0;
     {
         NSIndexPath* indexPath = [self.resultsTableView indexPathForCell:cell];
         [self textViewDidEndEditing:textView inRowAtIndexPath:indexPath];
-        //[self.resultsTableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationNone];
+        [self.resultsTableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationNone];
     }
-    [self.resultsTableView reloadData];
+    //[self.resultsTableView reloadData];
 }
 - (void)textViewDidBeginEditing:(UITextView*)textView
 {
@@ -281,6 +277,7 @@ float animatedDistance2 = 0;
     {
         NSIndexPath* indexPath = [self.resultsTableView indexPathForCell:cell];
         [self.resultsTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        
     }
     
     NSString *notes =textView.text;
@@ -337,14 +334,14 @@ float animatedDistance2 = 0;
 - (void)textViewDidEndEditing:(UITextView*)textView inRowAtIndexPath:(NSIndexPath*)indexPath;
 {
     Profile *cellProf = [self.thumbedQuestions objectAtIndex:indexPath.row];
-    if(cellProf.question != nil)
-    {
+    //if(cellProf.question != nil)
+    //{
         cellProf.text = textView.text;
         CGRect rect = textView.frame;
         rect.size.height = textView.contentSize.height;
         textView.frame = rect;
         cellProf.question.notes = textView.text;
-    }
+    //}
     CGRect viewFrame = self.parentView.frame;
     viewFrame.origin.y += animatedDistance2;
     

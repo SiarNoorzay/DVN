@@ -31,6 +31,81 @@
     textView.text = notes;
 }
 
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    UITextRange *temp =[textView selectedTextRange];
+    //CGPoint point = [textView caretRectForPosition:textView.textContainer.];
+    
+    int pos = [textView offsetFromPosition:textView.beginningOfDocument toPosition:temp.start];
+    
+    NSString *aStr = [textView.text substringToIndex:pos];
+    //UITextPosition *newPos = [textView positionFromPosition:textView.endOfDocument offset:pos];
+    
+    CGSize stringSize = [aStr sizeWithFont:[UIFont fontWithName:@"Verdana" size:14]
+                          constrainedToSize:CGSizeMake(textView.frame.size.width, 9999)
+                              lineBreakMode:NSLineBreakByWordWrapping];
+
+    int numberOfNewLines = ceil( 100 / textView.font.lineHeight );
+    
+    NSString *spacer = [NSString new];
+    while (numberOfNewLines > 0) {
+        spacer = [spacer stringByAppendingString:@"\n"];
+        numberOfNewLines--;
+    }
+    
+    if( (int)(stringSize.height + textView.frame.origin.y) % 742 > 692 )
+    {
+        
+        
+        aStr = [aStr stringByAppendingString:spacer];
+        NSString *fromCurrentSpotOn = [textView.text substringFromIndex:pos];
+        fromCurrentSpotOn = [fromCurrentSpotOn stringByReplacingOccurrencesOfString:spacer withString:@""];
+        
+        textView.text = [NSString stringWithFormat:@"%@%@%@", aStr, text, fromCurrentSpotOn];
+        
+        NSRange z = {pos+spacer.length+1, 0};
+        [textView setSelectedRange:z];
+        return NO;
+    }
+    else if( text.length > 0 )
+    {
+        NSString *fromCurrentSpotOn = [textView.text substringFromIndex:pos];
+        NSString *builtString = [NSString new];
+        
+        NSRange spotOfSpacer = [fromCurrentSpotOn rangeOfString:spacer];
+        
+        if( (int)spotOfSpacer.length <= 0 )
+            builtString = [builtString stringByAppendingString:fromCurrentSpotOn];
+        
+        while (spotOfSpacer.length > 0)
+        {
+            
+            NSRange newSpot = {spotOfSpacer.location-1, spotOfSpacer.length};
+            NSRange oneChar = {spotOfSpacer.location-1, 1};
+            
+            if( spotOfSpacer.location > 0)
+            {
+                fromCurrentSpotOn = [fromCurrentSpotOn stringByReplacingCharactersInRange:spotOfSpacer withString:@""];
+                fromCurrentSpotOn = [fromCurrentSpotOn stringByReplacingCharactersInRange:newSpot withString:[NSString stringWithFormat:@"%@%@", spacer, [fromCurrentSpotOn substringWithRange:oneChar]]];
+            }
+            
+            builtString = [NSString stringWithFormat:@"%@%@",builtString, fromCurrentSpotOn];
+            
+            fromCurrentSpotOn = [fromCurrentSpotOn substringFromIndex:spotOfSpacer.location+spacer.length+1];
+            spotOfSpacer = [fromCurrentSpotOn rangeOfString:spacer];
+        }
+        
+        textView.text = [NSString stringWithFormat:@"%@%@%@", aStr, text, builtString];
+        
+        NSRange z = {pos+text.length, 0};
+        [textView setSelectedRange:z];
+        
+        return NO;
+    }
+        
+    return YES;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -77,7 +152,7 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"goToExecutiveSummary"]) {
-        
+        MergeClass *fixHeight = [MergeClass new];
         ExecutiveSummaryViewController * exeVC = [segue destinationViewController];
         
         exeVC.audit = self.audit;
@@ -103,38 +178,48 @@
         rect = self.preparedBy.frame;
         rect.origin.y += pixelsToMove;
         self.preparedBy.frame = rect;
+        self.preparedBy = (UITextField*)[fixHeight adjustSpaceForMyObject:self.preparedBy];
         
         rect = self.preparedByLabel.frame;
         rect.origin.y += pixelsToMove;
         self.preparedByLabel.frame = rect;
+        self.preparedByLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.preparedByLabel];
+        
         
         rect = self.approvedBy.frame;
         rect.origin.y += pixelsToMove;
         self.approvedBy.frame = rect;
+        self.approvedBy = (UITextField*)[fixHeight adjustSpaceForMyObject:self.approvedBy];
         
         rect = self.approvedByLabel.frame;
         rect.origin.y += pixelsToMove;
         self.approvedByLabel.frame = rect;
+        self.approvedByLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.approvedByLabel];
         
         rect = self.dateOfIssueLabel.frame;
         rect.origin.y += pixelsToMove;
         self.dateOfIssueLabel.frame = rect;
+        self.dateOfIssueLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.dateOfIssueLabel];
         
         rect = self.dateOfIssue.frame;
         rect.origin.y += pixelsToMove;
         self.dateOfIssue.frame = rect;
+        self.dateOfIssue = (UITextField*)[fixHeight adjustSpaceForMyObject:self.dateOfIssue];
         
         rect = self.projectNum.frame;
         rect.origin.y += pixelsToMove;
         self.projectNum.frame = rect;
+        self.projectNum = (UITextField*)[fixHeight adjustSpaceForMyObject:self.projectNum];
         
         rect = self.projectNumLabel.frame;
         rect.origin.y += pixelsToMove;
         self.projectNumLabel.frame = rect;
+        self.projectNumLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.projectNumLabel];
         
         rect = self.copyrightLabel.frame;
         rect.origin.y += pixelsToMove;
         self.copyrightLabel.frame = rect;
+        self.copyrightLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.copyrightLabel];
         
         //[reportVC.viewArray addObject:self.reportDetialsPDFView];
         [reportVC.viewArray setObject:self.reportDetialsPDFView atIndexedSubscript:1];

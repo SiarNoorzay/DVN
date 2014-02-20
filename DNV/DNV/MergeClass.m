@@ -109,5 +109,21 @@
     //combine objects from both arrays with no duplicates and return
     
 }
+-(UIView*)adjustSpaceForMyObject: (UIView*)anyObject
+{
+    //distance to edge from origin
+    int pixelsTilEdge = 692 - ((int)anyObject.frame.origin.y) % 692;
+    
+    //number of pages object straddles
+    int iNumberOfStraddledPages = (pixelsTilEdge + anyObject.frame.size.height) / 692;
+    
+    if( iNumberOfStraddledPages > 0)
+        anyObject.frame = CGRectMake(anyObject.frame.origin.x, anyObject.frame.origin.y + pixelsTilEdge + 150 , anyObject.frame.size.width, anyObject.frame.size.height);
+    
+    
+    
+    
+    return anyObject;
+}
 
 @end
