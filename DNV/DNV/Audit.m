@@ -84,9 +84,6 @@
     
     mergedAudits.Elements = [NSArray arrayWithArray:mergedElements];
     
-    //TODO: merge audit ids
-   // mergedAudits.auditID =
-    
     return  mergedAudits;
 }
 -(NSDictionary*)toDictionary{

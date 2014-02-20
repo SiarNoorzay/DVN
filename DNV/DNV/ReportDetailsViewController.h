@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Audit.h"
 
-@interface ReportDetailsViewController : UIViewController
+@interface ReportDetailsViewController : UIViewController<UITextViewDelegate>
 @property (strong, nonatomic) Audit *audit;
 
 @property (strong, nonatomic) IBOutlet UIView *reportDetialsPDFView;

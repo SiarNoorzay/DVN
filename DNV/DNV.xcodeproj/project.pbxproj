@@ -56,6 +56,8 @@
 		76455F9218AAC23700AF8A7C /* chooseFromPhotos.png in Resources */ = {isa = PBXBuildFile; fileRef = 76455F9118AAC23700AF8A7C /* chooseFromPhotos.png */; };
 		76455F9418AAC68900AF8A7C /* seeAllImagesIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76455F9318AAC68900AF8A7C /* seeAllImagesIcon.png */; };
 		76455F9718AAD69400AF8A7C /* GraphViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76455F9618AAD69400AF8A7C /* GraphViewCell.m */; };
+		767F452218B51C07007EB5AE /* libFlurry_4.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7594018A5894500467154 /* libFlurry_4.3.1.a */; };
+		767F452618B54FF9007EB5AE /* Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 767F452518B54FF9007EB5AE /* Profile.m */; };
 		768D564E188F0FD300175EB4 /* SummaryOfRatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D564D188F0FD300175EB4 /* SummaryOfRatingsViewController.m */; };
 		768D5651188F0FF500175EB4 /* ElementRatingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 768D5650188F0FF500175EB4 /* ElementRatingsCell.m */; };
 		768D5653188F18CC00175EB4 /* sampleCompletedAudit.json in Resources */ = {isa = PBXBuildFile; fileRef = 768D5652188F18CC00175EB4 /* sampleCompletedAudit.json */; };
@@ -126,7 +128,6 @@
 		76BF9C73187222DC00ACF6DB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C72187222DC00ACF6DB /* Security.framework */; };
 		76BF9C75187222EF00ACF6DB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C74187222EF00ACF6DB /* QuartzCore.framework */; };
 		76BF9C771872237200ACF6DB /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C761872237200ACF6DB /* DropboxSDK.framework */; };
-		76C500E018AD8C2F0029952B /* libFlurry_4.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7594018A5894500467154 /* libFlurry_4.3.1.a */; };
 		76C500E618AE8D420029952B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C500E418AE8D420029952B /* Reachability.m */; };
 		76C7593618A3FA2B00467154 /* MethodologyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C7593518A3FA2B00467154 /* MethodologyViewController.m */; };
 		76C7594418A58B3F00467154 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C7594318A58B3F00467154 /* SystemConfiguration.framework */; };
@@ -264,6 +265,8 @@
 		76455F9318AAC68900AF8A7C /* seeAllImagesIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seeAllImagesIcon.png; sourceTree = "<group>"; };
 		76455F9518AAD69400AF8A7C /* GraphViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphViewCell.h; sourceTree = "<group>"; };
 		76455F9618AAD69400AF8A7C /* GraphViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphViewCell.m; sourceTree = "<group>"; };
+		767F452418B54FF9007EB5AE /* Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Profile.h; sourceTree = "<group>"; };
+		767F452518B54FF9007EB5AE /* Profile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Profile.m; sourceTree = "<group>"; };
 		768D564C188F0FD300175EB4 /* SummaryOfRatingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SummaryOfRatingsViewController.h; sourceTree = "<group>"; };
 		768D564D188F0FD300175EB4 /* SummaryOfRatingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SummaryOfRatingsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		768D564F188F0FF500175EB4 /* ElementRatingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementRatingsCell.h; sourceTree = "<group>"; };
@@ -430,7 +433,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76C500E018AD8C2F0029952B /* libFlurry_4.3.1.a in Frameworks */,
+				767F452218B51C07007EB5AE /* libFlurry_4.3.1.a in Frameworks */,
 				4A621CB718AB615B00AE168C /* QuickLook.framework in Frameworks */,
 				76C7594418A58B3F00467154 /* SystemConfiguration.framework in Frameworks */,
 				4AC04091188F0AF2006A2F3C /* libKLSwitch.a in Frameworks */,
@@ -687,9 +690,23 @@
 			name = "Image Viewer Icons";
 			sourceTree = "<group>";
 		};
+		767F452318B54FA6007EB5AE /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				768D56D6189317C300175EB4 /* ElementSubelementProfilesViewController.h */,
+				768D56D7189317C300175EB4 /* ElementSubelementProfilesViewController.m */,
+				768D56D918932BD100175EB4 /* ProfileLabelCell.h */,
+				768D56DA18932BD100175EB4 /* ProfileLabelCell.m */,
+				767F452418B54FF9007EB5AE /* Profile.h */,
+				767F452518B54FF9007EB5AE /* Profile.m */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
 		768D564B188F0FA300175EB4 /* Reporting */ = {
 			isa = PBXGroup;
 			children = (
+				767F452318B54FA6007EB5AE /* Profile */,
 				768D567D1891A8F100175EB4 /* Report Summary and Graph */,
 				768D567E1891ABD400175EB4 /* ReportPagesViewController.h */,
 				768D567F1891ABD400175EB4 /* ReportPagesViewController.m */,
@@ -711,10 +728,6 @@
 				768D56CF1892CFBD00175EB4 /* KeySuggesstionCell.m */,
 				768D56D2189314A900175EB4 /* ScoringAssumptionsViewController.h */,
 				768D56D3189314A900175EB4 /* ScoringAssumptionsViewController.m */,
-				768D56D6189317C300175EB4 /* ElementSubelementProfilesViewController.h */,
-				768D56D7189317C300175EB4 /* ElementSubelementProfilesViewController.m */,
-				768D56D918932BD100175EB4 /* ProfileLabelCell.h */,
-				768D56DA18932BD100175EB4 /* ProfileLabelCell.m */,
 				768D56541890145500175EB4 /* ReportDocViewController.h */,
 				768D56551890145500175EB4 /* ReportDocViewController.m */,
 			);
@@ -1314,6 +1327,7 @@
 				4A4AFC8B18A42EEB006901D1 /* Observations.m in Sources */,
 				4A4AFC8718A407FC006901D1 /* verifyRecordsCell.m in Sources */,
 				76E81F3F18849DB500441F62 /* NotesViewController.m in Sources */,
+				767F452618B54FF9007EB5AE /* Profile.m in Sources */,
 				4A6CFD65189FE6410036DD28 /* verificationCell.m in Sources */,
 				76D96A45187B585900961260 /* ClientViewController.m in Sources */,
 				768D567018915C5200175EB4 /* TitleViewController.m in Sources */,

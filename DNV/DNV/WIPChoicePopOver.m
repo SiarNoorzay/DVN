@@ -29,8 +29,13 @@
 	// Do any additional setup after loading the view.
     if (self.dropBoxSelected) {
         self.exportToDBoxButton.enabled = false;
+        self.btnDelete.enabled = false;
     }
-    else self.exportToDBoxButton.enabled = true;
+    else
+    {
+        self.exportToDBoxButton.enabled = true;
+        self.btnDelete.enabled = true;
+    }
 }
 
 - (void)didReceiveMemoryWarning

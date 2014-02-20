@@ -106,4 +106,7 @@
 
 @property (assign, nonatomic) bool bNAToSubmit;
 
+@property (assign, nonatomic) int mainQuestionPosition;
+@property (strong, nonatomic) Questions *mainSubQuestion;
+
 @end

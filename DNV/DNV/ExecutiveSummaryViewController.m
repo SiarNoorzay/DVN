@@ -89,7 +89,8 @@
     if ([[segue identifier] isEqualToString:@"goToToC"]) {
         
         TableofContentsViewController * tocVC = [segue destinationViewController];
-        
+        MergeClass *fixHeight = [MergeClass new];
+
         tocVC.audit = self.audit;
         
         ReportDocViewController *reportVC = [ReportDocViewController sharedReportDocViewController];
@@ -113,10 +114,13 @@
         rect = self.auditCountLabel.frame;
         rect.origin.y += pixelsToMove;
         self.auditCountLabel.frame = rect;
+        self.auditCountLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.auditCountLabel];
         
         rect = self.elementList.frame;
         rect.origin.y += pixelsToMove;
         self.elementList.frame = rect;
+        self.elementList = (UITextView*)[fixHeight adjustSpaceForMyObject:self.elementList];
+
         
         
         //set height to content size of element list and update pdfview size accordingly
@@ -156,6 +160,87 @@
     
 }
 
+-(void)textViewDidBeginEditing:(UITextView *)textView
+{
+    NSString *notes =textView.text;
+    notes = [notes stringByReplacingOccurrencesOfString:@"<insert summary here>" withString:@""];
+    textView.text = notes;
+}
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    UITextRange *temp =[textView selectedTextRange];
+    //CGPoint point = [textView caretRectForPosition:textView.textContainer.];
+    
+    int pos = [textView offsetFromPosition:textView.beginningOfDocument toPosition:temp.start];
+    
+    NSString *aStr = [textView.text substringToIndex:pos];
+    //UITextPosition *newPos = [textView positionFromPosition:textView.endOfDocument offset:pos];
+    
+    CGSize stringSize = [aStr sizeWithFont:textView.font
+                         constrainedToSize:CGSizeMake(textView.frame.size.width, 9999)
+                             lineBreakMode:NSLineBreakByWordWrapping];
+    
+    int numberOfNewLines = ceil( 100 / textView.font.lineHeight );
+    
+    NSString *spacer = [NSString new];
+    while (numberOfNewLines > 0) {
+        spacer = [spacer stringByAppendingString:@"\n"];
+        numberOfNewLines--;
+    }
+    
+    if( (int)(stringSize.height + textView.frame.origin.y) % 742 > 692 )
+    {
+        
+        
+        aStr = [aStr stringByAppendingString:spacer];
+        NSString *fromCurrentSpotOn = [textView.text substringFromIndex:pos];
+        fromCurrentSpotOn = [fromCurrentSpotOn stringByReplacingOccurrencesOfString:spacer withString:@""];
+        
+        textView.text = [NSString stringWithFormat:@"%@%@%@", aStr, text, fromCurrentSpotOn];
+        
+        NSRange z = {pos+spacer.length+1, 0};
+        [textView setSelectedRange:z];
+        return NO;
+    }
+    else if( text.length > 0 )
+    {
+        NSString *fromCurrentSpotOn = [textView.text substringFromIndex:pos];
+        NSString *builtString = [NSString new];
+        
+        NSRange spotOfSpacer = [fromCurrentSpotOn rangeOfString:spacer];
+        
+        if( (int)spotOfSpacer.length <= 0 )
+            builtString = [builtString stringByAppendingString:fromCurrentSpotOn];
+        
+        while (spotOfSpacer.length > 0)
+        {
+            
+            NSRange newSpot = {spotOfSpacer.location-1, spotOfSpacer.length};
+            NSRange oneChar = {spotOfSpacer.location-1, 1};
+            
+            if( spotOfSpacer.location > 0)
+            {
+                fromCurrentSpotOn = [fromCurrentSpotOn stringByReplacingCharactersInRange:spotOfSpacer withString:@""];
+                fromCurrentSpotOn = [fromCurrentSpotOn stringByReplacingCharactersInRange:newSpot withString:[NSString stringWithFormat:@"%@%@", spacer, [fromCurrentSpotOn substringWithRange:oneChar]]];
+            }
+            
+            builtString = [NSString stringWithFormat:@"%@%@",builtString, fromCurrentSpotOn];
+            
+            fromCurrentSpotOn = [fromCurrentSpotOn substringFromIndex:spotOfSpacer.location+spacer.length+1];
+            spotOfSpacer = [fromCurrentSpotOn rangeOfString:spacer];
+        }
+        
+        textView.text = [NSString stringWithFormat:@"%@%@%@", aStr, text, builtString];
+        
+        NSRange z = {pos+text.length, 0};
+        [textView setSelectedRange:z];
+        
+        return NO;
+    }
+    
+    return YES;
+}
 
 - (void)didReceiveMemoryWarning
 {

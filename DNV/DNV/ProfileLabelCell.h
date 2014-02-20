@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ProfileLabelCell : UITableViewCell
-@property (strong, nonatomic) IBOutlet UILabel *cellLabel;
+@property (strong, nonatomic) IBOutlet UITextView *notesTextView;
 
 @end

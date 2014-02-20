@@ -10,7 +10,7 @@
 #import "Audit.h"
 
 
-@interface ExecutiveSummaryViewController : UIViewController
+@interface ExecutiveSummaryViewController : UIViewController<UITextViewDelegate>
 
 @property (strong, nonatomic) Audit *audit;
 

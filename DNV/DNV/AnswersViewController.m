@@ -38,16 +38,17 @@ BOOL keyboardShouldMove = false;
 BOOL islayeredQuestion = false;
 int subLayerPosition = 0;
 
-Questions *mainSubQuestion;
 Questions *unchangedQuestion;
 
-int mainQuestionPosition;
+
 BOOL isSublayeredQuestion = false;
 
 int numOfSubs;
 
 
 @implementation AnswersViewController
+
+@synthesize mainSubQuestion, mainQuestionPosition;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -60,6 +61,8 @@ int numOfSubs;
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
+    
     if ([self.question.layeredQuesions count] > 0)
         mainSubQuestion = self.question;
 

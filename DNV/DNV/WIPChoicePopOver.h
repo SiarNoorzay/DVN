@@ -19,6 +19,7 @@
 - (IBAction)wipChoiceMade:(UIButton *)sender;
 
 @property (strong, nonatomic) IBOutlet UIButton *exportToDBoxButton;
+@property (weak, nonatomic) IBOutlet UIButton *btnDelete;
 
 
 @end
