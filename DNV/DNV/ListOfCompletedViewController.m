@@ -340,6 +340,14 @@ loadMetadataFailedWithError:(NSError *)error {
         titleVC.audit = self.audit;
     }
     
+    if( [segue.identifier isEqualToString:@"completedToListVerify"])
+    {
+        //to recursively go through and find all verified questions!!
+        VerifyQuestionsViewController *vq = [segue destinationViewController];
+        
+        vq.verifyQuestions = [self getVerifyQuestionsForAudit:self.audit];
+    }
+    
 }
 
 
@@ -533,6 +541,37 @@ loadMetadataFailedWithError:(NSError *)error {
         
     }
     return n;
+}
+
+
+-(NSMutableArray*)getVerifyQuestionsForAudit:(Audit*)anAudit
+{
+    NSMutableArray *verifyQuestions = [NSMutableArray new];
+    
+    for( Elements *Elem in anAudit.Elements)
+    {
+        for ( SubElements *SubElem in Elem.Subelements )
+        {
+            for( Questions *Quest in SubElem.Questions )
+            {
+                [self getAllVerifiedQuestionsFromQuestion:Quest forVerifyArray:verifyQuestions];
+            }
+        }
+    }
+    
+    return verifyQuestions;
+}
+-(void)getAllVerifiedQuestionsFromQuestion:(Questions*)aQuestion forVerifyArray:(NSMutableArray*)vArray
+{
+    for( Questions *LayerQuestion in aQuestion.layeredQuesions )
+    {
+        [self getAllVerifiedQuestionsFromQuestion:LayerQuestion forVerifyArray:vArray];
+    }
+    
+    if ( aQuestion.needsVerifying > 0)
+    {
+        [vArray addObject:aQuestion];
+    }
 }
 
 @end
