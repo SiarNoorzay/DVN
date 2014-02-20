@@ -387,6 +387,44 @@ float animatedDistance2 = 0;
         
         pixelsToMove = self.resultsTableView.frame.size.height - pixelsToMove;
         
+        MergeClass *fixHeight = [MergeClass new];
+        UILabel *someLabel = [[UILabel alloc] initWithFrame:CGRectMake( 50, self.lblProfilesTitle.frame.origin.y+self.lblProfilesTitle.frame.size.height+20, 572, 50)];
+    
+        for( int i=0; i<self.thumbedQuestions.count; i++)
+        {
+            someLabel.numberOfLines = 0;
+            someLabel.font =[UIFont fontWithName:@"Verdana" size:14];
+            Profile *prof = [self.thumbedQuestions objectAtIndex:i];
+            Questions *currQuestion = prof.question;
+            someLabel.text = [NSString stringWithFormat:@"%@",prof.text];
+            int width = 572;
+            int x = 0;
+            if (currQuestion !=nil) {
+                width = 492;
+                x = 80;
+            }
+            CGSize stringSize = [someLabel.text sizeWithFont:[UIFont fontWithName:@"Verdana" size:14]
+                                           constrainedToSize:CGSizeMake(width, 9999)
+                                               lineBreakMode:NSLineBreakByWordWrapping];
+            stringSize.height += 20;
+            
+            CGRect rect = someLabel.frame;
+            rect.size = stringSize;
+            rect.origin.x = x;
+            
+            someLabel.frame = rect;
+            
+            
+            
+            someLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:someLabel];
+            
+            [self.profilesPDFView addSubview:someLabel];
+            
+            //            ySpacer +=
+            someLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, someLabel.frame.origin.y + someLabel.frame.size.height +10, 572, 50)];
+        }
+
+        
         //make the pdfview height bigger
         rect = self.profilesPDFView.frame;
         rect.size.height += pixelsToMove;
@@ -394,6 +432,7 @@ float animatedDistance2 = 0;
         int numPages = ceil( rect.size.height / 792 );
         rect.size.height = numPages * 792;
         self.profilesPDFView.frame = rect;
+        self.resultsTableView.hidden = YES;
         
         [reportVC.viewArray setObject:self.profilesPDFView atIndexedSubscript:9];
 

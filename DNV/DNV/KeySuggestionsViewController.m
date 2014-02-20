@@ -320,7 +320,7 @@ float animatedDistance = 0;
         
         
         
-         MergeClass *fixHeight = [MergeClass new];
+        MergeClass *fixHeight = [MergeClass new];
         UILabel *someLabel = [[UILabel alloc] initWithFrame:CGRectMake( 50, self.lblKeysTitle.frame.origin.y+self.lblKeysTitle.frame.size.height+20, 600, 50)];
         
         for( int i=0; i<self.thumbsDowndQuestions.count; i++)
@@ -329,11 +329,11 @@ float animatedDistance = 0;
             someLabel.font =[UIFont fontWithName:@"Verdana" size:18];
             Questions *currQuestion = [self.thumbsDowndQuestions objectAtIndex:i];
             someLabel.text = [NSString stringWithFormat:@"%@ - %@", [self.positions objectAtIndex:i], currQuestion.notes];
-//            [someLabel sizeToFit];
+            //            [someLabel sizeToFit];
             
             CGSize stringSize = [someLabel.text sizeWithFont:[UIFont fontWithName:@"Verdana" size:18]
-                                  constrainedToSize:CGSizeMake(600, 9999)
-                                      lineBreakMode:NSLineBreakByWordWrapping];
+                                           constrainedToSize:CGSizeMake(600, 9999)
+                                               lineBreakMode:NSLineBreakByWordWrapping];
             stringSize.height += 20;
             
             CGRect rect = someLabel.frame;
@@ -347,7 +347,7 @@ float animatedDistance = 0;
             
             [self.keySugsPDFView addSubview:someLabel];
             
-//            ySpacer +=
+            //            ySpacer +=
             someLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, someLabel.frame.origin.y + someLabel.frame.size.height +10, 600, 50)];
         }
         
@@ -360,10 +360,25 @@ float animatedDistance = 0;
         
         self.keySugsPDFView.frame = rect;
         
+        //set the frame of this view to the bottom of the finalPdfview
+        //        rect = self.keySugsPDFView.frame;
+        //        rect.origin.y = reportVC.finalPFDView.frame.size.height;
+        //        self.keySugsPDFView.frame = rect;
+        //
+        //
+        //        [reportVC.finalPFDView addSubview:self.keySugsPDFView];
+        //        [reportVC.finalPFDView sizeToFit];
+        
+        // [reportVC.viewArray addObject:self.keySugsPDFView];
+        
+        self.KeySugsTableView.hidden=YES;
+        
         [reportVC.viewArray setObject:self.keySugsPDFView atIndexedSubscript:6];
         
+        
     }
+    
 }
 
-    
+
 @end
