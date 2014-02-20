@@ -76,7 +76,7 @@
     NSString *aStr = [textView.text substringToIndex:pos];
     //UITextPosition *newPos = [textView positionFromPosition:textView.endOfDocument offset:pos];
     
-    CGSize stringSize = [aStr sizeWithFont:[UIFont fontWithName:@"Verdana" size:14]
+    CGSize stringSize = [aStr sizeWithFont:textView.font
                          constrainedToSize:CGSizeMake(textView.frame.size.width, 9999)
                              lineBreakMode:NSLineBreakByWordWrapping];
     

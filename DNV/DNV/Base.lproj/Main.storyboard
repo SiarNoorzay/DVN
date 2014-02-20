@@ -3475,6 +3475,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <connections>
                         <outlet property="KeySugsTableView" destination="b6k-QW-lGt" id="j3d-NX-kcO"/>
                         <outlet property="keySugsPDFView" destination="C3y-mA-Nwj" id="yQY-wI-dyd"/>
+                        <outlet property="lblKeysTitle" destination="Rv5-zV-bPT" id="TTb-qp-acx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4vf-mG-5ZX" userLabel="First Responder" sceneMemberID="firstResponder"/>

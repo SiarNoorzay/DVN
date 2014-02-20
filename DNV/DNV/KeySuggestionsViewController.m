@@ -177,7 +177,9 @@ float animatedDistance = 0;
     {
         NSIndexPath* indexPath = [self.KeySugsTableView indexPathForCell:cell];
         [self textViewDidEndEditing:textView inRowAtIndexPath:indexPath];
-        [self.KeySugsTableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationNone];
+        if (indexPath!=nil) {
+            [self.KeySugsTableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationNone];
+        }
     }
     initialHeight = false;
     
@@ -294,6 +296,39 @@ float animatedDistance = 0;
         if( pixelsToMove < 0)
             pixelsToMove = 0;
         
+        
+        
+         MergeClass *fixHeight = [MergeClass new];
+        UILabel *someLabel = [[UILabel alloc] initWithFrame:CGRectMake( 50, self.lblKeysTitle.frame.origin.y+self.lblKeysTitle.frame.size.height+20, 600, 50)];
+        
+        for( int i=0; i<self.thumbsDowndQuestions.count; i++)
+        {
+            someLabel.numberOfLines = 0;
+            someLabel.font =[UIFont fontWithName:@"Verdana" size:18];
+            Questions *currQuestion = [self.thumbsDowndQuestions objectAtIndex:i];
+            someLabel.text = [NSString stringWithFormat:@"%@ - %@", [self.positions objectAtIndex:i], currQuestion.notes];
+//            [someLabel sizeToFit];
+            
+            CGSize stringSize = [someLabel.text sizeWithFont:[UIFont fontWithName:@"Verdana" size:18]
+                                  constrainedToSize:CGSizeMake(600, 9999)
+                                      lineBreakMode:NSLineBreakByWordWrapping];
+            stringSize.height += 20;
+            
+            CGRect rect = someLabel.frame;
+            rect.size = stringSize;
+            
+            someLabel.frame = rect;
+            
+            
+            
+            someLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:someLabel];
+            
+            [self.keySugsPDFView addSubview:someLabel];
+            
+//            ySpacer +=
+            someLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, someLabel.frame.origin.y + someLabel.frame.size.height +10, 600, 50)];
+        }
+        
         //make the pdfview height bigger
         rect = self.keySugsPDFView.frame;
         rect.size.height += pixelsToMove;
@@ -302,7 +337,6 @@ float animatedDistance = 0;
         rect.size.height = numPages * 792;
         
         self.keySugsPDFView.frame = rect;
-        
         
         //set the frame of this view to the bottom of the finalPdfview
 //        rect = self.keySugsPDFView.frame;
@@ -314,6 +348,9 @@ float animatedDistance = 0;
 //        [reportVC.finalPFDView sizeToFit];
         
        // [reportVC.viewArray addObject:self.keySugsPDFView];
+        
+        self.KeySugsTableView.hidden=YES;
+
         [reportVC.viewArray setObject:self.keySugsPDFView atIndexedSubscript:6];
         
 
