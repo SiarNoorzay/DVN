@@ -217,6 +217,10 @@
 loadMetadataFailedWithError:(NSError *)error {
     
     NSLog(@"Error loading metadata: %@", error);
+    
+    UIAlertView * dropboxLoadMetadataErrorAlert = [[UIAlertView alloc] initWithTitle:@"Loading Metadata From Dropbox Error" message:[NSString stringWithFormat:@"There was an error loading metadata. Receiving the following error message from Dropbox: \n%@", error] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+    [dropboxLoadMetadataErrorAlert show];
 }
 
 

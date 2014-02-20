@@ -31,7 +31,14 @@
         self.subElementID = [[subElementDictionary objectForKey:@"subElementID"]integerValue];
         self.isCompleted = [[subElementDictionary objectForKey:@"isCompleted"] boolValue];
         self.name = [subElementDictionary objectForKey:@"name"];
-        self.pointsPossible = [[subElementDictionary objectForKey:@"pointsPossible"]floatValue];
+        
+        if ([[subElementDictionary allKeys] containsObject:@"pointsPossible"]) {
+            
+            self.pointsPossible = [[subElementDictionary objectForKey:@"pointsPossible"]floatValue];
+        }
+        else
+            self.pointsPossible = -1;
+        
         self.pointsAwarded = [[subElementDictionary objectForKey:@"pointsAwarded"]floatValue];
         self.modefiedNAPoints = [[subElementDictionary objectForKey:@"modefiedNAPoints"]floatValue];
         

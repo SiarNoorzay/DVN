@@ -175,7 +175,9 @@
     if (buttonIndex == 1)
     {
         //Code for download button
-        NSArray * auditIDs = [self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.currentAudit.name];
+        NSMutableArray * auditIDs = [self.dnvDBManager retrieveAllAuditIDsOfType:1 forAuditName:self.currentAudit.name];
+        
+        [auditIDs addObjectsFromArray:[self.dnvDBManager retrieveAllAuditIDsOfType:2 forAuditName:self.currentAudit.name]];
         
         NSArray * currentAuditIDChunks = [self.currentAudit.auditID componentsSeparatedByString:@"."];
         NSArray * mergeAuditIDChunks = [self.mergingAudit.auditID componentsSeparatedByString:@"."];
@@ -211,6 +213,10 @@
 loadMetadataFailedWithError:(NSError *)error {
     
     NSLog(@"Error loading metadata: %@", error);
+    
+    UIAlertView * dropboxLoadMetadataErrorAlert = [[UIAlertView alloc] initWithTitle:@"Loading Metadata From Dropbox Error" message:[NSString stringWithFormat:@"There was an error loading metadata. Receiving the following error message from Dropbox: \n%@", error] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+    [dropboxLoadMetadataErrorAlert show];
 }
 
 - (void)restClient:(DBRestClient*)client loadedFile:(NSString*)localPath
@@ -223,6 +229,10 @@ loadMetadataFailedWithError:(NSError *)error {
 
 - (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
     NSLog(@"There was an error loading the file - %@", error);
+    
+    UIAlertView * dropboxLoadFileErrorAlert = [[UIAlertView alloc] initWithTitle:@"Loading File From Dropbox Error" message:[NSString stringWithFormat:@"There was an error loading the file. Receiving the following error message from Dropbox: \n%@", error] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+    [dropboxLoadFileErrorAlert show];
 }
 
 #pragma mark file selection methods
