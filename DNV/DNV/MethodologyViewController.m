@@ -91,6 +91,8 @@ float animatedDistance4 = 0;
     
     
 }
+
+
 - (void)textViewDidBeginEditing:(UITextView*)textView
 {
     
