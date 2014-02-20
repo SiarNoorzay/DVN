@@ -21,7 +21,14 @@
         self.isCompleted = [[elementDictionary objectForKey:@"isCompleted"] boolValue];
         self.name = [elementDictionary objectForKey:@"name"];
         self.isRequired = [[elementDictionary objectForKey:@"isRequired"]boolValue];
-        self.pointsPossible = [[elementDictionary objectForKey:@"pointsPossible"]floatValue];
+        
+        if ([[elementDictionary allKeys] containsObject:@"pointsPossible"]) {
+            
+            self.pointsPossible = [[elementDictionary objectForKey:@"pointsPossible"]floatValue];
+        }
+        else
+            self.pointsPossible = -1;
+        
         self.pointsAwarded = [[elementDictionary objectForKey:@"pointsAwarded"]floatValue];
         
         self.modefiedNAPoints = [[elementDictionary objectForKey:@"modefiedNAPoints"]floatValue];

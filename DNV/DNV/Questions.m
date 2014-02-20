@@ -19,7 +19,14 @@
         
         self.questionID = [[questionDictionary objectForKey:@"questionID"] integerValue];
         self.isCompleted = [[questionDictionary objectForKey:@"isCompleted"] boolValue];
-        self.pointsPossible = [[questionDictionary objectForKey:@"pointsPossible"]floatValue];
+        
+        if ([[questionDictionary allKeys] containsObject:@"pointsPossible"]) {
+            
+            self.pointsPossible = [[questionDictionary objectForKey:@"pointsPossible"]floatValue];
+        }
+        else
+            self.pointsPossible = -1;
+        
         self.pointsAwarded = [[questionDictionary objectForKey:@"pointsAwarded"]floatValue];
         self.questionText = [questionDictionary objectForKey:@"questionText"];
         self.helpText = [questionDictionary objectForKey:@"helpText"];
@@ -35,10 +42,23 @@
         
         self.attachmentsLocationArray = [questionDictionary objectForKey:@"attachmentsLocationArray"];
         self.imageLocationArray = [questionDictionary objectForKey:@"imageLocationArray"];
-        self.questionType = [[questionDictionary objectForKey:@"questionType"] intValue];
+        
+        if ([[questionDictionary allKeys] containsObject:@"questionType"]) {
+            
+            self.questionType = [[questionDictionary objectForKey:@"questionType"]integerValue];
+        }
+        else
+            self.questionType = -1;
+        
         self.isThumbsUp = [[questionDictionary objectForKey:@"isThumbsUp"] boolValue];
         self.isThumbsDown = [[questionDictionary objectForKey:@"isThumbsDown"] boolValue];
-        self.pointsNeededForLayered = [[questionDictionary objectForKey:@"pointsNeededForLayered"] floatValue];
+        
+        if ([[questionDictionary allKeys] containsObject:@"pointsNeededForLayered"]) {
+            
+            self.pointsNeededForLayered = [[questionDictionary objectForKey:@"pointsNeededForLayered"]floatValue];
+        }
+        else
+            self.pointsNeededForLayered = -1;
         
         NSMutableArray *physicalArray = [questionDictionary objectForKey:@"PhysicalObservations"];
         NSMutableArray *interviewArray = [questionDictionary objectForKey:@"InterviewObservations"];

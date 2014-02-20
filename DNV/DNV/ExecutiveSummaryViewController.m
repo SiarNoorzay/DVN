@@ -9,6 +9,7 @@
 #import "ExecutiveSummaryViewController.h"
 #import "ReportDocViewController.h"
 #import "TableofContentsViewController.h"
+#import "ListOfCompletedViewController.h"
 
 @interface ExecutiveSummaryViewController ()
 
@@ -29,19 +30,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
-//    NSError *error;
-//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
-//    
-//    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-//    
-//    NSLog(@"JSON contains:\n%@", [dictionary description]);
-//    
-//    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-//    
-//    self.audit = [[Audit alloc]initWithAudit:theAudit];
-    
-    
+        
     if (![self.audit.report.executiveSummary isEqualToString:@"(null)"]) {
         self.executiveSummary.text = self.audit.report.executiveSummary;
     }
@@ -69,18 +58,32 @@
             tempEleList = [tempEleList stringByAppendingString:[NSString stringWithFormat:@"%@ ", sub.name]];
         }
     }
-//    Elements *ele = [self.audit.Elements objectAtIndex:[self.audit.Elements count]-1];
-//    tempEleList = [tempEleList stringByAppendingString:[NSString stringWithFormat:@"%i (%@). ",[self.audit.Elements count], ele.name]];
-//    SubElements *sub = [ele.Subelements objectAtIndex:[ele.Subelements.count]-1] ;
-//    tempSubEleList = [tempSubEleList stringByAppendingString:[NSString stringWithFormat:@"%i <%@>",[ele.Subelements count], sub.name]];
     
-    //NSAttributedString *atrString = [[NSAttributedString alloc]initWithString:tempEleList];
-    
-   
     self.elementList.text = tempEleList;
-    
 
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Back to Completed Audits List" style:UIBarButtonItemStylePlain target:self action:@selector(popBackToCompletedAudits)];
+    
+    self.audit.report.executiveSummary = self.executiveSummary.text;
+    
+}
+
+-(void)popBackToCompletedAudits{
+    
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[ListOfCompletedViewController class]]) {
+            //Do not forget to import AnOldViewController.h
+            
+            [self.navigationController popToViewController:controller
+                                                  animated:YES];
+            break;
+        }
+    }
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"goToToC"]) {
@@ -244,11 +247,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)viewWillAppear:(BOOL)animated
-{
-    self.audit.report.executiveSummary = self.executiveSummary.text;
-    
-    //TODO: save audit
-}
+
 
 @end

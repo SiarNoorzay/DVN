@@ -14,7 +14,7 @@
 #import "ReportDocViewController.h"
 #import "ScoringAssumptionsViewController.h"
 #import "GraphViewCell.h"
-
+#import "ListOfCompletedViewController.h"
 
 
 @interface SummaryOfRatingsViewController ()
@@ -36,18 +36,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
-    
-    //    NSError *error;
-    //    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
-    //
-    //    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData: data options:kNilOptions error:&error];
-    //
-    //    NSLog(@"JSON contains:\n%@", [dictionary description]);
-    //
-    //    NSDictionary *theAudit = [dictionary objectForKey:@"Audit"];
-    //
-    //    self.audit = [[Audit alloc]initWithAudit:theAudit];
     
     NSMutableArray *tempArr = [[NSMutableArray alloc]initWithCapacity:[self.audit.Elements count]];
     
@@ -112,9 +100,7 @@
                 }
                 
             }
-            //subEleGraphView.elementNames = subEleNames;
-            //  subEleGraphView.elementPercent = subElePercents;
-            //  subEleGraphView.name = ele.name;
+            
             GraphView *subEleGraphView = [[GraphView alloc] initWithElementNames:subEleNames andPercents:subElePercents];
             [subEleGraphView setName:ele.name];
             [subEleGraphView setIsAudit:NO];
@@ -122,18 +108,34 @@
             
             [allGraphViews addObject: subEleGraphView];
             
-            //  [self.graphView setElementNames:subEleNames];
-            //   [self.graphView setElementPercent:subElePercents];
         }
         NSLog(@"Count of graph views: %d", allGraphViews.count);
 
         }
-        
     
     self.graphViews = allGraphViews;
 
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Back to Completed Audits List" style:UIBarButtonItemStylePlain target:self action:@selector(popBackToCompletedAudits)];
     
 }
+
+-(void)popBackToCompletedAudits{
+    
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[ListOfCompletedViewController class]]) {
+            //Do not forget to import AnOldViewController.h
+            
+            [self.navigationController popToViewController:controller
+                                                  animated:YES];
+            break;
+        }
+    }
+}
+
 #pragma mark - TableView Delegates
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -141,8 +143,6 @@
     if (tableView == self.ElementRatingsTableView) { return 44;}
     
     return 268;
-    
-    
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -198,9 +198,6 @@
     [cell.graphViewImage drawRect:CGRectMake(0, 0, 612, 340)];
     //-35, -42, 612, 260
     
- 
-    
-    
     return cell;
 }
 
@@ -208,7 +205,6 @@
     if (tableView == self.ElementRatingsTableView) {
         
         return [self.elementsArray count];
-        
     }
     
     return self.graphViews.count;
@@ -310,9 +306,6 @@
         rect.size.height = numPages * 792;
         self.ratingsPDFView.frame = rect;
         
-        
-        
-        
         //TODO: fix this sheit
         //     rect = self.graphView.frame;
         //     rect.origin.y += pixelsToMove;
@@ -332,7 +325,6 @@
         [reportVC.viewArray setObject:self.ratingsPDFView atIndexedSubscript:7];
         
     }
-    
 }
 
 - (void)didReceiveMemoryWarning

@@ -9,6 +9,7 @@
 #import "ScoringAssumptionsViewController.h"
 #import "ReportDocViewController.h"
 #import "ElementSubelementProfilesViewController.h"
+#import "ListOfCompletedViewController.h"
 
 @interface ScoringAssumptionsViewController ()
 
@@ -53,8 +54,6 @@
         self.scoreAssumpTextView.text = self.audit.report.scoringAssumptions;
 
     }
-    
-
 }
 - (void)textViewDidBeginEditing:(UITextView*)textView
 {
@@ -171,9 +170,26 @@
         
         [reportVC.viewArray setObject:self.scoringAsumPDFView atIndexedSubscript:8];
         
-
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated{
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Back to Completed Audits List" style:UIBarButtonItemStylePlain target:self action:@selector(popBackToCompletedAudits)];
+    
+}
+
+-(void)popBackToCompletedAudits{
+    
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[ListOfCompletedViewController class]]) {
+            //Do not forget to import AnOldViewController.h
+            
+            [self.navigationController popToViewController:controller
+                                                  animated:YES];
+            break;
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning

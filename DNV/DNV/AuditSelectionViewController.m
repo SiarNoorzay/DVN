@@ -15,6 +15,7 @@
 @interface AuditSelectionViewController ()<DBRestClientDelegate>
 
 @property (nonatomic) NSString *chosenAuditPath;
+@property (nonatomic) NSString * errorMsg;
 
 @end
 
@@ -44,7 +45,6 @@
     
     [[self restClient] loadMetadata:self.dbNewFolderPath];
     
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,7 +72,6 @@
     
     cell.textLabel.text = audit.name;
     cell.textLabel.font = [UIFont systemFontOfSize:25.0];
-//    cell.imageView.image = [UIImage imageNamed:@"check-mark-button.png"];
     
     return cell;
 }
@@ -100,7 +99,7 @@
     
 }
 
-#pragma mark Dropbox methods
+#pragma mark - Dropbox methods
 
 - (DBRestClient*)restClient {
     if (restClient == nil) {
@@ -154,6 +153,11 @@
 - (void)restClient:(DBRestClient *)client loadMetadataFailedWithError:(NSError *)error {
     
     NSLog(@"Error loading metadata: %@", error);
+    
+    UIAlertView * dropboxLoadMetadataErrorAlert = [[UIAlertView alloc] initWithTitle:@"Loading Metadata From Dropbox Error" message:[NSString stringWithFormat:@"There was an error loading metadata. Receiving the following error message from Dropbox: \n%@", error] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+    [dropboxLoadMetadataErrorAlert show];
+    
     [self.spinner stopAnimating];
 }
 
@@ -167,11 +171,17 @@
 }
 
 - (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
+    
     NSLog(@"There was an error loading the file - %@", error);
+    
+    UIAlertView * dropboxLoadFileErrorAlert = [[UIAlertView alloc] initWithTitle:@"Loading File From Dropbox Error" message:[NSString stringWithFormat:@"There was an error loading the file. Receiving the following error message from Dropbox: \n%@", error] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+    [dropboxLoadFileErrorAlert show];
+    
     [self.spinner stopAnimating];
 }
 
-#pragma mark file selection methods
+#pragma mark - File Selection Methods
 
 -(void)loadDropboxFile:(NSString *)file{
     
@@ -195,6 +205,7 @@
 }
 
 -(void)getAudit{
+    
     if (_directoryPath) { // check if file exists - if so load it:
         NSError *error;
         
@@ -210,55 +221,50 @@
         self.audit = [[Audit alloc]initWithAudit:theAudit];
         
         //checking for correct audit
+        if ([self auditIsFormatedCorrect:self.audit]){
         
-        //store current user in NSUSERDEFAULTS
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:self.audit.name forKey:@"currentAudit"];
-        [defaults synchronize];
+            //store current user in NSUSERDEFAULTS
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:self.audit.name forKey:@"currentAudit"];
+            [defaults synchronize];
         
-        //Just a DB test
-        //Using the user defaults to create the audit ID
-        self.audit.auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
-        self.audit.auditID = [self.audit.auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
-        self.audit.auditType = 1;
+            //Using the user defaults to create the audit ID
+            self.audit.auditID = [NSString stringWithFormat:@"%@.%@.%@", [defaults objectForKey:@"currentClient"], [defaults objectForKey:@"currentAudit"], [defaults objectForKey:@"currentUser"]];
+            self.audit.auditID = [self.audit.auditID stringByReplacingOccurrencesOfString:@" " withString:@""];
+            self.audit.auditType = 1;
         
-        self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+            self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
         
-        if ([self.dnvDBManager saveAudit:self.audit])//returns true if a new audit is created
-        {
-            //new audit started
-            NSString *curClient = [defaults objectForKey:@"currentClient"];
-            NSString *curAudit = [defaults objectForKey:@"currentAudit"];
+            if ([self.dnvDBManager saveAudit:self.audit])//returns true if a new audit is created
+            {
+                //new audit started
+                NSString *curClient = [defaults objectForKey:@"currentClient"];
+                NSString *curAudit = [defaults objectForKey:@"currentAudit"];
             
-            NSDictionary *newAuditParams =
-            [NSDictionary dictionaryWithObjectsAndKeys:
-             curClient, @"Client",
-             curAudit, @"Audit Name",
-             nil];
+                NSDictionary *newAuditParams =
+                [NSDictionary dictionaryWithObjectsAndKeys:
+                 curClient, @"Client",
+                 curAudit, @"Audit Name",
+                 nil];
             
-            [Flurry logEvent:@"New Audit Started" withParameters:newAuditParams];
-            self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
-            [self performSegueWithIdentifier:@"goToNewElement" sender:self];
+                [Flurry logEvent:@"New Audit Started" withParameters:newAuditParams];
+                self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
+                [self performSegueWithIdentifier:@"goToNewElement" sender:self];
+            }
+            else{
+            
+                UIAlertView * auditAlert = [[UIAlertView alloc] initWithTitle: @"Audit Save Options" message: @"An audit with this ID already exist in the DNV Database. Would you like to work with the currently saved audit, overwrite the saved audit, or keep the saved audit and start a new audit?" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Work On Current Audit", @"Overwrite Audit", @"Keep Both Audits", nil];
+            
+                [auditAlert show];
+            }
         }
         else{
             
-            UIAlertView * auditAlert = [[UIAlertView alloc] initWithTitle: @"Audit Save Options" message: @"An audit with this ID already exist in the DNV Database. Would you like to work with the currently saved audit, overwrite the saved audit, or keep the saved audit and start a new audit?" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Work On Current Audit", @"Overwrite Audit", @"Keep Both Audits", nil];
+            UIAlertView * badFormatAlert = [[UIAlertView alloc] initWithTitle:@"Audit Formatting Error" message:@"The Audit file chosen is not formatted properly. Please contact your Dropbox Administrator to address this issue." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             
-            [auditAlert show];
+            [badFormatAlert show];
         }
-        
-        
-        
-        
-        
-        NSLog(@"Audit Name: %@", self.audit.name);
-        
-      //  ElementSubElementViewController * eleSubEleVC = [segue destinationViewController];
-        //eleSubEleVC.aud = self.audit;
-        //end of DB test
-        
     }
-    
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -318,7 +324,169 @@
         self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
         [self performSegueWithIdentifier:@"goToNewElement" sender:self];
     }
+}
+
+# pragma mark - Check Audit Format Methods
+
+-(BOOL)auditIsFormatedCorrect:(Audit *)audit{
     
+    if ([audit.name isEqualToString:@""] || audit.name == nil) {
+        
+        return false;
+    }
+    
+    if (audit.Elements.count == 0){
+        
+        return false;
+    }
+    else{
+        
+        NSArray * elements = [[NSArray alloc]initWithArray:audit.Elements];
+        for (Elements * ele in elements){
+            
+            if (![self elementHasRequiredFields:ele]){
+                
+                return false;
+            }
+        }
+    }
+    
+    return true;
+}
+
+-(BOOL)elementHasRequiredFields:(Elements *)element{
+    
+    if ([element.name isEqualToString:@""] || element.name == nil) {
+        
+        return false;
+    }
+    
+    if (element.pointsPossible <= 0){
+        
+        return false;
+    }
+    
+    if (element.Subelements.count == 0){
+        
+        return false;
+    }
+    else{
+        
+        NSArray * subElements = [[NSArray alloc]initWithArray:element.Subelements];
+        for (SubElements * subEle in subElements){
+            
+            if (![self subElementHasRequiredFields:subEle]){
+                
+                return false;
+            }
+        }
+    }
+    
+    return true;
+}
+
+-(BOOL)subElementHasRequiredFields:(SubElements *)subElement{
+    
+    if ([subElement.name isEqualToString:@""] || subElement.name == nil){
+        
+        return false;
+    }
+    
+    if (subElement.pointsPossible <= 0){
+        
+        return false;
+    }
+    
+    if (subElement.Questions.count == 0){
+        
+        return false;
+    }
+    else{
+        
+        NSArray * questions = [[NSArray alloc]initWithArray:subElement.Questions];
+        for (Questions * question in questions){
+            
+            if (![self questionHasRequiredFields:question]){
+                
+                return false;
+            }
+        }
+    }
+    
+    return true;
+}
+
+-(BOOL)questionHasRequiredFields:(Questions *)question{
+    
+    if ([question.questionText isEqualToString:@""] || question.questionText == nil){
+        
+        return false;
+    }
+    
+    if (question.pointsPossible <= 0) {
+        
+        return false;
+    }
+    
+    if ([question.helpText isEqualToString:@""] || question.helpText == nil){
+        
+        return false;
+    }
+    
+    if (question.questionType < 0) {
+        
+        return false;
+    }
+    
+    if (question.layeredQuesions.count > 0){
+        
+        if (question.pointsNeededForLayered < 0){
+            
+            return false;
+        }
+        
+        NSArray * layeredQuestions = [[NSArray alloc]initWithArray:question.layeredQuesions];
+        for (Questions * lQuest in layeredQuestions){
+            
+            if (![self questionHasRequiredFields:lQuest]){
+                
+                return false;
+            }
+        }
+    }
+    
+    if (question.Answers.count == 0){
+        
+        return false;
+    }
+    else{
+        
+        NSArray * answers = [[NSArray alloc]initWithArray:question.Answers];
+        for (Answers * answer in answers){
+            
+            if (![self answerHasRequiredFields:answer forQuestionType:question.questionType]){
+                
+                return false;
+            }
+        }
+    }
+    
+    return true;
+}
+
+-(BOOL)answerHasRequiredFields:(Answers *)answer forQuestionType:(int)qType{
+    
+    if (([answer.answerText isEqualToString:@""] || answer.answerText == nil) && qType != 4){
+        
+        return false;
+    }
+    
+    if (answer.pointsPossible < 0){
+        
+        return false;
+    }
+    
+    return true;
 }
 
 @end

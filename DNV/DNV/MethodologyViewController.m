@@ -9,6 +9,7 @@
 #import "MethodologyViewController.h"
 #import "ReportDocViewController.h"
 #import "ConclusionViewController.h"
+#import "ListOfCompletedViewController.h"
 
 @interface MethodologyViewController ()
 
@@ -38,6 +39,25 @@ float animatedDistance4 = 0;
 	// Do any additional setup after loading the view.
     self.parentView = self.methodPDFView;
 
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Back to Completed Audits List" style:UIBarButtonItemStylePlain target:self action:@selector(popBackToCompletedAudits)];
+    
+}
+
+-(void)popBackToCompletedAudits{
+    
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[ListOfCompletedViewController class]]) {
+            //Do not forget to import AnOldViewController.h
+            
+            [self.navigationController popToViewController:controller
+                                                  animated:YES];
+            break;
+        }
+    }
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

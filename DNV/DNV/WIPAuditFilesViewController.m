@@ -195,6 +195,11 @@
 loadMetadataFailedWithError:(NSError *)error {
     
     NSLog(@"Error loading metadata: %@", error);
+    
+    UIAlertView * dropboxLoadMetadataErrorAlert = [[UIAlertView alloc] initWithTitle:@"Loading Metadata From Dropbox Error" message:[NSString stringWithFormat:@"There was an error loading metadata. Receiving the following error message from Dropbox: \n%@", error] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+    [dropboxLoadMetadataErrorAlert show];
+    
     [self.spinner stopAnimating];
 }
 
@@ -211,7 +216,13 @@ loadMetadataFailedWithError:(NSError *)error {
 }
 
 - (void)restClient:(DBRestClient*)client loadFileFailedWithError:(NSError*)error {
+    
     NSLog(@"There was an error loading the file - %@", error);
+    
+    UIAlertView * dropboxLoadFileErrorAlert = [[UIAlertView alloc] initWithTitle:@"Loading File From Dropbox Error" message:[NSString stringWithFormat:@"There was an error loading the file. Receiving the following error message from Dropbox: \n%@", error] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+    [dropboxLoadFileErrorAlert show];
+    
     [self.spinner stopAnimating];
 }
 
@@ -395,18 +406,27 @@ loadMetadataFailedWithError:(NSError *)error {
         //use this to access the audit and its components dictionary style
         self.audit = [[Audit alloc]initWithAudit:theAudit];
         
-        //import attachments locally and change attachment audit paths
-        self.audit = [self formatAndImportAttachmentsAndImages:self.audit];
+        
+        if ([self auditIsFormatedCorrect:self.audit]){
+        
+            //import attachments locally and change attachment audit paths
+            self.audit = [self formatAndImportAttachmentsAndImages:self.audit];
 
-        //saving imported audit to database
-        [self.dnvDBManager saveAudit:self.audit];
+            //saving imported audit to database
+            [self.dnvDBManager saveAudit:self.audit];
         
-        //retrieving audit from database to populate ids
-        self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
+            //retrieving audit from database to populate ids
+            self.audit = [self.dnvDBManager retrieveAudit:self.audit.auditID];
         
-        NSLog(@"Audit Name: %@", self.audit.name);
-        //end of DB test
-        
+            NSLog(@"Audit Name: %@", self.audit.name);
+            //end of DB test
+        }
+        else{
+            
+            UIAlertView * badFormatAlert = [[UIAlertView alloc] initWithTitle:@"Audit Formatting Error" message:@"The Audit file chosen is not formatted properly. Please contact your Dropbox Administrator to address this issue." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            
+            [badFormatAlert show];
+        }
     }
 }
 
@@ -505,13 +525,172 @@ loadMetadataFailedWithError:(NSError *)error {
     
     NSString * internalPath = [self setAttachPath:fileName];
     
-    //[[self restClient2] uploadFile:fileName toPath:dropboxPath withParentRev:nil fromPath:internalPath];
-    
-    //using this deprecated method since it overwrites instead of renaming
     [[self restClient3] loadFile:dropboxPath intoPath:internalPath];
     
     return internalPath;
+}
+
+# pragma mark - Check Audit Format Methods
+
+-(BOOL)auditIsFormatedCorrect:(Audit *)audit{
     
+    if ([audit.name isEqualToString:@""] || audit.name == nil) {
+        
+        return false;
+    }
+    
+    if (audit.Elements.count == 0){
+        
+        return false;
+    }
+    else{
+        
+        NSArray * elements = [[NSArray alloc]initWithArray:audit.Elements];
+        for (Elements * ele in elements){
+            
+            if (![self elementHasRequiredFields:ele]){
+                
+                return false;
+            }
+        }
+    }
+    
+    return true;
+}
+
+-(BOOL)elementHasRequiredFields:(Elements *)element{
+    
+    if ([element.name isEqualToString:@""] || element.name == nil) {
+        
+        return false;
+    }
+    
+    if (element.pointsPossible <= 0){
+        
+        return false;
+    }
+    
+    if (element.Subelements.count == 0){
+        
+        return false;
+    }
+    else{
+        
+        NSArray * subElements = [[NSArray alloc]initWithArray:element.Subelements];
+        for (SubElements * subEle in subElements){
+            
+            if (![self subElementHasRequiredFields:subEle]){
+                
+                return false;
+            }
+        }
+    }
+    
+    return true;
+}
+
+-(BOOL)subElementHasRequiredFields:(SubElements *)subElement{
+    
+    if ([subElement.name isEqualToString:@""] || subElement.name == nil){
+        
+        return false;
+    }
+    
+    if (subElement.pointsPossible <= 0){
+        
+        return false;
+    }
+    
+    if (subElement.Questions.count == 0){
+        
+        return false;
+    }
+    else{
+        
+        NSArray * questions = [[NSArray alloc]initWithArray:subElement.Questions];
+        for (Questions * question in questions){
+            
+            if (![self questionHasRequiredFields:question]){
+                
+                return false;
+            }
+        }
+    }
+    
+    return true;
+}
+
+-(BOOL)questionHasRequiredFields:(Questions *)question{
+    
+    if ([question.questionText isEqualToString:@""] || question.questionText == nil){
+        
+        return false;
+    }
+    
+    if (question.pointsPossible <= 0) {
+        
+        return false;
+    }
+    
+    if ([question.helpText isEqualToString:@""] || question.helpText == nil){
+        
+        return false;
+    }
+    
+    if (question.questionType < 0) {
+        
+        return false;
+    }
+    
+    if (question.layeredQuesions.count > 0){
+        
+        if (question.pointsNeededForLayered < 0){
+            
+            return false;
+        }
+        
+        NSArray * layeredQuestions = [[NSArray alloc]initWithArray:question.layeredQuesions];
+        for (Questions * lQuest in layeredQuestions){
+            
+            if (![self questionHasRequiredFields:lQuest]){
+                
+                return false;
+            }
+        }
+    }
+    
+    if (question.Answers.count == 0){
+        
+        return false;
+    }
+    else{
+        
+        NSArray * answers = [[NSArray alloc]initWithArray:question.Answers];
+        for (Answers * answer in answers){
+            
+            if (![self answerHasRequiredFields:answer forQuestionType:question.questionType]){
+                
+                return false;
+            }
+        }
+    }
+    
+    return true;
+}
+
+-(BOOL)answerHasRequiredFields:(Answers *)answer forQuestionType:(int)qType{
+    
+    if (([answer.answerText isEqualToString:@""] || answer.answerText == nil) && qType != 4){
+        
+        return false;
+    }
+    
+    if (answer.pointsPossible < 0){
+        
+        return false;
+    }
+    
+    return true;
 }
 
 - (void)restClient:(DBRestClient*)client createdFolder:(DBMetadata*)folder{
@@ -721,6 +900,7 @@ loadMetadataFailedWithError:(NSError *)error {
     return fileName;
     
 }
+
 -(int) getNumOfSubQuestionsAndSetAllSubsArray:(Questions *)question layerDepth:(int)depth
 {
     int n = 1;
@@ -746,4 +926,5 @@ loadMetadataFailedWithError:(NSError *)error {
     }
     return n;
 }
+
 @end

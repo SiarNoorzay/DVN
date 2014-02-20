@@ -28,7 +28,14 @@
     
         self.answerID = [[answerDictionary objectForKey:@"answerID"]intValue];
         self.answerText = [answerDictionary objectForKey:@"answerText"];
-        self.pointsPossible = [[answerDictionary objectForKey:@"pointsPossible"]floatValue];
+        
+        if ([[answerDictionary allKeys] containsObject:@"pointsPossible"]) {
+            
+            self.pointsPossible = [[answerDictionary objectForKey:@"pointsPossible"]floatValue];
+        }
+        else
+            self.pointsPossible = -1;
+        
         self.isSelected = [[answerDictionary objectForKey:@"isSelected"] boolValue];
         
         NSMutableArray *tempArray = [answerDictionary objectForKey:@"Questions"];

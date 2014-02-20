@@ -73,8 +73,6 @@
 
 -(void)setEnabledFlagsAndReloadQuestions;
 
-
-
 @property (strong, nonatomic) IBOutlet UIButton *firstButton;
 @property (strong, nonatomic) IBOutlet UIButton *lastButton;
 @property (strong, nonatomic) IBOutlet UIButton *nextButton;

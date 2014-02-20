@@ -144,7 +144,45 @@
         NSLog(@"JSON contains:\n%@", [dictionary description]);
 
         self.arrayOfUsers = [[NSArray alloc ] initWithArray:[dictionary objectForKey:@"Users"]];
+        
+        int userCount = 0;
+        
+        for (User * usr in self.arrayOfUsers) {
+            
+            if ([self userIsCorrect:usr]){
+                
+                userCount++;
+                [self.dnvDBManager saveUser:usr];
+            }
+        }
+        
+        if (self.arrayOfUsers.count > userCount){
+            
+            UIAlertView * badUsersAlert = [[UIAlertView alloc] initWithTitle:@"User File Formatting Error" message:@"One or more User creditials were not properly formatted. Any users effected by this error will not be able to signing in. Please contact your Dropbox administrator for assistance." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            
+            [badUsersAlert show];
+        }
     }
+}
+
+-(BOOL)userIsCorrect:(User *)usr{
+    
+    if ([[usr objectForKey:@"userID"] isEqualToString:@""] || ![usr objectForKey:@"userID"]){
+        
+        return false;
+    }
+    
+    if ([[usr objectForKey:@"password"] isEqualToString:@""] || ![usr objectForKey:@"password"]){
+        
+        return false;
+    }
+    
+    if ([[usr objectForKey:@"fullName"] isEqualToString:@""] || ![usr objectForKey:@"fullName"]){
+        
+        return false;
+    }
+    
+    return true;
 }
 
 
@@ -153,6 +191,7 @@
     restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     restClient.delegate = self;
 }
+
 - (DBRestClient*)restClient {
     if (restClient == nil) {
         restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
@@ -160,6 +199,7 @@
     }
     return restClient;
 }
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == self.passwordTextField) {
         [textField resignFirstResponder];
@@ -174,6 +214,7 @@
 - (IBAction)LogInButton:(UIBarButtonItem *)sender {
     [self attemptToLogin];
 }
+
 -(void)attemptToLogin
 {
     if( ![[DBSession sharedSession] isLinked] )
@@ -198,8 +239,6 @@
         BOOL foundUser = false;
         
         for (User *usr in self.arrayOfUsers) {
-            
-            [self.dnvDBManager saveUser:usr];
             
             if ([[usr objectForKey:@"userID" ] isEqualToString:self.userIDTextField.text]) {
                 

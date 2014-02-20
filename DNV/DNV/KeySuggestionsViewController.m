@@ -9,6 +9,7 @@
 #import "KeySuggestionsViewController.h"
 #import "ReportDocViewController.h"
 #import "SummaryOfRatingsViewController.h"
+#import "ListOfCompletedViewController.h"
 
 @interface KeySuggestionsViewController ()
 
@@ -31,6 +32,7 @@ float animatedDistance = 0;
     }
     return self;
 }
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     for (int i=0; i<self.thumbsDowndQuestions.count; i++) {
@@ -38,7 +40,6 @@ float animatedDistance = 0;
         NSString *notes =quest.notes;
         notes = [notes stringByReplacingOccurrencesOfString:@"<insert text here>\n" withString:@""];
         quest.notes = notes;
-        
         
     }
 }
@@ -89,8 +90,27 @@ float animatedDistance = 0;
         insert = [insert stringByAppendingString:quest.notes];
         quest.notes = insert;
     }
-
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Back to Completed Audits List" style:UIBarButtonItemStylePlain target:self action:@selector(popBackToCompletedAudits)];
+    
+}
+
+-(void)popBackToCompletedAudits{
+    
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[ListOfCompletedViewController class]]) {
+            //Do not forget to import AnOldViewController.h
+            
+            [self.navigationController popToViewController:controller
+                                                  animated:YES];
+            break;
+        }
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath  {
  
     Questions *quest =[self.thumbsDowndQuestions objectAtIndex:indexPath.row];
@@ -99,14 +119,8 @@ float animatedDistance = 0;
     CGSize stringSize = [label sizeWithFont:[UIFont fontWithName:@"Verdana" size:18]
                           constrainedToSize:CGSizeMake(401, 9999)
                               lineBreakMode:NSLineBreakByWordWrapping];
-    //if (stringSize.height < 70)stringSize.height = 70;
     
-    //int add = 22;
-    //if (initialHeight) add = 0;
-
     return stringSize.height+55;// + add;
-
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -114,10 +128,12 @@ float animatedDistance = 0;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
     return [self.thumbsDowndQuestions count];
 }
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString * cellIdentifier = @"KeySuggesstionCell";
@@ -147,11 +163,13 @@ float animatedDistance = 0;
     return cell;
     
 }
+
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
     
 }
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Perform the real delete action here. Note: you may need to check editing style
@@ -170,6 +188,7 @@ float animatedDistance = 0;
     }
     NSLog(@"Deleted row.");
 }
+
 -(void)textViewDidEndEditing:(UITextView *)textView
 {
     KeySuggesstionCell* cell = [self parentCellFor:textView];
@@ -181,9 +200,11 @@ float animatedDistance = 0;
             [self.KeySugsTableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationNone];
         }
     }
+    
     initialHeight = false;
     
 }
+
 - (void)textViewDidBeginEditing:(UITextView*)textView
 {
     KeySuggesstionCell* cell = [self parentCellFor:textView];
@@ -248,6 +269,7 @@ float animatedDistance = 0;
         return (KeySuggesstionCell*)view;
     return [self parentCellFor:view.superview];
 }
+
 - (void)textViewDidEndEditing:(UITextView*)textView inRowAtIndexPath:(NSIndexPath*)indexPath;
 {
     Questions *quest = [self.thumbsDowndQuestions objectAtIndex:indexPath.row];
@@ -338,24 +360,9 @@ float animatedDistance = 0;
         
         self.keySugsPDFView.frame = rect;
         
-        //set the frame of this view to the bottom of the finalPdfview
-//        rect = self.keySugsPDFView.frame;
-//        rect.origin.y = reportVC.finalPFDView.frame.size.height;
-//        self.keySugsPDFView.frame = rect;
-//        
-//        
-//        [reportVC.finalPFDView addSubview:self.keySugsPDFView];
-//        [reportVC.finalPFDView sizeToFit];
-        
-       // [reportVC.viewArray addObject:self.keySugsPDFView];
-        
-        self.KeySugsTableView.hidden=YES;
-
         [reportVC.viewArray setObject:self.keySugsPDFView atIndexedSubscript:6];
         
-
     }
-    
 }
 
     
