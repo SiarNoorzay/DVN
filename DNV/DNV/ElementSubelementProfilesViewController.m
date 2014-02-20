@@ -211,11 +211,14 @@ float animatedDistance2 = 0;
     static NSString * cellIdentifier = @"ProfileLabelCell";
     
     ProfileLabelCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+
     if(cell == nil){
         cell = [[ProfileLabelCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
+    
     Profile *cellProf = [self.thumbedQuestions objectAtIndex:indexPath.row];
     cell.notesTextView.text = cellProf.text;
+    cell.notesTextView.delegate = self;
     
     if (cellProf.question !=nil)
     {
@@ -234,6 +237,7 @@ float animatedDistance2 = 0;
         cell.notesTextView.frame = rect;
         cell.notesTextView.selectable = YES;
         cell.userInteractionEnabled = YES;
+        [cell.notesTextView setEditable:YES];
         
     }else //regular label
     {
@@ -244,6 +248,7 @@ float animatedDistance2 = 0;
         cell.notesTextView.frame = rect;
         cell.notesTextView.selectable = NO;
         cell.userInteractionEnabled = NO;
+        [cell.notesTextView setEditable:NO];
     }
 
     return cell;
@@ -265,8 +270,11 @@ float animatedDistance2 = 0;
     if (cell)
     {
         NSIndexPath* indexPath = [self.resultsTableView indexPathForCell:cell];
-        [self textViewDidEndEditing:textView inRowAtIndexPath:indexPath];
-        [self.resultsTableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationNone];
+        if (indexPath !=nil) {
+            [self textViewDidEndEditing:textView inRowAtIndexPath:indexPath];
+            [self.resultsTableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationNone];
+
+        }
     }
     //[self.resultsTableView reloadData];
 }
@@ -334,14 +342,14 @@ float animatedDistance2 = 0;
 - (void)textViewDidEndEditing:(UITextView*)textView inRowAtIndexPath:(NSIndexPath*)indexPath;
 {
     Profile *cellProf = [self.thumbedQuestions objectAtIndex:indexPath.row];
-    //if(cellProf.question != nil)
-    //{
+    if(cellProf.question != nil)
+    {
         cellProf.text = textView.text;
         CGRect rect = textView.frame;
         rect.size.height = textView.contentSize.height;
         textView.frame = rect;
         cellProf.question.notes = textView.text;
-    //}
+    }
     CGRect viewFrame = self.parentView.frame;
     viewFrame.origin.y += animatedDistance2;
     

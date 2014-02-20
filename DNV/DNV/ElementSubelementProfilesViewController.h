@@ -11,7 +11,7 @@
 
 
 
-@interface ElementSubelementProfilesViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface ElementSubelementProfilesViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
 
 @property (strong,nonatomic) Audit *audit;
 
