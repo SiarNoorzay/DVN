@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "Audit.h"
 #import "ReportDocViewController.h"
+#import "DNVDatabaseManagerClass.h"
 
-@interface TitleViewController : UIViewController<UIPageViewControllerDataSource>
+@interface TitleViewController : UIViewController
 
 @property (strong, atomic) Audit *audit;
+
+@property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
 
 @property (strong, nonatomic) IBOutlet UITextField *clientName;
 @property (strong, nonatomic) IBOutlet UITextField *date;

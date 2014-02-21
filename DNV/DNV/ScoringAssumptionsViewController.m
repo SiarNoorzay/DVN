@@ -31,8 +31,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    // self.audit = getAuditFromDB with ID from previous selection
-    
+
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
 //    
 //    NSError *error;
 //    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sampleCompletedAudit" ofType:@"json"]];
@@ -202,7 +202,8 @@
 {
     self.audit.report.scoringAssumptions = self.scoreAssumpTextView.text;
     
-    //TODO: save audit back to DB
+    [self.dnvDBManager updateReport:self.audit.report];
+    
 }
 
 

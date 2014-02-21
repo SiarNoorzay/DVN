@@ -44,8 +44,8 @@ float animatedDistance2 = 0;
             NSString *notes = quest.notes;
             notes = [notes stringByReplacingOccurrencesOfString:@"<insert text here>\n" withString:@""];
             quest.notes = notes;
-            
-            //TODO: save quest back to DB
+            [self.dnvDBManager updateQuestion:quest];
+
         }
     }
 }
@@ -55,6 +55,8 @@ float animatedDistance2 = 0;
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.thumbedQuestions = [[NSMutableArray alloc]initWithCapacity:1];
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+    
     
     for (int i = 0; i<[self.audit.Elements count]; i++) {
         Elements *ele = [self.audit.Elements objectAtIndex:i];
@@ -176,6 +178,7 @@ float animatedDistance2 = 0;
     
 }
 
+
 -(void)popBackToCompletedAudits{
     
     for (UIViewController *controller in self.navigationController.viewControllers) {
@@ -218,11 +221,14 @@ float animatedDistance2 = 0;
     static NSString * cellIdentifier = @"ProfileLabelCell";
     
     ProfileLabelCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+
     if(cell == nil){
         cell = [[ProfileLabelCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
+    
     Profile *cellProf = [self.thumbedQuestions objectAtIndex:indexPath.row];
     cell.notesTextView.text = cellProf.text;
+    cell.notesTextView.delegate = self;
     
     if (cellProf.question !=nil)
     {
@@ -241,6 +247,7 @@ float animatedDistance2 = 0;
         cell.notesTextView.frame = rect;
         cell.notesTextView.selectable = YES;
         cell.userInteractionEnabled = YES;
+        [cell.notesTextView setEditable:YES];
         
     }else //regular label
     {
@@ -251,6 +258,7 @@ float animatedDistance2 = 0;
         cell.notesTextView.frame = rect;
         cell.notesTextView.selectable = NO;
         cell.userInteractionEnabled = NO;
+        [cell.notesTextView setEditable:NO];
     }
 
     return cell;
@@ -272,8 +280,11 @@ float animatedDistance2 = 0;
     if (cell)
     {
         NSIndexPath* indexPath = [self.resultsTableView indexPathForCell:cell];
-        [self textViewDidEndEditing:textView inRowAtIndexPath:indexPath];
-        [self.resultsTableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationNone];
+        if (indexPath !=nil) {
+            [self textViewDidEndEditing:textView inRowAtIndexPath:indexPath];
+            [self.resultsTableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationNone];
+
+        }
     }
     //[self.resultsTableView reloadData];
 }
@@ -341,14 +352,14 @@ float animatedDistance2 = 0;
 - (void)textViewDidEndEditing:(UITextView*)textView inRowAtIndexPath:(NSIndexPath*)indexPath;
 {
     Profile *cellProf = [self.thumbedQuestions objectAtIndex:indexPath.row];
-    //if(cellProf.question != nil)
-    //{
+    if(cellProf.question != nil)
+    {
         cellProf.text = textView.text;
         CGRect rect = textView.frame;
         rect.size.height = textView.contentSize.height;
         textView.frame = rect;
         cellProf.question.notes = textView.text;
-    //}
+    }
     CGRect viewFrame = self.parentView.frame;
     viewFrame.origin.y += animatedDistance2;
     
@@ -379,6 +390,44 @@ float animatedDistance2 = 0;
         
         pixelsToMove = self.resultsTableView.frame.size.height - pixelsToMove;
         
+        MergeClass *fixHeight = [MergeClass new];
+        UILabel *someLabel = [[UILabel alloc] initWithFrame:CGRectMake( 50, self.lblProfilesTitle.frame.origin.y+self.lblProfilesTitle.frame.size.height+20, 572, 50)];
+    
+        for( int i=0; i<self.thumbedQuestions.count; i++)
+        {
+            someLabel.numberOfLines = 0;
+            someLabel.font =[UIFont fontWithName:@"Verdana" size:14];
+            Profile *prof = [self.thumbedQuestions objectAtIndex:i];
+            Questions *currQuestion = prof.question;
+            someLabel.text = [NSString stringWithFormat:@"%@",prof.text];
+            int width = 572;
+            int x = 0;
+            if (currQuestion !=nil) {
+                width = 492;
+                x = 80;
+            }
+            CGSize stringSize = [someLabel.text sizeWithFont:[UIFont fontWithName:@"Verdana" size:14]
+                                           constrainedToSize:CGSizeMake(width, 9999)
+                                               lineBreakMode:NSLineBreakByWordWrapping];
+            stringSize.height += 20;
+            
+            CGRect rect = someLabel.frame;
+            rect.size = stringSize;
+            rect.origin.x = x;
+            
+            someLabel.frame = rect;
+            
+            
+            
+            someLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:someLabel];
+            
+            [self.profilesPDFView addSubview:someLabel];
+            
+            //            ySpacer +=
+            someLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, someLabel.frame.origin.y + someLabel.frame.size.height +10, 572, 50)];
+        }
+
+        
         //make the pdfview height bigger
         rect = self.profilesPDFView.frame;
         rect.size.height += pixelsToMove;
@@ -386,6 +435,7 @@ float animatedDistance2 = 0;
         int numPages = ceil( rect.size.height / 792 );
         rect.size.height = numPages * 792;
         self.profilesPDFView.frame = rect;
+        self.resultsTableView.hidden = YES;
         
         [reportVC.viewArray setObject:self.profilesPDFView atIndexedSubscript:9];
 

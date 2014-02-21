@@ -164,7 +164,9 @@
     self.audit.client.auditDate = self.dateOfIssue.text;
     self.audit.report.projectNum = self.projectNum.text; 
     
-    //TODO:save audit
+    [self.dnvDBManager updateClient:self.audit.client];
+    [self.dnvDBManager updateReport:self.audit.report];
+    
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

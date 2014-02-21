@@ -2427,7 +2427,7 @@
                                 <rect key="frame" x="78" y="148" width="612" height="792"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Company Name" minimumFontSize="17" id="mJU-bu-XMI">
+                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Company Name" minimumFontSize="17" id="mJU-bu-XMI">
                                         <rect key="frame" x="214" y="103" width="357" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="18"/>
@@ -2874,6 +2874,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="evaluatedPercentageLabel" destination="hxj-L4-EIx" id="SwG-9Y-1ef"/>
                         <outlet property="evaluatedPossibleLabel" destination="wqq-wb-Unw" id="uZF-2h-Mrd"/>
                         <outlet property="graphsTableView" destination="pn8-Zh-bI2" id="VMo-4L-2XX"/>
+                        <outlet property="lblElementTitle" destination="SEz-ef-svt" id="upc-X9-C3g"/>
                         <outlet property="possibleLabel" destination="1Jy-1t-akR" id="xMo-m5-c8E"/>
                         <outlet property="ratingsPDFView" destination="pMf-KX-WZ2" id="x7l-0J-kWH"/>
                         <outlet property="totalAwardedLabel" destination="GqN-eg-xaU" id="ONo-6v-RKm"/>
@@ -3620,6 +3621,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </view>
                     <navigationItem key="navigationItem" title="Process Profiles" id="HKa-lD-fhg"/>
                     <connections>
+                        <outlet property="lblProfilesTitle" destination="hA0-38-b3t" id="7w1-gh-Z3Z"/>
                         <outlet property="profilesPDFView" destination="vka-Sx-OnN" id="p4N-SA-HiL"/>
                         <outlet property="resultsTableView" destination="4Di-QG-BMJ" id="JZa-BF-eSq"/>
                     </connections>

@@ -8,12 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "Audit.h"
+#import "DNVDatabaseManagerClass.h"
 
 
 
-@interface ElementSubelementProfilesViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface ElementSubelementProfilesViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
 
 @property (strong,nonatomic) Audit *audit;
+@property (strong, nonatomic) IBOutlet UILabel *lblProfilesTitle;
+@property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
+
 
 @property (strong, nonatomic) IBOutlet UIView *profilesPDFView;
 //@property (strong, nonatomic) NSArray *cellArrary;

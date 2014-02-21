@@ -30,7 +30,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-        
+
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+
+    
     if (![self.audit.report.executiveSummary isEqualToString:@"(null)"]) {
         self.executiveSummary.text = self.audit.report.executiveSummary;
     }
@@ -246,6 +249,13 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+   self.audit.report.executiveSummary = self.executiveSummary.text;
+    
+    [self.dnvDBManager updateReport:self.audit.report];
+    
 }
 
 
