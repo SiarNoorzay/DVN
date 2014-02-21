@@ -700,7 +700,7 @@ int numOfSubs;
 
 - (IBAction)submitButton:(id)sender {
     
-    if (!answered && self.question.questionType == 1 && self.question.isApplicable){
+    if (!answered && self.question.questionType == 1 && self.question.isApplicable && (!self.question.isCompleted)){
        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"No answer" message: @"" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         

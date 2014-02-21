@@ -128,7 +128,7 @@ int subEleNumber;
                 if( !ele.isApplicable)
                     [self.naForElements setBackgroundImage:[UIImage imageNamed:@"no.png"] forState:UIControlStateNormal];
                 else
-                    [self.naForElements setBackgroundImage:[UIImage imageNamed:@"yes.png"] forState:UIControlStateNormal];
+                    [self.naForElements setBackgroundImage:[UIImage imageNamed:@"yes-logo-green.png"] forState:UIControlStateNormal];
             }
             
             [self.dnvDBManager updateElement:ele];
@@ -240,7 +240,7 @@ int subEleNumber;
     if( !self.ele.isApplicable)
         [self.naForElements setBackgroundImage:[UIImage imageNamed:@"no.png"] forState:UIControlStateNormal];
     else
-        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"yes.png"] forState:UIControlStateNormal];
+        [self.naForElements setBackgroundImage:[UIImage imageNamed:@"yes-logo-green.png"] forState:UIControlStateNormal];
     
     [self.subElementTable reloadData];
     elementNumber = row;

@@ -37,6 +37,10 @@
     self.dnvDB = [DNVDatabaseManagerClass getSharedInstance];
     
     myTabBar = (VerifyTabController*)self.tabBarController;
+    if ([myTabBar.theQuestion.Records count] == 0)
+    {
+        [self btnAddToTable:self];
+    }
 }
 
 - (void)didReceiveMemoryWarning
