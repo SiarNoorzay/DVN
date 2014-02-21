@@ -40,14 +40,16 @@
     
     [self setTextfieldDelegates];
     
-    if ([self.report.clientRef isEqualToString:@"(null)"] || [self.report.clientRef isEqualToString:@""]) {
-        self.clientRefTxt.enabled = true;
-    }
-    else{
+//    if ([self.report.clientRef isEqualToString:@"(null)"] || [self.report.clientRef isEqualToString:@""]) {
+//        self.clientRefTxt.enabled = true;
+//    }
+//    else{
+//    
+//        self.clientRefTxt.enabled = false;
+//        self.clientRefTxt.text = self.report.clientRef;
+//    }
     
-        self.clientRefTxt.enabled = false;
-        self.clientRefTxt.text = self.report.clientRef;
-    }
+    self.clientRefTxt.text = self.report.clientRef;
     
     self.companyNameTxt.text = self.client.companyName;
     self.companyNameTxt.enabled = false;

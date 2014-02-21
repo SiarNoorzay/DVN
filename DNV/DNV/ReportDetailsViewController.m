@@ -111,16 +111,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
-    if ([self.audit.report.clientRef isEqualToString:@"(null)"] || [self.audit.report.clientRef isEqualToString:@""]) {
-        self.clientRef.enabled = true;
-    }
-    else{
-        
-        self.clientRef.enabled = false;
-        self.clientRef.text = self.audit.report.clientRef;
-    }
-    
+
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+
+    self.clientRef.text = self.audit.report.clientRef;
     self.summary.text = self.audit.report.summary;
     if ([self.summary.text isEqualToString:@""] || [self.summary.text isEqualToString:@"(null)"] || self.summary.text == nil)
     {
