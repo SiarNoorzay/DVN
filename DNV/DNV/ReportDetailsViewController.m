@@ -111,8 +111,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
-     self.clientRef.text = self.audit.report.clientRef;
+
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+
+    self.clientRef.text = self.audit.report.clientRef;
     self.summary.text = self.audit.report.summary;
     if ([self.summary.text isEqualToString:@""] || [self.summary.text isEqualToString:@"(null)"] || self.summary.text == nil)
     {
@@ -154,7 +156,9 @@
     self.audit.client.auditDate = self.dateOfIssue.text;
     self.audit.report.projectNum = self.projectNum.text; 
     
-    //TODO:save audit
+    [self.dnvDBManager updateClient:self.audit.client];
+    [self.dnvDBManager updateReport:self.audit.report];
+    
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

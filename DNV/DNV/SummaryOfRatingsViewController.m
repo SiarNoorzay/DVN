@@ -305,23 +305,7 @@
         numPages = ceil( rect.size.height / 792 );
         rect.size.height = numPages * 792;
         self.ratingsPDFView.frame = rect;
-        
-        //TODO: fix this sheit
-        //     rect = self.graphView.frame;
-        //     rect.origin.y += pixelsToMove;
-        //     self.graphView.frame = rect;
-        
-        
-        //set the frame of this view to the bottom of the finalPdfview
-        //        rect = self.ratingsPDFView.frame;
-        //        rect.origin.y = reportVC.finalPFDView.frame.size.height;
-        //        self.ratingsPDFView.frame = rect;
-        //
-        //        [reportVC.finalPFDView addSubview:self.ratingsPDFView];
-        //        [reportVC.finalPFDView sizeToFit];
-        //
-        //    [reportVC.viewArray addObject:self.ratingsPDFView];
-        
+    
         [reportVC.viewArray setObject:self.ratingsPDFView atIndexedSubscript:7];
         
     }

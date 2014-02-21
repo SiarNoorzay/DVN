@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "Audit.h"
+#import "DNVDatabaseManagerClass.h"
 
 @interface ConclusionViewController : UIViewController<UITextViewDelegate>
 @property(strong,nonatomic) Audit *audit;
 
 
 @property (strong, nonatomic) IBOutlet UITextField *percent;
+
+@property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
 
 @property (strong, nonatomic) IBOutlet UITextView *conclusionTextView;
 @property (strong, nonatomic) IBOutlet UILabel *overPercentLabel;

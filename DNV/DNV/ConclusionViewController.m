@@ -31,6 +31,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+    
     float auditPointsPossible = 0;
     float auditNAPoints = 0;
     float auditAwarded = 0;
@@ -119,7 +121,8 @@
 {
     self.audit.report.conclusion = self.conclusionTextView.text;
     
-    //TODO:save audit back to DB
+    [self.dnvDBManager updateReport:self.audit.report];
+    
 }
 
 @end

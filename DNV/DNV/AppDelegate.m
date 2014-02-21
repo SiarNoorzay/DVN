@@ -38,6 +38,7 @@
         [[DBSession sharedSession] unlinkAll];
     }
     
+    //TODO:Change this once we are ready to go live
     [Flurry setCrashReportingEnabled:YES];
     //note: iOS only allows one crash reporting tool per app; if using another, set to: NO
     [Flurry startSession:@"JXPCVN7MYZTH7P8QVNJK"];
