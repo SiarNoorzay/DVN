@@ -311,8 +311,24 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
     //Query to insert into the attachment table
     NSString * insertAttachSQL = [NSString stringWithFormat:@"INSERT INTO ATTACHMENT (QUESTIONID, ATTACHMENTNAME, ATTACHTYPE) VALUES (%d, \"%@\", %d)", questionID, attachName, attachType];
     
-    //Call to insert a row into a table
-    [self insertRowInTable:insertAttachSQL forTable:@"attachment"];
+    NSArray * tempAttachArray = [self retrieveAttachmentsOfQuestion:questionID ofType:attachType];
+    int attachCount = 0;
+    
+    for (NSString * attach in tempAttachArray){
+        
+        if ([attachName isEqualToString:attach])
+            break;
+        
+        attachCount++;
+    }
+    
+    if (attachCount == tempAttachArray.count){
+        //Call to insert a row into a table
+        [self insertRowInTable:insertAttachSQL forTable:@"attachment"];
+    }
+    else{
+        NSLog(@"Attachment already exist.");
+    }
     
 }
 
