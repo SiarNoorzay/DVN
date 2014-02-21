@@ -174,6 +174,12 @@
     
     NSLog(@"WIP Audit Path: %@",self.ogdbWIPFolderPath);
     
+    if (self.wips.count >0) {
+        wipAuditFileVC.hasDropboxFiles = true;
+    }
+    else
+        wipAuditFileVC.hasDropboxFiles = false;
+    
     [wipAuditFileVC setWipAuditPath: self.ogdbWIPFolderPath];
     wipAuditFileVC.wipAuditType = _WIPType;
 

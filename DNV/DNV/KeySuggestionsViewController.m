@@ -38,8 +38,12 @@ float animatedDistance = 0;
     for (int i=0; i<self.thumbsDowndQuestions.count; i++) {
         Questions *quest = [self.thumbsDowndQuestions objectAtIndex:i];
         NSString *notes =quest.notes;
-        notes = [notes stringByReplacingOccurrencesOfString:@"<insert text here>\n" withString:@""];
-        quest.notes = notes;
+        if (quest != nil) {
+            notes = [notes stringByReplacingOccurrencesOfString:@"<insert text here>\n" withString:@""];
+            quest.notes = notes;
+            [self.dnvDBManager updateQuestion:quest];
+        }
+        
         
     }
 }
@@ -48,7 +52,9 @@ float animatedDistance = 0;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    // self.audit = getAuditFromDB with ID from previous selection
+
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+    
     self.thumbsDowndQuestions = [[NSMutableArray alloc]initWithCapacity:1];
     self.positions = [[NSMutableArray alloc]initWithCapacity:1];
 

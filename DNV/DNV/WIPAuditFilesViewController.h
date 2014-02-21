@@ -33,6 +33,8 @@
 
 @property (strong, nonatomic) NSString * wipAuditType;
 @property (strong, nonatomic) NSString * wipAuditPath;
+
+@property (nonatomic) BOOL hasDropboxFiles;
 @property (strong, nonatomic) NSMutableArray * JSONList;
 @property (strong, nonatomic) NSMutableArray * attachmentList;
 

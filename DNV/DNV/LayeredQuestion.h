@@ -15,6 +15,6 @@
 @property (nonatomic,strong) Questions *question;
 @property (nonatomic,strong) NSMutableArray  *subIndexes;
 @property (nonatomic) BOOL  shouldBeEnabled;
-
+@property (nonatomic) BOOL isSelected;
 
 @end

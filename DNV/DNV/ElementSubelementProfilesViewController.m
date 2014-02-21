@@ -44,8 +44,8 @@ float animatedDistance2 = 0;
             NSString *notes = quest.notes;
             notes = [notes stringByReplacingOccurrencesOfString:@"<insert text here>\n" withString:@""];
             quest.notes = notes;
-            
-            //TODO: save quest back to DB
+            [self.dnvDBManager updateQuestion:quest];
+
         }
     }
 }
@@ -55,6 +55,8 @@ float animatedDistance2 = 0;
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.thumbedQuestions = [[NSMutableArray alloc]initWithCapacity:1];
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+    
     
     for (int i = 0; i<[self.audit.Elements count]; i++) {
         Elements *ele = [self.audit.Elements objectAtIndex:i];
@@ -175,6 +177,7 @@ float animatedDistance2 = 0;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Back to Completed Audits List" style:UIBarButtonItemStylePlain target:self action:@selector(popBackToCompletedAudits)];
     
 }
+
 
 -(void)popBackToCompletedAudits{
     

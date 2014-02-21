@@ -29,6 +29,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
+
+    
     
     self.clientName.text = self.audit.client.companyName;
     
@@ -63,24 +66,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
-    
-    
-    return nil;
-}
-
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
-    
-    if ([viewController isKindOfClass:[TitleViewController class]]) {
-        ReportDetailsViewController *rdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"ReportDetailsViewController"];
-        return  rdvc;
-        
-    }
-    
-    else return nil;
-    
-}
-
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"goToDetails"]) {
@@ -106,11 +91,11 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-     self.audit.client.companyName = self.clientName.text;
     
-     self.audit.client.auditDate = self.date.text;
+    self.audit.client.auditDate = self.date.text;
+    
+    [self.dnvDBManager updateClient:self.audit.client];
 
-    //TODO: save audit
 }
 - (IBAction)datePickerValueChanged:(id)sender {
 }

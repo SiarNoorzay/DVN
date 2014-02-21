@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "Audit.h"
 #import "KeySuggesstionCell.h"
+#import "DNVDatabaseManagerClass.h"
+
 
 @interface KeySuggestionsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate, UITextViewDelegate>
 
 @property (strong,nonatomic) Audit *audit;
+@property (strong, nonatomic) DNVDatabaseManagerClass * dnvDBManager;
 
 @property (strong, nonatomic) IBOutlet UIView *keySugsPDFView;
 
