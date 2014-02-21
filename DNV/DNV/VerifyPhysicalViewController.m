@@ -34,7 +34,13 @@
 	// Do any additional setup after loading the view.
     
     self.dnvDB = [DNVDatabaseManagerClass getSharedInstance];
+    
     myTabBar = (VerifyTabController*)self.tabBarController;
+    
+    if ([myTabBar.theQuestion.PhysicalObservations count] == 0)
+    {
+        [self btnAddRowToTable:self];
+    }
 }
 
 - (void)didReceiveMemoryWarning

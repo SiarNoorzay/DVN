@@ -55,7 +55,7 @@
     if( !isApplicable)
         [self.btnNASubElement setBackgroundImage:[UIImage imageNamed:@"no.png"] forState:UIControlStateNormal];
     else
-        [self.btnNASubElement setBackgroundImage:[UIImage imageNamed:@"yes.png"] forState:UIControlStateNormal];
+        [self.btnNASubElement setBackgroundImage:[UIImage imageNamed:@"yes-logo-green.png"] forState:UIControlStateNormal];
 }
 
 #pragma mark Alertview method
