@@ -42,8 +42,8 @@ int subEleNumber;
     self.listOfElements = self.aud.Elements;
     [self.elementPicker reloadAllComponents];
     
-    [self.elementPicker selectRow:0 inComponent:0 animated:false];
-    Elements *tempEle = [self.listOfElements objectAtIndex:0];
+    [self.elementPicker selectRow:elementNumber inComponent:0 animated:false];
+    Elements *tempEle = [self.listOfElements objectAtIndex:elementNumber];
     self.listOfSubElements = tempEle.Subelements;
     [self.subElementTable reloadData];
     [self.spinner stopAnimating];
@@ -157,15 +157,7 @@ int subEleNumber;
     NSLog(@"Audit Path: %@", self.auditPath);
     NSLog(@"Audit Type: %@", self.audType);
     
-//    if (restClient == nil) {
-//        restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
-//        restClient.delegate = self;
-//    }
-    
-//    [self loadDropboxFile:self.auditPath];
-    
-   
-    
+    elementNumber = 0;
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
     
 }

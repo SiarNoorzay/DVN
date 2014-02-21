@@ -112,14 +112,24 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-     self.clientRef.text = self.audit.report.clientRef;
+    if ([self.audit.report.clientRef isEqualToString:@"(null)"] || [self.audit.report.clientRef isEqualToString:@""]) {
+        self.clientRef.enabled = true;
+    }
+    else{
+        
+        self.clientRef.enabled = false;
+        self.clientRef.text = self.audit.report.clientRef;
+    }
+    
     self.summary.text = self.audit.report.summary;
     if ([self.summary.text isEqualToString:@""] || [self.summary.text isEqualToString:@"(null)"] || self.summary.text == nil)
     {
         self.summary.text = @"<insert summary here>";
         
     }
-    self.preparedBy.text = self.audit.report.preparedBy;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.preparedBy.text = [defaults objectForKey:@"currentUserName"];
     self.approvedBy.text = self.audit.report.approvedBy;
     self.dateOfIssue.text = self.audit.client.auditDate;
     self.projectNum.text = [NSString stringWithFormat:@"%@",self.audit.report.projectNum];

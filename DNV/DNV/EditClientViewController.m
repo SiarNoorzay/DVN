@@ -50,6 +50,8 @@
     }
     
     self.companyNameTxt.text = self.client.companyName;
+    self.companyNameTxt.enabled = false;
+    
     self.divisionTxt.text = self.client.division;
     self.SICnumberTxt.text = self.client.SICNumber;
     self.numOfEmpTxt.text = [NSString stringWithFormat:@"%d", self.client.numEmployees];

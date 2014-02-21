@@ -569,15 +569,12 @@ int numOfSubs;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.textLabel.enabled = NO;
                 [cell setUserInteractionEnabled:NO];
-
             }
             
-            NSLog(@"%@: %d",cell.textLabel.text, cell.isSelected);
-            
-//            if ([cell isSelected]){
-//                cell.textLabel.font = [UIFont fontWithName:@"Verdana-Bold" size:20.0];
-//                self.mainLayeredQuesionButton.titleLabel.font = [UIFont fontWithName:@"Verdana" size:30.0];
-//            }
+            if (tempLayered.isSelected){
+                cell.textLabel.font = [UIFont fontWithName:@"Verdana-Bold" size:20.0];
+                self.mainLayeredQuesionButton.titleLabel.font = [UIFont fontWithName:@"Verdana" size:30.0];
+            }
             
             return cell;
         }
@@ -673,15 +670,15 @@ int numOfSubs;
     }
     else if ( tableView == self.subQuesionsTableView)
     {
+        for (LayeredQuestion * LQ in self.allSublayeredQuestions)
+            LQ.isSelected = false;
+        
         LayeredQuestion *tempQ = [self.allSublayeredQuestions objectAtIndex:indexPath.row];
         self.question = tempQ.question;
         
-        self.currentPosition = (indexPath.row +1) * -1;
+        tempQ.isSelected = true;
+        self.currentPosition = (indexPath.row + 1) * -1;
         
-        UITableViewCell * cell = [self.subQuesionsTableView cellForRowAtIndexPath:indexPath];
-        
-//        cell.textLabel.font = [UIFont fontWithName:@"Verdana-Bold" size:20.0];
-
         [self refreshAnswerView];
     }
 }
@@ -782,19 +779,9 @@ int numOfSubs;
         
         [self.subQuesionsTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
         
-        UITableViewCell * cell = [self.subQuesionsTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        [cell setSelected: true];
-        
-        cell.textLabel.font = [UIFont fontWithName:@"Verdana-Bold" size:20.0];
-        self.mainLayeredQuesionButton.titleLabel.font = [UIFont fontWithName:@"Verdana" size:30.0];
-        
-        [self.subQuesionsTableView reloadData];
-
-//        [cell.textLabel setFont:[UIFont fontWithName:@"Verdana-Bold" size:20.0]];
-//        self.mainLayeredQuesionButton.titleLabel.font = [UIFont fontWithName:@"Verdana" size:30.0];
-        
         LayeredQuestion *tempQ = [self.allSublayeredQuestions objectAtIndex:0];
         tempQ.shouldBeEnabled = YES;
+        tempQ.isSelected = true;
         [self.allSublayeredQuestions replaceObjectAtIndex:0 withObject:tempQ];
         
         self.question = tempQ.question;
@@ -859,13 +846,11 @@ int numOfSubs;
                 
                 [self.subQuesionsTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:(layeredPosition +1)*-1 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
                 
-                UITableViewCell * cell = [self.subQuesionsTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:(layeredPosition +1)*-1 inSection:0]];
+                LayeredQuestion * prevSelectedLQ = [self.allSublayeredQuestions objectAtIndex:((layeredPosition +1)*-1)-1];
+                LayeredQuestion * lQuest = [self.allSublayeredQuestions objectAtIndex:(layeredPosition +1)*-1];
                 
-                cell.textLabel.font = [UIFont fontWithName:@"Verdana-Bold" size:20.0];
-                self.mainLayeredQuesionButton.titleLabel.font = [UIFont fontWithName:@"Verdana" size:30.0];
-                
-                [self.subQuesionsTableView reloadData];
-
+                prevSelectedLQ.isSelected = false;
+                lQuest.isSelected = true;
                 
                 self.currentPosition = layeredPosition;
                 
@@ -885,6 +870,12 @@ int numOfSubs;
                         
                         [self.subQuesionsTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
                         self.currentPosition = (i+1)*-1;
+                        
+                        LayeredQuestion * prevSelectedLQ = [self.allSublayeredQuestions objectAtIndex:i];
+                        LayeredQuestion * lQuest = [self.allSublayeredQuestions objectAtIndex:self.currentPosition*-1];
+                        
+                        prevSelectedLQ.isSelected = false;
+                        lQuest.isSelected = true;
                         
                         [self refreshAnswerView];
                         
