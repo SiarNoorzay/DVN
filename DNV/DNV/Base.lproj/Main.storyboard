@@ -2060,7 +2060,7 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Dropbox Audit Files" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qgr-o5-Act">
                                 <rect key="frame" x="0.0" y="593" width="768" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.83957313629518071" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="backgroundColor" red="0.24313725490196078" green="0.60784313725490191" blue="0.20784313725490194" alpha="1" colorSpace="deviceRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <color key="textColor" red="0.1004554288" green="0.12551632679999999" blue="0.38758916440000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
