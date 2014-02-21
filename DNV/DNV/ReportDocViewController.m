@@ -122,6 +122,14 @@ static ReportDocViewController* _sharedReportDocViewController = nil;
 //        rect.origin.y = self.finalPFDView.frame.size.height;
 //        view.frame = rect;
         
+        
+        for( int i =0; i < view.frame.size.height; i += 792)
+        {
+            UIImageView *theLogo = [[UIImageView alloc] initWithFrame:CGRectMake(60, i+10 , 492, 50)];
+            theLogo.image = [UIImage imageNamed:@"DNV_GL_ long_logo"];
+            [view addSubview:theLogo];
+        }
+        
         CGSize size = self.finalPFDView.contentSize;
         size.height = size.height + view.frame.size.height;
         self.finalPFDView.contentSize = size;
@@ -157,14 +165,12 @@ static ReportDocViewController* _sharedReportDocViewController = nil;
         
         UIGraphicsBeginPDFPageWithInfo(CGRectMake(0, 0.0, pageSize.width, pageSize.height), nil);
         
-        UIImageView *theLogo = [[UIImageView alloc] initWithFrame:CGRectMake(10, pageSize.height*currentPage , 592, 50)];
-        theLogo.image = [UIImage imageNamed:@"DNV_GL_ long_logo"];
-        [aView addSubview:theLogo];
         [aView.layer renderInContext:pdfContext];
         
         CGContextTranslateCTM(pdfContext, 0, -(pageSize.height*currentPage));
         
         [self.finalPFDView setContentOffset:CGPointMake(0, (currentPage+1) * 792) animated:NO];
+        
         if ((pageSize.height*(currentPage+1)) > mediaBox.size.height) done = YES;
         else currentPage++;
     } while (!done);
