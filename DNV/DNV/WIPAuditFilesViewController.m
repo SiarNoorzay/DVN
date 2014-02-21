@@ -60,15 +60,19 @@
     //Checks for internect connectivity when the View Appears
     if ([self.navigationController.navigationBar.backgroundColor isEqual:[UIColor greenColor]]){
         
-        NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
+        if (self.hasDropboxFiles){
+            NSUserDefaults *nsDefaults = [NSUserDefaults standardUserDefaults];
         
-        self.wipAuditPath = [NSString stringWithFormat:@"%@%@",self.wipAuditPath, [nsDefaults objectForKey:@"currentAudit"]];
+            self.wipAuditPath = [NSString stringWithFormat:@"%@%@",self.wipAuditPath, [nsDefaults objectForKey:@"currentAudit"]];
         
-        [self.spinner startAnimating];
+            [self.spinner startAnimating];
         
-        NSLog(@"WIP Path: %@", self.wipAuditPath);
-        [[self restClient] loadMetadata:self.wipAuditPath];
-        
+            NSLog(@"WIP Path: %@", self.wipAuditPath);
+            [[self restClient] loadMetadata:self.wipAuditPath];
+        }
+        else{
+            [self.spinner stopAnimating];
+        }
     }
     else
         [self.spinner stopAnimating];

@@ -84,6 +84,9 @@
     [eleGraphView setElementNames:eleNames];
     [eleGraphView setElementPercent:percents];
     [eleGraphView setIsAudit:YES];
+    
+   // eleGraphView = [eleGraphView drawRect:CGRectMake(0, 0, 612, 340)];
+    
     [allGraphViews addObject:eleGraphView];
     
     for (Elements *ele in self.audit.Elements) {
@@ -281,16 +284,6 @@
             [someView addSubview:cell.pointsAwarded];
             [someView addSubview:cell.percentage];
             
-//            CGSize stringSize = [someLabel.text sizeWithFont:[UIFont fontWithName:@"Verdana" size:18]
-//                                           constrainedToSize:CGSizeMake(600, 9999)
-//                                               lineBreakMode:NSLineBreakByWordWrapping];
-//            stringSize.height += 20;
-//            
-//            CGRect rect = someLabel.frame;
-//            rect.size = stringSize;
-//            
-//            someLabel.frame = rect;
-            
             
             someView = [fixHeight adjustSpaceForMyObject:someView];
             
@@ -356,6 +349,41 @@
         
         if (pixelsToMove2<0)
             pixelsToMove2 = 0;
+        
+        
+        if( self.graphViews.count > 0)
+        {
+            
+            UIView *graphHolder = [[UIView alloc] initWithFrame:CGRectMake(10, self.evaluatedPercentageLabel.frame.origin.y + self.evaluatedPercentageLabel.frame.size.height +20, 612, 340)];
+            
+            [graphHolder addSubview: self.graphViews[0]];
+        
+            
+            for( int i=0; i<self.graphViews.count; i++)
+            {
+                graphHolder = [fixHeight adjustSpaceForMyObject:graphHolder];
+                
+                [self.ratingsPDFView addSubview:graphHolder];
+                
+                [[self.graphViews objectAtIndex:1]setNeedsDisplay];
+                [[self.graphViews objectAtIndex:1] drawRect:CGRectMake(0, 0, 612, 340)];
+           
+                if( i+1 < self.graphViews.count )
+                {
+                    graphHolder = [[UIView alloc] initWithFrame: CGRectMake(10, graphHolder.frame.origin.y + graphHolder.frame.size.height +10, 612, 340)];
+                   // [[self.graphViews objectAtIndex:i+1]setNeedsDisplay];
+                   // [[self.graphViews objectAtIndex:i+1] drawRect:CGRectMake(0, 0, 612, 340)];
+                    
+                    [graphHolder setBackgroundColor:[UIColor yellowColor]];
+                    [graphHolder addSubview:self.graphViews[i+1]];
+                    
+                    
+//                    [[self.graphViews objectAtIndex:i+1]setNeedsDisplay];
+//                    [[self.graphViews objectAtIndex:i+1] drawRect:CGRectMake(0, 0, 612, 340)];
+                    
+                }
+            }
+        }
         
         
         

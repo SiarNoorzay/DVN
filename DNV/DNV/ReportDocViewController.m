@@ -129,7 +129,6 @@ static ReportDocViewController* _sharedReportDocViewController = nil;
         [self.finalPFDView addSubview:view];
     }
     
-    
     self.pdfSavedAt = [self createPDFfromUIView:self.finalPFDView saveToDocumentsWithFileName:@"AuditReport.pdf"];
     
     [self.spinner stopAnimating];
@@ -157,8 +156,14 @@ static ReportDocViewController* _sharedReportDocViewController = nil;
     do {
         
         UIGraphicsBeginPDFPageWithInfo(CGRectMake(0, 0.0, pageSize.width, pageSize.height), nil);
-        CGContextTranslateCTM(pdfContext, 0, -(pageSize.height*currentPage));
+        
+        UIImageView *theLogo = [[UIImageView alloc] initWithFrame:CGRectMake(10, pageSize.height*currentPage , 592, 50)];
+        theLogo.image = [UIImage imageNamed:@"DNV_GL_ long_logo"];
+        [aView addSubview:theLogo];
         [aView.layer renderInContext:pdfContext];
+        
+        CGContextTranslateCTM(pdfContext, 0, -(pageSize.height*currentPage));
+        
         [self.finalPFDView setContentOffset:CGPointMake(0, (currentPage+1) * 792) animated:NO];
         if ((pageSize.height*(currentPage+1)) > mediaBox.size.height) done = YES;
         else currentPage++;

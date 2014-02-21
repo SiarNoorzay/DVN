@@ -121,7 +121,9 @@
         self.summary.text = @"<insert summary here>";
         
     }
-    self.preparedBy.text = self.audit.report.preparedBy;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.preparedBy.text = [defaults objectForKey:@"currentUserName"];
     self.approvedBy.text = self.audit.report.approvedBy;
     self.dateOfIssue.text = self.audit.client.auditDate;
     self.projectNum.text = [NSString stringWithFormat:@"%@",self.audit.report.projectNum];

@@ -574,37 +574,37 @@ static DNVDatabaseManagerClass *sharedInstance = nil;
             NSString * name = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 2)];
             
             //Gets the division data from DB and adding it to the temp Client Object
-            NSString * division = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 3)];
+            NSString * division = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
             
             //Gets the SIC number data from DB and adding it to the temp Client Object
-            NSString * sicNum = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
+            NSString * sicNum = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
             
             //Gets the number of employees data from DB and adding it to the temp Client Object
-            NSString * numOfEmp = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
+            NSString * numOfEmp = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
             
             //Gets the auditor data from DB and adding it to the temp Client Object
-            NSString * auditor = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
+            NSString * auditor = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
             
             //Gets the audit site data from DB and adding it to the temp Client Object
-            NSString * audSite = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
+            NSString * audSite = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 8)];
             
             //Gets the audit date data from DB and adding it to the temp Client Object
-            NSString * audDate = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 8)];
+            NSString * audDate = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 9)];
             
             //Gets the baseline audit data from DB and adding it to the temp Client Object
-            NSString * baselineAud = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 9)];
+            NSString * baselineAud = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 10)];
             
             //Gets the street address data from DB and adding it to the temp Client Object
-            NSString * sAddress = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 10)];
+            NSString * sAddress = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 11)];
             
             //Gets the city state province data from DB and adding it to the temp Client Object
-            NSString * cityStateProv = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 11)];
+            NSString * cityStateProv = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 12)];
             
             //Gets the postal code data from DB and adding it to the temp Client Object
-            NSString * pCode = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 12)];
+            NSString * pCode = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 13)];
             
             //Gets the country data from DB and adding it to the temp Client Object
-            NSString * country = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 13)];
+            NSString * country = [[NSString alloc] initWithUTF8String:(const char*)sqlite3_column_text(statement, 14)];
             
             tempClient.clientID = [identify integerValue];
             tempClient.companyName = name;
