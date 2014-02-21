@@ -118,10 +118,7 @@
     int iNumberOfStraddledPages = (pixelsTilEdge + anyObject.frame.size.height) / 692;
     
     if( iNumberOfStraddledPages > 0)
-        anyObject.frame = CGRectMake(anyObject.frame.origin.x, anyObject.frame.origin.y + pixelsTilEdge + 150 , anyObject.frame.size.width, anyObject.frame.size.height);
-    
-    
-    
+        anyObject.frame = CGRectMake(anyObject.frame.origin.x, anyObject.frame.origin.y + pixelsTilEdge + 150 + (50*iNumberOfStraddledPages-1) , anyObject.frame.size.width, anyObject.frame.size.height);
     
     return anyObject;
 }

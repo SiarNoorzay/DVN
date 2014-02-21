@@ -19,6 +19,10 @@
 
 @interface SummaryOfRatingsViewController ()
 
+{
+    bool bLeaving;
+}
+
 @end
 
 @implementation SummaryOfRatingsViewController
@@ -145,6 +149,15 @@
     
     if (tableView == self.ElementRatingsTableView) { return 44;}
     
+    if( bLeaving )
+    {
+        if( tableView == self.graphsTableView && indexPath.row % 3 != 2 )
+        return 349;
+        
+        //spacer cell
+        return 100;
+    }
+    
     return 268;
 }
 
@@ -173,8 +186,10 @@
         
         
     }
+    else if( indexPath.row % 3 != 2 || !bLeaving)
+    {
     static NSString * cellIdentifier2 = @"graphViewCell";
-    GraphView *grphView = [self.graphViews objectAtIndex:indexPath.row];
+    GraphView *grphView = [self.graphViews objectAtIndex:indexPath.row - (indexPath.row/3) ];
     
     GraphViewCell * cell;// = [tableView dequeueReusableCellWithIdentifier:cellIdentifier2];
     
@@ -200,6 +215,14 @@
     
     [cell.graphViewImage drawRect:CGRectMake(0, 0, 612, 340)];
     //-35, -42, 612, 260
+        
+        return cell;
+    }
+    
+    //spacer cell
+    UITableViewCell *cell = [[UITableViewCell alloc] init];
+    
+    cell.alpha = 0;
     
     return cell;
 }
@@ -210,7 +233,11 @@
         return [self.elementsArray count];
     }
     
-    return self.graphViews.count;
+    
+    if( !bLeaving)
+        return self.graphViews.count;
+    
+    return  self.graphViews.count + (self.graphViews.count/3);
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -221,6 +248,10 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    bLeaving = true;
+    
+    [self.graphsTableView reloadData];
+    
     if ([[segue identifier] isEqualToString:@"goToAssumptions"]) {
         
         ScoringAssumptionsViewController * assVC = [segue destinationViewController];
@@ -293,123 +324,71 @@
             someView = [[UIView alloc] initWithFrame:CGRectMake(50, someView.frame.origin.y + someView.frame.size.height +10, 600, 80)];
         }
         
-        pixelsToMove = [self.elementsArray count] * 90;
+        pixelsToMove = someView.frame.origin.y + someView.frame.size.height + 20;
         
         //move each uiElement under elements tableview
         rect = self.possibleLabel.frame;
-        rect.origin.y += pixelsToMove;
+        rect.origin.y = pixelsToMove;
         self.possibleLabel.frame = rect;
         self.possibleLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.possibleLabel];
         
         rect = self.totalPossibleLabel.frame;
-        rect.origin.y += pixelsToMove;
+        rect.origin.y = pixelsToMove;
         self.totalPossibleLabel.frame = rect;
         self.totalPossibleLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.totalPossibleLabel];
         
         rect = self.totalAwardedLabel.frame;
-        rect.origin.y += pixelsToMove;
+        rect.origin.y = pixelsToMove;
         self.totalAwardedLabel.frame = rect;
         self.totalAwardedLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.totalAwardedLabel];
         
         rect = self.totalPercentageLabel.frame;
-        rect.origin.y += pixelsToMove;
+        rect.origin.y = pixelsToMove;
         self.totalPercentageLabel.frame = rect;
         self.totalPercentageLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.totalPercentageLabel];
         
         
+        pixelsToMove += self.possibleLabel.frame.size.height + 10;
+        
         rect = self.evaluatedLabel.frame;
-        rect.origin.y += pixelsToMove;
+        rect.origin.y = pixelsToMove;
         self.evaluatedLabel.frame = rect;
         self.evaluatedLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.evaluatedLabel];
         
         rect = self.evaluatedPossibleLabel.frame;
-        rect.origin.y += pixelsToMove;
+        rect.origin.y = pixelsToMove;
         self.evaluatedPossibleLabel.frame = rect;
         self.evaluatedPossibleLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.evaluatedPossibleLabel];
         
         rect = self.evaluatedAwardedLabel.frame;
-        rect.origin.y += pixelsToMove;
+        rect.origin.y = pixelsToMove;
         self.evaluatedAwardedLabel.frame = rect;
         self.evaluatedAwardedLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.evaluatedAwardedLabel];
         
         rect = self.evaluatedPercentageLabel.frame;
-        rect.origin.y += pixelsToMove;
+        rect.origin.y = pixelsToMove;
         self.evaluatedPercentageLabel.frame = rect;
         self.evaluatedPercentageLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.evaluatedPercentageLabel];
         
         
         //set height to content size of element list and update pdfview size accordingly
-        
-        int pixelsToMove2 = self.graphsTableView.frame.size.height+ pixelsToMove;
         rect = self.graphsTableView.frame;
         rect.size.height    = self.graphsTableView.contentSize.height;
         self.graphsTableView.frame  = CGRectMake(0, self.evaluatedPercentageLabel.frame.origin.y, 700, self.graphsTableView.contentSize.height);
         self.graphsTableView = (UITableView*)[fixHeight adjustSpaceForMyObject:self.graphsTableView];
         
         
-        if (pixelsToMove2<0)
-            pixelsToMove2 = 0;
-        
-        
-        if( self.graphViews.count > 0)
-        {
-            
-            UIView *graphHolder = [[UIView alloc] initWithFrame:CGRectMake(10, self.evaluatedPercentageLabel.frame.origin.y + self.evaluatedPercentageLabel.frame.size.height +20, 612, 340)];
-
-            [graphHolder addSubview:self.graphViews[0]];
-        
-            
-//            for( int i=0; i<self.graphViews.count; i++)
-//            {
-//               // graphHolder = [fixHeight adjustSpaceForMyObject:graphHolder];
-//                
-//                [self.ratingsPDFView addSubview:graphHolder];
-//                
-//               // [[self.graphViews objectAtIndex:i]setNeedsDisplay];
-//                //[[self.graphViews objectAtIndex:i] drawRect:CGRectMake(0, 0, 612, 340)];
-//           
-//                if( i+1 < self.graphViews.count )
-//                {
-//                    graphHolder = [[UIView alloc] initWithFrame: CGRectMake(10, graphHolder.frame.origin.y + graphHolder.frame.size.height +10, 612, 340)];
-//                   // [[self.graphViews objectAtIndex:i+1]setNeedsDisplay];
-//                   // [[self.graphViews objectAtIndex:i+1] drawRect:CGRectMake(0, 0, 612, 340)];
-//                    
-//                    
-//                    [graphHolder setBackgroundColor:[UIColor yellowColor]];
-//                    [graphHolder addSubview:self.graphViews[i+1]];
-//                    
-//                    
-//                    [[self.graphViews objectAtIndex:i+1]setNeedsDisplay];
-//                    [[self.graphViews objectAtIndex:i+1] drawRect:CGRectMake(0, 0, 612, 340)];
-//                    
-//                }
-//            }
-        }
-        
-        
-        
         //make the hieght view bigger
         rect = self.ratingsPDFView.frame;
-        rect.size.height += pixelsToMove;
-        int numPages = ceil( rect.size.height / 792 );
+        //rect.size.height += pixelsToMove;
+        int numPages = ceil( (self.graphsTableView.frame.origin.y+self.graphsTableView.frame.size.height) / 792 );
         rect.size.height = numPages * 792;
         self.ratingsPDFView.frame = rect;
-        
-        //make the pdfview height bigger
-        rect = self.ratingsPDFView.frame;
-        rect.size.height += pixelsToMove2;
-        
-        
-        numPages = ceil( rect.size.height / 792 );
-        rect.size.height = numPages * 792;
-        self.ratingsPDFView.frame = rect;
-        
         
         self.ElementRatingsTableView.hidden = true;
         //self.graphsTableView.hidden = true;
         
         [reportVC.viewArray setObject:self.ratingsPDFView atIndexedSubscript:7];
-        
     }
 }
 
