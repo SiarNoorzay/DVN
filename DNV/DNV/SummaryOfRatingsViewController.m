@@ -355,34 +355,35 @@
         {
             
             UIView *graphHolder = [[UIView alloc] initWithFrame:CGRectMake(10, self.evaluatedPercentageLabel.frame.origin.y + self.evaluatedPercentageLabel.frame.size.height +20, 612, 340)];
-            
-            [graphHolder addSubview: self.graphViews[0]];
+
+            [graphHolder addSubview:self.graphViews[0]];
         
             
-            for( int i=0; i<self.graphViews.count; i++)
-            {
-                graphHolder = [fixHeight adjustSpaceForMyObject:graphHolder];
-                
-                [self.ratingsPDFView addSubview:graphHolder];
-                
-                [[self.graphViews objectAtIndex:1]setNeedsDisplay];
-                [[self.graphViews objectAtIndex:1] drawRect:CGRectMake(0, 0, 612, 340)];
-           
-                if( i+1 < self.graphViews.count )
-                {
-                    graphHolder = [[UIView alloc] initWithFrame: CGRectMake(10, graphHolder.frame.origin.y + graphHolder.frame.size.height +10, 612, 340)];
-                   // [[self.graphViews objectAtIndex:i+1]setNeedsDisplay];
-                   // [[self.graphViews objectAtIndex:i+1] drawRect:CGRectMake(0, 0, 612, 340)];
-                    
-                    [graphHolder setBackgroundColor:[UIColor yellowColor]];
-                    [graphHolder addSubview:self.graphViews[i+1]];
-                    
-                    
+//            for( int i=0; i<self.graphViews.count; i++)
+//            {
+//               // graphHolder = [fixHeight adjustSpaceForMyObject:graphHolder];
+//                
+//                [self.ratingsPDFView addSubview:graphHolder];
+//                
+//               // [[self.graphViews objectAtIndex:i]setNeedsDisplay];
+//                //[[self.graphViews objectAtIndex:i] drawRect:CGRectMake(0, 0, 612, 340)];
+//           
+//                if( i+1 < self.graphViews.count )
+//                {
+//                    graphHolder = [[UIView alloc] initWithFrame: CGRectMake(10, graphHolder.frame.origin.y + graphHolder.frame.size.height +10, 612, 340)];
+//                   // [[self.graphViews objectAtIndex:i+1]setNeedsDisplay];
+//                   // [[self.graphViews objectAtIndex:i+1] drawRect:CGRectMake(0, 0, 612, 340)];
+//                    
+//                    
+//                    [graphHolder setBackgroundColor:[UIColor yellowColor]];
+//                    [graphHolder addSubview:self.graphViews[i+1]];
+//                    
+//                    
 //                    [[self.graphViews objectAtIndex:i+1]setNeedsDisplay];
 //                    [[self.graphViews objectAtIndex:i+1] drawRect:CGRectMake(0, 0, 612, 340)];
-                    
-                }
-            }
+//                    
+//                }
+//            }
         }
         
         
@@ -405,7 +406,7 @@
         
         
         self.ElementRatingsTableView.hidden = true;
-        self.graphsTableView.hidden = true;
+        //self.graphsTableView.hidden = true;
         
         [reportVC.viewArray setObject:self.ratingsPDFView atIndexedSubscript:7];
         
