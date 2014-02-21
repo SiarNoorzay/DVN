@@ -73,8 +73,10 @@ bool start = true;
 - (IBAction)startStopButtonPushed:(id)sender {
     
     if (start) {
+        self.startStopButton.enabled = NO;
+        self.startStopButton.hidden = YES;
         [self.spinner startAnimating];
-        
+    
         [self.vr startVoiceRecognition];
         
         start = false;
@@ -85,6 +87,7 @@ bool start = true;
         [self.vr stopVoiceRecognition];
         [self.startStopButton setTitle:@"Start Voice Recognition" forState:UIControlStateNormal];
         start = true;
+        [self.spinner stopAnimating];
     }
     
     
@@ -121,6 +124,8 @@ bool start = true;
         
         if (self.vr.listening) {
             [self.spinner stopAnimating];
+            self.startStopButton.enabled = YES;
+            self.startStopButton.hidden =NO;
         }
     }
 

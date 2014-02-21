@@ -351,7 +351,7 @@
             pixelsToMove2 = 0;
         
         
-        if( self.graphViews.count > 0)
+       /* if( self.graphViews.count > 0)
         {
             
             UIView *graphHolder = [[UIView alloc] initWithFrame:CGRectMake(10, self.evaluatedPercentageLabel.frame.origin.y + self.evaluatedPercentageLabel.frame.size.height +20, 612, 340)];
@@ -383,7 +383,36 @@
                     
                 }
             }
+        }*/
+        
+        
+        for (int i = 0; i<[self.graphViews count]; i++) {
+            
+            GraphView *grphView = [self.graphViews objectAtIndex:i];
+            
+            //GraphView *view = [[GraphView alloc]init];
+            
+            //cell.graphViewImage.backgroundColor = [UIColor clearColor];
+            [grphView setNeedsDisplay];
+            
+            [grphView drawRect:CGRectMake(0, 0, 612, 340)];
+            
+            CGRect rect = grphView.frame;
+            rect.origin.y = self.ratingsPDFView.frame.size.height;
+            grphView.frame = rect;
+            
+            rect = self.ratingsPDFView.frame;
+            rect.size.height += grphView.frame.size.height;
+            
+            
+            
         }
+        
+    
+        
+        
+        
+        
         
         
         
@@ -402,25 +431,10 @@
         numPages = ceil( rect.size.height / 792 );
         rect.size.height = numPages * 792;
         self.ratingsPDFView.frame = rect;
-        
-        //TODO: fix this sheit
-        //     rect = self.graphView.frame;
-        //     rect.origin.y += pixelsToMove;
-        //     self.graphView.frame = rect;
-        
-        
-        //set the frame of this view to the bottom of the finalPdfview
-        //        rect = self.ratingsPDFView.frame;
-        //        rect.origin.y = reportVC.finalPFDView.frame.size.height;
-        //        self.ratingsPDFView.frame = rect;
-        //
-        //        [reportVC.finalPFDView addSubview:self.ratingsPDFView];
-        //        [reportVC.finalPFDView sizeToFit];
-        //
-        //    [reportVC.viewArray addObject:self.ratingsPDFView];
+       
         
         self.ElementRatingsTableView.hidden = true;
-        //self.graphsTableView.hidden = true;
+        self.graphsTableView.hidden = true;
         
         [reportVC.viewArray setObject:self.ratingsPDFView atIndexedSubscript:7];
         

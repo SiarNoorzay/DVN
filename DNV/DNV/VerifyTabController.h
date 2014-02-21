@@ -15,7 +15,7 @@
 @property (nonatomic, strong) NSArray *listOfVerifyQuestions;
 @property (nonatomic, strong) Questions *theQuestion;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *btnEditQuestion;
+@property (weak, nonatomic) IBOutlet UIButton *btnEditQuestion;
 
 - (IBAction)btnEditQuestion:(id)sender;
 

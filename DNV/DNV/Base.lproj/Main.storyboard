@@ -358,9 +358,9 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EVP-bl-jp5">
-                                                    <rect key="frame" x="20" y="30" width="60" height="30"/>
+                                                    <rect key="frame" x="20" y="35" width="50" height="25"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" backgroundImage="yes.png">
+                                                    <state key="normal" backgroundImage="yes-logo-green.png">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -409,9 +409,9 @@
                                 <color key="color" red="0.1004554288" green="0.12551632679999999" blue="0.38758916440000002" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Dwm-op-zEL">
-                                <rect key="frame" x="20" y="424" width="60" height="30"/>
+                                <rect key="frame" x="20" y="426" width="50" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" backgroundImage="yes.png">
+                                <state key="normal" backgroundImage="yes-logo-green.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -836,13 +836,13 @@
                         <segue destination="fuF-Ln-BzO" kind="popover" identifier="calcSegue" id="eip-Ra-5Vq">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
-                        <segue destination="eiv-AO-kQq" kind="push" identifier="questionToVerify" id="iwB-8H-uOu"/>
                         <segue destination="CeT-MT-roR" kind="popover" identifier="verifyPopOver" id="iYV-gc-8wp">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
                         <segue destination="st9-EE-Phh" kind="popover" id="bYe-gZ-oMC">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
+                        <segue destination="eiv-AO-kQq" kind="push" identifier="questionToVerify" id="FW5-kv-44c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lkK-qJ-2w0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1725,7 +1725,21 @@
         <scene sceneID="eRW-vg-MUl">
             <objects>
                 <tabBarController definesPresentationContext="YES" id="eiv-AO-kQq" customClass="VerifyTabController" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="iIv-sD-D2o"/>
+                    <navigationItem key="navigationItem" id="iIv-sD-D2o">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="IH0-yz-ubg">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9hZ-yr-vzp">
+                                <rect key="frame" x="582" y="5" width="170" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Edit Question">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnEditQuestion:" destination="eiv-AO-kQq" eventType="touchUpInside" id="CAh-a6-0DS"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="9iq-hK-BRs">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
@@ -1733,9 +1747,11 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <outlet property="btnEditQuestion" destination="9hZ-yr-vzp" id="2qu-Aq-KRD"/>
                         <segue destination="TSN-fa-D8a" kind="relationship" relationship="viewControllers" id="zib-82-enM"/>
                         <segue destination="hkX-Qp-bq0" kind="relationship" relationship="viewControllers" id="6h8-rZ-cbs"/>
                         <segue destination="sMx-3o-ZvH" kind="relationship" relationship="viewControllers" id="GV9-gg-o1H"/>
+                        <segue destination="8Xc-YB-eLc" kind="push" identifier="verifyTabToDashboard" id="yLb-8U-SDc"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kxN-ml-UNs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1756,7 +1772,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="verifyCell" rowHeight="100" id="AXO-Je-jmp" customClass="verificationCell">
-                                        <rect key="frame" x="0.0" y="86" width="768" height="100"/>
+                                        <rect key="frame" x="0.0" y="22" width="768" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AXO-Je-jmp" id="zTH-Kz-rpA">
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="99"/>
@@ -1889,7 +1905,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="verifyRecords" rowHeight="100" id="D47-pk-8Re" customClass="verifyRecordsCell">
-                                        <rect key="frame" x="0.0" y="86" width="768" height="100"/>
+                                        <rect key="frame" x="0.0" y="22" width="768" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D47-pk-8Re" id="NvA-hT-0Ql">
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="99"/>
@@ -2427,11 +2443,11 @@
                                 <rect key="frame" x="78" y="148" width="612" height="792"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Company Name" minimumFontSize="17" id="mJU-bu-XMI">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Company Name" minimumFontSize="17" id="mJU-bu-XMI">
                                         <rect key="frame" x="214" y="103" width="357" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report for:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="n2q-Qc-KXF">
                                         <rect key="frame" x="64" y="92" width="142" height="52"/>
@@ -2446,13 +2462,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Date" minimumFontSize="17" id="2Q6-KK-Nab">
-                                        <rect key="frame" x="214" y="169" width="167" height="30"/>
+                                        <rect key="frame" x="214" y="180" width="167" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3X1-pH-Db2">
-                                        <rect key="frame" x="64" y="158" width="142" height="52"/>
+                                        <rect key="frame" x="64" y="169" width="142" height="52"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="22"/>
                                         <nil key="highlightedColor"/>
@@ -2849,7 +2865,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hyB-Aa-Rae">
-                                <rect key="frame" x="207" y="966" width="340" height="46"/>
+                                <rect key="frame" x="207" y="948" width="340" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="25"/>
                                 <state key="normal" title="Go to Scoring Assumptions">
@@ -3779,7 +3795,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="verify_icon.png" width="258" height="258"/>
         <image name="verify_icon_gray.png" width="258" height="258"/>
         <image name="wip_checklist_icon.png" width="300" height="350"/>
-        <image name="yes.png" width="125" height="49"/>
+        <image name="yes-logo-green.png" width="125" height="49"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackOpaque"/>
@@ -3787,15 +3803,16 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="yLb-8U-SDc"/>
+        <segue reference="FW5-kv-44c"/>
         <segue reference="Kjd-jP-nx9"/>
-        <segue reference="Xof-A4-Klh"/>
         <segue reference="mdm-Om-J66"/>
+        <segue reference="Xof-A4-Klh"/>
         <segue reference="hrt-DA-W4A"/>
         <segue reference="JhJ-6V-9g8"/>
         <segue reference="qKN-QJ-s0B"/>
         <segue reference="sOY-bc-kKG"/>
         <segue reference="z9l-uk-5Nw"/>
         <segue reference="xXC-Ay-Dh8"/>
-        <segue reference="iwB-8H-uOu"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -39,6 +39,9 @@ float animatedDistance2 = 0;
 {
     for (int i=0; i<self.thumbedQuestions.count; i++) {
         Profile *prof = [self.thumbedQuestions objectAtIndex:i];
+        NSString *notes = prof.text;
+        notes = [notes stringByReplacingOccurrencesOfString:@"<insert text here>\n" withString:@""];
+        prof.text = notes;
         Questions *quest = prof.question;
         if (quest) {
             NSString *notes = quest.notes;
@@ -48,6 +51,7 @@ float animatedDistance2 = 0;
 
         }
     }
+    [self.resultsTableView reloadData];
 }
 
 - (void)viewDidLoad
@@ -61,13 +65,13 @@ float animatedDistance2 = 0;
     for (int i = 0; i<[self.audit.Elements count]; i++) {
         Elements *ele = [self.audit.Elements objectAtIndex:i];
         Profile *eleProf = [Profile new];
-        eleProf.text = [NSString stringWithFormat:@"%d %@",i+1, ele.name];
+        eleProf.text = [NSString stringWithFormat:@"%d %@\n<insert text here>\n",i+1, ele.name];
         [self.thumbedQuestions addObject:eleProf];
         
         for (int j = 0; j<[ele.Subelements count]; j++) {
             SubElements *subEle = [ele.Subelements objectAtIndex:j];
             Profile *subEleProf = [Profile new];
-            subEleProf.text = [NSString stringWithFormat:@"\t%d.%d %@",i+1,j+1, subEle.name];
+            subEleProf.text = [NSString stringWithFormat:@"\t%d.%d %@\n<insert text here>\n",i+1,j+1, subEle.name];
             [self.thumbedQuestions addObject:subEleProf];
             
             NSMutableArray *upArray = [[NSMutableArray alloc]initWithCapacity:1];
@@ -245,7 +249,7 @@ float animatedDistance2 = 0;
         rect.size.width = 492;
         rect.origin.x =80;
         cell.notesTextView.frame = rect;
-        cell.notesTextView.selectable = YES;
+        cell.notesTextView.selectable = NO;
         cell.userInteractionEnabled = YES;
         [cell.notesTextView setEditable:YES];
         
@@ -257,8 +261,15 @@ float animatedDistance2 = 0;
         rect.origin.x = 0;
         cell.notesTextView.frame = rect;
         cell.notesTextView.selectable = NO;
-        cell.userInteractionEnabled = NO;
-        [cell.notesTextView setEditable:NO];
+        cell.userInteractionEnabled = YES;
+        [cell.notesTextView setEditable:YES];
+        
+        //this changes behavior of noteworthy and suggesstions cells
+//        if ((([cell.notesTextView.text rangeOfString:@"\t\tNoteworthy Efforts"].location != NSNotFound)) || ([cell.notesTextView.text rangeOfString:@"\t\tSuggesstions for Improvement "].location != NSNotFound)) {
+//            cell.notesTextView.selectable = NO;
+//            cell.userInteractionEnabled = YES;
+//            [cell.notesTextView setEditable:YES];
+//        }
     }
 
     return cell;
@@ -274,6 +285,29 @@ float animatedDistance2 = 0;
     return YES;
     
 }
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Perform the real delete action here. Note: you may need to check editing style
+    //   if you do not perform delete only.
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        Profile *prof = [self.thumbedQuestions objectAtIndex:indexPath.row];
+        Questions *quest = prof.question;
+        NSString *notes = quest.notes;
+        notes = [notes stringByReplacingOccurrencesOfString:@"<insert text here>\n" withString:@""];
+        quest.notes = notes;
+        notes = prof.text;
+        notes = [notes stringByReplacingOccurrencesOfString:@"<insert text here>\n" withString:@""];
+        prof.text = notes;
+        
+        [self.thumbedQuestions removeObjectAtIndex:indexPath.row];
+        
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+    NSLog(@"Deleted row.");
+}
+
 -(void)textViewDidEndEditing:(UITextView *)textView
 {
     ProfileLabelCell* cell = [self parentCellFor:textView];
