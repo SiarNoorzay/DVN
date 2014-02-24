@@ -34,9 +34,9 @@
     self.dnvDBManager = [DNVDatabaseManagerClass getSharedInstance];
 
     
-    if (![self.audit.report.executiveSummary isEqualToString:@"(null)"]) {
-        self.executiveSummary.text = self.audit.report.executiveSummary;
-    }
+//    if (![self.audit.report.executiveSummary isEqualToString:@"(null)"]) {
+//        self.executiveSummary.text = self.audit.report.executiveSummary;
+//    }
     
     if ([self.executiveSummary.text isEqualToString:@""] || [self.executiveSummary.text isEqualToString:@"(null)"] || self.executiveSummary.text ==nil)
     {
@@ -120,9 +120,9 @@
         self.auditCountLabel = (UILabel*)[fixHeight adjustSpaceForMyObject:self.auditCountLabel];
         
         rect = self.elementList.frame;
-        rect.origin.y += pixelsToMove;
+        rect.origin.y = self.auditCountLabel.frame.origin.y + self.auditCountLabel.frame.size.height + 20;
         self.elementList.frame = rect;
-        self.elementList = (UITextView*)[fixHeight adjustSpaceForMyObject:self.elementList];
+        //calling adjust after its rect is set based on its contentsize
 
         
         
@@ -132,6 +132,10 @@
         rect = self.elementList.frame;
         rect.size.height    = self.elementList.contentSize.height;
         self.elementList.frame  = rect;
+        
+        
+        self.elementList = (UITextView*)[fixHeight adjustSpaceForMyObject:self.elementList];
+        
         
         pixelsToMove2 = self.elementList.frame.size.height - pixelsToMove2;
         
@@ -255,7 +259,6 @@
    self.audit.report.executiveSummary = self.executiveSummary.text;
     
     [self.dnvDBManager updateReport:self.audit.report];
-    
 }
 
 

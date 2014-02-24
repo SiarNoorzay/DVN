@@ -115,10 +115,16 @@
     int pixelsTilEdge = 692 - ((int)anyObject.frame.origin.y) % 692;
     
     //number of pages object straddles
-    int iNumberOfStraddledPages = (pixelsTilEdge + anyObject.frame.size.height) / 692;
+    int iNumberOfStraddledPages = ( 692 - pixelsTilEdge + anyObject.frame.size.height) / 692;
     
+    //if it straddles
     if( iNumberOfStraddledPages > 0)
         anyObject.frame = CGRectMake(anyObject.frame.origin.x, anyObject.frame.origin.y + pixelsTilEdge + 150 + (50*iNumberOfStraddledPages-1) , anyObject.frame.size.width, anyObject.frame.size.height);
+    
+    //if it lies in between pages
+    if( (int)anyObject.frame.origin.y % 792 > 692 )
+         anyObject.frame = CGRectMake(anyObject.frame.origin.x, anyObject.frame.origin.y + 862 - (int)anyObject.frame.origin.y%792 + (50*iNumberOfStraddledPages-1) , anyObject.frame.size.width, anyObject.frame.size.height);
+    //862 instead of 842 (50 more than edge, to create more of a gap with logo)
     
     return anyObject;
 }
