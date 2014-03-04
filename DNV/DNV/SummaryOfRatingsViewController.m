@@ -206,7 +206,7 @@
     cell.elementSubName.text = grphView.name;
     
     cell.elementSubName.backgroundColor = [UIColor redColor];
-    cell.backgroundColor = [UIColor lightGrayColor];
+   // cell.backgroundColor = [UIColor lightGrayColor];
     
     cell.graphViewImage.backgroundColor = [UIColor clearColor];
 
@@ -374,7 +374,8 @@
         //set height to content size of element list and update pdfview size accordingly
         rect = self.graphsTableView.frame;
         rect.size.height    = self.graphsTableView.contentSize.height;
-        self.graphsTableView.frame  = CGRectMake(0, self.evaluatedPercentageLabel.frame.origin.y, 700, self.graphsTableView.contentSize.height);
+        rect.origin.y = self.evaluatedPercentageLabel.frame.origin.y+ self.evaluatedPercentageLabel.frame.size.height+20;
+        self.graphsTableView.frame  = rect;
         self.graphsTableView = (UITableView*)[fixHeight adjustSpaceForMyObject:self.graphsTableView];
         
         
